@@ -1,0 +1,46 @@
+page-map {
+    .map-background {
+         background: url(../assets/img/backgrounds/todo.jpg) no-repeat center center fixed;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+        
+        .scroll-content {
+            display: table !important;
+            width: 100% !important;
+            height: 100% !important;
+        }
+        .fixed-content {
+            background: url(../assets/img/backgrounds/todo.jpg) no-repeat center center fixed;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+        }
+        
+        .map-title {
+            //margin: 0;
+            //text-align: center;
+            min-height: 8vh;
+            max-height: 8vh;
+            .toolbar-background {
+                background-color: transparent;
+            }
+
+            ion-buttons button {
+                //font-weight: bolder;
+                color: white;
+            }
+
+            ion-title .toolbar-title {
+                font-weight: bold;
+                color: white;
+            }
+
+            img {
+                height: 80%;
+            }
+        } 
+    }
+}

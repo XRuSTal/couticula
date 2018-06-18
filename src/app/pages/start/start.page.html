@@ -1,0 +1,25 @@
+<!--
+  Generated template for the Start page.
+
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<!--<ion-header>
+
+  <ion-navbar>
+    <ion-title>start</ion-title>
+  </ion-navbar>
+
+</ion-header>-->
+
+
+<ion-content class="card-background-page" scroll="false">
+  <ion-list no-lines class="start-menu col col-50 col-offset-25">
+    <!--<button ion-item *ngFor="let item of items" (click)="itemSelected(item)">
+      {{ item }}
+    </button> -->
+    <button ion-button block color="light" *ngFor="let page of pages" (click)="openPage(page)">{{page.title}}</button>
+  </ion-list>
+
+    
+</ion-content>

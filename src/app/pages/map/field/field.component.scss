@@ -1,0 +1,17 @@
+field {
+    .field-grid { 
+        align-items: center;
+
+        .map-row {
+            display: table;
+            //width: 100%; /*Optional*/
+            //table-layout: fixed; /*Optional*/
+        }
+        .map-column {
+            display: table-cell;
+        }
+    }
+}
+.popover-event-attack .popover-content {
+    width: 35vw;
+}

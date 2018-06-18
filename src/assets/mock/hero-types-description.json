@@ -1,0 +1,20 @@
+[
+    {   
+        "heroClassID": 0, 
+        "name": "Воин", 
+        "img": "assets/img/heroes/warrior.jpg", 
+        "description": "+1 к силовому вскрытию сундуков."
+    },
+    {   
+        "heroClassID": 1, 
+        "name": "Клирик", 
+        "img": "assets/img/heroes/prist.jpg", 
+        "description": "вместо атаки лечение."
+    },
+    {   
+        "heroClassID": 2, 
+        "name": "Следопыт", 
+        "img": "assets/img/heroes/scout.jpg",
+        "description": "+1 к вскрытию сундуков, максимальная броня/оружие 3, максимум 50 хитов, ударяет цель дважды."
+    }
+]

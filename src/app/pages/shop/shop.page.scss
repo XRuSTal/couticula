@@ -1,0 +1,135 @@
+page-shop {
+    .shop-background {
+         background: url(../assets/img/backgrounds/todo.jpg) no-repeat center center fixed;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+        
+        .scroll-content {
+            display: table !important;
+            width: 100% !important;
+            height: 100% !important;
+        }
+        .fixed-content {
+            background: url(../assets/img/backgrounds/todo.jpg) no-repeat center center fixed;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+        }
+        
+        .shop-title {
+            //margin: 0;
+            //text-align: center;
+            min-height: 8vh;
+            max-height: 8vh;
+            .toolbar-background {
+                background-color: transparent;
+            }
+
+            ion-buttons button {
+                //font-weight: bolder;
+                color: white;
+            }
+
+            ion-title .toolbar-title {
+                font-weight: bold;
+                color: white;
+            }
+
+            img {
+                height: 80%;
+            }
+        }
+
+        ion-tabs {
+            margin-top: 8vh;
+            height: 92vh;
+
+            .tab-button {
+                height: 10vh;
+                min-height: 10vh;
+                max-height: 10vh;
+
+                ion-icon {
+                    font-size: 1.5em;
+                }
+            }
+        }
+
+        .buy-section {
+            position: fixed; 
+            bottom: 10vh;
+            left: 20vh;
+            min-height: 10vh;
+            max-height: 10vh;
+            min-width: 20vw;
+            max-width: 20vw;
+            color: white;
+            .buy-button {
+                color: white;
+                border-color: white;
+                background-color: gray;
+                border-radius: 1rem;
+                opacity: .6;
+            }
+            .item-selected {
+                background-color: green;
+            }
+            .buy-button.activated {
+                color: black;
+                background-color: white;
+            }
+        }
+        .chose-heroes {
+            position: fixed;
+            bottom: 2vh;
+            right: 2vh;
+            .hero {
+                float: left;
+                min-height: 20vh;
+                max-height: 20vh;
+                min-width: 20vh;
+                max-width: 20vh;
+                margin: 0 0 0 1vw;
+                img {
+                    //padding: 1vh;
+                    border-radius: 2vh;
+                }
+                .hitpoints {
+                    position: absolute;
+                    bottom: 0vh;
+                    width: 20vh;
+                    border-radius: 0 0 2vh 2vh;
+                    text-align: end;
+                    font-size: 3.5vh;
+                    font-weight: bold;
+                    color: red;
+                    background-color:rgba(0, 0, 0, 0.7);
+                    .hitpoints-icon{
+                        color: red;
+                    }
+                }
+            }
+            .hero-selected {
+                border: solid gold 1vh;
+                border-radius: 3vh;
+                font-weight: bold;
+                color: red;
+                .hitpoints {
+                    bottom: 1vh;
+                    width: 18vh;
+                    border-radius: 0 0 2vh 2vh;
+                }
+            }
+            .new-hero-not-available {
+                opacity: .4;
+            }
+           /* button.activated {
+                color: black;
+                background-color: white;
+            }*/
+        }
+    }         
+}

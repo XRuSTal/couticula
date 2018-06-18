@@ -1,0 +1,24 @@
+.cell {
+    position: relative;
+    width: 8vw;
+    height: 8vw;
+    .cell-image, .cell-event-image {
+        width: 100%;
+        height: 100%;
+        //width: 8vw;
+        //height: 8vw;
+    }
+    .cell-event-image {
+        position: absolute;
+        top: 0;
+        z-index: 100;
+    }
+    .info {
+        position: absolute;
+        color: red;
+        top: -.5vh;
+    }
+    .exists-boss {
+        background-color: red;
+    }
+}

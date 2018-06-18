@@ -1,0 +1,57 @@
+equipment {
+    ion-col {
+        text-align: center;
+    }
+
+    .type-equipment, .hitpoints {
+        text-align: center; 
+            max-height: 10vh;
+            min-height: 10vh;
+        img {
+            min-height: 10vh;
+            max-height: 10vh;
+            max-width: 10vh;
+            min-width: 10vh;
+        }
+    }
+
+    .value {
+        //font-weight: bold;
+        position: relative;
+        color: white;
+        max-height: 7vh;
+        min-height: 7vh;
+        font-size: 4.5vh;
+        .hitpoints-value {
+            color: red;
+            font-weight: bold;
+        }
+        img {
+            height: 4vh;
+            width: 4vh;
+        }
+        .item-count {
+            position: absolute;
+            top: -.5vh;
+            font-size: 3.5vh;
+        }
+    }
+    .value.good-item {
+        font-weight: bold;
+        color: lightskyblue;
+    }
+    .value.best-item {
+        font-weight: bold;
+        color: orangered;
+    }
+    .selected-item {
+        font-weight: bold;
+        color: green;
+        background-color: black;
+        border: solid gold 1vh;
+        border-radius: 3vh;
+    }
+    .not-available-price {
+        opacity: .4;
+    }
+}

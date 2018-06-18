@@ -1,0 +1,24 @@
+[
+    {   
+        "heroClassID": 0, 
+        "name": "Воин", 
+        "img": "assets/img/heroes/warrior.jpg", 
+        "hitpoint": 50,
+        "maxAddonHitPoint": 70,
+        "maxArmorValue": 6,
+        "maxWeaponValue": 6,
+        "description": "+1 к силовому вскрытию сундуков.",
+        "uniqueAbilities": []
+    },
+    {   
+        "heroClassID": 1, 
+        "name": "Клирик", 
+        "img": "assets/img/heroes/prist.jpg", 
+        "hitpoint": 30,
+        "maxAddonHitPoint": 70,
+        "maxArmorValue": 6,
+        "maxWeaponValue": 6,
+        "description": "вместо атаки лечение.",
+        "uniqueAbilities": []
+    }
+]

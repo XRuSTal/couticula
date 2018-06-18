@@ -1,0 +1,36 @@
+
+<ion-content class="" scroll="false">
+  <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-list ion-scroll class="ability-list">
+            <ion-item *ngFor="let ability of shopAbilities" class="ability"
+              [ngClass]="{'not-available-price': !isAvailablePrice(ability.cost),
+              'selected': isSelectedAbility(ability) }"
+              (click)="selectAbility(ability)">
+              <ion-thumbnail item-left class="img">
+                <img src="{{ability.img}}">
+              </ion-thumbnail>
+              <p class="name">{{ability.name}}</p>
+              <div item-right class="cost">
+                {{ability.cost}}<img src="assets/img/gold.png" alt="" title="" />
+              </div>
+            </ion-item>
+          </ion-list>
+        </ion-col>
+        <ion-col>
+          <div class="info">
+            <div *ngIf="choosenAbility">
+              <div class="title">{{choosenAbility.name}}</div>
+              <div class="property" 
+                *ngFor="let prop of getPropertiesDescription(choosenAbility)">
+                {{prop}}</div>
+              <div class="description">
+                {{choosenAbility.description}}
+              </div>
+            </div>
+          </div>
+        </ion-col>
+      </ion-row>
+  </ion-grid>
+</ion-content>

@@ -1,0 +1,68 @@
+ability-list {
+    .ability-list {
+        max-height: 55vh;
+        min-height: 55vh;
+        overflow:scroll !important;
+        background-color:rgba(0, 0, 0, 0.4);
+        border-radius: 5vh;
+        .ability {
+            min-height: 15vh;
+            max-height: 15vh;
+            background-color: transparent;
+
+            .img {
+                min-height: 10vh;
+                min-width: 10vh;
+                img {
+                    height: 10vh;
+                    width: 10vh;
+                }
+            }
+            .name {
+                white-space: normal;
+                color: white;
+            }
+            .cost {
+                color: white;
+                img {
+                    height: 5vh;
+                    width: 5vh;
+                }
+            }
+        }
+        .selected {
+            font-weight: bold;
+            background-color: black;
+            border: solid gold 1vh;
+            border-radius: 5vh;
+            .name {
+                color: green;
+            }
+        }
+        .not-available-price {
+            opacity: .3;
+        }
+    }
+    .info {
+        max-height: 55vh;
+        min-height: 55vh;
+        background-color:rgba(0, 0, 0, 0.4);
+        border-radius: 5vh;
+        padding: 2vh;
+        .title {
+            text-align: center;
+            font-size: 5.5vh;
+            font-weight: bold;
+            color: lightsteelblue;
+        }
+        .property {
+            text-align: center;
+            font-size: 4.0vh;
+            color: lightskyblue;
+        }
+        .description {
+            text-align: justify;
+            color: white;
+        }
+    }
+}

@@ -1,0 +1,13 @@
+<ion-grid class="field-grid" (swipe)="swipeEvent($event)">
+    <div *ngFor="let row of visibleMap" class="map-row">
+        <div *ngFor="let cell of row" class="map-column">
+            <cell [cell]="cell" (clicked)="onCellSelected(cell)
+            " (clickedEvent)="onCellSelectedEvent(cell)"></cell>
+        </div>
+    </div>
+    <!--<ion-row *ngFor="let row of visibleMap">
+        <ion-col *ngFor="let cell of row">
+            <cell [cell]="cell"></cell>
+        </ion-col>
+    </ion-row>-->
+</ion-grid>
