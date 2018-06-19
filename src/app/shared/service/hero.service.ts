@@ -7,7 +7,7 @@ import { HttpService }  from './http.service';
 import { GameService }  from './game.service';
 import { SettingsService }  from './settings.service';
 //import { ShopService }  from './shop.service';
-import { IHero, IHeroSettings, 
+import { IHero, IHeroSettings,
   Hero, HeroClass, Item, Shield,
   HeroTypes, ItemType
 }  from '../index';
@@ -34,7 +34,7 @@ export class HeroService {
     });*/
   }
   addNewHero(heroClassID: HeroClass): Promise<any> {
-    return new Promise(resolve => {      
+    return new Promise(resolve => {
       this.createHero(heroClassID)
       .then(res => {
         resolve();
@@ -52,15 +52,15 @@ export class HeroService {
   }
   getAllHeroClassesDescription(): Promise<IHeroSettings[]> {
     return new Promise(resolve => {
-      resolve(HeroTypes);
+      resolve(HeroTypes as IHeroSettings[]);
     });
   }
   equipItem(heroID: number, item: Item): Promise<boolean> {
     return new Promise<boolean>(resolve => {
-      let hero = this.heroes.find(p => p.id === heroID);      
+      let hero = this.heroes.find(p => p.id === heroID);
       if (hero.maxItemValue < item.value)
         resolve(false); // предмет не подходит
-      let oldItem: Item;      
+      let oldItem: Item;
       switch (item.type) {
         case ItemType.Weapon:
           oldItem = hero.equipment.Weapon;
