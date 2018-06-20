@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "baseUrl": "src",
     "allowSyntheticDefaultImports": true,
     "declaration": false,
     "emitDecoratorMetadata": true,
@@ -11,7 +12,16 @@
     "module": "es2015",
     "moduleResolution": "node",
     "sourceMap": true,
-    "target": "es5"
+    "target": "es5",
+    "paths": {
+      "@app/*": ["app/*"],
+      "@assets/*": ["assets/*"],
+      "@pages/*": ["app/pages/*"],
+      "@shared/*": ["app/shared/*"],
+      "@interface": ["app/shared/interface"],
+      "@model": ["app/shared/model"],
+      "@service": ["app/shared/service"]
+    }
   },
   "include": [
     "src/**/*.ts"
