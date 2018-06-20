@@ -1,11 +1,11 @@
+import { IItem, } from './item';
+import { IShield } from './shield';
 
-import { IItem, IShield } from './index';
-
-export interface IEquipment {   
-    Head: IItem;
-    Hands: IItem;
-    Legs: IItem;
-    Body: IItem;
-    Weapon: IItem;
-    Shield: IShield; 
+export interface IEquipment {
+  Head: IItem;
+  Hands: IItem;
+  Legs: IItem;
+  Body: IItem;
+  Weapon: IItem;
+  Shield: IShield;
 }

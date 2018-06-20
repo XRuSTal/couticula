@@ -1,16 +1,15 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions, Response } from '@angular/http';
-
 import 'rxjs/add/operator/toPromise';
+
+import { HeroClass, ItemType, IHero, IHeroSettings } from '@interface';
+import { Hero, Item, Shield } from '@model';
+import { HeroTypes } from '@shared/db';
 
 import { HttpService }  from './http.service';
 import { GameService }  from './game.service';
 import { SettingsService }  from './settings.service';
 //import { ShopService }  from './shop.service';
-import { IHero, IHeroSettings,
-  Hero, HeroClass, Item, Shield,
-  HeroTypes, ItemType
-}  from '../index';
 
 @Injectable()
 export class HeroService {

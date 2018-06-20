@@ -1,9 +1,8 @@
 import { ItemType,
   IHero, IHeroSettings,
   AbilityType, HeroClass
-} from '../interface';
-import { Creature, Item } from './index';
-
+} from '@interface';
+import { Creature } from './creature';
 
 export class Hero extends Creature /*implements IHero */{
   static GUID: number = 0;

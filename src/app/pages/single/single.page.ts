@@ -3,7 +3,7 @@ import { NavController, NavParams } from 'ionic-angular';
 
 import { ChoiceHeroPage } from '../index';
 
-import { GameService } from '../../shared';
+import { GameService } from '@shared/service';
 
 @Component({
   selector: 'page-single',
@@ -12,7 +12,7 @@ import { GameService } from '../../shared';
 export class SinglePage {
 
   constructor(
-    public navCtrl: NavController, 
+    public navCtrl: NavController,
     public navParams: NavParams,
     private gameService: GameService
   ) {}
@@ -22,8 +22,8 @@ export class SinglePage {
     console.log('ionViewDidLoad SinglePage');
     //TODO: панель загрузки
     this.gameService.startGame()
-    .then(() => { 
-      console.log('startGame') 
+    .then(() => {
+      console.log('startGame')
       this.openPage({ title: 'ChoiceHeroPage', component: ChoiceHeroPage });
     });
   }

@@ -1,17 +1,15 @@
 import { Injectable, EventEmitter } from '@angular/core';
 import { Http, Headers, RequestOptions, Response } from '@angular/http';
-
 import 'rxjs/add/operator/toPromise';
+
+import { HeroClass, IHeroView, IItem, ItemType } from '@interface';
+import { Ability, Hero, Item } from '@model';
+import { ShopAbilities, ShopEquipment } from '@shared/db';
 
 import { GameService }  from './game.service';
 import { HeroService }  from './hero.service';
 import { HttpService }  from './http.service';
 import { SettingsService }  from './settings.service';
-import { HeroClass, 
-  IHeroView, IItem, ItemType 
-}  from '../interface';
-import { Ability, Hero, Item }  from '../model';
-import { ShopAbilities, ShopEquipment }  from '../db';
 
 @Injectable()
 export class ShopService {
@@ -22,7 +20,7 @@ export class ShopService {
   choosenHitpoints: { value: number, cost: number};
   selectedItem = new EventEmitter<boolean>();
   //selectedItem = new EventEmitter<any>();
-  //selectedHitpoints = new EventEmitter<any>();  
+  //selectedHitpoints = new EventEmitter<any>();
   get heroPrice(): Promise<number> {
     return new Promise((resolve, reject) => {
       let price;
@@ -45,18 +43,18 @@ export class ShopService {
   ){
     //this.apiUrl = settingsService.apiUrl;
   }
-  
+
   getShopEquipment(): Promise<
-    { 
+    {
       equipment: {
-          itemType: ItemType, 
-          name: string,
-          img: string,
-          items: { value: number, cost: number}[] 
-        }[],
+        itemType: ItemType,
+        name: string,
+        img: string,
+        items: { value: number, cost: number}[]
+      }[],
       hitpoints: {
         img: string,
-        items: { value: number, cost: number}[] 
+        items: { value: number, cost: number}[]
       }
     }> {
     return new Promise<any>(resolve => {
@@ -68,7 +66,7 @@ export class ShopService {
       resolve(ShopAbilities);
     });
   }
-  selectHero(hero: Hero) { 
+  selectHero(hero: Hero) {
     this.choosenHero = hero;
   }
   selectItem(itemType: ItemType, item: { value: number, cost: number}) {
@@ -183,7 +181,7 @@ export class ShopService {
             });
           }
         }
-      }); 
-    });   
+      });
+    });
   }
 }

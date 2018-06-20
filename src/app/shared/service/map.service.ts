@@ -1,15 +1,16 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions, Response } from '@angular/http';
-
 import 'rxjs/add/operator/toPromise';
+
+import { ICell } from '@interface';
+import { Cell } from '@model';
+import { CellSettings, MonstersSettings } from '@shared/db';
 
 import { HttpService } from './http.service';
 import { GameService } from './game.service';
 import { MathService } from './math.service';
 import { PLayerService } from './player.service';
 import { SettingsService, GameMode } from './settings.service';
-import { ICell, Cell } from '../index';
-import { CellSettings, MonstersSettings } from '../db';
 
 @Injectable()
 export class MapService {
@@ -90,7 +91,7 @@ export class MapService {
   private generateOneWay(x: number, y: number) {
     let that = this;
     let deep = this.gameMap[x][y].deep;
-    //2-3 для начала и 1-3 иначе 
+    //2-3 для начала и 1-3 иначе
     let waysCount = deep < 4 ? this.mathService.getRandomInt(2, 3)
       : this.mathService.getRandomInt(1, 6);
     // тупик 50%

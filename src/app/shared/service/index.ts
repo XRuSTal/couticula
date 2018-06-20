@@ -8,24 +8,24 @@ import { SettingsService } from './settings.service';
 import { ShopService } from './shop.service';
 
 const SHARED_SERVICES: any[] = [
-    GameService,
-    HeroService,
-    HttpService,
-    MapService,
-    MathService,
-    PLayerService,
-    SettingsService,
-    ShopService 
+  GameService,
+  HeroService,
+  HttpService,
+  MapService,
+  MathService,
+  PLayerService,
+  SettingsService,
+  ShopService
 ]
 
-export { 
-    SHARED_SERVICES,
-    GameService,
-    HeroService,
-    HttpService,
-    MapService,
-    MathService,
-    PLayerService,
-    SettingsService,
-    ShopService 
+export {
+  SHARED_SERVICES,
+  GameService,
+  HeroService,
+  HttpService,
+  MapService,
+  MathService,
+  PLayerService,
+  SettingsService,
+  ShopService
 }

@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController } from 'ionic-angular';
 
-import { 
-  GameService
-} from '../../service';
+import { GameService } from '@service';
 
 @Component({
   selector: 'gold',
@@ -13,7 +11,7 @@ export class GoldComponent implements OnInit {
   get gold () { return this.gameService.gold; }
 
 	constructor(
-    public navCtrl: NavController, 
+    public navCtrl: NavController,
     private gameService: GameService
   ) {}
 

@@ -1,8 +1,8 @@
 
-import { IItem } from './index';
+import { IItem } from './item';
 
-export interface  IShield extends IItem {
-    //armor: number;
-    hitPoint: number;
-    currentHitPoint: number;
-} 
+export interface IShield extends IItem {
+  //armor: number;
+  hitPoint: number;
+  currentHitPoint: number;
+}

@@ -6,10 +6,10 @@ import ShopAbilities from './shop-abilities';
 import ShopEquipment from './shop-equipment';
 
 export {
-    CellSettings,
-    HeroTypes,
-    Items,
-    MonstersSettings,
-    ShopAbilities,
-    ShopEquipment
+  CellSettings,
+  HeroTypes,
+  Items,
+  MonstersSettings,
+  ShopAbilities,
+  ShopEquipment
 }

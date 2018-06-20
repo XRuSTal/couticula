@@ -1,9 +1,8 @@
 import { IHero, IItem,
   AbilityType, HeroClass, ItemType
-} from '../interface';
-import { Items }  from '../db';
-
-import { Shield } from '../index';
+} from '@interface';
+import { Items } from '@shared/db';
+import { Shield } from './shield';
 
 export class Item /*implements IItem*/ {
   public name: string;
@@ -73,7 +72,7 @@ export class Item /*implements IItem*/ {
             case 2:
             case 3: type = ItemType.BottleOfHeal; name = listAbilities[AbilityType.HeroUseBottleOfHeal].name; description = listAbilities[AbilityType.HeroUseBottleOfHeal].description; image = ImageType.BottleOfHeal;
                 break;
-            case 4: 
+            case 4:
             case 5: type = ItemType.BottleOfStan; name = listAbilities[AbilityType.HeroUseBottleOfStan].name; description = listAbilities[AbilityType.HeroUseBottleOfStan].description; image = ImageType.BottleOfStan;
                 break;
             case 6: type = ItemType.BottleOfPoison; name = listAbilities[AbilityType.HeroUseBottleOfPoison].name; description = listAbilities[AbilityType.HeroUseBottleOfPoison].description; image = ImageType.BottleOfPoison;

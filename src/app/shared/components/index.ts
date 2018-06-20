@@ -1,10 +1,10 @@
 import { GoldComponent } from './gold/gold.component';
 
 const SHARED_COMPONENTS: any[] = [
-    GoldComponent
+  GoldComponent
 ]
 
 export {
-    SHARED_COMPONENTS,
-    GoldComponent
+  SHARED_COMPONENTS,
+  GoldComponent
 }

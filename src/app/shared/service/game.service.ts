@@ -1,19 +1,16 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions, Response } from '@angular/http';
-
 import 'rxjs/add/operator/toPromise';
 
-import { HttpService }  from './http.service';
-import { MapService }  from './map.service';
-import { PLayerService }  from './player.service';
-import { SettingsService }  from './settings.service';
-import { HeroClass, ItemType,
-  IHero, IHeroView, 
-  Hero/*, HeroClass*/ , Item
-}  from '../index';
+import { HeroClass, ItemType, IHero, IHeroView } from '@interface';
+import { Hero, Item } from '@model';
 
+import { HttpService } from './http.service';
+import { MapService } from './map.service';
+import { PLayerService } from './player.service';
+import { SettingsService } from './settings.service';
 @Injectable()
-export class GameService {  
+export class GameService {
   private playerGold: number;
   private heroesInventory: Item[];
   get gold() {
@@ -40,7 +37,7 @@ export class GameService {
         resolve();
       });
     });
-  }  
+  }
   increaseGold(value: number): Promise<boolean> {
     return new Promise(resolve => {
       this.playerGold += value;

@@ -1,7 +1,6 @@
 
-import { ItemType, 
-  IShield } from '../interface';
-import { Item } from './index';
+import { ItemType, IShield } from '@interface';
+import { Item } from './item';
 
 export class Shield extends Item implements IShield {
   //armor: number;
@@ -18,4 +17,4 @@ export class Shield extends Item implements IShield {
   public copy(): Shield {
     return new Shield(this.value, this.hitPoint, this.name, this.img, this.description);
   }
-} 
+}
