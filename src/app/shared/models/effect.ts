@@ -1,4 +1,4 @@
-import { /*IEffect,*/ EffectType } from '@interface';
+import { /*IEffect,*/ EffectType } from '@interfaces';
 
 export class Effect /*implements IEffect*/ {
   name: string;

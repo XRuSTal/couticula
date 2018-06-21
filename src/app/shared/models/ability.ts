@@ -1,4 +1,4 @@
-import { AbilityType } from '@interface';
+import { AbilityType } from '@interfaces';
 
 // TODO: перенести в магазин (shop.ts)
 var AbilitiesShop = {

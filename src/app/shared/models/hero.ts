@@ -1,7 +1,7 @@
 import { ItemType,
   IHero, IHeroSettings,
   AbilityType, HeroClass
-} from '@interface';
+} from '@interfaces';
 import { Creature } from './creature';
 
 export class Hero extends Creature /*implements IHero */{

@@ -1,5 +1,5 @@
 
-import { ItemType, IShield } from '@interface';
+import { ItemType, IShield } from '@interfaces';
 import { Item } from './item';
 
 export class Shield extends Item implements IShield {

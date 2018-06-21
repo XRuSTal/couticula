@@ -1,6 +1,6 @@
 import { IHero, IItem,
   AbilityType, HeroClass, ItemType
-} from '@interface';
+} from '@interfaces';
 import { Items } from '@shared/db';
 import { Shield } from './shield';
 

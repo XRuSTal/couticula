@@ -1,6 +1,6 @@
 import { ICreature,
   AbilityType, CreatureState, EffectType, ItemType
-} from '@interface';
+} from '@interfaces';
 import { Equipment } from './equipment';
 import { Item } from './item';
 // import { Effect } from './effect';

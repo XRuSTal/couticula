@@ -1,4 +1,4 @@
-import { ItemType } from '@interface';
+import { ItemType } from '@interfaces';
 
 export default [
   {

@@ -2,8 +2,8 @@ import { Injectable, EventEmitter } from '@angular/core';
 import { Http, Headers, RequestOptions, Response } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 
-import { HeroClass, IHeroView, IItem, ItemType } from '@interface';
-import { Ability, Hero, Item } from '@model';
+import { HeroClass, IHeroView, IItem, ItemType } from '@interfaces';
+import { Ability, Hero, Item } from '@models';
 import { ShopAbilities, ShopEquipment } from '@shared/db';
 
 import { GameService }  from './game.service';

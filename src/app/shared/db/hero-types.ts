@@ -1,4 +1,4 @@
-import { HeroClass } from '@interface';
+import { HeroClass } from '@interfaces';
 
 export default [
   {

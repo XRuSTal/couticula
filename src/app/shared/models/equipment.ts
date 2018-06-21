@@ -1,4 +1,4 @@
-//import { IEquipment } from '@interface';
+//import { IEquipment } from '@interfaces';
 import { Item } from './item';
 import { Shield } from './shield';
 

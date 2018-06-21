@@ -1,4 +1,4 @@
-import { ICell } from '@interface';
+import { ICell } from '@interfaces';
 
 export class Cell implements ICell {
   x: number;
