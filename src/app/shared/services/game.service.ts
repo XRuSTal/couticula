@@ -2,8 +2,8 @@ import { EventEmitter, Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions, Response } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 
-import { HeroClass, ItemType, IHero, IHeroView } from '@interface';
-import { Hero, Item } from '@model';
+import { HeroClass, ItemType, IHero, IHeroView } from '@interfaces';
+import { Hero, Item } from '@models';
 
 import { HttpService } from './http.service';
 import { MapService } from './map.service';

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController } from 'ionic-angular';
 
-import { GameService } from '@service';
+import { GameService } from '@services';
 
 @Component({
   selector: 'gold',

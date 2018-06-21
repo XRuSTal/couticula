@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
-import { Hero } from '@model';
+import { Hero } from '@models';
 
 @Pipe({
   name: 'availableHitPoints',
