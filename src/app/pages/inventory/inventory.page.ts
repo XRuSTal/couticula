@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
-import { MapPage } from '../index';
+import { MapPage } from '@pages';
 
 @Component({
   selector: 'page-inventory',

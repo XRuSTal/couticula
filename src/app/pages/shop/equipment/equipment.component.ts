@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController } from 'ionic-angular';
 
-import { ItemType, Hero } from '../../../shared';
-import { GameService, HeroService, ShopService } from '../../../shared';
+import { ItemType } from '@interfaces';
+import { Hero } from '@models';
+import { GameService, HeroService, ShopService } from '@services';
 
 @Component({
   selector: 'equipment',
@@ -10,26 +11,26 @@ import { GameService, HeroService, ShopService } from '../../../shared';
 })
 
 export class EquipmentComponent implements OnInit {
-  shopEquipment: { 
+  shopEquipment: {
     equipment: {
-        itemType: ItemType, 
+        itemType: ItemType,
         name: string,
         img: string,
-        items: { value: number, cost: number}[] 
+        items: { value: number, cost: number}[]
       }[],
     hitpoints: {
       img: string,
-      items: { value: number, cost: number}[] 
+      items: { value: number, cost: number}[]
     }
   };
   get choosenHero(): Hero {
     return this.shopService.choosenHero;
   }
   get equipment(): {
-        itemType: ItemType, 
+        itemType: ItemType,
         name: string,
         img: string,
-        items: { value: number, cost: number}[] 
+        items: { value: number, cost: number}[]
       }[]{
     return this.shopEquipment.equipment;
   }
@@ -51,7 +52,7 @@ export class EquipmentComponent implements OnInit {
   ngOnInit() {
     let that = this;
     this.shopService.getShopEquipment()
-    .then(shopEquipment => { 
+    .then(shopEquipment => {
       this.shopEquipment = shopEquipment;
       this.shopEquipment.equipment.forEach(listItems => {
         listItems.items.forEach(item => {
@@ -70,14 +71,14 @@ export class EquipmentComponent implements OnInit {
         });
       });
     });
-  }  
+  }
   isSelectedItem(itemType: ItemType, value: number) {
-    return this.shopService.choosenItem 
-      && this.shopService.choosenItem.itemType == itemType 
+    return this.shopService.choosenItem
+      && this.shopService.choosenItem.itemType == itemType
       && this.shopService.choosenItem.item.value == value;
   }
   isSelectedHitpoints(value: number) {
-    return this.shopService.choosenHitpoints 
+    return this.shopService.choosenHitpoints
       && this.shopService.choosenHitpoints.value == value;
   }
   selectItem(itemType: ItemType, item: { value: number, cost: number}) {

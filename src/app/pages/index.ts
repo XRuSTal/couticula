@@ -11,28 +11,28 @@ import { StartPage } from './start/start.page';
 
 
 const PAGES_COMPONENTS: any[] = [
-    BattlePage,
-    CHOICE_HERO_COMPONENTS,
-    InventoryPage,
-    LoginPage,
-    MAP_COMPONENTS,
-    MultiplayerPage,
-    SettingsPage,
-    SHOP_COMPONENTS,
-    SinglePage,
-    StartPage,
+  BattlePage,
+  CHOICE_HERO_COMPONENTS,
+  InventoryPage,
+  LoginPage,
+  MAP_COMPONENTS,
+  MultiplayerPage,
+  SettingsPage,
+  SHOP_COMPONENTS,
+  SinglePage,
+  StartPage,
 ]
 
 export {
-    PAGES_COMPONENTS,
-    BattlePage,
-    ChoiceHeroPage,
-    InventoryPage,
-    LoginPage,
-    MapPage,
-    MultiplayerPage,
-    SettingsPage,
-    ShopPage,
-    SinglePage,
-    StartPage
+  PAGES_COMPONENTS,
+  BattlePage,
+  ChoiceHeroPage,
+  InventoryPage,
+  LoginPage,
+  MapPage,
+  MultiplayerPage,
+  SettingsPage,
+  ShopPage,
+  SinglePage,
+  StartPage
 }

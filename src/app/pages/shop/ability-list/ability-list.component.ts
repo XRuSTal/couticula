@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController } from 'ionic-angular';
 
-import { Ability, AbilityCategory, AbilityType } from '../../../shared';
-import { GameService, ShopService } from '../../../shared';
+import { AbilityCategory, AbilityType } from '@interfaces';
+import { Ability } from '@models';
+import { GameService, ShopService } from '@services';
 
 @Component({
   selector: 'ability-list',
@@ -20,7 +21,7 @@ export class AbilityListComponent implements OnInit {
     console.log(this.navCtrl.id)
   }
 
-  ngOnInit() { 
+  ngOnInit() {
     this.shopService.getShopAbilites()
     .then(shopAbilities => {
       this.shopAbilities = shopAbilities;

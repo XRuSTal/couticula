@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
-import { IHeroView } from '@interface';
+import { IHeroView } from '@interfaces';
 
 @Component({
   selector: 'card-hero',

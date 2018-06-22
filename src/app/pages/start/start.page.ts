@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
-import { MultiplayerPage, SettingsPage, SinglePage } from '../index';
+import { MultiplayerPage, SettingsPage, SinglePage } from '@pages';
 
 /*
   Generated class for the Start page.

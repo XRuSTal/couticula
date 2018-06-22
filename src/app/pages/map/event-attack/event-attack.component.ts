@@ -1,11 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NavParams, ViewController } from 'ionic-angular';
 
-import { 
-  Cell,
-  GameService, MapService, SettingsService
-} from '../../../shared';
-
+import { Cell } from '@models';
+import { GameService, MapService, SettingsService } from '@services';
 
 @Component({
   selector: 'event-attack',
@@ -14,7 +11,7 @@ import {
 
 export class EventAttackComponent implements OnInit {
   cell: Cell;
-  
+
   get monstersLevel1(): string[] {
     return Array<string>(Math.min(5, this.cell.mosterLevel1Count))
     .fill(this.monsterLevel1Image);
@@ -22,7 +19,7 @@ export class EventAttackComponent implements OnInit {
   get monstersLevel2(): string[] {
     return Array<string>(Math.min(5, this.cell.mosterLevel2Count))
     .fill(this.monsterLevel2Image);
-  }  
+  }
   get existsBoss(): boolean {
     return this.cell.existsBoss;
   }

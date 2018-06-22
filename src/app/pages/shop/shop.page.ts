@@ -1,15 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { AlertController, NavController, NavParams } from 'ionic-angular';
 
-import { AbilityListComponent, 
-  EquipmentComponent,
-  HeroInfoShortComponent
-} from './index';
-import { ChoiceHeroPage, MapPage } from '../index';
-import { AbilityCategory, ItemType, 
-  IItem, IHero, 
-  Hero, 
-  HeroService, GameService, ShopService } from '../../shared';
+import { Hero } from '@models';
+import { ChoiceHeroPage, MapPage } from '@pages';
+import { HeroService, GameService, ShopService } from '@services';
+
+import { AbilityListComponent, EquipmentComponent, HeroInfoShortComponent } from './index';
 
 @Component({
   selector: 'page-shop',
@@ -35,7 +31,7 @@ export class ShopPage implements OnInit {
   }
   constructor(
     public alertCtrl: AlertController,
-    public navCtrl: NavController, 
+    public navCtrl: NavController,
     public navParams: NavParams,
     private heroService: HeroService,
     private gameService: GameService,
@@ -69,7 +65,7 @@ export class ShopPage implements OnInit {
   buy(){
     this.shopService.buy();
   }
-  
+
   choseHero(hero: Hero){
     this.shopService.selectHero(hero);
   }

@@ -1,21 +1,19 @@
 import { Component } from '@angular/core';
 import { AlertController, NavController, NavParams, PopoverController } from 'ionic-angular';
 
-import { EventAttackComponent } from '../index';
-import { ShopPage, InventoryPage } from '../../index';
+import { Cell } from '@models';
+import { ShopPage, InventoryPage } from '@pages';
+import { MapService, SettingsService } from '@services';
 
-import { 
-  Cell,
-  MapService, SettingsService
-} from '../../../shared';
+import { EventAttackComponent } from '../index'; // TODO: убрать зависимость от родительского компонента
 
 @Component({
-	selector: 'field',
+  selector: 'field',
   templateUrl: 'field.component.html'
 })
 
 export class FieldComponent {
-	get visibleMap () {
+  get visibleMap () {
     let map: Cell[][] = [];
     let cntX = this.settingsService.countCellVisibleX;
     let cntY = this.settingsService.countCellVisibleY;
@@ -40,15 +38,15 @@ export class FieldComponent {
   constructor(
     public alertCtrl: AlertController,
     public popoverCtrl: PopoverController,
-    public navCtrl: NavController, 
+    public navCtrl: NavController,
     public navParams: NavParams,
     private mapService: MapService,
     private settingsService: SettingsService
   ) {}
 
-	ngOnInit() { 
+  ngOnInit() {
 
-	}
+  }
   onCellSelected(cell: Cell) {
     console.log(cell);
     if (cell) {
@@ -56,7 +54,7 @@ export class FieldComponent {
       this.mapService.yCurrentMap = cell.y;
       this.mapService.clearCell(cell.x, cell.y);
     }
-  }  
+  }
   onCellSelectedEvent(cell: Cell) {
     console.log(cell);
     if (cell) {

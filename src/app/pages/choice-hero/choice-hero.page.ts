@@ -1,28 +1,25 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
-import { ShopPage } from '../index';
-
-import { 
-  IHeroSettings, 
-  GameService, HeroService, ShopService
-} from '../../shared';
+import { IHeroSettings } from '@interfaces';
+import { ShopPage } from '@pages';
+import { GameService, HeroService, ShopService } from '@services';
 
 @Component({
   selector: 'page-choice-hero',
   templateUrl: 'choice-hero.page.html'
 })
 export class ChoiceHeroPage implements OnInit {
-	heroes: IHeroSettings[];
+  heroes: IHeroSettings[];
   constructor(
-    public navCtrl: NavController, 
+    public navCtrl: NavController,
     public navParams: NavParams,
     public gameService: GameService,
     public heroService: HeroService,
     public shopService: ShopService
   ) {}
 
-	ngOnInit() { 
+  ngOnInit() {
     this.heroService.getAllHeroClassesDescription()
     .then(heroes => this.heroes = heroes);
   }

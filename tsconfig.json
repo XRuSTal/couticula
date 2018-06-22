@@ -16,11 +16,11 @@
     "paths": {
       "@app/*": ["app/*"],
       "@assets/*": ["assets/*"],
-      "@pages/*": ["app/pages/*"],
+      "@pages": ["app/pages"],
       "@shared/*": ["app/shared/*"],
-      "@interface": ["app/shared/interface"],
-      "@model": ["app/shared/model"],
-      "@service": ["app/shared/service"]
+      "@interfaces": ["app/shared/interfaces"],
+      "@models": ["app/shared/models"],
+      "@services": ["app/shared/services"]
     }
   },
   "include": [

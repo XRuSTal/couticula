@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
-import { ChoiceHeroPage } from '../index';
+import { ChoiceHeroPage } from '@pages';
 
-import { GameService } from '@shared/service';
+import { GameService } from '@services';
 
 @Component({
   selector: 'page-single',

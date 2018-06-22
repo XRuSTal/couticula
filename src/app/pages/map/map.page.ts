@@ -1,21 +1,18 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 
-import { EventAttackComponent } from './index';
-import { ShopPage, InventoryPage } from '../index';
+import { ShopPage, InventoryPage } from '@pages';
+import { GameService, SettingsService } from '@services';
 
-import { 
-  Cell,
-  GameService, SettingsService
-} from '../../shared';
+import { EventAttackComponent } from './index';
 
 @Component({
   selector: 'page-map',
   templateUrl: 'map.page.html'
 })
-export class MapPage {  
+export class MapPage {
   constructor(
-    public navCtrl: NavController, 
+    public navCtrl: NavController,
     private gameService: GameService,
     private settingsService: SettingsService
   ) {}
@@ -30,7 +27,7 @@ export class MapPage {
   openShop(){
     console.log('openPage ShopPage');
     this.navCtrl.push(ShopPage);
-  }  
+  }
   openInventory(){
     console.log('openPage InventoryPage');
     this.navCtrl.push(InventoryPage);
