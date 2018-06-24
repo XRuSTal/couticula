@@ -4,9 +4,11 @@ import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
+import { PAGES_COMPONENTS } from '@pages';
+import { SHARED_COMPONENTS } from '@shared/components';
+import { SHARED_PIPES } from '@shared/pipes';
+import { SHARED_SERVICES } from '@shared/services';
 import { MyApp } from './app.component';
-import { PAGES_COMPONENTS } from './pages';
-import { SHARED_COMPONENTS, SHARED_SERVICES, SHARED_PIPES } from './shared';
 
 @NgModule({
   declarations: [
