@@ -25,14 +25,6 @@ export class Item /*implements IItem*/ {
     this.img = img;
     this.description = description;
   }
-  static createItem(type: ItemType, value: number, hitPoints: number = 0): Item {
-    let itemInfo = Items.find(p => p.type === type);
-    if (type === ItemType.Shield)
-      return new Shield(value, hitPoints, itemInfo.name, itemInfo.img);
-    else {
-      return new Item(type, value, itemInfo.name, itemInfo.img);
-    }
-  }
   public copy() {
     return new Item(this.type, this.value, this.name, this.img, this.description);
   }

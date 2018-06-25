@@ -5,6 +5,7 @@ import 'rxjs/add/operator/toPromise';
 import { HeroClass, IHeroView, IItem, ItemType } from '@interfaces';
 import { Ability, Hero, Item } from '@models';
 import { ShopAbilities, ShopEquipment } from '@shared/db';
+import { ItemFabric } from '@shared/fabrics';
 
 import { GameService }  from './game.service';
 import { HeroService }  from './hero.service';
@@ -169,7 +170,7 @@ export class ShopService {
             this.gameService.decreaseGold(item.cost)
             .then(success => {
               if (success) {
-                let newItem = Item.createItem(this.choosenItem.itemType, item.value);
+                let newItem = ItemFabric.createItem(this.choosenItem.itemType, item.value);
                 this.heroService.equipItem(hero.id, newItem)
                 .then(success => {
                   if (!success) {

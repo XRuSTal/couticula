@@ -1,6 +1,7 @@
 import { ICreature,
   AbilityType, CreatureState, EffectType, ItemType
 } from '@interfaces';
+import { ItemFabric } from '@shared/fabrics';
 import { Equipment } from './equipment';
 import { Item } from './item';
 // import { Effect } from './effect';
@@ -36,12 +37,12 @@ export class Creature/* implements ICreature*/ {
     this.img = img;
     this.hitPoint = hitpoint;
     this.maxHitPoint = hitpoint;
-    this.equipment.Weapon = Item.createItem(ItemType.Weapon, weapon);
-    this.equipment.Head = Item.createItem(ItemType.Head, head);
-    this.equipment.Hands = Item.createItem(ItemType.Hands, hands);
-    this.equipment.Legs = Item.createItem(ItemType.Legs, legs);
-    this.equipment.Body = Item.createItem(ItemType.Body, body);
-    this.equipment.Shield = Item.createItem(ItemType.Shield, body) as Shield;
+    this.equipment.Weapon = ItemFabric.createItem(ItemType.Weapon, weapon);
+    this.equipment.Head = ItemFabric.createItem(ItemType.Head, head);
+    this.equipment.Hands = ItemFabric.createItem(ItemType.Hands, hands);
+    this.equipment.Legs = ItemFabric.createItem(ItemType.Legs, legs);
+    this.equipment.Body = ItemFabric.createItem(ItemType.Body, body);
+    this.equipment.Shield = ItemFabric.createItem(ItemType.Shield, body) as Shield;
     this.abilities.push(AbilityType.MonsterBasicAttack);
   }
 
