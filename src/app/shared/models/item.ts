@@ -1,10 +1,7 @@
-import { IHero, IItem,
-  AbilityType, HeroClass, ItemType
-} from '@interfaces';
+import { AbilityType, ItemType } from '@interfaces';
 import { Items } from '@shared/db';
-import { Shield } from './shield';
 
-export class Item /*implements IItem*/ {
+export class Item {
   public name: string;
   public description: string;
   public type: ItemType;

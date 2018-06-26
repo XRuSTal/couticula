@@ -1,7 +1,6 @@
 import { Component,Input, OnInit } from '@angular/core';
 import { NavController } from 'ionic-angular';
 
-import { IHero } from '@interfaces';
 import { ShopService } from '@services';
 
 @Component({
@@ -11,7 +10,7 @@ import { ShopService } from '@services';
 
 export class HeroInfoShortComponent implements OnInit {
   @Input()
-  hero: IHero;
+  hero: any;
   constructor(
     public navCtrl: NavController,
     public shopService: ShopService

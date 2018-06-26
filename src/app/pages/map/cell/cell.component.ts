@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { ICell } from '@interfaces';
 import { Cell } from '@models';
 
 @Component({

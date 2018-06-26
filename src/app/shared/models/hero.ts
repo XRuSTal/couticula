@@ -1,10 +1,10 @@
 import { ItemType,
-  IHero, IHeroSettings,
+  IHeroSettings,
   AbilityType, HeroClass
 } from '@interfaces';
 import { Creature } from './creature';
 
-export class Hero extends Creature /*implements IHero */{
+export class Hero extends Creature {
   static GUID: number = 0;
   constructor(name: string, img: string, hitpoint: number = 0, weapon: number = 0, head: number = 0, hands: number = 0, legs: number = 0, body: number = 0) {
     super(name, img, hitpoint, weapon, head, hands, legs, body);

@@ -2,7 +2,7 @@ import { Injectable, EventEmitter } from '@angular/core';
 import { Http, Headers, RequestOptions, Response } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 
-import { HeroClass, IHeroView, IItem, ItemType } from '@interfaces';
+import { ItemType } from '@interfaces';
 import { Ability, Hero, Item } from '@models';
 import { ShopAbilities, ShopEquipment } from '@shared/db';
 import { ItemFabric } from '@shared/fabrics';

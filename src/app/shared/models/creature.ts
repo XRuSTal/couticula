@@ -1,4 +1,4 @@
-import { ICreature,
+import {
   AbilityType, CreatureState, EffectType, ItemType
 } from '@interfaces';
 import { ItemFabric } from '@shared/fabrics';
@@ -7,7 +7,7 @@ import { Item } from './item';
 // import { Effect } from './effect';
 import { Shield } from './shield';
 
-export class Creature/* implements ICreature*/ {
+export class Creature {
   name: string;
   //image: ImageType = ImageType.NoImage;
   description: string = "";

@@ -15,6 +15,3 @@ export enum AbilityType {
   MonsterAddonSunLazy, MonsterAttackEqualsTargetArmor, MonsterBasicAttack, MonsterBasicAttackWithRandomEnemyTarget, MonsterBasicHeal, MonsterDoubleBasicAttack, MonsterDoubleThrowSpearow,
   MonsterHeadAttackWithStan, MonsterMagicAttack3, MonsterBasicAttackWithThrow, MonsterShieldAttack, MonsterThrowSpearow1, MonsterThrowSpearow4,
 }
-
-export interface IAbility {
-}

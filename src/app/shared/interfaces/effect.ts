@@ -5,9 +5,3 @@ export enum EffectType {
   HealWithAllies, HeroTargetAttack, HideCreature, Imbecility, MagicProtection, Poison1, Poison2, Poison3, Rage, Regeneration1, ResistPoisonAny, ResistPoison1, ResistStan, ResistStanSpecial, Shield, Slackness, SpecialAttackLegs, Stan, Stan2, Suppression,
   TargetAttackLegs, WounderHeal, OneUseStrongHeal,
 }
-export interface IEffect {
-  name: string;
-  description: string;
-  //image: ImageType;
-  effectType: EffectType;
-}

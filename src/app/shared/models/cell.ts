@@ -1,6 +1,4 @@
-import { ICell } from '@interfaces';
-
-export class Cell implements ICell {
+export class Cell {
   x: number;
   y: number;
   img: string = "assets/img/map/black-box.jpg";

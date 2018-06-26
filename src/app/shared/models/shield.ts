@@ -1,8 +1,8 @@
 
-import { ItemType, IShield } from '@interfaces';
+import { ItemType } from '@interfaces';
 import { Item } from './item';
 
-export class Shield extends Item implements IShield {
+export class Shield extends Item{
   //armor: number;
   hitPoint: number;
   currentHitPoint: number;

@@ -2,7 +2,6 @@ import { EventEmitter, Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions, Response } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 
-import { ICell } from '@interfaces';
 import { Cell } from '@models';
 import { CellSettings, MonstersSettings } from '@shared/db';
 

@@ -10,12 +10,12 @@ import { GameService } from '@services';
 export class GoldComponent implements OnInit {
   get gold () { return this.gameService.gold; }
 
-	constructor(
+  constructor(
     public navCtrl: NavController,
     private gameService: GameService
   ) {}
 
-	ngOnInit() { }
+  ngOnInit() { }
 
   // TODO: remove
   selectGold() {
