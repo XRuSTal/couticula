@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions, Response } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 
-import { HeroClass, ItemType, IHeroSettings } from '@interfaces';
-import { Hero, Item, Shield } from '@models';
+import { HeroClass, ItemType } from '@enums';
+import { Hero, HeroSettings, Item, Shield } from '@models';
 import { HeroTypes } from '@shared/db';
 
 import { HttpService }  from './http.service';
@@ -49,9 +49,9 @@ export class HeroService {
       resolve();
     });
   }
-  getAllHeroClassesDescription(): Promise<IHeroSettings[]> {
+  getAllHeroClassesDescription(): Promise<HeroSettings[]> {
     return new Promise(resolve => {
-      resolve(HeroTypes as IHeroSettings[]);
+      resolve(HeroTypes as HeroSettings[]);
     });
   }
   equipItem(heroID: number, item: Item): Promise<boolean> {

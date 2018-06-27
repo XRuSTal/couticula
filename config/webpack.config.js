@@ -9,7 +9,7 @@ const customConfig = {
       '@assets': path.resolve('src/assets'),
       '@pages': path.resolve('src/app/pages'),
       "@shared": path.resolve('src/app/shared'),
-      "@interfaces": path.resolve('src/app/shared/interfaces'),
+      "@enums": path.resolve('src/app/shared/enums'),
       "@models": path.resolve('src/app/shared/models'),
       "@services": path.resolve('src/app/shared/services')
     }

@@ -1,11 +1,11 @@
-import {
-  AbilityType, CreatureState, EffectType, ItemType
-} from '@interfaces';
+import { AbilityType, CreatureState, EffectType, ItemType } from '@enums';
 import { ItemFabric } from '@shared/fabrics';
 import { Equipment } from './equipment';
 import { Item } from './item';
 // import { Effect } from './effect';
 import { Shield } from './shield';
+
+
 
 export class Creature {
   name: string;

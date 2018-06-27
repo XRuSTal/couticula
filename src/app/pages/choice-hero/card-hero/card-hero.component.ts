@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
-import { IHeroSettings } from '@interfaces';
+import { HeroSettings } from '@models';
 
 @Component({
   selector: 'card-hero',
@@ -10,7 +10,7 @@ import { IHeroSettings } from '@interfaces';
 
 export class CardHeroComponent implements OnInit {
   @Input()
-  hero: IHeroSettings;
+  hero: HeroSettings;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {}
 

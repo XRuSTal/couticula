@@ -1,6 +1,6 @@
 export enum HeroClass { Warrior, Prist, Scout };
 
-export interface IHeroSettings {
+export interface HeroSettings {
   description: string;
   heroClass: HeroClass;
   hitPoint: number;

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController } from 'ionic-angular';
 
-import { AbilityCategory, AbilityType } from '@interfaces';
+import { AbilityCategory, AbilityType } from '@enums';
 import { Ability } from '@models';
 import { GameService, ShopService } from '@services';
 

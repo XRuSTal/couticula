@@ -18,7 +18,7 @@
       "@assets/*": ["assets/*"],
       "@pages": ["app/pages"],
       "@shared/*": ["app/shared/*"],
-      "@interfaces": ["app/shared/interfaces"],
+      "@enums": ["app/shared/enums"],
       "@models": ["app/shared/models"],
       "@services": ["app/shared/services"]
     }

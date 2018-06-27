@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
-import { IHeroSettings } from '@interfaces';
+import { HeroSettings } from '@models';
 import { ShopPage } from '@pages';
 import { GameService, HeroService, ShopService } from '@services';
 
@@ -10,7 +10,7 @@ import { GameService, HeroService, ShopService } from '@services';
   templateUrl: 'choice-hero.page.html'
 })
 export class ChoiceHeroPage implements OnInit {
-  heroes: IHeroSettings[];
+  heroes: HeroSettings[];
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -27,7 +27,7 @@ export class ChoiceHeroPage implements OnInit {
   ionViewDidLoad() {
     console.log('ionViewDidLoad ChoiceHeroPage');
   }
-  selectHero(hero: IHeroSettings) {
+  selectHero(hero: HeroSettings) {
     this.heroService.addNewHero(hero.heroClass)
     .then(() => {
       console.log('openPage shop');

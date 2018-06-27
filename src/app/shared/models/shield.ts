@@ -1,5 +1,5 @@
 
-import { ItemType } from '@interfaces';
+import { ItemType } from '@enums';
 import { Item } from './item';
 
 export class Shield extends Item{

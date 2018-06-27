@@ -1,8 +1,7 @@
-//import { IEquipment } from '@interfaces';
 import { Item } from './item';
 import { Shield } from './shield';
 
-export class Equipment/* implements IEquipment*/ {
+export class Equipment {
   public Head: Item;
   public Hands: Item;
   public Legs: Item;

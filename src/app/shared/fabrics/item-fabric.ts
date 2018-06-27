@@ -1,7 +1,6 @@
-import { ItemType } from '@interfaces';
+import { ItemType } from '@enums';
 import { Item, Shield } from '@models';
 import { Items } from '@shared/db';
-
 
 export class ItemFabric {
 

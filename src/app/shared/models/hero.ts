@@ -1,8 +1,8 @@
 import { ItemType,
-  IHeroSettings,
   AbilityType, HeroClass
-} from '@interfaces';
+} from '@enums';
 import { Creature } from './creature';
+import { HeroSettings } from './hero-settings';
 
 export class Hero extends Creature {
   static GUID: number = 0;
@@ -11,7 +11,7 @@ export class Hero extends Creature {
     this.id = Hero.GUID++;
     this.addonHitPoint = 0;
   }
-  static createHero(hero: IHeroSettings): Hero {
+  static createHero(hero: HeroSettings): Hero {
     let newHero = new Hero(hero.name, hero.img, hero.hitPoint);
     newHero.description = hero.description;
     newHero.heroClass = hero.heroClass;

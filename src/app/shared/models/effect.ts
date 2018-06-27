@@ -1,6 +1,6 @@
-import { /*IEffect,*/ EffectType } from '@interfaces';
+import { EffectType } from '@enums';
 
-export class Effect /*implements IEffect*/ {
+export class Effect {
   name: string;
   description: string;
   //image: ImageType;

@@ -1,4 +1,4 @@
-import { ItemType } from '@interfaces';
+import { ItemType } from '@enums';
 
 export default [
   {

@@ -1,4 +1,4 @@
-import { HeroClass } from '@interfaces';
+import { HeroClass } from '@enums';
 
 export default [
   {

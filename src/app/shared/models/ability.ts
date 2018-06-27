@@ -1,4 +1,4 @@
-import { AbilityType } from '@interfaces';
+import { AbilityType } from '@enums';
 
 // TODO: перенести в магазин (shop.ts)
 var AbilitiesShop = {

@@ -4,5 +4,6 @@ export * from './creature';
 export * from './effect';
 export * from './equipment';
 export * from './hero';
+export * from './hero-settings';
 export * from './item';
 export * from './shield';

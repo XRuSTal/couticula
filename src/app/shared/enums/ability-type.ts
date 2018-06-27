@@ -1,4 +1,3 @@
-export enum AbilityCategory { Attack, Defense, Heal, Magic, Special }
 export enum AbilityType {
   // Attack:
   HeroDoubleSimpleAttack, HeroSimpleAttack, HeroSimpleAttackTwoTargets,

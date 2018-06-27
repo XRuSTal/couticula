@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController } from 'ionic-angular';
 
-import { ItemType } from '@interfaces';
+import { ItemType } from '@enums';
 import { Hero } from '@models';
 import { GameService, HeroService, ShopService } from '@services';
 

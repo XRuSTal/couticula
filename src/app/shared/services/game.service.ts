@@ -2,7 +2,7 @@ import { EventEmitter, Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions, Response } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 
-import { ItemType } from '@interfaces';
+import { ItemType } from '@enums';
 import { Hero, Item } from '@models';
 
 import { HttpService } from './http.service';

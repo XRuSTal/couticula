@@ -1,4 +1,4 @@
-import { AbilityType, ItemType } from '@interfaces';
+import { AbilityType, ItemType } from '@enums';
 import { Items } from '@shared/db';
 
 export class Item {
