@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NavController } from 'ionic-angular';
 
 import { ItemType } from '@enums';
-import { Hero } from '@models';
+import { Hero, ShopEquipmentHitpoints } from '@models';
 import { GameService, HeroService, ShopService } from '@services';
 
 @Component({
@@ -11,18 +11,7 @@ import { GameService, HeroService, ShopService } from '@services';
 })
 
 export class EquipmentComponent implements OnInit {
-  shopEquipment: {
-    equipment: {
-        itemType: ItemType,
-        name: string,
-        img: string,
-        items: { value: number, cost: number}[]
-      }[],
-    hitpoints: {
-      img: string,
-      items: { value: number, cost: number}[]
-    }
-  };
+  shopEquipment: ShopEquipmentHitpoints;
   get choosenHero(): Hero {
     return this.shopService.choosenHero;
   }
@@ -51,8 +40,7 @@ export class EquipmentComponent implements OnInit {
 
   ngOnInit() {
     let that = this;
-    this.shopService.getShopEquipment()
-    .then(shopEquipment => {
+    this.shopService.getShopEquipment().subscribe(shopEquipment => {
       this.shopEquipment = shopEquipment;
       this.shopEquipment.equipment.forEach(listItems => {
         listItems.items.forEach(item => {

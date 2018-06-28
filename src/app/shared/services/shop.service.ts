@@ -1,9 +1,10 @@
 import { Injectable, EventEmitter } from '@angular/core';
 import { Http, Headers, RequestOptions, Response } from '@angular/http';
-import 'rxjs/add/operator/toPromise';
+import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs/observable/of';
 
 import { ItemType } from '@enums';
-import { Ability, Hero, Item } from '@models';
+import { Ability, Hero, Item, ShopEquipmentHitpoints } from '@models';
 import { ShopAbilities, ShopEquipment } from '@shared/db';
 import { ItemFabric } from '@shared/fabrics';
 
@@ -15,7 +16,6 @@ import { SettingsService }  from './settings.service';
 @Injectable()
 export class ShopService {
   newHero = new EventEmitter();
-  private apiUrl: string;
   choosenHero: Hero;
   choosenItem: { itemType: ItemType, item: { value: number, cost: number} };
   choosenHitpoints: { value: number, cost: number};
@@ -41,26 +41,10 @@ export class ShopService {
     private gameService: GameService,
     private heroService: HeroService,
     private settingsService: SettingsService
-  ){
-    //this.apiUrl = settingsService.apiUrl;
-  }
+  ){ }
 
-  getShopEquipment(): Promise<
-    {
-      equipment: {
-        itemType: ItemType,
-        name: string,
-        img: string,
-        items: { value: number, cost: number}[]
-      }[],
-      hitpoints: {
-        img: string,
-        items: { value: number, cost: number}[]
-      }
-    }> {
-    return new Promise<any>(resolve => {
-      resolve(ShopEquipment);
-    });
+  getShopEquipment(): Observable<ShopEquipmentHitpoints> {
+    return of(ShopEquipment);
   }
   getShopAbilites(): Promise<Ability[]> {
     return new Promise<Ability[]>(resolve => {
@@ -139,8 +123,7 @@ export class ShopService {
 
   buyHitpoint(hero: Hero): Promise<boolean>{
     return new Promise<boolean>(resolve => {
-      this.getShopEquipment()
-      .then(shopEquipment => {
+      this.getShopEquipment().subscribe(shopEquipment => {
         let hitpoints = shopEquipment.hitpoints.items.find(p => p.value === this.choosenHitpoints.value);
         if (hitpoints) {
           let currentHero = this.heroService.heroes.find(p => p.id === hero.id);
@@ -159,8 +142,7 @@ export class ShopService {
   }
   buyItem(hero: Hero){
     return new Promise<boolean>(resolve => {
-      this.getShopEquipment()
-      .then(shopEquipment => {
+      this.getShopEquipment().subscribe(shopEquipment => {
         let item = shopEquipment.equipment
         .find(p => p.itemType === this.choosenItem.itemType)
         .items.find(p => p.value === this.choosenItem.item.value);
