@@ -1,7 +1,7 @@
 import { Item } from './item';
 import { Shield } from './shield';
 
-export class HeroEquipment {
+export class CreatureEquipment {
   public Head: Item;
   public Hands: Item;
   public Legs: Item;

@@ -1,11 +1,9 @@
 import { AbilityType, CreatureState, EffectType, ItemType } from '@enums';
 import { ItemFabric } from '@shared/fabrics';
-import { Equipment } from './equipment';
-import { Item } from './item';
+
+import { CreatureEquipment } from './creature-equipment';
 // import { Effect } from './effect';
 import { Shield } from './shield';
-
-
 
 export class Creature {
   name: string;
@@ -23,7 +21,7 @@ export class Creature {
   // !!! Позволяет создавать однотипные эффекты с разным описанием. Если реально не пригодится - заменить на тип эффекта:
   //effects: Effect[] = [];                 // эффекты на существе.
   //currentEffects: Effect[] = [];          // эффекты на существе во время боя
-  equipment: Equipment = new Equipment();
+  equipment: CreatureEquipment = new CreatureEquipment();
 
   lastDiceDamage: number = null;
   lastDiceTarget: number = null;
