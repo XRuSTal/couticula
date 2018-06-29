@@ -1,6 +1,5 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions, Response } from '@angular/http';
-import 'rxjs/add/operator/toPromise';
 
 import { Cell } from '@models';
 import { CellSettings, MonstersSettings } from '@shared/db';
@@ -8,7 +7,7 @@ import { CellSettings, MonstersSettings } from '@shared/db';
 import { HttpService } from './http.service';
 import { GameService } from './game.service';
 import { MathService } from './math.service';
-import { PLayerService } from './player.service';
+import { PlayerService } from './player.service';
 import { SettingsService, GameMode } from './settings.service';
 
 @Injectable()

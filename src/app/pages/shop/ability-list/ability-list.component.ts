@@ -3,7 +3,7 @@ import { NavController } from 'ionic-angular';
 
 import { AbilityCategory, AbilityType } from '@enums';
 import { Ability } from '@models';
-import { GameService, ShopService } from '@services';
+import { PlayerService, ShopService } from '@services';
 
 @Component({
   selector: 'ability-list',
@@ -15,7 +15,7 @@ export class AbilityListComponent implements OnInit {
   choosenAbility: Ability;
   constructor(
     public navCtrl: NavController,
-    private playerService: GameService,
+    private playerService: PlayerService,
     private shopService: ShopService) {
     // Id is 1, nav refers to Tab1
     console.log(this.navCtrl.id)

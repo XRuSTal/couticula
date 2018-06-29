@@ -3,7 +3,7 @@ import { NavController } from 'ionic-angular';
 
 import { ItemType } from '@enums';
 import { Hero, ShopEquipmentHitpoints } from '@models';
-import { GameService, HeroService, ShopService } from '@services';
+import { HeroService, PlayerService, ShopService } from '@services';
 
 @Component({
   selector: 'equipment',
@@ -24,13 +24,13 @@ export class EquipmentComponent implements OnInit {
     return this.shopEquipment.equipment;
   }
   get playerGold() {
-    return this.gameService.gold;
+    return this.playerService.gold;
   }
 
   constructor(
     public navCtrl: NavController,
-    private gameService: GameService,
     private heroService: HeroService,
+    private playerService: PlayerService,
     private shopService: ShopService
   ) {
     // Id is 1, nav refers to Tab1
@@ -45,7 +45,7 @@ export class EquipmentComponent implements OnInit {
       this.shopEquipment.equipment.forEach(listItems => {
         listItems.items.forEach(item => {
           (item as any).countExists = function(): number {
-            let countInInventory = that.gameService.inventory
+            let countInInventory = that.playerService.inventory
             .filter(i => i.type === listItems.itemType && i.value === item.value)
             .length;
             let countInEquipment = that.heroService.heroes

@@ -1,24 +1,24 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController } from 'ionic-angular';
 
-import { GameService } from '@services';
+import { PlayerService } from '@services';
 
 @Component({
   selector: 'gold',
   templateUrl: 'gold.component.html'
 })
 export class GoldComponent implements OnInit {
-  get gold () { return this.gameService.gold; }
+  get gold () { return this.playerService.gold; }
 
   constructor(
     public navCtrl: NavController,
-    private gameService: GameService
+    private playerService: PlayerService
   ) {}
 
   ngOnInit() { }
 
   // TODO: remove
   selectGold() {
-    this.gameService.increaseGold(100);
+    this.playerService.increaseGold(100);
   }
 }

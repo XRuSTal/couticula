@@ -7,7 +7,7 @@ import { Hero, HeroSettings, Item, Shield } from '@models';
 import { HeroTypes } from '@shared/db';
 
 import { HttpService }  from './http.service';
-import { GameService }  from './game.service';
+import { PlayerService }  from './player.service';
 import { SettingsService }  from './settings.service';
 //import { ShopService }  from './shop.service';
 
@@ -18,7 +18,7 @@ export class HeroService {
 
   constructor(
     //private httpService: HttpService,
-    private gameService: GameService,
+    private playerService: PlayerService,
     private settingsService: SettingsService
   ){
     this.heroes = [];
@@ -91,7 +91,7 @@ export class HeroService {
           break;
       }
       if (oldItem.value !== 0) {
-        this.gameService.addonInventory(oldItem);
+        this.playerService.addonInventory(oldItem);
       }
       resolve(true);
     });

@@ -3,7 +3,7 @@ import { HeroService } from './hero.service';
 import { HttpService } from './http.service';
 import { MapService } from './map.service';
 import { MathService } from './math.service';
-import { PLayerService } from './player.service';
+import { PlayerService } from './player.service';
 import { SettingsService } from './settings.service';
 import { ShopService } from './shop.service';
 
@@ -13,7 +13,7 @@ const SHARED_SERVICES: any[] = [
   HttpService,
   MapService,
   MathService,
-  PLayerService,
+  PlayerService,
   SettingsService,
   ShopService
 ]
@@ -25,7 +25,7 @@ export {
   HttpService,
   MapService,
   MathService,
-  PLayerService,
+  PlayerService,
   SettingsService,
   ShopService
 }

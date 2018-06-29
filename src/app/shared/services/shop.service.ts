@@ -8,9 +8,9 @@ import { Ability, Hero, Item, ShopEquipmentHitpoints } from '@models';
 import { ShopAbilities, ShopEquipment } from '@shared/db';
 import { ItemFabric } from '@shared/fabrics';
 
-import { GameService }  from './game.service';
 import { HeroService }  from './hero.service';
 import { HttpService }  from './http.service';
+import { PlayerService } from './player.service';
 import { SettingsService }  from './settings.service';
 
 @Injectable()
@@ -38,8 +38,8 @@ export class ShopService {
   }
   constructor(
     //private httpService: HttpService,
-    private gameService: GameService,
     private heroService: HeroService,
+    private playerService: PlayerService,
     private settingsService: SettingsService
   ){ }
 
@@ -60,7 +60,7 @@ export class ShopService {
         this.choosenItem = null;
         this.selectedItem.emit(false);
     }
-    else if (this.gameService.gold >= item.cost){
+    else if (this.playerService.gold >= item.cost){
       this.choosenHitpoints = null;
       this.choosenItem = {itemType: itemType, item: item };
       this.selectedItem.emit(true);
@@ -71,7 +71,7 @@ export class ShopService {
         this.choosenHitpoints = null;
         this.selectedItem.emit(false);
     }
-    else if (this.gameService.gold >= item.cost){
+    else if (this.playerService.gold >= item.cost){
       this.choosenItem = null;
       this.choosenHitpoints = item;
       this.selectedItem.emit(true);
@@ -80,21 +80,21 @@ export class ShopService {
   isNewHeroAvailable(): Promise<boolean> {
      return new Promise(resolve => {
       this.heroPrice.then(price => {
-        resolve(this.gameService.gold >= price);
+        resolve(this.playerService.gold >= price);
       })
       .catch(() => resolve(false));
     });
   }
   isItemAvailable(price: number): Promise<boolean> {
      return new Promise(resolve => {
-       resolve(this.gameService.gold >= price)
+       resolve(this.playerService.gold >= price)
     });
   }
   buyNewHero(): Promise<boolean> {
     return new Promise(resolve => {
       this.heroPrice.then(price => {
-        if (this.gameService.gold >= price) {
-          this.gameService.decreaseGold(price)
+        if (this.playerService.gold >= price) {
+          this.playerService.decreaseGold(price)
           .then(success => {
             resolve(success);
           });
@@ -128,7 +128,7 @@ export class ShopService {
         if (hitpoints) {
           let currentHero = this.heroService.heroes.find(p => p.id === hero.id);
           if (currentHero.addonHitPoint < hitpoints.value && currentHero.maxAddonHitPoint >= hitpoints.value) {
-            this.gameService.decreaseGold(hitpoints.cost)
+            this.playerService.decreaseGold(hitpoints.cost)
             .then(success => {
               if (success) {
                 currentHero.setAddonHitPoints(hitpoints.value);
@@ -149,14 +149,14 @@ export class ShopService {
         if (item) {
           let currentHero = this.heroService.heroes.find(p => p.id === hero.id);
           if (currentHero.maxItemValue >= item.value) {
-            this.gameService.decreaseGold(item.cost)
+            this.playerService.decreaseGold(item.cost)
             .then(success => {
               if (success) {
                 let newItem = ItemFabric.createItem(this.choosenItem.itemType, item.value);
                 this.heroService.equipItem(hero.id, newItem)
                 .then(success => {
                   if (!success) {
-                    this.gameService.addonInventory(newItem);
+                    this.playerService.addonInventory(newItem);
                   }
                   resolve(success);
                 });

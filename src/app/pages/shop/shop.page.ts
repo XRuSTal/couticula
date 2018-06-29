@@ -3,7 +3,7 @@ import { AlertController, NavController, NavParams } from 'ionic-angular';
 
 import { Hero } from '@models';
 import { ChoiceHeroPage, MapPage } from '@pages';
-import { HeroService, GameService, ShopService } from '@services';
+import { HeroService, PlayerService, ShopService } from '@services';
 
 import { AbilityListComponent, EquipmentComponent, HeroInfoShortComponent } from './index';
 
@@ -34,7 +34,7 @@ export class ShopPage implements OnInit {
     public navCtrl: NavController,
     public navParams: NavParams,
     private heroService: HeroService,
-    private gameService: GameService,
+    private playerService: PlayerService,
     private shopService: ShopService
   ) {
     this.tabEquipment = EquipmentComponent;
@@ -42,7 +42,7 @@ export class ShopPage implements OnInit {
     this.shopService.selectedItem.subscribe(isSelected => {
       this.isSelected = isSelected;
     });
-    this.gameService.changeGold.subscribe(gold => {
+    this.playerService.gold$.subscribe(gold => {
       this.shopService.isNewHeroAvailable()
       .then(success => this.isNewHeroAvailable = success);
     })
@@ -77,7 +77,7 @@ export class ShopPage implements OnInit {
   addHero() {
     this.shopService.heroPrice
     .then(price => {
-      if (price > this.gameService.gold)
+      if (price > this.playerService.gold)
         return;
       let confirm = this.alertCtrl.create({
         title: 'Купить нового героя?',
