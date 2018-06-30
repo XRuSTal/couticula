@@ -6,8 +6,8 @@ import { CellSettings, MonstersSettings } from '@shared/db';
 
 import { HttpService } from './http.service';
 import { GameService } from './game.service';
-import { MathService } from './math.service';
 import { PlayerService } from './player.service';
+import { Random } from './random';
 import { SettingsService, GameMode } from './settings.service';
 
 @Injectable()
@@ -20,7 +20,6 @@ export class MapService {
   }
   constructor(
     //private httpService: HttpService,
-    private mathService: MathService,
     //private playerService: PLayerService,
     private settingsService: SettingsService
   ) {
@@ -90,8 +89,8 @@ export class MapService {
     let that = this;
     let deep = this.gameMap[x][y].deep;
     //2-3 для начала и 1-3 иначе
-    let waysCount = deep < 4 ? this.mathService.getRandomInt(2, 3)
-      : this.mathService.getRandomInt(1, 6);
+    let waysCount = deep < 4 ? Random.getInt(2, 3)
+      : Random.getInt(1, 6);
     // тупик 50%
     if (waysCount > 3)
       waysCount = 0;
@@ -123,7 +122,7 @@ export class MapService {
     var checkBottom = function () { check(0, -1); }
     // генерация путей в произвольном порядке
     let directionsWithRandomSort = [checkRight, checkLeft, checkTop, checkBottom]
-      .map(p => { return { weight: this.mathService.getRandomFloat(0, 1), func: p } })
+      .map(p => { return { weight: Random.getFloat(0, 1), func: p } })
       .sort(p => p.weight);
     for (let i = 0; i < 4; i++) {
       directionsWithRandomSort[i].func();
@@ -145,10 +144,10 @@ export class MapService {
       };
     }
 
-    let mosterLevel2Count = this.mathService.getRandomInt(s.mosterLevel2Min, s.mosterLevel2Max);
+    let mosterLevel2Count = Random.getInt(s.mosterLevel2Min, s.mosterLevel2Max);
     let diff = mosterLevel2Count - s.mosterLevel2Min;
-    let mosterLevel1Count = this.mathService.getRandomInt(s.mosterLevel1Min - diff * 2, s.mosterLevel1Max - diff * 2);
-    let existsBoss = mosterLevel2Count > 0 && s.percentBoss > this.mathService.getRandomInt(1, 100);
+    let mosterLevel1Count = Random.getInt(s.mosterLevel1Min - diff * 2, s.mosterLevel1Max - diff * 2);
+    let existsBoss = mosterLevel2Count > 0 && s.percentBoss > Random.getInt(1, 100);
     mosterLevel2Count -= existsBoss ? 1 : 0;
 
     this.gameMap[x][y].mosterLevel1Count = mosterLevel1Count;
@@ -177,10 +176,10 @@ export class MapService {
       s.mosterLevel2Min = 3;
       s.percentBoss = 33;
     }
-    let mosterCount = this.mathService.getRandomInt(s.mosterMinCount, s.mosterMaxCount);
-    let mosterLevel2Count = this.mathService.getRandomInt(s.mosterLevel2Min, s.mosterLevel2Max);
+    let mosterCount = Random.getInt(s.mosterMinCount, s.mosterMaxCount);
+    let mosterLevel2Count = Random.getInt(s.mosterLevel2Min, s.mosterLevel2Max);
     let mosterLevel1Count = mosterCount - mosterLevel2Count < 0 ? 0 : mosterCount - mosterLevel2Count;
-    let existsBoss = mosterLevel2Count > 0 && s.percentBoss > this.mathService.getRandomInt(1, 100);
+    let existsBoss = mosterLevel2Count > 0 && s.percentBoss > Random.getInt(1, 100);
     mosterLevel2Count -= existsBoss ? 1 : 0;
 
     this.gameMap[x][y].mosterLevel1Count = mosterLevel1Count;
