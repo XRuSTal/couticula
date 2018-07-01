@@ -5,13 +5,13 @@ import { Subject } from 'rxjs/Subject';
 
 import { Hero, Item } from '@models';
 
-import { HttpService }  from './http.service';
-import { SettingsService }  from './settings.service';
+import { HttpService } from './http.service';
+import { SettingsService } from './settings.service';
 
 @Injectable()
 export class PlayerService {
   private playerGold: number;
-  private playerGoldSource: Subject<number>;
+  private playerGoldSource: Subject<number> = new Subject<number>();
   private heroesInventory: Item[] = [];
   gold$: Observable<number>;
 
