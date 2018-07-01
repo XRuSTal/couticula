@@ -3,6 +3,7 @@ export * from './cell';
 export * from './creature';
 export * from './creature-equipment';
 export * from './effect';
+export * from './enemy-group-settings';
 export * from './hero';
 export * from './hero-settings';
 export * from './item';
