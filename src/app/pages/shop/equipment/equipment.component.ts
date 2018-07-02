@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NavController } from 'ionic-angular';
+import { Subscription } from 'rxjs/Subscription';
 
 import { ItemType } from '@enums';
 import { Hero, ShopEquipmentHitpoints } from '@models';
@@ -10,8 +11,11 @@ import { HeroService, PlayerService, ShopService } from '@services';
 	templateUrl: 'equipment.component.html'
 })
 
-export class EquipmentComponent implements OnInit {
+export class EquipmentComponent implements OnInit, OnDestroy {
   shopEquipment: ShopEquipmentHitpoints;
+
+  private subscriptions: Subscription[] = [];
+
   get choosenHero(): Hero {
     return this.shopService.choosenHero;
   }
@@ -40,26 +44,32 @@ export class EquipmentComponent implements OnInit {
 
   ngOnInit() {
     let that = this;
-    this.shopService.getShopEquipment().subscribe(shopEquipment => {
-      this.shopEquipment = shopEquipment;
-      this.shopEquipment.equipment.forEach(listItems => {
-        listItems.items.forEach(item => {
-          (item as any).countExists = function(): number {
-            let countInInventory = that.playerService.inventory
-            .filter(i => i.type === listItems.itemType && i.value === item.value)
-            .length;
-            let countInEquipment = that.heroService.heroes
-            .reduce((sum, hero) => {
-              return sum + hero.equipment.items
-              .filter(i => i.type == listItems.itemType && i.value == item.value)
+    this.subscriptions.push(this.shopService.getShopEquipment().subscribe(
+      shopEquipment => {
+        this.shopEquipment = shopEquipment;
+        this.shopEquipment.equipment.forEach(listItems => {
+          listItems.items.forEach(item => {
+            (item as any).countExists = function(): number {
+              let countInInventory = that.playerService.inventory
+              .filter(i => i.type === listItems.itemType && i.value === item.value)
               .length;
-            }, 0);
-            return countInInventory + countInEquipment;
-          }
+              let countInEquipment = that.heroService.heroes
+              .reduce((sum, hero) => {
+                return sum + hero.equipment.items
+                .filter(i => i.type == listItems.itemType && i.value == item.value)
+                .length;
+              }, 0);
+              return countInInventory + countInEquipment;
+            }
+          });
         });
-      });
-    });
+      }
+    ));
   }
+  ngOnDestroy() {
+    this.subscriptions.forEach(s => s.unsubscribe);
+  }
+
   isSelectedItem(itemType: ItemType, value: number) {
     return this.shopService.choosenItem
       && this.shopService.choosenItem.itemType == itemType

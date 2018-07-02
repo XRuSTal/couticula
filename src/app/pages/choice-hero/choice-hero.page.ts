@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
+import { Subscription } from 'rxjs/Subscription';
 
 import { HeroSettings } from '@models';
 import { ShopPage } from '@pages';
@@ -9,8 +10,11 @@ import { GameService, HeroService, ShopService } from '@services';
   selector: 'page-choice-hero',
   templateUrl: 'choice-hero.page.html'
 })
-export class ChoiceHeroPage implements OnInit {
+export class ChoiceHeroPage implements OnInit, OnDestroy {
   heroes: HeroSettings[];
+
+  private subscriptions: Subscription[] = [];
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -20,8 +24,12 @@ export class ChoiceHeroPage implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.heroService.getAllHeroClassesDescription()
-    .then(heroes => this.heroes = heroes);
+    this.subscriptions.push(this.heroService.getAllHeroClassesDescription().subscribe(
+      heroes => this.heroes = heroes
+    ));
+  }
+  ngOnDestroy() {
+    this.subscriptions.forEach(s => s.unsubscribe);
   }
 
   ionViewDidLoad() {

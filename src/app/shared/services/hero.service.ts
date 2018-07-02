@@ -1,13 +1,16 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions, Response } from '@angular/http';
+import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs/observable/of';
 
 import { HeroClass, ItemType } from '@enums';
 import { Hero, HeroSettings, Item, Shield } from '@models';
+import { HeroTypes } from '@shared/db';
 import { HeroFabric } from '@shared/fabrics';
 
-import { HttpService }  from './http.service';
-import { PlayerService }  from './player.service';
-//import { ShopService }  from './shop.service';
+import { HttpService } from './http.service';
+import { PlayerService } from './player.service';
+//import { ShopService } from './shop.service';
 
 @Injectable()
 export class HeroService {
@@ -35,10 +38,8 @@ export class HeroService {
       resolve();
     });
   }
-  getAllHeroClassesDescription(): Promise<HeroSettings[]> {
-    return new Promise(resolve => {
-      resolve(HeroTypes as HeroSettings[]);
-    });
+  getAllHeroClassesDescription(): Observable<HeroSettings[]> {
+    return of(HeroTypes as HeroSettings[]);
   }
   equipItem(heroID: number, item: Item): Promise<boolean> {
     return new Promise<boolean>(resolve => {

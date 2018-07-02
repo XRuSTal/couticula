@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AlertController, NavController, NavParams } from 'ionic-angular';
+import { Subscription } from 'rxjs/Subscription';
 
 import { Hero } from '@models';
 import { ChoiceHeroPage, MapPage } from '@pages';
@@ -11,7 +12,7 @@ import { AbilityListComponent, EquipmentComponent, HeroInfoShortComponent } from
   selector: 'page-shop',
   templateUrl: 'shop.page.html'
 })
-export class ShopPage implements OnInit {
+export class ShopPage implements OnInit, OnDestroy {
   tabEquipment: any = EquipmentComponent;
   tabAttack: any = AbilityListComponent;
   tabHeal: any = AbilityListComponent;
@@ -23,6 +24,9 @@ export class ShopPage implements OnInit {
 
   isSelected: boolean;
   isNewHeroAvailable: boolean = false;
+
+  private subscriptions: Subscription[] = [];
+
   get heroes(): Hero[] {
     return this.heroService.heroes;
   }
@@ -42,16 +46,21 @@ export class ShopPage implements OnInit {
     this.shopService.selectedItem.subscribe(isSelected => {
       this.isSelected = isSelected;
     });
-    this.playerService.gold$.subscribe(gold => {
-      this.shopService.isNewHeroAvailable()
-      .then(success => this.isNewHeroAvailable = success);
-    })
+    this.subscriptions.push(this.playerService.gold$.subscribe(
+      gold => {
+        this.shopService.isNewHeroAvailable()
+        .then(success => this.isNewHeroAvailable = success);
+      }
+    ));
   }
 
   ngOnInit(){
     this.shopService.isNewHeroAvailable()
     .then(success => this.isNewHeroAvailable = success);
     this.shopService.selectHero(this.heroes[0]);
+  }
+  ngOnDestroy() {
+    this.subscriptions.forEach(s => s.unsubscribe);
   }
 
   ionViewDidLoad() {
