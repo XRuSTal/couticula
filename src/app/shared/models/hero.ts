@@ -1,37 +1,22 @@
-import { ItemType,
-  AbilityType, HeroClass
-} from '@enums';
+import { AbilityType, HeroClass } from '@enums';
 import { Creature } from './creature';
-import { HeroSettings } from './hero-settings';
 
 export class Hero extends Creature {
-  static GUID: number = 0;
+  id: number;
+  heroClass: HeroClass;
+  addonHitPoint: number;
+  maxAddonHitPoint: number;
+  maxItemValue: number;
+  lastTargetInBattle: number;
+  uniqueAbilities: AbilityType[]; // уникальные способности героя
+  shopHideAbilities: AbilityType[];
+
   constructor(name: string, img: string, hitpoint: number = 0, weapon: number = 0, head: number = 0, hands: number = 0, legs: number = 0, body: number = 0) {
     super(name, img, hitpoint, weapon, head, hands, legs, body);
-    this.id = Hero.GUID++;
     this.addonHitPoint = 0;
   }
-  static createHero(hero: HeroSettings): Hero {
-    let newHero = new Hero(hero.name, hero.img, hero.hitPoint);
-    newHero.description = hero.description;
-    newHero.heroClass = hero.heroClass;
-    newHero.maxAddonHitPoint = hero.maxAddonHitPoint;
-    newHero.maxItemValue = hero.maxArmorValue;
-    //newHero.inventory = hero.inventory;
-    //newHero.uniqueAbilities = hero.uniqueAbilities;
-    //newHero.shopHideAbilities = hero.shopHideAbilities;
-    return newHero;
-  }
-  public id: number;
-  public heroClass: HeroClass;
-  public addonHitPoint: number;
-  public maxAddonHitPoint: number;
-  public maxItemValue: number;
-  public lastTargetInBattle: number;
-  public uniqueAbilities: AbilityType[];          // уникальные способности героя
-  public shopHideAbilities: AbilityType[];
 
-  public setAddonHitPoints(value: number) {
+  setAddonHitPoints(value: number) {
     this.hitPoint += value - this.addonHitPoint;
     this.addonHitPoint = value;
   }

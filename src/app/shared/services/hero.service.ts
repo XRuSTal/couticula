@@ -1,28 +1,23 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions, Response } from '@angular/http';
-import 'rxjs/add/operator/toPromise';
 
 import { HeroClass, ItemType } from '@enums';
 import { Hero, HeroSettings, Item, Shield } from '@models';
-import { HeroTypes } from '@shared/db';
+import { HeroFabric } from '@shared/fabrics';
 
 import { HttpService }  from './http.service';
 import { PlayerService }  from './player.service';
-import { SettingsService }  from './settings.service';
 //import { ShopService }  from './shop.service';
 
 @Injectable()
 export class HeroService {
-  //private apiUrl: string;
-  public heroes: Hero[];
+  heroes: Hero[];
 
   constructor(
     //private httpService: HttpService,
-    private playerService: PlayerService,
-    private settingsService: SettingsService
+    private playerService: PlayerService
   ){
     this.heroes = [];
-    //this.apiUrl = settingsService.apiUrl;
     //this.getHeroes().then(heroes => this.heroes = heroes.map(hero => new Hero(hero)));
     // обновлен список героев
     /*this.shopService.newHero.subscribe(() => {
@@ -32,18 +27,9 @@ export class HeroService {
       });
     });*/
   }
-  addNewHero(heroClassID: HeroClass): Promise<any> {
+  addNewHero(heroClass: HeroClass): Promise<any> {
     return new Promise(resolve => {
-      this.createHero(heroClassID)
-      .then(res => {
-        resolve();
-      });
-    });
-  }
-  private createHero(heroClass: HeroClass): Promise<any> {
-    return new Promise(resolve => {
-      let heroInfo = HeroTypes.find(p => p.heroClass === heroClass);
-      let newHero: Hero =  Hero.createHero(heroInfo);
+      const newHero: Hero = HeroFabric.createHero(heroClass);
       //newHero.uniqueAbilities = heroInfo.uniqueAbilities;
       this.heroes.push(newHero);
       resolve();

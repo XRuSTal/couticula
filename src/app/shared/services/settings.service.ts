@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-export enum GameMode { Easy = 1, Hard = 2 }
+import { GameMode } from '@shared/enums';
 
 @Injectable()
 export class SettingsService {

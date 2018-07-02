@@ -4,9 +4,8 @@ import { MonstersSettings } from '@shared/db';
 
 export class EnemyGroupFabric {
 
-
   static createMostersCasual(cell: Cell): EnemyGroupSettings {
-    let deep = cell.deep;
+    const deep = cell.deep;
     console.log('createMostersCasual', cell);
     //Число монстров 1 и 2лвл от глубины (min / max):
     let s = MonstersSettings.find(p => p.deep === deep);
@@ -22,15 +21,15 @@ export class EnemyGroupFabric {
     }
 
     let mosterLevel2Count = Random.getInt(s.mosterLevel2Min, s.mosterLevel2Max);
-    let diff = mosterLevel2Count - s.mosterLevel2Min;
-    let mosterLevel1Count = Random.getInt(s.mosterLevel1Min - diff * 2, s.mosterLevel1Max - diff * 2);
-    let existsBoss = mosterLevel2Count > 0 && s.percentBoss > Random.getInt(1, 100);
+    const diff = mosterLevel2Count - s.mosterLevel2Min;
+    const mosterLevel1Count = Random.getInt(s.mosterLevel1Min - diff * 2, s.mosterLevel1Max - diff * 2);
+    const existsBoss = mosterLevel2Count > 0 && s.percentBoss > Random.getInt(1, 100);
     mosterLevel2Count -= existsBoss ? 1 : 0;
 
     return { mosterLevel1Count, mosterLevel2Count, existsBoss } as EnemyGroupSettings;
   }
   static createMostersTrueHard(cell: Cell) {
-    let s = {
+    const s = {
       mosterMinCount: 1,
       mosterMaxCount: cell.deep,
       mosterLevel2Min: 0,
@@ -51,10 +50,10 @@ export class EnemyGroupFabric {
       s.mosterLevel2Min = 3;
       s.percentBoss = 33;
     }
-    let mosterCount = Random.getInt(s.mosterMinCount, s.mosterMaxCount);
+    const mosterCount = Random.getInt(s.mosterMinCount, s.mosterMaxCount);
     let mosterLevel2Count = Random.getInt(s.mosterLevel2Min, s.mosterLevel2Max);
-    let mosterLevel1Count = mosterCount - mosterLevel2Count < 0 ? 0 : mosterCount - mosterLevel2Count;
-    let existsBoss = mosterLevel2Count > 0 && s.percentBoss > Random.getInt(1, 100);
+    const mosterLevel1Count = mosterCount - mosterLevel2Count < 0 ? 0 : mosterCount - mosterLevel2Count;
+    const existsBoss = mosterLevel2Count > 0 && s.percentBoss > Random.getInt(1, 100);
     mosterLevel2Count -= existsBoss ? 1 : 0;
 
     return { mosterLevel1Count, mosterLevel2Count, existsBoss } as EnemyGroupSettings;

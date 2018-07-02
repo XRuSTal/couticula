@@ -3,13 +3,12 @@ import { Http, Headers, RequestOptions, Response } from '@angular/http';
 
 import { Cell } from '@models';
 import { CellSettings, MonstersSettings } from '@shared/db';
+import { GameMode } from '@shared/enums';
+import { EnemyGroupFabric } from '@app/shared/fabrics';
 
 import { HttpService } from './http.service';
-import { GameService } from './game.service';
-import { PlayerService } from './player.service';
 import { Random } from './random';
-import { SettingsService, GameMode } from './settings.service';
-import { EnemyGroupFabric } from '@app/shared/fabrics';
+import { SettingsService } from './settings.service';
 
 @Injectable()
 export class MapService {
@@ -37,7 +36,7 @@ export class MapService {
       resolve();
     });
   }
-  public getCell(x: number, y: number): Cell {
+  getCell(x: number, y: number): Cell {
     if (this.cellIsEmpty(x, y)) {
       return null;
     }
@@ -68,12 +67,12 @@ export class MapService {
     }
     return cell;
   }
-  public cellIsEmpty(x: number, y: number) {
+  cellIsEmpty(x: number, y: number) {
     if (this.gameMap[x] == null || this.gameMap[x][y] == null)
       return true;
     return false;
   }
-  public clearCell(x: number, y: number) {
+  clearCell(x: number, y: number) {
     if (!this.cellIsEmpty(x, y) && !this.map[x][y].isWall) {
       this.map[x][y].isClear = true;
       this.generateOneWay(x, y);
@@ -90,8 +89,7 @@ export class MapService {
     let that = this;
     let deep = this.gameMap[x][y].deep;
     //2-3 для начала и 1-3 иначе
-    let waysCount = deep < 4 ? Random.getInt(2, 3)
-      : Random.getInt(1, 6);
+    let waysCount = deep < 4 ? Random.getInt(2, 3) : Random.getInt(1, 6);
     // тупик 50%
     if (waysCount > 3)
       waysCount = 0;
