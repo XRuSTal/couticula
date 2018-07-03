@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers, RequestOptions, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 
-import { Hero, Item } from '@models';
+import { Item } from '@models';
 
 import { HttpService } from './http.service';
 import { SettingsService } from './settings.service';

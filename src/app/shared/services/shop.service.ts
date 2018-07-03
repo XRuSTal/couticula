@@ -1,26 +1,23 @@
 import { Injectable, EventEmitter } from '@angular/core';
-import { Http, Headers, RequestOptions, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 
 import { ItemType } from '@enums';
-import { Ability, Hero, Item, ShopEquipmentHitpoints } from '@models';
+import { Ability, Hero, ShopEquipmentHitpoints } from '@models';
 import { ShopAbilities, ShopEquipment } from '@shared/db';
 import { ItemFabric } from '@shared/fabrics';
 
-import { HeroService }  from './hero.service';
-import { HttpService }  from './http.service';
+import { HeroService } from './hero.service';
+import { HttpService } from './http.service';
 import { PlayerService } from './player.service';
-import { SettingsService }  from './settings.service';
+import { SettingsService } from './settings.service';
 
 @Injectable()
 export class ShopService {
-  newHero = new EventEmitter();
   choosenHero: Hero;
   choosenItem: { itemType: ItemType, item: { value: number, cost: number} };
   choosenHitpoints: { value: number, cost: number};
   selectedItem = new EventEmitter<boolean>();
-  //selectedItem = new EventEmitter<any>();
   //selectedHitpoints = new EventEmitter<any>();
   get heroPrice(): Promise<number> {
     return new Promise((resolve, reject) => {

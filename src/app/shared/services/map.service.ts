@@ -1,8 +1,7 @@
-import { EventEmitter, Injectable } from '@angular/core';
-import { Http, Headers, RequestOptions, Response } from '@angular/http';
+import { Injectable } from '@angular/core';
 
 import { Cell } from '@models';
-import { CellSettings, MonstersSettings } from '@shared/db';
+import { CellSettings } from '@shared/db';
 import { GameMode } from '@shared/enums';
 import { EnemyGroupFabric } from '@app/shared/fabrics';
 
@@ -18,11 +17,7 @@ export class MapService {
   get map() {
     return this.gameMap;
   }
-  constructor(
-    //private httpService: HttpService,
-    //private playerService: PLayerService,
-    private settingsService: SettingsService
-  ) {
+  constructor(private settingsService: SettingsService) {
   }
 
   createMap(): Promise<void> {
@@ -37,7 +32,7 @@ export class MapService {
     });
   }
   getCell(x: number, y: number): Cell {
-    if (this.cellIsEmpty(x, y)) {
+    if (this.isEmptyCell(x, y)) {
       return null;
     }
     let that = this;
@@ -48,7 +43,7 @@ export class MapService {
     }
     else if (cell.isClear) {
       let wayExists = function (xDiff: number, yDiff: number) {
-        return !that.cellIsEmpty(x + xDiff, y + yDiff) && !that.gameMap[x + xDiff][y + yDiff].isWall;
+        return !that.isEmptyCell(x + xDiff, y + yDiff) && !that.gameMap[x + xDiff][y + yDiff].isWall;
       }
       let wayExistsRight = wayExists(1, 0);
       let wayExistsLeft = wayExists(-1, 0);
@@ -67,13 +62,13 @@ export class MapService {
     }
     return cell;
   }
-  cellIsEmpty(x: number, y: number) {
+  isEmptyCell(x: number, y: number) {
     if (this.gameMap[x] == null || this.gameMap[x][y] == null)
       return true;
     return false;
   }
   clearCell(x: number, y: number) {
-    if (!this.cellIsEmpty(x, y) && !this.map[x][y].isWall) {
+    if (!this.isEmptyCell(x, y) && !this.map[x][y].isWall) {
       this.map[x][y].isClear = true;
       this.generateOneWay(x, y);
     }
@@ -95,10 +90,10 @@ export class MapService {
       waysCount = 0;
     //this.gameMap[x][y].ways = waysCount.toString();
 
-    if (this.cellIsEmpty(x + 1, y)) this.createEmptyCell(x + 1, y);
-    if (this.cellIsEmpty(x - 1, y)) this.createEmptyCell(x - 1, y);
-    if (this.cellIsEmpty(x, y + 1)) this.createEmptyCell(x, y + 1);
-    if (this.cellIsEmpty(x, y - 1)) this.createEmptyCell(x, y - 1);
+    if (this.isEmptyCell(x + 1, y)) this.createEmptyCell(x + 1, y);
+    if (this.isEmptyCell(x - 1, y)) this.createEmptyCell(x - 1, y);
+    if (this.isEmptyCell(x, y + 1)) this.createEmptyCell(x, y + 1);
+    if (this.isEmptyCell(x, y - 1)) this.createEmptyCell(x, y - 1);
 
     let check = function (xDiff: number, yDiff: number) {
       const cell = that.gameMap[x + xDiff][y + yDiff];
