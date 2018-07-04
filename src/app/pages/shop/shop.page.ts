@@ -43,9 +43,11 @@ export class ShopPage implements OnInit, OnDestroy {
   ) {
     this.tabEquipment = EquipmentComponent;
     this.tabAttack = AbilityListComponent;
-    this.shopService.selectedItem.subscribe(isSelected => {
-      this.isSelected = isSelected;
-    });
+    this.subscriptions.push(this.shopService.selectedItem$.subscribe(
+      isSelected => {
+        this.isSelected = isSelected;
+      }
+    ));
     this.subscriptions.push(this.playerService.gold$.subscribe(
       gold => {
         this.shopService.isNewHeroAvailable()
@@ -54,7 +56,7 @@ export class ShopPage implements OnInit, OnDestroy {
     ));
   }
 
-  ngOnInit(){
+  ngOnInit() {
     this.shopService.isNewHeroAvailable()
     .then(success => this.isNewHeroAvailable = success);
     this.shopService.selectHero(this.heroes[0]);
@@ -67,15 +69,15 @@ export class ShopPage implements OnInit, OnDestroy {
     console.log('ionViewDidLoad ShopPage');
   }
 
-  close(){
+  close() {
     console.log('openPage map');
     this.navCtrl.push(MapPage);
   }
-  buy(){
+  buy() {
     this.shopService.buy();
   }
 
-  choseHero(hero: Hero){
+  choseHero(hero: Hero) {
     this.shopService.selectHero(hero);
   }
   openPage(page) {

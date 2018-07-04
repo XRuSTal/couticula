@@ -1,5 +1,6 @@
 import { Injectable, EventEmitter } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import { Subject } from 'rxjs/Subject';
 import { of } from 'rxjs/observable/of';
 
 import { ItemType } from '@enums';
@@ -17,8 +18,12 @@ export class ShopService {
   choosenHero: Hero;
   choosenItem: { itemType: ItemType, item: { value: number, cost: number} };
   choosenHitpoints: { value: number, cost: number};
-  selectedItem = new EventEmitter<boolean>();
   //selectedHitpoints = new EventEmitter<any>();
+  selectedItem$: Observable<boolean>;
+  //selectedHitpoints$: Observable<any>;
+
+  private selectedItemSource: Subject<boolean> = new Subject<boolean>();
+
   get heroPrice(): Promise<number> {
     return new Promise((resolve, reject) => {
       let price;
@@ -33,12 +38,15 @@ export class ShopService {
       return resolve(price);
     });
   }
+
   constructor(
     //private httpService: HttpService,
     private heroService: HeroService,
     private playerService: PlayerService,
     private settingsService: SettingsService
-  ){ }
+  ){
+    this.selectedItem$ = this.selectedItemSource.asObservable();
+  }
 
   getShopEquipment(): Observable<ShopEquipmentHitpoints> {
     return of(ShopEquipment);
@@ -55,23 +63,23 @@ export class ShopService {
     if (this.choosenItem && this.choosenItem.itemType == itemType
       && this.choosenItem.item.value == item.value) {
         this.choosenItem = null;
-        this.selectedItem.emit(false);
+        this.selectedItemSource.next(false);
     }
     else if (this.playerService.gold >= item.cost){
       this.choosenHitpoints = null;
       this.choosenItem = {itemType: itemType, item: item };
-      this.selectedItem.emit(true);
+      this.selectedItemSource.next(true);
     }
   }
   selectHitpoints(item: { value: number, cost: number}) {
     if (this.choosenHitpoints && this.choosenHitpoints.value == item.value) {
         this.choosenHitpoints = null;
-        this.selectedItem.emit(false);
+        this.selectedItemSource.next(false);
     }
     else if (this.playerService.gold >= item.cost){
       this.choosenItem = null;
       this.choosenHitpoints = item;
-      this.selectedItem.emit(true);
+      this.selectedItemSource.next(true);
     }
   }
   isNewHeroAvailable(): Promise<boolean> {
@@ -115,7 +123,7 @@ export class ShopService {
         this.choosenItem = null;
       });
     }
-    this.selectedItem.emit(false);
+    this.selectedItemSource.next(false);
   }
 
   buyHitpoint(hero: Hero): Promise<boolean>{
