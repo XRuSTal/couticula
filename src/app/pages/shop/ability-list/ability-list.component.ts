@@ -22,8 +22,7 @@ export class AbilityListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.shopService.getShopAbilites()
-    .then(shopAbilities => {
+    this.shopService.getShopAbilites().subscribe(shopAbilities => {
       this.shopAbilities = shopAbilities;
     });
   }

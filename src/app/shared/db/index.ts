@@ -3,7 +3,7 @@ import HeroTypes from './hero-types';
 import Items from './items';
 import MonstersSettings from './monsters-settings';
 import ShopAbilities from './shop-abilities';
-import ShopEquipment from './shop-equipment';
+import ShopEquipments from './shop-equipment';
 
 export {
   CellSettings,
@@ -11,5 +11,5 @@ export {
   Items,
   MonstersSettings,
   ShopAbilities,
-  ShopEquipment
+  ShopEquipments,
 }

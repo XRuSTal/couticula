@@ -8,4 +8,4 @@ export * from './hero';
 export * from './hero-settings';
 export * from './item';
 export * from './shield';
-export * from './shop-equipment-hitpoints';
+export * from './shop';

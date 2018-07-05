@@ -5,7 +5,7 @@ import { of } from 'rxjs/observable/of';
 
 import { ItemType } from '@enums';
 import { Ability, Hero, ShopEquipmentHitpoints } from '@models';
-import { ShopAbilities, ShopEquipment } from '@shared/db';
+import { ShopAbilities, ShopEquipments } from '@shared/db';
 import { ItemFabric } from '@shared/fabrics';
 
 import { HeroService } from './hero.service';
@@ -24,7 +24,16 @@ export class ShopService {
 
   private selectedItemSource: Subject<boolean> = new Subject<boolean>();
 
-  get heroPrice(): Promise<number> {
+  constructor(
+    //private httpService: HttpService,
+    private heroService: HeroService,
+    private playerService: PlayerService,
+    private settingsService: SettingsService
+  ){
+    this.selectedItem$ = this.selectedItemSource.asObservable();
+  }
+
+  getHeroPrice(): Promise<number> {
     return new Promise((resolve, reject) => {
       let price;
       switch (this.heroService.heroes.length) {
@@ -38,23 +47,11 @@ export class ShopService {
       return resolve(price);
     });
   }
-
-  constructor(
-    //private httpService: HttpService,
-    private heroService: HeroService,
-    private playerService: PlayerService,
-    private settingsService: SettingsService
-  ){
-    this.selectedItem$ = this.selectedItemSource.asObservable();
-  }
-
   getShopEquipment(): Observable<ShopEquipmentHitpoints> {
-    return of(ShopEquipment);
+    return of(ShopEquipments);
   }
-  getShopAbilites(): Promise<Ability[]> {
-    return new Promise<Ability[]>(resolve => {
-      resolve(ShopAbilities);
-    });
+  getShopAbilites(): Observable<Ability[]> {
+    return of(ShopAbilities);
   }
   selectHero(hero: Hero) {
     this.choosenHero = hero;
@@ -84,7 +81,7 @@ export class ShopService {
   }
   isNewHeroAvailable(): Promise<boolean> {
      return new Promise(resolve => {
-      this.heroPrice.then(price => {
+      this.getHeroPrice().then(price => {
         resolve(this.playerService.gold >= price);
       })
       .catch(() => resolve(false));
@@ -97,7 +94,7 @@ export class ShopService {
   }
   buyNewHero(): Promise<boolean> {
     return new Promise(resolve => {
-      this.heroPrice.then(price => {
+      this.getHeroPrice().then(price => {
         if (this.playerService.gold >= price) {
           this.playerService.decreaseGold(price)
           .then(success => {

@@ -86,7 +86,7 @@ export class ShopPage implements OnInit, OnDestroy {
     //this.navCtrl.setRoot(page.component);
   }
   addHero() {
-    this.shopService.heroPrice
+    this.shopService.getHeroPrice()
     .then(price => {
       if (price > this.playerService.gold)
         return;
