@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NavController } from 'ionic-angular';
+import { Subscription } from 'rxjs/Subscription';
 
 import { AbilityCategory, AbilityType } from '@enums';
 import { Ability } from '@models';
@@ -10,9 +11,12 @@ import { PlayerService, ShopService } from '@services';
 	templateUrl: 'ability-list.component.html'
 })
 
-export class AbilityListComponent implements OnInit {
+export class AbilityListComponent implements OnInit, OnDestroy {
   shopAbilities: Ability[];
   choosenAbility: Ability;
+
+  private subscriptions: Subscription[] = [];
+
   constructor(
     public navCtrl: NavController,
     private playerService: PlayerService,
@@ -22,10 +26,14 @@ export class AbilityListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.shopService.getShopAbilites().subscribe(shopAbilities => {
-      this.shopAbilities = shopAbilities;
-    });
+    this.subscriptions.push(this.shopService.getShopAbilites().subscribe(
+      shopAbilities => this.shopAbilities = shopAbilities
+    ));
   }
+  ngOnDestroy() {
+    this.subscriptions.forEach(s => s.unsubscribe);
+  }
+
   isSelectedAbility(ability: Ability) {
     return this.choosenAbility == ability;
   }
