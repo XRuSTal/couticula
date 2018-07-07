@@ -1,5 +1,5 @@
 
-<ion-content class="" scroll="false"> 
+<ion-content class="" scroll="false">
     <ion-grid *ngIf="shopEquipment">
       <ion-row>
         <ion-col>
@@ -17,7 +17,7 @@
               <img item-left src="assets/img/dice.png" alt="" title="" />
             </div>
         </ion-col>-->
-        <ion-col width-20>
+        <ion-col col-3>
             <div class="hitpoints">
               <img item-left src="{{shopEquipment.hitpoints.img}}" alt="" title="" />
             </div>
@@ -26,7 +26,7 @@
       <ion-row>
         <ion-col>
           <ion-list>
-            <div *ngFor="let value of [1,2,3,4,5,6]" class="value" 
+            <div *ngFor="let value of [1,2,3,4,5,6]" class="value"
               [ngClass]="{'good-item': value === 4 || value === 5,
               'best-item': value === 6 }">
               +{{value}}
@@ -46,9 +46,9 @@
             </div>
           </ion-list>
         </ion-col>
-        <ion-col width-20>
+        <ion-col col-3>
           <ion-list>
-            <div *ngFor="let item of (shopEquipment.hitpoints.items | availableHitPoints: choosenHero)" 
+            <div *ngFor="let item of (shopEquipment.hitpoints.items | availableHitPoints: choosenHero)"
               class="value" [ngClass]="{'not-available-price': item.cost > playerGold,
               'selected-item': isSelectedHitpoints(item.value) }"
               (click)="selectHitpoints(item)">
@@ -62,6 +62,6 @@
         <ion-col *ngFor="let item of equipment.items">{{item.cost}}</ion-col>
       </ion-row>-->
     </ion-grid>
-    
+
 
 </ion-content>
