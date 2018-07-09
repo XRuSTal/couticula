@@ -1,4 +1,4 @@
-export default [
+export const MonstersSettings = [
   {
     "deep": 1,
     "mosterLevel1Min": 1,

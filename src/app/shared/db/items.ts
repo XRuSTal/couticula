@@ -1,6 +1,6 @@
 import { ItemType } from '@enums';
 
-export default [
+export const Items = [
   {
     "type": ItemType.Weapon,
     "name": "Что-то в руках",

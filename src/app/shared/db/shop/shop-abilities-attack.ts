@@ -1,4 +1,4 @@
-export default [
+export const ShopAbilitiesAttack = [
   {
     "name": "Ослабление регенерации.",
     "description": "Снижение регенерации на 1 до конца боя",

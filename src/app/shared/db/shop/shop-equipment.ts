@@ -1,6 +1,6 @@
 import { ItemType } from '@enums';
 
-export default
+export const ShopEquipments =
 {
   "equipment": [
     {

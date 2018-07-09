@@ -1,15 +1,5 @@
-import CellSettings from './cell-settings';
-import HeroTypes from './hero-types';
-import Items from './items';
-import MonstersSettings from './monsters-settings';
-import ShopAbilities from './shop-abilities';
-import ShopEquipments from './shop-equipment';
-
-export {
-  CellSettings,
-  HeroTypes,
-  Items,
-  MonstersSettings,
-  ShopAbilities,
-  ShopEquipments,
-}
+export * from './cell-settings';
+export * from './hero-types';
+export * from './items';
+export * from './monsters-settings';
+export * from './shop';

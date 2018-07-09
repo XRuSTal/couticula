@@ -1,4 +1,4 @@
-export default [
+export const CellSettings = [
   {
     "left": true,
     "top": false,

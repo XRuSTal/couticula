@@ -1,6 +1,6 @@
 import { HeroClass } from '@enums';
 
-export default [
+export const HeroTypes = [
   {
     "heroClass": HeroClass.Warrior,
     "name": "Воин",
