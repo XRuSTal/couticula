@@ -4,8 +4,11 @@ import { Subject } from 'rxjs/Subject';
 import { of } from 'rxjs/observable/of';
 
 import { ItemType } from '@enums';
-import { Ability, Hero, ShopEquipmentHitpoints } from '@models';
-import { ShopAbilities, ShopEquipments } from '@shared/db';
+import { Hero, ShopAbilities, ShopEquipmentHitpoints } from '@models';
+import {
+  ShopAbilitiesAttack, ShopAbilitiesDefence, ShopAbilitiesHeal, ShopAbilitiesMagic, ShopAbilitiesSpecial,
+  ShopEquipments,
+} from '@shared/db';
 import { ItemFabric } from '@shared/fabrics';
 
 import { HeroService } from './hero.service';
@@ -50,8 +53,15 @@ export class ShopService {
   getShopEquipment(): Observable<ShopEquipmentHitpoints> {
     return of(ShopEquipments);
   }
-  getShopAbilites(): Observable<Ability[]> {
-    return of(ShopAbilities);
+  getShopAbilites(): Observable<ShopAbilities> {
+    const shopAbilities: ShopAbilities = {
+      attack: ShopAbilitiesAttack,
+      defense: ShopAbilitiesDefence,
+      heal: ShopAbilitiesHeal,
+      magic: ShopAbilitiesMagic,
+      special: ShopAbilitiesSpecial,
+    }
+    return of(shopAbilities);
   }
   selectHero(hero: Hero) {
     this.choosenHero = hero;

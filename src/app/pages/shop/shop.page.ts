@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AlertController, NavController, NavParams } from 'ionic-angular';
 import { Subscription } from 'rxjs/Subscription';
 
-import { Hero } from '@models';
+import { Hero, ShopAbilities } from '@models';
 import { ChoiceHeroPage, MapPage } from '@pages';
 import { HeroService, PlayerService, ShopService } from '@services';
 
@@ -13,13 +13,9 @@ import { AbilityListComponent, EquipmentComponent, HeroInfoShortComponent } from
   templateUrl: 'shop.page.html'
 })
 export class ShopPage implements OnInit, OnDestroy {
+  shopAbilities: ShopAbilities;
   tabEquipment: any = EquipmentComponent;
-  tabAttack: any = AbilityListComponent;
-  tabHeal: any = AbilityListComponent;
-  tabMagic: any = AbilityListComponent;
-  tabDefense: any = AbilityListComponent;
-  tabSpecial: any = AbilityListComponent;
-
+  tabAbilityList: any = AbilityListComponent;
   tabHeroInfo: any = HeroInfoShortComponent;
 
   isSelected: boolean;
@@ -41,8 +37,6 @@ export class ShopPage implements OnInit, OnDestroy {
     private playerService: PlayerService,
     private shopService: ShopService
   ) {
-    this.tabEquipment = EquipmentComponent;
-    this.tabAttack = AbilityListComponent;
     this.subscriptions.push(this.shopService.selectedItem$.subscribe(
       isSelected => {
         this.isSelected = isSelected;
@@ -52,6 +46,11 @@ export class ShopPage implements OnInit, OnDestroy {
       gold => {
         this.shopService.isNewHeroAvailable()
         .then(success => this.isNewHeroAvailable = success);
+      }
+    ));
+    this.subscriptions.push(this.shopService.getShopAbilites().subscribe(
+      shopAbilities => {
+        this.shopAbilities = shopAbilities;
       }
     ));
   }

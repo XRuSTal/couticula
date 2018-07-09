@@ -20,11 +20,16 @@
 
   <ion-tabs tabsPlacement="top">
     <ion-tab tabIcon="contact" small tabTitle="Снаряжение" [root]="tabEquipment"></ion-tab>
-    <ion-tab tabIcon="flame" small tabTitle="Атака" [root]="tabAttack"></ion-tab>
-    <ion-tab tabIcon="snow" small tabTitle="Защита" [root]="tabDefense"></ion-tab>
-    <ion-tab tabIcon="leaf" small tabTitle="Лечение" [root]="tabHeal"></ion-tab>
-    <ion-tab tabIcon="water" small tabTitle="Магия" [root]="tabMagic"></ion-tab>
-    <ion-tab tabIcon="star" small tabTitle="Особое" [root]="tabSpecial"></ion-tab>
+    <ion-tab tabIcon="flame" small tabTitle="Атака"
+             [root]="tabAbilityList" [rootParams]="shopAbilities.attack"></ion-tab>
+    <ion-tab tabIcon="snow" small tabTitle="Защита"
+             [root]="tabAbilityList" [rootParams]="shopAbilities.defense"></ion-tab>
+    <ion-tab tabIcon="leaf" small tabTitle="Лечение"
+             [root]="tabAbilityList" [rootParams]="shopAbilities.heal"></ion-tab>
+    <ion-tab tabIcon="water" small tabTitle="Магия"
+             [root]="tabAbilityList" [rootParams]="shopAbilities.magic"></ion-tab>
+    <ion-tab tabIcon="star" small tabTitle="Особое"
+             [root]="tabAbilityList" [rootParams]="shopAbilities.special"></ion-tab>
   </ion-tabs>
 
   <div *ngIf="selectedHero" class="buy-section">
