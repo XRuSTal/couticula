@@ -51,6 +51,7 @@ var AbilitiesShop = {
 }
 
 export class Ability {
+  type: AbilityType;
   name: string;
   description: string;
   //ability: Helpers.Func<void, AbilityResult>;

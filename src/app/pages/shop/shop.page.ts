@@ -1,5 +1,5 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { AlertController, NavController, NavParams } from 'ionic-angular';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { AlertController, NavController, NavParams, Tabs } from 'ionic-angular';
 import { Subscription } from 'rxjs/Subscription';
 
 import { Hero, ShopAbilities } from '@models';
@@ -13,6 +13,8 @@ import { AbilityListComponent, EquipmentComponent, HeroInfoShortComponent } from
   templateUrl: 'shop.page.html'
 })
 export class ShopPage implements OnInit, OnDestroy {
+  @ViewChild('shopTabs') tabRef: Tabs;
+
   shopAbilities: ShopAbilities;
   tabEquipment: any = EquipmentComponent;
   tabAbilityList: any = AbilityListComponent;
@@ -73,7 +75,11 @@ export class ShopPage implements OnInit, OnDestroy {
     this.navCtrl.push(MapPage);
   }
   buy() {
-    this.shopService.buy();
+    if (this.tabRef.getSelected().name === 'Снаряжение') {
+      this.shopService.buyEquipment();
+    } else {
+      this.shopService.buyAbility();
+    }
   }
 
   choseHero(hero: Hero) {

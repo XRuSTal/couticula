@@ -37,7 +37,8 @@ export class AbilityListComponent implements OnInit, OnDestroy {
     return this.playerService.gold >= cost;
   }
   selectAbility(ability: Ability) {
-    return this.choosenAbility = ability;
+    this.choosenAbility = ability;
+    this.shopService.selectAbility(ability);
   }
   getPropertiesDescription(ability: Ability): string[] {
     let description: string[] = [];

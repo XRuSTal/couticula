@@ -4,7 +4,7 @@ import { Subject } from 'rxjs/Subject';
 import { of } from 'rxjs/observable/of';
 
 import { ItemType } from '@enums';
-import { Hero, ShopAbilities, ShopEquipmentHitpoints } from '@models';
+import { Ability, Hero, ShopAbilities, ShopEquipmentHitpoints } from '@models';
 import {
   ShopAbilitiesAttack, ShopAbilitiesDefence, ShopAbilitiesHeal, ShopAbilitiesMagic, ShopAbilitiesSpecial,
   ShopEquipments,
@@ -19,6 +19,7 @@ import { SettingsService } from './settings.service';
 @Injectable()
 export class ShopService {
   choosenHero: Hero;
+  choosenAbility: Ability;
   choosenItem: { itemType: ItemType, item: { value: number, cost: number} };
   choosenHitpoints: { value: number, cost: number};
   //selectedHitpoints = new EventEmitter<any>();
@@ -89,6 +90,10 @@ export class ShopService {
       this.selectedItemSource.next(true);
     }
   }
+  selectAbility(ability: Ability) {
+    this.choosenAbility = ability;
+  }
+
   isNewHeroAvailable(): Promise<boolean> {
      return new Promise(resolve => {
       this.getHeroPrice().then(price => {
@@ -117,7 +122,22 @@ export class ShopService {
       .catch(() => resolve(false));
     });
   }
-  buy() {
+  buyAbility() {
+    if (this.choosenAbility != null) {
+      let currentHero = this.heroService.heroes.find(p => p.id === this.choosenHero.id);
+      if (currentHero.abilities.every(a => a !== this.choosenAbility.type)) {
+        this.playerService.decreaseGold(this.choosenAbility.cost).then(success => {
+          if (success) {
+            currentHero.abilities.push(this.choosenAbility.type);
+          }
+          this.choosenAbility = null;
+        });
+      }
+    }
+    this.selectedItemSource.next(false);
+  }
+
+  buyEquipment() {
     if (this.choosenHitpoints != null){
       this.buyHitpoint(this.choosenHero)
       .then(() => {
@@ -133,7 +153,7 @@ export class ShopService {
     this.selectedItemSource.next(false);
   }
 
-  buyHitpoint(hero: Hero): Promise<boolean>{
+  private buyHitpoint(hero: Hero): Promise<boolean>{
     return new Promise<boolean>(resolve => {
       this.getShopEquipment().subscribe(shopEquipment => {
         let hitpoints = shopEquipment.hitpoints.items.find(p => p.value === this.choosenHitpoints.value);
@@ -152,7 +172,7 @@ export class ShopService {
       });
     });
   }
-  buyItem(hero: Hero){
+  private buyItem(hero: Hero){
     return new Promise<boolean>(resolve => {
       this.getShopEquipment().subscribe(shopEquipment => {
         let item = shopEquipment.equipment
