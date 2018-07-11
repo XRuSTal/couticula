@@ -23,12 +23,8 @@
         <div class="info">
           <div *ngIf="choosenAbility">
             <div class="title">{{choosenAbility.name}}</div>
-            <div class="property"
-                  *ngFor="let prop of getPropertiesDescription(choosenAbility)">
-              {{prop}}</div>
-            <div class="description">
-              {{choosenAbility.description}}
-            </div>
+            <div class="property" *ngFor="let prop of propertiesDescription">{{prop}}</div>
+            <div class="description">{{choosenAbility.description}}</div>
           </div>
         </div>
       </ion-col>

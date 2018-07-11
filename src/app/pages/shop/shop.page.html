@@ -18,7 +18,7 @@
     </ion-buttons>
   </ion-toolbar>
 
-  <ion-tabs #shopTabs tabsPlacement="top">
+  <ion-tabs #shopTabs tabsPlacement="top" (ionChange)="onTabsChange()">
     <ion-tab tabIcon="contact" small tabTitle="Снаряжение" [root]="tabEquipment"></ion-tab>
     <ion-tab tabIcon="flame" small tabTitle="Атака"
              [root]="tabAbilityList" [rootParams]="shopAbilities.attack"></ion-tab>

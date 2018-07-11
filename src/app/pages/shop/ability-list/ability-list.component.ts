@@ -8,7 +8,7 @@ import { PlayerService, ShopService } from '@services';
 
 @Component({
   selector: 'ability-list',
-	templateUrl: 'ability-list.component.html'
+  templateUrl: 'ability-list.component.html'
 })
 
 export class AbilityListComponent implements OnInit, OnDestroy {
@@ -16,9 +16,19 @@ export class AbilityListComponent implements OnInit, OnDestroy {
   choosenAbility: Ability;
 
   private subscriptions: Subscription[] = [];
+
+  get propertiesDescription(): string[] {
+    let description: string[] = [];
+    if (this.choosenAbility.isImmediateAction)
+      description.push('Мгновенное действие');
+    if (this.choosenAbility.isAddonAction)
+      description.push('Дополнительное действие');
+    return description;
+  }
+
   constructor(
-    public navCtrl: NavController,
-    public navParams: NavParams,
+    navCtrl: NavController,
+    navParams: NavParams,
     private playerService: PlayerService,
     private shopService: ShopService,
   ) {
@@ -39,13 +49,5 @@ export class AbilityListComponent implements OnInit, OnDestroy {
   selectAbility(ability: Ability) {
     this.choosenAbility = ability;
     this.shopService.selectAbility(ability);
-  }
-  getPropertiesDescription(ability: Ability): string[] {
-    let description: string[] = [];
-    if (ability.isImmediateAction)
-      description.push('Мгновенное действие');
-    if (ability.isAddonAction)
-      description.push('Дополнительное действие');
-    return description;
   }
 }

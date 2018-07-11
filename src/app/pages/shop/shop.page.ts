@@ -58,8 +58,9 @@ export class ShopPage implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.shopService.isNewHeroAvailable()
-    .then(success => this.isNewHeroAvailable = success);
+    this.shopService.isNewHeroAvailable().then(
+      success => this.isNewHeroAvailable = success
+    );
     this.shopService.selectHero(this.heroes[0]);
   }
   ngOnDestroy() {
@@ -75,8 +76,8 @@ export class ShopPage implements OnInit, OnDestroy {
     this.navCtrl.push(MapPage);
   }
   buy() {
-    const currentTab = this.tabRef.getSelected();
-    if (currentTab.tabTitle === 'Снаряжение') {
+    const selectedTab = this.tabRef.getSelected();
+    if (selectedTab.tabTitle === 'Снаряжение') {
       this.shopService.buyEquipment();
     } else {
       this.shopService.buyAbility();
@@ -125,5 +126,10 @@ export class ShopPage implements OnInit, OnDestroy {
       });
       confirm.present();
     });
+  }
+
+  onTabsChange() {
+    let selectedTab = this.tabRef.getSelected();
+    console.log(selectedTab.index + ' - ' + selectedTab.tabTitle);
   }
 }
