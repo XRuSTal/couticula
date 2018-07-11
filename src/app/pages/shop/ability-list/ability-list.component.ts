@@ -2,8 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { Subscription } from 'rxjs/Subscription';
 
-import { AbilityCategory, AbilityType } from '@enums';
-import { Ability } from '@models';
+import { Ability, ShopAbilitiesPage } from '@models';
 import { PlayerService, ShopService } from '@services';
 
 @Component({
@@ -12,7 +11,7 @@ import { PlayerService, ShopService } from '@services';
 })
 
 export class AbilityListComponent implements OnInit, OnDestroy {
-  shopAbilities: Ability[];
+  shopAbilitiesPage: ShopAbilitiesPage;
   choosenAbility: Ability;
 
   private subscriptions: Subscription[] = [];
@@ -32,7 +31,7 @@ export class AbilityListComponent implements OnInit, OnDestroy {
     private playerService: PlayerService,
     private shopService: ShopService,
   ) {
-    this.shopAbilities = navParams.data;
+    this.shopAbilitiesPage = navParams.data;
   }
 
   ngOnInit() { }

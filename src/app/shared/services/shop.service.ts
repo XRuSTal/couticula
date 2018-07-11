@@ -4,7 +4,7 @@ import { Subject } from 'rxjs/Subject';
 import { of } from 'rxjs/observable/of';
 
 import { ItemType } from '@enums';
-import { Ability, Hero, ShopAbilities, ShopEquipmentHitpoints } from '@models';
+import { Ability, Hero, ShopAbilitiesPages, ShopEquipmentHitpoints } from '@models';
 import {
   ShopAbilitiesAttack, ShopAbilitiesDefence, ShopAbilitiesHeal, ShopAbilitiesMagic, ShopAbilitiesSpecial,
   ShopEquipments,
@@ -54,15 +54,15 @@ export class ShopService {
   getShopEquipment(): Observable<ShopEquipmentHitpoints> {
     return of(ShopEquipments);
   }
-  getShopAbilites(): Observable<ShopAbilities> {
-    const shopAbilities: ShopAbilities = {
-      attack: ShopAbilitiesAttack,
-      defense: ShopAbilitiesDefence,
-      heal: ShopAbilitiesHeal,
-      magic: ShopAbilitiesMagic,
-      special: ShopAbilitiesSpecial,
-    }
-    return of(shopAbilities);
+  getShopAbilitesPages(): Observable<ShopAbilitiesPages> {
+    const shopAbilitiesPages = new ShopAbilitiesPages(
+      ShopAbilitiesAttack,
+      ShopAbilitiesDefence,
+      ShopAbilitiesHeal,
+      ShopAbilitiesMagic,
+      ShopAbilitiesSpecial,
+    );
+    return of(shopAbilitiesPages);
   }
   selectHero(hero: Hero) {
     this.choosenHero = hero;

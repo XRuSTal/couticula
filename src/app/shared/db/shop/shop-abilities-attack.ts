@@ -1,6 +1,7 @@
 import { AbilityType } from "@app/shared/enums";
+import { Ability } from "@app/shared/models";
 
-export const ShopAbilitiesAttack = [
+export const ShopAbilitiesAttack: Ability[] = [
   {
     "type": AbilityType.HeroCastDecreaseRegeneration1,
     "name": "Ослабление регенерации.",

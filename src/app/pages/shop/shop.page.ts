@@ -2,7 +2,8 @@ import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { AlertController, NavController, NavParams, Tabs } from 'ionic-angular';
 import { Subscription } from 'rxjs/Subscription';
 
-import { Hero, ShopAbilities } from '@models';
+import { ShopPageType } from '@enums';
+import { Hero, ShopAbilitiesPages } from '@models';
 import { ChoiceHeroPage, MapPage } from '@pages';
 import { HeroService, PlayerService, ShopService } from '@services';
 
@@ -15,7 +16,7 @@ import { AbilityListComponent, EquipmentComponent, HeroInfoShortComponent } from
 export class ShopPage implements OnInit, OnDestroy {
   @ViewChild('shopTabs') tabRef: Tabs;
 
-  shopAbilities: ShopAbilities;
+  shopAbilitiesPages: ShopAbilitiesPages;
   tabEquipment: any = EquipmentComponent;
   tabAbilityList: any = AbilityListComponent;
   tabHeroInfo: any = HeroInfoShortComponent;
@@ -31,6 +32,7 @@ export class ShopPage implements OnInit, OnDestroy {
   get selectedHero(): Hero {
     return this.shopService.choosenHero;
   }
+
   constructor(
     public alertCtrl: AlertController,
     public navCtrl: NavController,
@@ -50,9 +52,9 @@ export class ShopPage implements OnInit, OnDestroy {
         .then(success => this.isNewHeroAvailable = success);
       }
     ));
-    this.subscriptions.push(this.shopService.getShopAbilites().subscribe(
+    this.subscriptions.push(this.shopService.getShopAbilitesPages().subscribe(
       shopAbilities => {
-        this.shopAbilities = shopAbilities;
+        this.shopAbilitiesPages = shopAbilities;
       }
     ));
   }

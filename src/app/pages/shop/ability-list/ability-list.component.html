@@ -4,7 +4,7 @@
     <ion-row>
       <ion-col>
         <ion-list ion-scroll class="ability-list">
-          <ion-item *ngFor="let ability of shopAbilities" class="ability"
+          <ion-item *ngFor="let ability of shopAbilitiesPage.abilities" class="ability"
                     [ngClass]="{'not-available-price': !isAvailablePrice(ability.cost),
                       'selected': isSelectedAbility(ability) }"
                     (click)="selectAbility(ability)">

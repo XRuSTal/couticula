@@ -5,3 +5,4 @@ export * from './effect-type';
 export * from './game-mode';
 export * from './hero-class';
 export * from './item-type';
+export * from './shop-page-type';
