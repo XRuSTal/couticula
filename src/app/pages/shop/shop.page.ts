@@ -75,7 +75,8 @@ export class ShopPage implements OnInit, OnDestroy {
     this.navCtrl.push(MapPage);
   }
   buy() {
-    if (this.tabRef.getSelected().name === 'Снаряжение') {
+    const currentTab = this.tabRef.getSelected();
+    if (currentTab.tabTitle === 'Снаряжение') {
       this.shopService.buyEquipment();
     } else {
       this.shopService.buyAbility();
