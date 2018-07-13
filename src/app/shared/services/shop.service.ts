@@ -3,7 +3,7 @@ import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import { of } from 'rxjs/observable/of';
 
-import { ItemType } from '@enums';
+import { ItemType, ShopPageType } from '@enums';
 import { Ability, Hero, ShopAbilitiesPages, ShopEquipmentHitpoints } from '@models';
 import {
   ShopAbilitiesAttack, ShopAbilitiesDefence, ShopAbilitiesHeal, ShopAbilitiesMagic, ShopAbilitiesSpecial,
@@ -22,6 +22,7 @@ export class ShopService {
   choosenAbility: Ability;
   choosenItem: { itemType: ItemType, item: { value: number, cost: number} };
   choosenHitpoints: { value: number, cost: number};
+  choosenPageType: ShopPageType;
   //selectedHitpoints = new EventEmitter<any>();
   selectedItem$: Observable<boolean>;
   //selectedHitpoints$: Observable<any>;
@@ -92,6 +93,9 @@ export class ShopService {
   }
   selectAbility(ability: Ability) {
     this.choosenAbility = ability;
+  }
+  selectPage(pageType: ShopPageType) {
+    this.choosenPageType = pageType;
   }
 
   isNewHeroAvailable(): Promise<boolean> {

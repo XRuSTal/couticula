@@ -132,6 +132,7 @@ export class ShopPage implements OnInit, OnDestroy {
 
   onTabsChange() {
     let selectedTab = this.tabRef.getSelected();
+    this.shopService.selectPage(selectedTab.rootParams.typePage);
     console.log(selectedTab.index + ' - ' + selectedTab.tabTitle);
   }
 }
