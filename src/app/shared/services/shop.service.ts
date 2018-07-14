@@ -203,4 +203,16 @@ export class ShopService {
       });
     });
   }
+  private isSelectedAvailable() {
+    let cost = 0;
+    switch(this.choosenPageType) {
+      case ShopPageType.Items:
+        cost = this.choosenItem ? this.choosenItem.item.cost : this.choosenHitpoints.cost;
+      break;
+      default:
+        cost = this.choosenAbility.cost;
+      break;
+    }
+    return cost < this.playerService.gold;
+  }
 }

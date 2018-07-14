@@ -29,6 +29,9 @@ export class ShopPage implements OnInit, OnDestroy {
   get heroes(): Hero[] {
     return this.heroService.heroes;
   }
+  get equipmentPage() {
+    return { typePage: ShopPageType.Items };
+  }
   get selectedHero(): Hero {
     return this.shopService.choosenHero;
   }

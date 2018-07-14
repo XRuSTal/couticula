@@ -1,4 +1,5 @@
 export enum ShopPageType {
+  Items,
   Attack,
   Defense,
   Heal,
