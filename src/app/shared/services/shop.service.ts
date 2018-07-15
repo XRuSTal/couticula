@@ -16,10 +16,16 @@ import { HttpService } from './http.service';
 import { PlayerService } from './player.service';
 import { SettingsService } from './settings.service';
 
+/**
+ * Хранит состояние магазина:
+ * - текущий раздел
+ * - выбранная позиция раздела
+ * - доступность покупки выбранной позиции
+ */
 @Injectable()
 export class ShopService {
   choosenHero: Hero;
-  choosenAbility: Ability;
+  choosenAbilities: { pageType: ShopPageType, ability: Ability }[] = [];
   choosenItem: { itemType: ItemType, item: { value: number, cost: number} };
   choosenHitpoints: { value: number, cost: number};
   choosenPageType: ShopPageType;
@@ -29,6 +35,10 @@ export class ShopService {
 
   private selectedItemSource: Subject<boolean> = new Subject<boolean>();
 
+  get choosenAbility() {
+    const ability = this.choosenAbilities.filter(p => p.pageType === this.choosenPageType);
+    return ability.length ? ability[0].ability : null;
+  }
   constructor(
     //private httpService: HttpService,
     private heroService: HeroService,
@@ -92,7 +102,15 @@ export class ShopService {
     }
   }
   selectAbility(ability: Ability) {
-    this.choosenAbility = ability;
+    const previousAbility = this.choosenAbilities.filter(p => p.pageType === this.choosenPageType);
+    if (previousAbility.length) {
+      previousAbility[0].ability = ability;
+    } else {
+      this.choosenAbilities.push({
+        pageType: this.choosenPageType,
+        ability,
+      });
+    }
   }
   selectPage(pageType: ShopPageType) {
     this.choosenPageType = pageType;
@@ -127,14 +145,15 @@ export class ShopService {
     });
   }
   buyAbility() {
-    if (this.choosenAbility != null) {
+    const ability = this.choosenAbility;
+    if (ability != null) {
       let currentHero = this.heroService.heroes.find(p => p.id === this.choosenHero.id);
-      if (currentHero.abilities.every(a => a !== this.choosenAbility.type)) {
-        this.playerService.decreaseGold(this.choosenAbility.cost).then(success => {
+      if (currentHero.abilities.every(a => a !== ability.type)) {
+        this.playerService.decreaseGold(ability.cost).then(success => {
           if (success) {
-            currentHero.abilities.push(this.choosenAbility.type);
+            currentHero.abilities.push(ability.type);
           }
-          this.choosenAbility = null;
+          this.resetCurrentAbility();
         });
       }
     }
@@ -203,7 +222,7 @@ export class ShopService {
       });
     });
   }
-  private isSelectedAvailable() {
+  private checkSelectedAvailable() {
     let cost = 0;
     switch(this.choosenPageType) {
       case ShopPageType.Items:
@@ -214,5 +233,9 @@ export class ShopService {
       break;
     }
     return cost < this.playerService.gold;
+  }
+  private resetCurrentAbility() {
+    const abilityIndex = this.choosenAbilities.findIndex(p => p.pageType === this.choosenPageType);
+    this.choosenAbilities.splice(abilityIndex, 1);
   }
 }
