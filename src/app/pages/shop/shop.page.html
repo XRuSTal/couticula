@@ -27,7 +27,7 @@
 
   <div *ngIf="selectedHero" class="buy-section">
     <button ion-button small block icon-left
-      class="buy-button" [ngClass]="{'item-selected': isSelected }"
+      class="buy-button" [ngClass]="{'item-selected': isSelectedAvailable }"
       (click)="buy()">
       Купить
     </button>

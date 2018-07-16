@@ -21,7 +21,7 @@ export class ShopPage implements OnInit, OnDestroy {
   tabAbilityList: any = AbilityListComponent;
   tabHeroInfo: any = HeroInfoShortComponent;
 
-  isSelected: boolean;
+  isSelectedAvailable: boolean;
   isNewHeroAvailable: boolean = false;
 
   private subscriptions: Subscription[] = [];
@@ -44,9 +44,9 @@ export class ShopPage implements OnInit, OnDestroy {
     private playerService: PlayerService,
     private shopService: ShopService
   ) {
-    this.subscriptions.push(this.shopService.selectedItem$.subscribe(
-      isSelected => {
-        this.isSelected = isSelected;
+    this.subscriptions.push(this.shopService.isSelectedAvailable$.subscribe(
+      isSelectedAvailable => {
+        this.isSelectedAvailable = isSelectedAvailable;
       }
     ));
     this.subscriptions.push(this.playerService.gold$.subscribe(

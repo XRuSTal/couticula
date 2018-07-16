@@ -29,11 +29,10 @@ export class ShopService {
   choosenItem: { itemType: ItemType, item: { value: number, cost: number} };
   choosenHitpoints: { value: number, cost: number};
   choosenPageType: ShopPageType;
-  //selectedHitpoints = new EventEmitter<any>();
-  selectedItem$: Observable<boolean>;
-  //selectedHitpoints$: Observable<any>;
+  isSelectedAvailable$: Observable<boolean>;
 
-  private selectedItemSource: Subject<boolean> = new Subject<boolean>();
+
+  private isSelectedAvailableSource: Subject<boolean> = new Subject<boolean>();
 
   get choosenAbility() {
     const ability = this.choosenAbilities.filter(p => p.pageType === this.choosenPageType);
@@ -45,7 +44,7 @@ export class ShopService {
     private playerService: PlayerService,
     private settingsService: SettingsService
   ){
-    this.selectedItem$ = this.selectedItemSource.asObservable();
+    this.isSelectedAvailable$ = this.isSelectedAvailableSource.asObservable();
   }
 
   getHeroPrice(): Promise<number> {
@@ -82,23 +81,23 @@ export class ShopService {
     if (this.choosenItem && this.choosenItem.itemType == itemType
       && this.choosenItem.item.value == item.value) {
         this.choosenItem = null;
-        this.selectedItemSource.next(false);
+        this.isSelectedAvailableSource.next(false);
     }
     else if (this.playerService.gold >= item.cost){
       this.choosenHitpoints = null;
       this.choosenItem = {itemType: itemType, item: item };
-      this.selectedItemSource.next(true);
+      this.checkSelectedAvailable();
     }
   }
   selectHitpoints(item: { value: number, cost: number}) {
     if (this.choosenHitpoints && this.choosenHitpoints.value == item.value) {
         this.choosenHitpoints = null;
-        this.selectedItemSource.next(false);
+        this.isSelectedAvailableSource.next(false);
     }
     else if (this.playerService.gold >= item.cost){
       this.choosenItem = null;
       this.choosenHitpoints = item;
-      this.selectedItemSource.next(true);
+      this.checkSelectedAvailable();
     }
   }
   selectAbility(ability: Ability) {
@@ -114,6 +113,7 @@ export class ShopService {
   }
   selectPage(pageType: ShopPageType) {
     this.choosenPageType = pageType;
+    this.checkSelectedAvailable();
   }
 
   isNewHeroAvailable(): Promise<boolean> {
@@ -157,7 +157,7 @@ export class ShopService {
         });
       }
     }
-    this.selectedItemSource.next(false);
+    this.isSelectedAvailableSource.next(false);
   }
 
   buyEquipment() {
@@ -173,7 +173,7 @@ export class ShopService {
         this.choosenItem = null;
       });
     }
-    this.selectedItemSource.next(false);
+    this.isSelectedAvailableSource.next(false);
   }
 
   private buyHitpoint(hero: Hero): Promise<boolean>{
@@ -223,16 +223,17 @@ export class ShopService {
     });
   }
   private checkSelectedAvailable() {
-    let cost = 0;
+    let selected: { cost: number };
     switch(this.choosenPageType) {
       case ShopPageType.Items:
-        cost = this.choosenItem ? this.choosenItem.item.cost : this.choosenHitpoints.cost;
+      selected = this.choosenItem ? this.choosenItem.item : this.choosenHitpoints;
       break;
       default:
-        cost = this.choosenAbility.cost;
+      selected = this.choosenAbility;
       break;
     }
-    return cost < this.playerService.gold;
+    const isSelectedAvailable = !!selected && !!selected.cost && selected.cost < this.playerService.gold;
+    this.isSelectedAvailableSource.next(isSelectedAvailable);
   }
   private resetCurrentAbility() {
     const abilityIndex = this.choosenAbilities.findIndex(p => p.pageType === this.choosenPageType);
