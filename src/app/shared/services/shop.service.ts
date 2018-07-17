@@ -81,29 +81,31 @@ export class ShopService {
     if (this.choosenItem && this.choosenItem.itemType == itemType
       && this.choosenItem.item.value == item.value) {
         this.choosenItem = null;
-        this.isSelectedAvailableSource.next(false);
     }
     else if (this.playerService.gold >= item.cost){
       this.choosenHitpoints = null;
       this.choosenItem = {itemType: itemType, item: item };
-      this.checkSelectedAvailable();
     }
+    this.checkSelectedAvailable();
   }
   selectHitpoints(item: { value: number, cost: number}) {
     if (this.choosenHitpoints && this.choosenHitpoints.value == item.value) {
         this.choosenHitpoints = null;
-        this.isSelectedAvailableSource.next(false);
     }
     else if (this.playerService.gold >= item.cost){
       this.choosenItem = null;
       this.choosenHitpoints = item;
-      this.checkSelectedAvailable();
     }
+    this.checkSelectedAvailable();
   }
   selectAbility(ability: Ability) {
-    const previousAbility = this.choosenAbilities.filter(p => p.pageType === this.choosenPageType);
-    if (previousAbility.length) {
-      previousAbility[0].ability = ability;
+    const previousAbility = this.choosenAbilities.findIndex(p => p.pageType === this.choosenPageType);
+    if (previousAbility >= 0) {
+      if (this.choosenAbilities[previousAbility].ability.type === ability.type) {
+        this.choosenAbilities.splice(previousAbility, 1);
+      } else {
+        this.choosenAbilities[previousAbility].ability = ability;
+      }
     } else {
       this.choosenAbilities.push({
         pageType: this.choosenPageType,

@@ -12,15 +12,19 @@ import { PlayerService, ShopService } from '@services';
 
 export class AbilityListComponent implements OnInit, OnDestroy {
   shopAbilitiesPage: ShopAbilitiesPage;
-  choosenAbility: Ability;
 
   private subscriptions: Subscription[] = [];
 
+  get choosenAbility() {
+    return this.shopService.choosenAbility;
+  }
   get propertiesDescription(): string[] {
     let description: string[] = [];
-    if (this.choosenAbility.isImmediateAction)
+    const choosenAbility = this.shopService.choosenAbility;
+
+    if (choosenAbility.isImmediateAction)
       description.push('Мгновенное действие');
-    if (this.choosenAbility.isAddonAction)
+    if (choosenAbility.isAddonAction)
       description.push('Дополнительное действие');
     return description;
   }
@@ -40,13 +44,12 @@ export class AbilityListComponent implements OnInit, OnDestroy {
   }
 
   isSelectedAbility(ability: Ability) {
-    return this.choosenAbility == ability;
+    return this.shopService.choosenAbility && this.shopService.choosenAbility.type === ability.type;
   }
   isAvailablePrice(cost: number) {
     return this.playerService.gold >= cost;
   }
   selectAbility(ability: Ability) {
-    this.choosenAbility = ability;
     this.shopService.selectAbility(ability);
   }
 }
