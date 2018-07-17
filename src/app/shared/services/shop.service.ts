@@ -110,6 +110,7 @@ export class ShopService {
         ability,
       });
     }
+    this.checkSelectedAvailable();
   }
   selectPage(pageType: ShopPageType) {
     this.choosenPageType = pageType;
