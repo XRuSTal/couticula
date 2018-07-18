@@ -19,12 +19,7 @@ export class EquipmentComponent implements OnInit, OnDestroy {
   get choosenHero(): Hero {
     return this.shopService.choosenHero;
   }
-  get equipment(): {
-        itemType: ItemType,
-        name: string,
-        img: string,
-        items: { value: number, cost: number}[]
-      }[]{
+  get equipment() {
     return this.shopEquipment.equipment;
   }
   get playerGold() {
