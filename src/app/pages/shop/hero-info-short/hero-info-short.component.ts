@@ -1,6 +1,7 @@
 import { Component,Input, OnInit } from '@angular/core';
 import { NavController } from 'ionic-angular';
 
+import { Hero } from '@models';
 import { ShopService } from '@services';
 
 @Component({
@@ -9,8 +10,9 @@ import { ShopService } from '@services';
 })
 
 export class HeroInfoShortComponent implements OnInit {
-  @Input()
-  hero: any;
+  @Input() hero: Hero;
+  @Input() isSelected: boolean;
+
   constructor(
     public navCtrl: NavController,
     public shopService: ShopService

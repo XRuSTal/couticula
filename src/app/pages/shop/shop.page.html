@@ -1,12 +1,6 @@
 
-<ion-content class="shop-background" scroll="false">
-    <!--<div class="shop-title">
-        <button ion-button small (click)="close()">
-            Закрыть
-        </button>
-        <h2 class="shop-title">Магазин</h2>
-    </div>-->
-  <ion-toolbar class="shop-title">
+<ion-content class="shop shop__background" scroll="false">
+  <ion-toolbar class="shop__title">
     <ion-buttons start>
       <gold></gold>
     </ion-buttons>
@@ -25,58 +19,31 @@
              [root]="tabAbilityList" [rootParams]="page"></ion-tab>
   </ion-tabs>
 
-  <div *ngIf="selectedHero" class="buy-section">
-    <button ion-button small block icon-left
-      class="buy-button" [ngClass]="{'item-selected': isSelectedAvailable }"
-      (click)="buy()">
-      Купить
-    </button>
-  </div>
+  <div class="shop__footer">
+    <div *ngIf="selectedHero" class="shop__footer__buy-section">
+      <button ion-button small block icon-left
+        class="buy-button" [ngClass]="{'buy-button_available': isSelectedAvailable }"
+        (click)="buy()">
+        Купить
+      </button>
+    </div>
 
-  <div class="chose-heroes">
-    <div *ngFor="let hero of heroes"
-      class="hero" [ngClass]="{'hero-selected': hero === selectedHero }"
-      (click)="choseHero(hero)">
-      <img src="{{hero.img}}" alt="" title="" />
-      <div class="hitpoints"
-        >{{hero.hitPoint}}/{{hero.hitPoint}}
-        <ion-icon name="heart" class="hitpoints-icon"></ion-icon>
+    <div class="shop__footer__heroes">
+      <hero-info-short *ngFor="let hero of heroes"
+                        [hero]="hero"
+                        [isSelected]="hero === selectedHero"
+                        class="shop__footer__heroes__hero"
+                        (click)="choseHero(hero)"></hero-info-short>
+      <div *ngIf="heroes.length < 2"
+        class="shop__footer__heroes__hero" [ngClass]="{'shop__footer__heroes_not-available': !isNewHeroAvailable }"
+        (click)="addHero(hero)">
+        <img src="assets/img/new-hero.jpg" alt="" title="" />
+      </div>
+      <div *ngIf="heroes.length < 3"
+        class="shop__footer__heroes__hero" [ngClass]="{'shop__footer__heroes_not-available': !isNewHeroAvailable }"
+        (click)="addHero(hero)">
+        <img src="assets/img/new-hero.jpg" alt="" title="" />
       </div>
     </div>
-    <div *ngIf="heroes.length < 2"
-      class="hero" [ngClass]="{'new-hero-not-available': !isNewHeroAvailable }"
-      (click)="addHero(hero)">
-      <img src="assets/img/new-hero.jpg" alt="" title="" />
-    </div>
-    <div *ngIf="heroes.length < 3"
-      class="hero" [ngClass]="{'new-hero-not-available': !isNewHeroAvailable }" (click)="addHero(hero)">
-      <img src="assets/img/new-hero.jpg" alt="" title="" />
-    </div>
   </div>
-  <!--<ion-grid class="chose-heroes">
-      <ion-row *ngIf="heroes">
-        <ion-col col-3 *ngFor="let hero of heroes">
-          <div class="hero" [ngClass]="{'hero-selected': hero === selectedHero }"
-            (click)="choseHero(hero)">
-            <img src="{{hero.img}}" alt="" title="" />
-            <div class="hitpoints"
-              >{{selectedHero.hitpoint}}/{{selectedHero.hitpoint}}
-              <ion-icon name="heart" class="hitpoints-icon"></ion-icon>
-            </div>
-          </div>
-        </ion-col>
-        <ion-col col-3>
-          <div *ngIf="heroes.length < 2" class="hero" (click)="addHero(hero)">
-            <img src="assets/img/new-hero.jpg" alt="" title="" />
-              <ion-icon name="add-circle"></ion-icon>
-          </div>
-        </ion-col>
-        <ion-col col-3>
-          <div *ngIf="heroes.length < 3" class="hero" (click)="addHero(hero)">
-            <img src="assets/img/new-hero.jpg" alt="" title="" />
-              <ion-icon name="add-circle"></ion-icon>
-          </div>
-        </ion-col>
-      </ion-row>
-  </ion-grid>-->
 </ion-content>

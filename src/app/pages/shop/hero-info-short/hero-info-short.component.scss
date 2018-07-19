@@ -1,3 +1,37 @@
-.hero-info-short {
+.hero {
 
+  img {
+    border-radius: 2vh;
+  }
+
+  &__hitpoints {
+    position: absolute;
+    bottom: 0vh;
+    width: 20vh;
+    border-radius: 0 0 2vh 2vh;
+    text-align: end;
+    font-size: 3.5vh;
+    font-weight: bold;
+    color: red;
+    background-color:rgba(0, 0, 0, 0.7);
+    &__icon{
+      color: red;
+    }
+  }
+
+  &_selected {
+    border: solid gold 1vh;
+    border-radius: 3vh;
+    font-weight: bold;
+    color: red;
+    .hero__hitpoints {
+        bottom: 1vh;
+        width: 18vh;
+        border-radius: 0 0 2vh 2vh;
+    }
+  }
+
+  &_not-available {
+    opacity: .4;
+  }
 }

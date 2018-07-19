@@ -1,1 +1,7 @@
-<Label class="hero-info-short" text="Hello HeroInfoShortComponent!"></Label>
+<div class="hero" [ngClass]="{'hero_selected': isSelected }">
+  <img src="{{hero.img}}" alt="" title="" />
+  <div class="hero__hitpoints">
+    {{hero.hitPoint}}/{{hero.hitPoint}}
+    <ion-icon name="heart" class="hero__hitpoints__icon"></ion-icon>
+  </div>
+</div>
