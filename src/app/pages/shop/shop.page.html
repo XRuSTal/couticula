@@ -35,14 +35,16 @@
                         class="shop__footer__heroes__hero"
                         (click)="choseHero(hero)"></hero-info-short>
       <div *ngIf="heroes.length < 2"
-        class="shop__footer__heroes__hero" [ngClass]="{'shop__footer__heroes_not-available': !isNewHeroAvailable }"
+        class="shop__footer__heroes__hero"
+        [ngClass]="{ 'shop__footer__heroes_not-available': !isNewHeroAvailable }"
+        [ngStyle]="{ 'backgroundImage': 'url(assets/img/new-hero.jpg)' }"
         (click)="addHero(hero)">
-        <img src="assets/img/new-hero.jpg" alt="" title="" />
       </div>
       <div *ngIf="heroes.length < 3"
-        class="shop__footer__heroes__hero" [ngClass]="{'shop__footer__heroes_not-available': !isNewHeroAvailable }"
+        class="shop__footer__heroes__hero"
+        [ngClass]="{ 'shop__footer__heroes_not-available': !isNewHeroAvailable }"
+        [ngStyle]="{ 'backgroundImage': 'url(assets/img/new-hero.jpg)' }"
         (click)="addHero(hero)">
-        <img src="assets/img/new-hero.jpg" alt="" title="" />
       </div>
     </div>
   </div>
