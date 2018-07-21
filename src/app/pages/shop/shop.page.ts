@@ -9,6 +9,8 @@ import { HeroService, PlayerService, ShopService } from '@services';
 
 import { AbilityListComponent, EquipmentComponent, HeroInfoShortComponent } from './index';
 
+const maxHeroCount = 3;
+
 @Component({
   selector: 'page-shop',
   templateUrl: 'shop.page.html'
@@ -20,7 +22,6 @@ export class ShopPage implements OnInit, OnDestroy {
   tabEquipment: any = EquipmentComponent;
   tabAbilityList: any = AbilityListComponent;
   tabHeroInfo: any = HeroInfoShortComponent;
-
   isSelectedAvailable: boolean;
   isNewHeroAvailable: boolean = false;
 
@@ -34,6 +35,12 @@ export class ShopPage implements OnInit, OnDestroy {
   }
   get selectedHero(): Hero {
     return this.shopService.choosenHero;
+  }
+  get newHeroButtons() {
+    const buttons = [];
+    buttons.length = maxHeroCount - this.heroes.length;
+    buttons.fill(null);
+    return buttons;
   }
 
   constructor(
