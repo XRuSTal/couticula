@@ -4,7 +4,7 @@ import { NavController } from 'ionic-angular';
 import { ShopPage, InventoryPage } from '@pages';
 import { GameService, SettingsService } from '@services';
 
-import { EventAttackComponent } from './index';
+import { EventAttackComponent } from './event-attack/event-attack.component';
 
 @Component({
   selector: 'page-map',

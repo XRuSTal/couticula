@@ -13,7 +13,7 @@ import { EventAttackComponent } from '../index'; // TODO: убрать зави�
 })
 
 export class FieldComponent {
-  get visibleMap () {
+  get visibleMap() {
     let map: Cell[][] = [];
     let cntX = this.settingsService.countCellVisibleX;
     let cntY = this.settingsService.countCellVisibleY;
@@ -25,14 +25,7 @@ export class FieldComponent {
         map[i][j] = this.mapService.getCell(xGlobal, yGlobal);
       }
     }
-    let mapRotate: Cell[][] = [];
-    for (let j = 0; j < cntY; j++) {
-      mapRotate[j] = [];
-      for (let i = 0; i < cntX; i++) {
-        mapRotate[j][i] = map[i][j];
-      }
-    }
-    return mapRotate;
+    return this.rotate(map);
   }
 
   constructor(
@@ -42,7 +35,7 @@ export class FieldComponent {
     public navParams: NavParams,
     private mapService: MapService,
     private settingsService: SettingsService
-  ) {}
+  ) { }
 
   ngOnInit() {
 
@@ -58,28 +51,8 @@ export class FieldComponent {
   onCellSelectedEvent(cell: Cell) {
     console.log(cell);
     if (cell) {
-      // окно нападения
-      /*let confirm = this.alertCtrl.create({
-        title: 'Монстры',
-        message: `Стоимость  золота`,
-        buttons: [
-          {
-            text: 'Отмена',
-            handler: () => {
-              console.log('Disagree clicked');
-            }
-          },
-          {
-            text: 'Напасть!',
-            handler: () => {
-              console.log('Agree clicked');
-              this.mapService.clearCell(cell.x, cell.y);
-            }
-          }
-        ]
-      });
-      confirm.present();*/
-      let popover = this.popoverCtrl.create(EventAttackComponent, { cell: cell }, { cssClass: 'popover-event-attack' });
+      let popover = this.popoverCtrl.create(EventAttackComponent, { cell: cell },
+        { cssClass: 'popover-event-attack' });
       popover.present({
         //ev: myEvent
       });
@@ -90,5 +63,16 @@ export class FieldComponent {
   swipeEvent(e) {
     console.clear();
     console.log(e);
+  }
+
+  private rotate(map: Cell[][]) {
+    let mapRotate: Cell[][] = [];
+    for (let j = 0; j < map.length; j++) {
+      mapRotate[j] = [];
+      for (let i = 0; i < map[j].length; i++) {
+        mapRotate[j][i] = map[i][j];
+      }
+    }
+    return mapRotate;
   }
 }
