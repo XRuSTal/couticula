@@ -1,68 +1,72 @@
 ability-list {
-    .ability-list {
-        max-height: 55vh;
-        min-height: 55vh;
-        overflow:scroll !important;
-        background-color:rgba(0, 0, 0, 0.4);
-        border-radius: 5vh;
-        .ability {
-            min-height: 15vh;
-            max-height: 15vh;
-            background-color: transparent;
+  .shop__ability-list {
+    max-height: 55vh;
+    min-height: 55vh;
+    overflow:scroll !important;
+    background-color:rgba(0, 0, 0, 0.4);
+    border-radius: 5vh;
+  }
 
-            .img {
-                min-height: 10vh;
-                min-width: 10vh;
-                img {
-                    height: 10vh;
-                    width: 10vh;
-                }
-            }
-            .name {
-                white-space: normal;
-                color: white;
-            }
-            .cost {
-                color: white;
-                img {
-                    height: 5vh;
-                    width: 5vh;
-                }
-            }
-        }
-        .selected {
-            font-weight: bold;
-            background-color: black;
-            border: solid gold 1vh;
-            border-radius: 5vh;
-            .name {
-                color: green;
-            }
-        }
-        .not-available-price {
-            opacity: .3;
-        }
+  .shop__ability-list__ability {
+    min-height: 15vh;
+    max-height: 15vh;
+    background-color: transparent;
+
+    &__img {
+      min-height: 10vh;
+      min-width: 10vh;
+      img {
+        height: 10vh;
+        width: 10vh;
+      }
     }
-    .info {
-        max-height: 55vh;
-        min-height: 55vh;
-        background-color:rgba(0, 0, 0, 0.4);
-        border-radius: 5vh;
-        padding: 2vh;
-        .title {
-            text-align: center;
-            font-size: 5.5vh;
-            font-weight: bold;
-            color: lightsteelblue;
-        }
-        .property {
-            text-align: center;
-            font-size: 4.0vh;
-            color: lightskyblue;
-        }
-        .description {
-            text-align: justify;
-            color: white;
-        }
+    &__name {
+      white-space: normal;
+      color: white;
     }
+    &__cost {
+      color: white;
+      img {
+        height: 5vh;
+        width: 5vh;
+      }
+    }
+
+    &_not-available-price {
+        opacity: .3;
+    }
+    &_selected {
+      font-weight: bold;
+      background-color: black;
+      border: solid gold 1vh;
+      border-radius: 5vh;
+      .name {
+        color: green;
+      }
+    }
+  }
+
+  .shop__ability-list__info {
+    max-height: 55vh;
+    min-height: 55vh;
+    background-color:rgba(0, 0, 0, 0.4);
+    border-radius: 5vh;
+    padding: 2vh;
+
+    &__title {
+      text-align: center;
+      font-size: 5.5vh;
+      font-weight: bold;
+      color: lightsteelblue;
+    }
+    &__property {
+      text-align: center;
+      font-size: 4.0vh;
+      color: lightskyblue;
+    }
+    &__description {
+      text-align: justify;
+      color: white;
+    }
+  }
 }

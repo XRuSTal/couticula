@@ -1,18 +1,21 @@
 
-<ion-content class="" scroll="false">
+<ion-content scroll="false">
   <ion-grid>
     <ion-row>
       <ion-col>
-        <ion-list ion-scroll class="ability-list">
-          <ion-item *ngFor="let ability of shopAbilitiesPage.abilities" class="ability"
-                    [ngClass]="{'not-available-price': !isAvailablePrice(ability.cost),
-                      'selected': isSelectedAbility(ability) }"
+        <ion-list ion-scroll class="shop__ability-list">
+          <ion-item *ngFor="let ability of shopAbilitiesPage.abilities"
+                    class="shop__ability-list__ability"
+                    [ngClass]="{
+                      'shop__ability-list__ability_not-available-price': !isAvailablePrice(ability.cost),
+                      'shop__ability-list__ability_selected': isSelectedAbility(ability)
+                    }"
                     (click)="selectAbility(ability)">
-            <ion-thumbnail item-left class="img">
+            <ion-thumbnail item-left class="shop__ability-list__ability__img">
               <img src="{{ability.img}}">
             </ion-thumbnail>
-            <p class="name">{{ability.name}}</p>
-            <div item-right class="cost">
+            <p class="shop__ability-list__ability__name">{{ability.name}}</p>
+            <div item-right class="shop__ability-list__ability__cost">
               {{ability.cost}}
               <img src="assets/img/gold.png" alt="" title="" />
             </div>
@@ -20,12 +23,13 @@
         </ion-list>
       </ion-col>
       <ion-col>
-        <div class="info">
-          <div *ngIf="choosenAbility">
-            <div class="title">{{choosenAbility.name}}</div>
-            <div class="property" *ngFor="let prop of propertiesDescription">{{prop}}</div>
-            <div class="description">{{choosenAbility.description}}</div>
-          </div>
+        <div class="shop__ability-list__info">
+          <ng-container *ngIf="choosenAbility">
+            <div class="shop__ability-list__info__title">{{choosenAbility.name}}</div>
+            <div class="shop__ability-list__info__property"
+                 *ngFor="let prop of propertiesDescription">{{prop}}</div>
+            <div class="shop__ability-list__info__description">{{choosenAbility.description}}</div>
+          </ng-container>
         </div>
       </ion-col>
     </ion-row>
