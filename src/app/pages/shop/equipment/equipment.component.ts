@@ -8,7 +8,7 @@ import { HeroService, PlayerService, ShopService } from '@services';
 
 @Component({
   selector: 'equipment',
-	templateUrl: 'equipment.component.html'
+  templateUrl: 'equipment.component.html'
 })
 
 export class EquipmentComponent implements OnInit, OnDestroy {
@@ -44,16 +44,16 @@ export class EquipmentComponent implements OnInit, OnDestroy {
         this.shopEquipment = shopEquipment;
         this.shopEquipment.equipment.forEach(listItems => {
           listItems.items.forEach(item => {
-            (item as any).countExists = function(): number {
+            (item as any).countExists = (): number => {
               let countInInventory = that.playerService.inventory
-              .filter(i => i.type === listItems.itemType && i.value === item.value)
-              .length;
-              let countInEquipment = that.heroService.heroes
-              .reduce((sum, hero) => {
-                return sum + hero.equipment.items
-                .filter(i => i.type == listItems.itemType && i.value == item.value)
+                .filter(i => i.type === listItems.itemType && i.value === item.value)
                 .length;
-              }, 0);
+              let countInEquipment = that.heroService.heroes
+                .reduce((sum, hero) => {
+                  return sum + hero.equipment.items
+                    .filter(i => i.type == listItems.itemType && i.value == item.value)
+                    .length;
+                }, 0);
               return countInInventory + countInEquipment;
             }
           });
@@ -74,10 +74,10 @@ export class EquipmentComponent implements OnInit, OnDestroy {
     return this.shopService.choosenHitpoints
       && this.shopService.choosenHitpoints.value == value;
   }
-  selectItem(itemType: ItemType, item: { value: number, cost: number}) {
+  selectItem(itemType: ItemType, item: { value: number, cost: number }) {
     this.shopService.selectItem(itemType, item);
   }
-  selectHitpoints(item: { value: number, cost: number}) {
+  selectHitpoints(item: { value: number, cost: number }) {
     this.shopService.selectHitpoints(item);
   }
 }

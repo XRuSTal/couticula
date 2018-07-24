@@ -1,67 +1,57 @@
 
-<ion-content class="" scroll="false">
-    <ion-grid *ngIf="shopEquipment">
-      <ion-row>
-        <ion-col>
-            <div class="type-equipment">
-              <img item-left src="assets/img/dice.png" alt="" title="" />
-            </div>
-        </ion-col>
-        <ion-col *ngFor="let e of equipment">
-            <div class="type-equipment">
-              <img item-left src="{{e.img}}" alt="" title="" />
-            </div>
-        </ion-col>
-        <!--<ion-col>
-            <div class="hitpoints">
-              <img item-left src="assets/img/dice.png" alt="" title="" />
-            </div>
-        </ion-col>-->
-        <ion-col col-3>
-            <div class="hitpoints">
-              <img item-left src="{{shopEquipment.hitpoints.img}}" alt="" title="" />
-            </div>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col>
-          <ion-list>
-            <div *ngFor="let value of [1,2,3,4,5,6]" class="value"
-              [ngClass]="{'good-item': value === 4 || value === 5,
-              'best-item': value === 6 }">
-              +{{value}}
-            </div>
-          </ion-list>
-        </ion-col>
-        <ion-col *ngFor="let e of equipment">
-          <ion-list>
-            <div *ngFor="let item of (e.items | availableItems: choosenHero)"
-              class="value" [ngClass]="{'not-available-price': item.cost > playerGold,
-              'selected-item': isSelectedItem(e.itemType, item.value) }"
-              (click)="selectItem(e.itemType, item)">
-              {{item.cost}}<img src="assets/img/gold.png" alt="" title="" />
-              <span *ngIf="!isSelectedItem(e.itemType, item.value)" class="item-count">
-                {{item.countExists() | itemCount}}
-              </span>
-            </div>
-          </ion-list>
-        </ion-col>
-        <ion-col col-3>
-          <ion-list>
-            <div *ngFor="let item of (shopEquipment.hitpoints.items | availableHitPoints: choosenHero)"
-              class="value" [ngClass]="{'not-available-price': item.cost > playerGold,
-              'selected-item': isSelectedHitpoints(item.value) }"
-              (click)="selectHitpoints(item)">
-              {{item.cost}}<img src="assets/img/gold.png" alt="" title="" /> (<span class="hitpoints-value">+{{item.value}}</span>)
-            </div>
-          </ion-list>
-        </ion-col>
-      </ion-row>
-     <!-- <ion-row *ngFor="let equipment of shopEquipment.equipment">
-        <ion-col >{{equipment.name}}</ion-col>
-        <ion-col *ngFor="let item of equipment.items">{{item.cost}}</ion-col>
-      </ion-row>-->
-    </ion-grid>
+<ion-content scroll="false">
+  <div *ngIf="shopEquipment" class="shop__equipment">
+    <div class="shop__equipment__type-equipment">
+      <img item-left src="assets/img/dice.png" alt="" title="" />
+    </div>
+    <div *ngFor="let e of equipment"
+         class="shop__equipment__type-equipment">
+      <img item-left src="{{e.img}}" alt="" title="" />
+    </div>
+    <div class="shop__equipment__hitpoints">
+      <img item-left src="{{shopEquipment.hitpoints.img}}" alt="" title="" />
+    </div>
 
-
+    <div class="shop__equipment__values">
+      <div *ngFor="let value of [1,2,3,4,5,6]"
+           class="shop__equipment__values__value"
+           [ngClass]="{
+                        'shop__equipment__values__value_quality_good': value === 4 || value === 5,
+                        'shop__equipment__values__value_quality_best': value === 6
+                      }">
+        +{{value}}
+      </div>
+    </div>
+    <div *ngFor="let e of equipment" class="shop__equipment__values">
+      <div *ngFor="let item of (e.items | availableItems: choosenHero)"
+            class="shop__equipment__values__value"
+            [ngClass]="{
+                        'shop__equipment__values__value_not-available-price': item.cost > playerGold,
+                        'shop__equipment__values__value_selected': isSelectedItem(e.itemType, item.value)
+                      }"
+            (click)="selectItem(e.itemType, item)">
+        {{item.cost}}
+        <img src="assets/img/gold.png" alt="" title="" />
+        <span *ngIf="!isSelectedItem(e.itemType, item.value)"
+              class="shop__equipment__values__value__item-count">
+          {{item.countExists() | itemCount}}
+        </span>
+      </div>
+    </div>
+    <div class="shop__equipment__values">
+      <div *ngFor="let item of (shopEquipment.hitpoints.items | availableHitPoints: choosenHero)"
+           class="shop__equipment__values__value"
+           [ngClass]="{
+                        'shop__equipment__values__value_not-available-price': item.cost > playerGold,
+                        'shop__equipment__values__value_selected': isSelectedHitpoints(item.value)
+                      }"
+           (click)="selectHitpoints(item)">
+        {{item.cost}}
+        <img src="assets/img/gold.png" alt="" title="" />
+        (<span class="shop__equipment__values__value__hitpoints-value">
+          +{{item.value}}
+        </span>)
+      </div>
+    </div>
+  </div>
 </ion-content>
