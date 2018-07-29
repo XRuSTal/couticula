@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { AlertController, NavController, NavParams, Tabs } from 'ionic-angular';
 import { Subscription } from 'rxjs/Subscription';
 
@@ -23,7 +23,7 @@ export class ShopPage implements OnInit, OnDestroy {
   tabAbilityList: any = AbilityListComponent;
   tabHeroInfo: any = HeroInfoShortComponent;
   isSelectedAvailable: boolean;
-  isNewHeroAvailable: boolean = false;
+  isNewHeroAvailable = false;
 
   private subscriptions: Subscription[] = [];
 
@@ -102,14 +102,14 @@ export class ShopPage implements OnInit, OnDestroy {
   openPage(page) {
     console.log('openPage ' + page.title);
     this.navCtrl.push(page.component);
-    //this.navCtrl.setRoot(page.component);
   }
   addHero() {
     this.shopService.getHeroPrice()
     .then(price => {
-      if (price > this.playerService.gold)
+      if (price > this.playerService.gold) {
         return;
-      let confirm = this.alertCtrl.create({
+      }
+      const confirm = this.alertCtrl.create({
         title: 'Купить нового героя?',
         message: `Стоимость ${price} золота`,
         buttons: [
@@ -123,7 +123,7 @@ export class ShopPage implements OnInit, OnDestroy {
             text: 'Купить',
             handler: () => {
               console.log('Agree clicked');
-              let navTransition = confirm.dismiss();
+              const navTransition = confirm.dismiss();
               this.shopService.buyNewHero()
               .then(success => {
                 if (success) {
@@ -132,6 +132,7 @@ export class ShopPage implements OnInit, OnDestroy {
                   });
                 }
               });
+              return false;
             }
           }
         ]
@@ -141,7 +142,7 @@ export class ShopPage implements OnInit, OnDestroy {
   }
 
   onTabsChange() {
-    let selectedTab = this.tabRef.getSelected();
+    const selectedTab = this.tabRef.getSelected();
     this.shopService.selectPage(selectedTab.rootParams.typePage);
     console.log(selectedTab.index + ' - ' + selectedTab.tabTitle);
   }
