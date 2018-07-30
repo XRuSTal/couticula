@@ -1,10 +1,10 @@
-<div class="cell">
-    <img src="{{image}}" class="cell-image" alt=" " (click)="click()">
+<div class="map__field__cell">
+    <img src="{{image}}" class="map__field__cell__background" alt=" " (click)="click()">
     <img *ngIf="existsEvent"
         src="{{imageEvent}}"
-        class="cell-event-image"
-        [ngClass]="{'exists-boss': existsBoss }"
+        class="map__field__cell__event"
+        [ngClass]="{'map__field__cell__event_exists-boss': existsBoss }"
         alt=""
         (click)="clickEvent()">
-    <!--<span *ngIf="cell" class="info">X:{{cell.x}}-Y:{{cell.y}}</span>-->
+    <!--<span *ngIf="cell" class=""map__field__cell__info">X:{{cell.x}}-Y:{{cell.y}}</span>-->
 </div>

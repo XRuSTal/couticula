@@ -6,8 +6,8 @@ import { GameMode } from '@shared/enums';
 export class SettingsService {
   apiUrl = '/api';
   gameMode: GameMode = GameMode.Hard;
-  countCellVisibleX = 11;   // TODO настроить адаптивный дизайн
-  countCellVisibleY = 6;   // TODO настроить адаптивный дизайн
+  countCellVisibleX = 11;
+  countCellVisibleY = 6;
   startGold: number = this.gameMode === GameMode.Easy ? 1500 : 4000;
   priceSecondHero = 800;
   priceThirdHero = 1000;

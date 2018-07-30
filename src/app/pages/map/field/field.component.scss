@@ -1,17 +1,12 @@
-field {
-    .field-grid { 
-        align-items: center;
 
-        .map-row {
-            display: table;
-            //width: 100%; /*Optional*/
-            //table-layout: fixed; /*Optional*/
-        }
-        .map-column {
-            display: table-cell;
-        }
-    }
+.map__field {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
 }
+
 .popover-event-attack .popover-content {
-    width: 35vw;
+  width: 35vw;
 }
