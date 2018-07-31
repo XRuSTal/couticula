@@ -1,13 +1,12 @@
 <div class="map__field"
-          [ngStyle]="{
-            'grid-template-rows': 'repeat(' + cntY + ', minmax(auto, ' + 90 / cntY + 'vh))',
-            'grid-template-columns': 'repeat(' + cntX + ', minmax(auto, ' + 90 / cntY + 'vh))'
-          }"
-          (swipe)="swipeEvent($event)">
-  <ng-container *ngFor="let row of visibleMap">
-    <div *ngFor="let cell of row">
-      <cell [cell]="cell" (clicked)="onCellSelected(cell)"
-            (clickedEvent)="onCellSelectedEvent(cell)"></cell>
-    </div>
+     [ngStyle]="{
+        'grid-template-rows': 'repeat(' + cntY + ', minmax(auto, ' + 90 / cntY + 'vh))',
+        'grid-template-columns': 'repeat(' + cntX + ', minmax(auto, ' + 90 / cntY + 'vh))'
+     }"
+     (swipe)="swipeEvent($event)">
+  <ng-container *ngFor="let cell of visibleMap">
+    <cell [cell]="cell"
+          (clicked)="onCellSelected(cell)"
+          (clickedEvent)="onCellSelectedEvent(cell)"></cell>
   </ng-container>
 </div>

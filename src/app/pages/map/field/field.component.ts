@@ -15,19 +15,17 @@ export class FieldComponent {
   get cntX() { return this.settingsService.countCellVisibleX; }
   get cntY() { return this.settingsService.countCellVisibleY; }
   get visibleMap() {
-    const map: Cell[][] = [];
+    const map: Cell[] = [];
     const cntX = this.settingsService.countCellVisibleX;
     const cntY = this.settingsService.countCellVisibleY;
-    for (let i = 0; i < cntY; i++) {
-      map[i] = []; // массив строк
+    for (let i = cntY - 1; i >= 0; i--) {
       for (let j = 0; j < cntX; j++) {
         const yGlobal = this.mapService.yCurrentMap + i - Math.floor(cntY / 2);
-        const xGlobal = this.mapService.xCurrentMap - j + Math.floor(cntX / 2);
-        map[i][j] = this.mapService.getCell(xGlobal, yGlobal);
+        const xGlobal = this.mapService.xCurrentMap + j - Math.floor(cntX / 2);
+        map.push(this.mapService.getCell(xGlobal, yGlobal));
       }
     }
     return map;
-    // return this.rotate(map);
   }
 
   constructor(
@@ -60,16 +58,5 @@ export class FieldComponent {
   swipeEvent(e) {
     console.clear();
     console.log(e);
-  }
-
-  private rotate(map: Cell[][]) {
-    const mapRotate: Cell[][] = [];
-    for (let j = 0; j < map.length; j++) {
-      mapRotate[j] = [];
-      for (let i = 0; i < map[j].length; i++) {
-        mapRotate[j][i] = map[i][j];
-      }
-    }
-    return mapRotate;
   }
 }
