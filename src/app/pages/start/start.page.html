@@ -18,8 +18,11 @@
     <!--<button ion-item *ngFor="let item of items" (click)="itemSelected(item)">
       {{ item }}
     </button> -->
-    <button ion-button block color="light" *ngFor="let page of pages" (click)="openPage(page)">{{page.title}}</button>
+    <button *ngFor="let page of pages"
+            ion-button block color="light"
+            [disabled]="page.title !== 'Single'"
+            (click)="openPage(page)">{{page.title}}</button>
   </ion-list>
 
-    
+
 </ion-content>
