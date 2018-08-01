@@ -13,8 +13,7 @@ export class CellComponent implements OnInit {
   get image() {
     if (this.cell) {
       return this.cell.img;
-    }
-    else {
+    } else {
       return 'assets/img/map/terra-incognito.jpg';
     }
   }
@@ -22,16 +21,15 @@ export class CellComponent implements OnInit {
     return this.cell && !this.cell.isWall && !this.cell.isClear;
   }
   get existsBoss(): boolean {
-    return this.cell && this.cell.existsBoss && !this.cell.isClear;
+    return this.cell && this.cell.doesBossExists && !this.cell.isClear;
   }
   get imageEvent() {
     return 'assets/img/map/event-attack.png';
   }
-  constructor() { }
 
   ngOnInit() { }
   click() {
-    //console.log('qwe');
+    // console.log('qwe');
     this.clicked.emit();
   }
   clickEvent() {

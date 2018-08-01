@@ -21,7 +21,7 @@ export class EventAttackComponent implements OnInit {
     .fill(this.monsterLevel2Image);
   }
   get existsBoss(): boolean {
-    return this.cell.existsBoss;
+    return this.cell.doesBossExists;
   }
   private get monsterLevel1Image(): string {
     return 'assets/img/map/event-attack-monster-1.png';
