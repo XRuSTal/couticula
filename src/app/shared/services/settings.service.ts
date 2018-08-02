@@ -8,13 +8,16 @@ export class SettingsService {
   gameMode: GameMode = GameMode.Hard;
   countCellVisibleX = 11;
   countCellVisibleY = 6;
-  startGold: number = this.gameMode === GameMode.Easy ? 1500 : 4000;
   priceSecondHero = 800;
   priceThirdHero = 1000;
 
   private platformWidth: number;
   private platformHeight: number;
   private headerCoefficient = 0.1; // доля карты, выделенная под меню
+
+  get startGold() {
+    return this.gameMode === GameMode.Easy ? 1500 : 4000;
+  }
 
   constructor(platform: Platform) {
     platform.ready().then((readySource) => {

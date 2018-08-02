@@ -4,15 +4,15 @@ import { Subject } from 'rxjs/Subject';
 
 import { Item } from '@models';
 
-import { HttpService } from './http.service';
 import { SettingsService } from './settings.service';
 
 @Injectable()
 export class PlayerService {
+  gold$: Observable<number>;
+
   private playerGold: number;
   private playerGoldSource: Subject<number> = new Subject<number>();
   private heroesInventory: Item[] = [];
-  gold$: Observable<number>;
 
   get gold() {
     return this.playerGold;
@@ -21,12 +21,8 @@ export class PlayerService {
     return this.heroesInventory;
   }
 
-  constructor(
-    //private httpService: HttpService,
-    private settingsService: SettingsService
-  ){
+  constructor(private settingsService: SettingsService) {
     this.gold$ = this.playerGoldSource.asObservable();
-
     this.playerGold = this.settingsService.startGold;
   }
   increaseGold(value: number): Promise<boolean> {
@@ -40,8 +36,7 @@ export class PlayerService {
     return new Promise(resolve => {
       if (value > this.playerGold) {
         resolve(false);
-      }
-      else {
+      } else {
         this.playerGold -= value;
         this.playerGoldSource.next(this.playerGold);
         resolve(true);

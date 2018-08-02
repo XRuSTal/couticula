@@ -15,7 +15,7 @@ const SHARED_SERVICES: any[] = [
   PlayerService,
   SettingsService,
   ShopService
-]
+];
 
 export {
   SHARED_SERVICES,
@@ -27,4 +27,4 @@ export {
   PlayerService,
   SettingsService,
   ShopService
-}
+};

@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers, RequestOptions, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 
@@ -8,20 +7,17 @@ import { Hero, HeroSettings, Item, Shield } from '@models';
 import { HeroTypes } from '@shared/db';
 import { HeroFabric } from '@shared/fabrics';
 
-import { HttpService } from './http.service';
 import { PlayerService } from './player.service';
-//import { ShopService } from './shop.service';
 
 @Injectable()
 export class HeroService {
   heroes: Hero[];
 
   constructor(
-    //private httpService: HttpService,
     private playerService: PlayerService
-  ){
+  ) {
     this.heroes = [];
-    //this.getHeroes().then(heroes => this.heroes = heroes.map(hero => new Hero(hero)));
+    // this.getHeroes().then(heroes => this.heroes = heroes.map(hero => new Hero(hero)));
     // обновлен список героев
     /*this.shopService.newHero.subscribe(() => {
       this.httpService.get('playerHeroes')
@@ -33,7 +29,7 @@ export class HeroService {
   addNewHero(heroClass: HeroClass): Promise<any> {
     return new Promise(resolve => {
       const newHero: Hero = HeroFabric.createHero(heroClass);
-      //newHero.uniqueAbilities = heroInfo.uniqueAbilities;
+      // newHero.uniqueAbilities = heroInfo.uniqueAbilities;
       this.heroes.push(newHero);
       resolve();
     });
@@ -43,9 +39,11 @@ export class HeroService {
   }
   equipItem(heroID: number, item: Item): Promise<boolean> {
     return new Promise<boolean>(resolve => {
-      let hero = this.heroes.find(p => p.id === heroID);
-      if (hero.maxItemValue < item.value)
-        resolve(false); // предмет не подходит
+      const hero = this.heroes.find(p => p.id === heroID);
+      if (hero.maxItemValue < item.value) {
+        // предмет не подходит
+        resolve(false);
+      }
       let oldItem: Item;
       switch (item.type) {
         case ItemType.Weapon:
@@ -71,10 +69,10 @@ export class HeroService {
         case ItemType.Shield:
           if (hero.equipment.Shield.value !== 0) {
             oldItem = hero.equipment.Shield;
-            //this.dropEffect(EffectType.Shield);
+            // this.dropEffect(EffectType.Shield);
           }
           hero.equipment.Shield = item as Shield;
-          //this.effects.push(new Effect("Щит", "Постоянное действие. Щит, броня " + item.value + ", прочность " + (item as Shield).hitpoint, ImageType.ShieldMedium, EffectType.Shield));
+          // this.effects.push(new Effect("Щит", "Постоянное действие. Щит, броня " + item.value + ", прочность " + (item as Shield).hitpoint, ImageType.ShieldMedium, EffectType.Shield));
           break;
       }
       if (oldItem.value !== 0) {

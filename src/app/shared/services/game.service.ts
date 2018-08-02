@@ -5,11 +5,8 @@ import { SettingsService } from './settings.service';
 
 @Injectable()
 export class GameService {
-  constructor(
-    private mapService: MapService,
-    private settingsService: SettingsService
-  ){
-  }
+  constructor(private mapService: MapService) {}
+
   startGame() {
     return this.mapService.createMap();
   }
