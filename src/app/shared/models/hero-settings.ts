@@ -1,4 +1,4 @@
-export enum HeroClass { Warrior, Prist, Scout };
+import { HeroClass } from '@enums';
 
 export interface HeroSettings {
   description: string;

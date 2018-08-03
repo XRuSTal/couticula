@@ -11,9 +11,29 @@ export class Hero extends Creature {
   uniqueAbilities: AbilityType[]; // уникальные способности героя
   shopHideAbilities: AbilityType[];
 
-  constructor(name: string, img: string, hitpoint: number = 0, weapon: number = 0, head: number = 0, hands: number = 0, legs: number = 0, body: number = 0) {
+  constructor(
+    name: string,
+    img: string,
+    hitpoint = 0,
+    weapon = 0,
+    head = 0,
+    hands = 0,
+    legs = 0,
+    body = 0
+  ) {
     super(name, img, hitpoint, weapon, head, hands, legs, body);
     this.addonHitPoint = 0;
+  }
+
+  static getHeroClassName(heroClass: HeroClass) {
+    switch (heroClass) {
+      case HeroClass.Prist:
+        return 'Клирик';
+      case HeroClass.Scout:
+        return 'Следопыт';
+      case HeroClass.Warrior:
+        return 'Воин';
+    }
   }
 
   setAddonHitPoints(value: number) {
