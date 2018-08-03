@@ -1,8 +1,9 @@
-import { Hero, HeroClass, HeroSettings } from '@models';
+import { HeroClass } from '@enums';
+import { Hero, HeroSettings } from '@models';
 import { HeroTypes } from '@shared/db';
 
 export class HeroFabric {
-  static GUID: number = 0;
+  static GUID = 0;
 
   static createHero(heroClass: HeroClass): Hero {
     const hero: HeroSettings = HeroTypes.find(p => p.heroClass === heroClass);
@@ -12,9 +13,9 @@ export class HeroFabric {
     newHero.heroClass = hero.heroClass;
     newHero.maxAddonHitPoint = hero.maxAddonHitPoint;
     newHero.maxItemValue = hero.maxArmorValue;
-    //newHero.inventory = hero.inventory;
-    //newHero.uniqueAbilities = hero.uniqueAbilities;
-    //newHero.shopHideAbilities = hero.shopHideAbilities;
+    // newHero.inventory = hero.inventory;
+    // newHero.uniqueAbilities = hero.uniqueAbilities;
+    // newHero.shopHideAbilities = hero.shopHideAbilities;
     return newHero;
   }
 }
