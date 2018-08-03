@@ -1,6 +1,5 @@
-
-<ion-content class="shop-background" scroll="false">
-  <ion-toolbar class="shop-title">
+<ion-content class="inventory inventory_background" scroll="false">
+  <ion-toolbar class="inventory__title">
     <ion-buttons start>
       <gold></gold>
     </ion-buttons>
@@ -12,23 +11,16 @@
     </ion-buttons>
   </ion-toolbar>
 
-  <div *ngIf="selectedHero" class="buy-section">
-    <button ion-button small block icon-left 
-      class="buy-button" [ngClass]="{'item-selected': isSelected }"
-      (click)="buy()">
-      Купить
-    </button>
+  <div class="inventory__active-hero-equipment">
+
   </div>
-  
-  <div class="chose-heroes">
-    <div *ngFor="let hero of heroes"
-      class="hero" [ngClass]="{'hero-selected': hero === selectedHero }"
-      (click)="choseHero(hero)">
-      <img src="{{hero.img}}" alt="" title="" />
-      <div class="hitpoints"
-        >{{hero.hitPoint}}/{{hero.hitPoint}}  
-        <ion-icon name="heart" class="hitpoints-icon"></ion-icon>
-      </div>
-    </div>
+
+  <div class="inventory__hero-panel">
+
   </div>
+
+  <div class="inventory__hero-equipment">
+
+  </div>
+
 </ion-content>

@@ -1,3 +1,59 @@
 page-inventory {
+  .inventory {
+
+    > .scroll-content {
+      width: 100% !important;
+      height: 100% !important;
+      display: grid;
+      grid-template-rows: auto 1fr;
+      grid-template-columns: auto auto auto;
+    }
+    .fixed-content {
+      background: url(../assets/img/backgrounds/todo.jpg) no-repeat center center fixed;
+      -webkit-background-size: cover;
+      -moz-background-size: cover;
+      -o-background-size: cover;
+      background-size: cover;
+    }
+
+    &_background {
+      background: url(../assets/img/backgrounds/todo.jpg) no-repeat center center fixed;
+      -webkit-background-size: cover;
+      -moz-background-size: cover;
+      -o-background-size: cover;
+      background-size: cover;
+    }
+
+    &__title {
+      grid-column-start: 1;
+      grid-column-end: 4;
+      min-height: auto;
+      .toolbar-background {
+        background-color: transparent;
+      }
+
+      ion-buttons button {
+        color: white;
+      }
+
+      ion-title .toolbar-title {
+        font-weight: bold;
+        color: white;
+      }
+    }
+
+    &__active-hero-equipment {
+
+    }
+
+    &__hero-panel {
+
+    }
+
+    &__hero-equipment {
+
+    }
+  }
+
 
 }
