@@ -7,7 +7,7 @@ import { Hero, ShopAbilitiesPages } from '@models';
 import { ChoiceHeroPage, MapPage } from '@pages';
 import { HeroService, PlayerService, ShopService } from '@services';
 
-import { AbilityListComponent, EquipmentComponent, HeroInfoShortComponent } from './index';
+import { AbilityListComponent, EquipmentComponent } from './index';
 
 const maxHeroCount = 3;
 
@@ -21,7 +21,6 @@ export class ShopPage implements OnInit, OnDestroy {
   shopAbilitiesPages: ShopAbilitiesPages;
   tabEquipment: any = EquipmentComponent;
   tabAbilityList: any = AbilityListComponent;
-  tabHeroInfo: any = HeroInfoShortComponent;
   isSelectedAvailable: boolean;
   isNewHeroAvailable = false;
 

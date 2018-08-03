@@ -1,4 +1,4 @@
-.shop__hero-info-short {
+.hero-info-short {
   display: grid;
   grid-template-rows: auto;
   align-items: end;
@@ -24,9 +24,5 @@
     border-radius: 3vh;
     font-weight: bold;
     color: red;
-  }
-
-  &_not-available {
-    opacity: .4;
   }
 }
