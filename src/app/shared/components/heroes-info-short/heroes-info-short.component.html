@@ -1,0 +1,14 @@
+
+<div class="heroes-info-short">
+  <hero-info-short *ngFor="let hero of heroes"
+                    [hero]="hero"
+                    [isSelected]="hero === currentHero"
+                    class="heroes-info-short__hero"
+                    (click)="selectHero(hero)"></hero-info-short>
+  <div *ngFor="let i of newHeroButtons"
+        class="heroes-info-short__new-hero"
+        [ngClass]="{ 'heroes-info-short__new-hero_not-available': !isNewHeroAvailable }"
+        [ngStyle]="{ 'backgroundImage': 'url(assets/img/new-hero.jpg)' }"
+        (click)="addHero()">
+  </div>
+</div>
