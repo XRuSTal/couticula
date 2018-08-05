@@ -77,23 +77,6 @@ page-shop {
           }
         }
       }
-
-      &__heroes {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        grid-column-gap: 3vh;
-        padding: 2vh;
-        &__hero {
-          height: 100%;
-          background-size: cover;
-          max-height: 16vh;
-          max-width: 16vh;
-          border-radius: 2vh;
-        }
-        &__hero_not-available {
-          opacity: .4;
-        }
-      }
     }
   }
 }

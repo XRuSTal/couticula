@@ -35,12 +35,6 @@ export class ShopPage implements OnInit, OnDestroy {
   get selectedHero(): Hero {
     return this.shopService.choosenHero;
   }
-  get newHeroButtons() {
-    const buttons = [];
-    buttons.length = maxHeroCount - this.heroes.length;
-    buttons.fill(null);
-    return buttons;
-  }
 
   constructor(
     public alertCtrl: AlertController,

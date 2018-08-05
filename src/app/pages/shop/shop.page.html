@@ -29,17 +29,10 @@
     </div>
 
     <div class="shop__footer__heroes">
-      <hero-info-short *ngFor="let hero of heroes"
-                        [hero]="hero"
-                        [isSelected]="hero === selectedHero"
-                        class="shop__footer__heroes__hero"
-                        (click)="choseHero(hero)"></hero-info-short>
-      <div *ngFor="let i of newHeroButtons"
-           class="shop__footer__heroes__hero"
-           [ngClass]="{ 'shop__footer__heroes_not-available': !isNewHeroAvailable }"
-           [ngStyle]="{ 'backgroundImage': 'url(assets/img/new-hero.jpg)' }"
-           (click)="addHero(hero)">
-      </div>
+      <heroes-info-short [heroes]="heroes"
+                         [isNewHeroAvailable]="isNewHeroAvailable"
+                         (addedHero)="addHero($event)"
+                         (selectedHero)="choseHero($event)"></heroes-info-short>
     </div>
   </div>
 </ion-content>

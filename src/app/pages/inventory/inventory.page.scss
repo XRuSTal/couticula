@@ -6,7 +6,7 @@ page-inventory {
       height: 100% !important;
       display: grid;
       grid-template-rows: auto 1fr;
-      grid-template-columns: auto auto auto;
+      grid-template-columns: minmax(20vw, auto) minmax(auto, 50vw) minmax(20vw, auto);
     }
     .fixed-content {
       background: url(../assets/img/backgrounds/todo.jpg) no-repeat center center fixed;
@@ -47,7 +47,19 @@ page-inventory {
     }
 
     &__hero-panel {
+      display: grid;
+      grid-template-rows: auto auto auto 20vh;
+      justify-items: center;
+      color: white;
 
+      &__image {
+        justify-items: center;
+        ion-img {
+          height: 33vh;
+          width: 33vh;
+          border-radius: 2vh;
+        }
+      }
     }
 
     &__hero-equipment {

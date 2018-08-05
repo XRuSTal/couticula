@@ -12,15 +12,25 @@
   </ion-toolbar>
 
   <div class="inventory__active-hero-equipment">
-
+    <div class="invetory__active-hero-equipment__item"></div>
   </div>
 
   <div class="inventory__hero-panel">
-
+    <div class="inventory__hero-panel__image">
+      <ion-img src="{{selectedHero.img}}" ></ion-img>
+    </div>
+    <div class="inventory__hero-panel__type">{{heroClassName}}</div>
+    <!-- <div class="inventory__hero-panel__name">{{selectedHero.name}}</div> -->
+    <div class="inventory__hero-panel__description">{{selectedHero.description}}</div>
+    <div class="inventory__hero-panel__heroes">
+      <heroes-info-short [heroes]="heroes"
+                         [isNewHeroAvailable]="false"
+                         (selectedHero)="choseHero($event)"></heroes-info-short>
+    </div>
   </div>
 
   <div class="inventory__hero-equipment">
-
+    <div class="invetory__hero-equipment__item"></div>
   </div>
 
 </ion-content>
