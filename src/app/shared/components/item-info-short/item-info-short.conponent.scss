@@ -1,0 +1,21 @@
+.item-info-short {
+  display: grid;
+  grid-template-rows: auto;
+  align-items: end;
+  height: 100%;
+  background-size: cover;
+  border-radius: 2vh;
+
+  &__value {
+    width: 100%;
+    border-radius: 0 0 2vh 2vh;
+    text-align: end;
+    font-size: 3.5vh;
+    font-weight: bold;
+    color: red;
+    background-color:rgba(0, 0, 0, 0.7);
+    &__icon{
+      color: red;
+    }
+  }
+}
