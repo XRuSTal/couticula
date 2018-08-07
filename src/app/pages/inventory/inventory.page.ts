@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
-import { Hero } from '@models';
+import { Hero, Item } from '@models';
 import { MapPage } from '@pages';
 import { HeroService } from '@services';
 
@@ -12,7 +12,13 @@ import { HeroService } from '@services';
 export class InventoryPage {
   selectedHero: Hero;
 
-  get heroes(): Hero[] {
+  get heroEquipment() {
+    return this.selectedHero.equipment.items;
+  }
+  get heroInventory() {
+  return this.selectedHero.inventory;
+  }
+  get heroes() {
     return this.heroService.heroes;
   }
   get heroClassName() {
@@ -38,5 +44,9 @@ export class InventoryPage {
   close() {
     console.log('openPage map');
     this.navCtrl.push(MapPage);
+  }
+
+  getItemTypeImage(item: Item) {
+    return Item.getItemTypeImage(item.type);
   }
 }

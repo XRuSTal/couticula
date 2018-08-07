@@ -2,12 +2,12 @@ import { Item } from './item';
 import { Shield } from './shield';
 
 export class CreatureEquipment {
-  public Head: Item;
-  public Hands: Item;
-  public Legs: Item;
-  public Body: Item;
-  public Weapon: Item;
-  public Shield: Shield;
+  Head: Item;
+  Hands: Item;
+  Legs: Item;
+  Body: Item;
+  Weapon: Item;
+  Shield: Shield;
   get items(): Item[] {
     return [
       this.Head,

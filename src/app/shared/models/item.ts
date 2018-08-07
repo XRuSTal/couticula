@@ -2,10 +2,11 @@ import { AbilityType, ItemType } from '@enums';
 import { Items } from '@shared/db';
 
 export class Item {
-  public name: string;
-  public description: string;
-  public type: ItemType;
-  public img: string;
+  name: string;
+  description: string;
+  type: ItemType;
+  img: string;
+
   private _value: number;
   get value(): number {
     return this._value;
@@ -15,14 +16,39 @@ export class Item {
         this._value = val;
     }
   }
-  constructor(type: ItemType, value: number, name: string, img: string, description: string = "") {
+
+  constructor(type: ItemType, value: number, name: string, img: string, description = '') {
     this.name = name;
     this.type = type;
     this.value = value;
     this.img = img;
     this.description = description;
   }
-  public copy() {
+
+  static getItemTypeImage(itemType: ItemType) {
+    const imageName = Item.getItemTypeImageName(itemType);
+    return `assets/img/items/${ imageName }.jpg`;
+  }
+  private static getItemTypeImageName(itemType: ItemType) {
+    switch (itemType) {
+      case ItemType.Body:
+        return 'body';
+      case ItemType.Hands:
+        return 'hand';
+      case ItemType.Head:
+        return 'head';
+      case ItemType.Legs:
+        return 'legs';
+      case ItemType.Weapon:
+        return 'weapon';
+      case ItemType.Shield:
+        return 'shield';
+      default:
+        return 'black';
+    }
+  }
+
+  copy() {
     return new Item(this.type, this.value, this.name, this.img, this.description);
   }
 
