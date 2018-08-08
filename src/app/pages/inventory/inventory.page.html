@@ -13,10 +13,11 @@
 
   <div class="inventory__hero-equipment">
     <div *ngFor="let item of heroEquipment"
-         class="invetory__hero-equipment__item">
-      <div class="inventory__hero-equipment__item__type-item"
+         class="inventory__hero-equipment__item">
+      <div class="inventory__hero-equipment__item__type"
            [ngStyle]="{ 'backgroundImage': 'url(' + getItemTypeImage(item) + ')' }"></div>
-      <item-info-short [item]='item'></item-info-short>
+      <item-info-short [item]='item'
+                       class="inventory__hero-equipment__item__value"></item-info-short>
     </div>
   </div>
 
@@ -36,7 +37,7 @@
 
   <div class="inventory__hero-inventory">
     <div *ngFor="let item of heroInventory"
-         class="invetory__hero-inventory__item">
+         class="inventory__hero-inventory__item">
       <item-info-short [item]='item'></item-info-short>
     </div>
   </div>
