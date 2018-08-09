@@ -34,7 +34,7 @@ export class Item {
       case ItemType.Body:
         return 'body';
       case ItemType.Hands:
-        return 'hand';
+        return 'hands';
       case ItemType.Head:
         return 'head';
       case ItemType.Legs:
