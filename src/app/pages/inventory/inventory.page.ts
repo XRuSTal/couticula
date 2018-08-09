@@ -16,7 +16,7 @@ export class InventoryPage {
     return this.selectedHero.equipment.items;
   }
   get heroInventory() {
-  return this.selectedHero.inventory;
+    return this.selectedHero.inventory;
   }
   get heroes() {
     return this.heroService.heroes;
@@ -48,5 +48,9 @@ export class InventoryPage {
 
   getItemTypeImage(item: Item) {
     return Item.getItemTypeImage(item.type);
+  }
+
+  equipItem(item: Item) {
+    this.heroService.equipItem(this.selectedHero.id, item);
   }
 }

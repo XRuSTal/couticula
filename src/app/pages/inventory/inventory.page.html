@@ -37,7 +37,8 @@
 
   <div class="inventory__hero-inventory">
     <div *ngFor="let item of heroInventory"
-         class="inventory__hero-inventory__item">
+         class="inventory__hero-inventory__item"
+         (click)="equipItem(item)">
       <item-info-short [item]='item'></item-info-short>
     </div>
   </div>

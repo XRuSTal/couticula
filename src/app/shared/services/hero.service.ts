@@ -75,10 +75,20 @@ export class HeroService {
           // this.effects.push(new Effect("Щит", "Постоянное действие. Щит, броня " + item.value + ", прочность " + (item as Shield).hitpoint, ImageType.ShieldMedium, EffectType.Shield));
           break;
       }
+      this.removeItemFormInventory(hero, item);
       if (oldItem.value !== 0) {
-        this.playerService.addonInventory(oldItem);
+        this.addItemToInventory(hero, oldItem);
       }
       resolve(true);
     });
+  }
+  addItemToInventory(hero: Hero, item: Item) {
+    hero.inventory.push(item);
+  }
+  removeItemFormInventory(hero: Hero, item: Item) {
+    const index = hero.inventory.findIndex(value => value === item);
+    if (index !== -1) {
+      hero.inventory.splice(index, 1);
+    }
   }
 }
