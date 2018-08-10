@@ -76,7 +76,7 @@ export class HeroService {
           break;
       }
       this.removeItemFormInventory(hero, item);
-      if (oldItem.value !== 0) {
+      if (oldItem && oldItem.value !== 0) {
         this.addItemToInventory(hero, oldItem);
       }
       resolve(true);
