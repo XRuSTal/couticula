@@ -1,6 +1,6 @@
 <div class="item-info-short"
      [ngStyle]="{ 'backgroundImage': 'url(' + item.img + ')' }">
-  <div class="item-info-short__value">
-    {{item.value}}
+  <div class="item-info-short__value"
+       [ngStyle]="{ 'background-position-x': -17.5 * (item.value - 1) + 'px' }">
   </div>
 </div>
