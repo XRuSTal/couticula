@@ -13,9 +13,7 @@ import { PlayerService } from './player.service';
 export class HeroService {
   heroes: Hero[];
 
-  constructor(
-    private playerService: PlayerService
-  ) {
+  constructor(private playerService: PlayerService) {
     this.heroes = [];
     // this.getHeroes().then(heroes => this.heroes = heroes.map(hero => new Hero(hero)));
     // обновлен список героев

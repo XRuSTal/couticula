@@ -5,28 +5,26 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { StartPage } from '@pages';
 
-
 @Component({
-  templateUrl: 'app.html'
+  templateUrl: 'app.html',
 })
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
   // make HelloIonicPage the root (or first) page
   rootPage: any = StartPage;
-  pages: Array<{title: string, component: any}>;
+  pages: Array<{ title: string; component: any }>;
 
   constructor(
     private platform: Platform,
     private menu: MenuController,
     private statusBar: StatusBar,
-    private splashScreen: SplashScreen,
+    private splashScreen: SplashScreen
   ) {
     this.initializeApp();
 
     // set our app's pages
-    this.pages = [
-    ];
+    this.pages = [];
   }
 
   initializeApp() {

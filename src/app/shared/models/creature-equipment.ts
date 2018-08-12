@@ -9,13 +9,6 @@ export class CreatureEquipment {
   Weapon: Item;
   Shield: Shield;
   get items(): Item[] {
-    return [
-      this.Head,
-      this.Hands,
-      this.Legs,
-      this.Body,
-      this.Weapon,
-      this.Shield
-    ];
+    return [this.Head, this.Hands, this.Legs, this.Body, this.Weapon, this.Shield];
   }
 }

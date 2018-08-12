@@ -48,7 +48,7 @@ var AbilitiesShop = {
     AbilityType.AddSecondHero,      // Найм второго героя
     AbilityType.AddThirdHero,       // Найм третьего героя
   ],
-}
+};
 
 export class Ability {
   type: AbilityType;

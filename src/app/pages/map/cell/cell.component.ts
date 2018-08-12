@@ -3,7 +3,7 @@ import { Cell } from '@models';
 
 @Component({
   selector: 'cell',
-  templateUrl: 'cell.component.html'
+  templateUrl: 'cell.component.html',
 })
 export class CellComponent implements OnInit {
   @Input() cell: Cell;
@@ -27,7 +27,7 @@ export class CellComponent implements OnInit {
     return 'assets/img/map/event-attack.png';
   }
 
-  ngOnInit() { }
+  ngOnInit() {}
   click() {
     // console.log('qwe');
     this.clicked.emit();

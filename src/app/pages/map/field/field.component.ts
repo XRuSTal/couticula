@@ -8,12 +8,15 @@ import { EventAttackComponent } from '../index'; // TODO: убрать зави�
 
 @Component({
   selector: 'field',
-  templateUrl: 'field.component.html'
+  templateUrl: 'field.component.html',
 })
-
 export class FieldComponent {
-  get cntX() { return this.settingsService.countCellVisibleX; }
-  get cntY() { return this.settingsService.countCellVisibleY; }
+  get cntX() {
+    return this.settingsService.countCellVisibleX;
+  }
+  get cntY() {
+    return this.settingsService.countCellVisibleY;
+  }
   get visibleMap() {
     const map: Cell[] = [];
     const cntX = this.settingsService.countCellVisibleX;
@@ -35,7 +38,7 @@ export class FieldComponent {
     public navParams: NavParams,
     private mapService: MapService,
     private settingsService: SettingsService
-  ) { }
+  ) {}
 
   onCellSelected(cell: Cell) {
     console.log(cell);
@@ -48,8 +51,11 @@ export class FieldComponent {
   onCellSelectedEvent(cell: Cell) {
     console.log(cell);
     if (cell) {
-      const popover = this.popoverCtrl.create(EventAttackComponent, { cell },
-        { cssClass: 'popover-event-attack' });
+      const popover = this.popoverCtrl.create(
+        EventAttackComponent,
+        { cell },
+        { cssClass: 'popover-event-attack' }
+      );
       popover.present({
         // ev: myEvent
       });

@@ -7,7 +7,7 @@ import { HeroService } from '@services';
 
 @Component({
   selector: 'page-inventory',
-  templateUrl: 'inventory.page.html'
+  templateUrl: 'inventory.page.html',
 })
 export class InventoryPage {
   selectedHero: Hero;
@@ -28,7 +28,7 @@ export class InventoryPage {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    private heroService: HeroService,
+    private heroService: HeroService
   ) {
     this.selectedHero = this.heroes[0];
   }

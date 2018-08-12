@@ -9,14 +9,12 @@ import { NavController, NavParams } from 'ionic-angular';
 */
 @Component({
   selector: 'page-battle',
-  templateUrl: 'battle.page.html'
+  templateUrl: 'battle.page.html',
 })
 export class BattlePage {
-
   constructor(public navCtrl: NavController, public navParams: NavParams) {}
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad BattlePage');
   }
-
 }

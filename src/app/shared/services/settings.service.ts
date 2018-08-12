@@ -20,7 +20,7 @@ export class SettingsService {
   }
 
   constructor(platform: Platform) {
-    platform.ready().then((readySource) => {
+    platform.ready().then(readySource => {
       this.platformWidth = platform.width();
       this.platformHeight = platform.height();
       this.calcFieldSize();

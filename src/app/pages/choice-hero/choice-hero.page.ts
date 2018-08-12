@@ -8,7 +8,7 @@ import { GameService, HeroService, ShopService } from '@services';
 
 @Component({
   selector: 'page-choice-hero',
-  templateUrl: 'choice-hero.page.html'
+  templateUrl: 'choice-hero.page.html',
 })
 export class ChoiceHeroPage implements OnInit, OnDestroy {
   heroes: HeroSettings[];
@@ -24,9 +24,9 @@ export class ChoiceHeroPage implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.subscriptions.push(this.heroService.getAllHeroClassesDescription().subscribe(
-      heroes => this.heroes = heroes
-    ));
+    this.subscriptions.push(
+      this.heroService.getAllHeroClassesDescription().subscribe(heroes => (this.heroes = heroes))
+    );
   }
   ngOnDestroy() {
     this.subscriptions.forEach(s => s.unsubscribe);
@@ -36,11 +36,9 @@ export class ChoiceHeroPage implements OnInit, OnDestroy {
     console.log('ionViewDidLoad ChoiceHeroPage');
   }
   selectHero(hero: HeroSettings) {
-    this.heroService.addNewHero(hero.heroClass)
-    .then(() => {
+    this.heroService.addNewHero(hero.heroClass).then(() => {
       console.log('openPage shop');
       this.navCtrl.push(ShopPage);
     });
   }
-
 }

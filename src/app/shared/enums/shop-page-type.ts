@@ -5,5 +5,4 @@ export enum ShopPageType {
   Heal,
   Magic,
   Special,
-
 }

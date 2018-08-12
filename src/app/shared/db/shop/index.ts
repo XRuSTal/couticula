@@ -1,4 +1,3 @@
-
 export * from './shop-abilities-attack';
 export * from './shop-abilities-defense';
 export * from './shop-abilities-heal';

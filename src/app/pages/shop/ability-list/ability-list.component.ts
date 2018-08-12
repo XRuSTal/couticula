@@ -7,9 +7,8 @@ import { PlayerService, ShopService } from '@services';
 
 @Component({
   selector: 'ability-list',
-  templateUrl: 'ability-list.component.html'
+  templateUrl: 'ability-list.component.html',
 })
-
 export class AbilityListComponent implements OnInit, OnDestroy {
   shopAbilitiesPage: ShopAbilitiesPage;
 
@@ -22,10 +21,8 @@ export class AbilityListComponent implements OnInit, OnDestroy {
     let description: string[] = [];
     const choosenAbility = this.shopService.choosenAbility;
 
-    if (choosenAbility.isImmediateAction)
-      description.push('Мгновенное действие');
-    if (choosenAbility.isAddonAction)
-      description.push('Дополнительное действие');
+    if (choosenAbility.isImmediateAction) description.push('Мгновенное действие');
+    if (choosenAbility.isAddonAction) description.push('Дополнительное действие');
     return description;
   }
 
@@ -33,12 +30,12 @@ export class AbilityListComponent implements OnInit, OnDestroy {
     navCtrl: NavController,
     navParams: NavParams,
     private playerService: PlayerService,
-    private shopService: ShopService,
+    private shopService: ShopService
   ) {
     this.shopAbilitiesPage = navParams.data;
   }
 
-  ngOnInit() { }
+  ngOnInit() {}
   ngOnDestroy() {
     this.subscriptions.forEach(s => s.unsubscribe);
   }

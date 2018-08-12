@@ -1,1 +1,7 @@
-export enum AbilityCategory { Attack, Defense, Heal, Magic, Special }
+export enum AbilityCategory {
+  Attack,
+  Defense,
+  Heal,
+  Magic,
+  Special,
+}

@@ -5,17 +5,16 @@ import { PlayerService } from '@services';
 
 @Component({
   selector: 'gold',
-  templateUrl: 'gold.component.html'
+  templateUrl: 'gold.component.html',
 })
 export class GoldComponent implements OnInit {
-  get gold () { return this.playerService.gold; }
+  get gold() {
+    return this.playerService.gold;
+  }
 
-  constructor(
-    public navCtrl: NavController,
-    private playerService: PlayerService
-  ) {}
+  constructor(public navCtrl: NavController, private playerService: PlayerService) {}
 
-  ngOnInit() { }
+  ngOnInit() {}
 
   // TODO: remove
   selectGold() {

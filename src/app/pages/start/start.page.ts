@@ -11,18 +11,18 @@ import { MultiplayerPage, SettingsPage, SinglePage } from '@pages';
 */
 @Component({
   selector: 'page-start',
-  templateUrl: 'start.page.html'
+  templateUrl: 'start.page.html',
 })
 export class StartPage {
   background: string;
-  pages: Array<{title: string, component: any}>;
+  pages: Array<{ title: string; component: any }>;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     this.background = 'assets/img/start-background.jpg';
     this.pages = [
       { title: 'Single', component: SinglePage },
       { title: 'Multiplayer', component: MultiplayerPage },
-      { title: 'Settings', component: SettingsPage }
+      { title: 'Settings', component: SettingsPage },
     ];
   }
 

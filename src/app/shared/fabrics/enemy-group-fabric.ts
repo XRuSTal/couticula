@@ -3,7 +3,6 @@ import { Random } from '@services';
 import { MonstersSettings } from '@shared/db';
 
 export class EnemyGroupFabric {
-
   static createMostersCasual(cell: Cell): EnemyGroupSettings {
     const deep = cell.deep;
     console.log('createMostersCasual', cell);
@@ -16,13 +15,16 @@ export class EnemyGroupFabric {
         mosterLevel1Max: deep / 3 + 1,
         mosterLevel2Min: deep / 3,
         mosterLevel2Max: deep / 3 + 1,
-        percentBoss: 33
+        percentBoss: 33,
       };
     }
 
     let mosterLevel2Count = Random.getInt(s.mosterLevel2Min, s.mosterLevel2Max);
     const diff = mosterLevel2Count - s.mosterLevel2Min;
-    const mosterLevel1Count = Random.getInt(s.mosterLevel1Min - diff * 2, s.mosterLevel1Max - diff * 2);
+    const mosterLevel1Count = Random.getInt(
+      s.mosterLevel1Min - diff * 2,
+      s.mosterLevel1Max - diff * 2
+    );
     const doesBossExist = mosterLevel2Count > 0 && s.percentBoss > Random.getInt(1, 100);
     mosterLevel2Count -= doesBossExist ? 1 : 0;
 
@@ -34,7 +36,7 @@ export class EnemyGroupFabric {
       mosterMaxCount: cell.deep,
       mosterLevel2Min: 0,
       mosterLevel2Max: cell.deep,
-      percentBoss: 10
+      percentBoss: 10,
     };
     if (s.mosterMaxCount <= 3) {
       s.mosterMaxCount += 1;
@@ -50,7 +52,8 @@ export class EnemyGroupFabric {
     }
     const mosterCount = Random.getInt(s.mosterMinCount, s.mosterMaxCount);
     let mosterLevel2Count = Random.getInt(s.mosterLevel2Min, s.mosterLevel2Max);
-    const mosterLevel1Count = mosterCount - mosterLevel2Count < 0 ? 0 : mosterCount - mosterLevel2Count;
+    const mosterLevel1Count =
+      mosterCount - mosterLevel2Count < 0 ? 0 : mosterCount - mosterLevel2Count;
     const doesBossExist = mosterLevel2Count > 0 && s.percentBoss > Random.getInt(1, 100);
     mosterLevel2Count -= doesBossExist ? 1 : 0;
 

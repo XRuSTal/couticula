@@ -13,7 +13,7 @@ const maxHeroCount = 3;
 
 @Component({
   selector: 'page-shop',
-  templateUrl: 'shop.page.html'
+  templateUrl: 'shop.page.html',
 })
 export class ShopPage implements OnInit, OnDestroy {
   @ViewChild('shopTabs') tabRef: Tabs;
@@ -44,28 +44,25 @@ export class ShopPage implements OnInit, OnDestroy {
     private playerService: PlayerService,
     private shopService: ShopService
   ) {
-    this.subscriptions.push(this.shopService.isSelectedAvailable$.subscribe(
-      isSelectedAvailable => {
+    this.subscriptions.push(
+      this.shopService.isSelectedAvailable$.subscribe(isSelectedAvailable => {
         this.isSelectedAvailable = isSelectedAvailable;
-      }
-    ));
-    this.subscriptions.push(this.playerService.gold$.subscribe(
-      gold => {
-        this.shopService.isNewHeroAvailable()
-        .then(success => this.isNewHeroAvailable = success);
-      }
-    ));
-    this.subscriptions.push(this.shopService.getShopAbilitesPages().subscribe(
-      shopAbilities => {
+      })
+    );
+    this.subscriptions.push(
+      this.playerService.gold$.subscribe(gold => {
+        this.shopService.isNewHeroAvailable().then(success => (this.isNewHeroAvailable = success));
+      })
+    );
+    this.subscriptions.push(
+      this.shopService.getShopAbilitesPages().subscribe(shopAbilities => {
         this.shopAbilitiesPages = shopAbilities;
-      }
-    ));
+      })
+    );
   }
 
   ngOnInit() {
-    this.shopService.isNewHeroAvailable().then(
-      success => this.isNewHeroAvailable = success
-    );
+    this.shopService.isNewHeroAvailable().then(success => (this.isNewHeroAvailable = success));
     this.shopService.selectHero(this.heroes[0]);
   }
   ngOnDestroy() {
@@ -97,8 +94,7 @@ export class ShopPage implements OnInit, OnDestroy {
     this.navCtrl.push(page.component);
   }
   addHero() {
-    this.shopService.getHeroPrice()
-    .then(price => {
+    this.shopService.getHeroPrice().then(price => {
       if (price > this.playerService.gold) {
         return;
       }
@@ -110,15 +106,14 @@ export class ShopPage implements OnInit, OnDestroy {
             text: 'Отмена',
             handler: () => {
               console.log('Disagree clicked');
-            }
+            },
           },
           {
             text: 'Купить',
             handler: () => {
               console.log('Agree clicked');
               const navTransition = confirm.dismiss();
-              this.shopService.buyNewHero()
-              .then(success => {
+              this.shopService.buyNewHero().then(success => {
                 if (success) {
                   navTransition.then(() => {
                     this.openPage({ title: 'ChoiceHeroPage', component: ChoiceHeroPage });
@@ -126,9 +121,9 @@ export class ShopPage implements OnInit, OnDestroy {
                 }
               });
               return false;
-            }
-          }
-        ]
+            },
+          },
+        ],
       });
       confirm.present();
     });

@@ -14,7 +14,7 @@ const SHARED_SERVICES: any[] = [
   MapService,
   PlayerService,
   SettingsService,
-  ShopService
+  ShopService,
 ];
 
 export {
@@ -26,5 +26,5 @@ export {
   Random,
   PlayerService,
   SettingsService,
-  ShopService
+  ShopService,
 };

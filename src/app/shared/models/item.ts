@@ -12,8 +12,8 @@ export class Item {
     return this._value;
   }
   set value(val: number) {
-    if (val >= 0 && val <= 6 || this.type === ItemType.Gold) {
-        this._value = val;
+    if ((val >= 0 && val <= 6) || this.type === ItemType.Gold) {
+      this._value = val;
     }
   }
 
@@ -27,7 +27,7 @@ export class Item {
 
   static getItemTypeImage(itemType: ItemType) {
     const imageName = Item.getItemTypeImageName(itemType);
-    return `assets/img/items/${ imageName }.jpg`;
+    return `assets/img/items/${imageName}.jpg`;
   }
   private static getItemTypeImageName(itemType: ItemType) {
     switch (itemType) {
@@ -52,7 +52,7 @@ export class Item {
     return new Item(this.type, this.value, this.name, this.img, this.description);
   }
 
-    /*public static createRandomEquipment(): Item {
+  /*public static createRandomEquipment(): Item {
         var type: ItemType;
         var name: string;
         var value: number = Helpers.throwDice(6);

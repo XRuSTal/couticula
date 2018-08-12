@@ -14,11 +14,11 @@ export class Creature {
   hitPoint = 0;
   maxHitPoint = 0;
   state: CreatureState = CreatureState.Alive;
-  abilities: AbilityType[] = [];          // способности существа
-  currentAbilities: AbilityType[] = [];   // способности существа, доступные во время боя
+  abilities: AbilityType[] = []; // способности существа
+  currentAbilities: AbilityType[] = []; // способности существа, доступные во время боя
   // !!! Каждая способность применяется только 1 раз за раунд
-  usedInThisBattleAbilities: number[] = [];       // способности существа, примененные в этом раунде <AbilityType, number>
-  usedInThisRoundAbilities: AbilityType[] = [];   // способности существа, примененные в этом бою
+  usedInThisBattleAbilities: number[] = []; // способности существа, примененные в этом раунде <AbilityType, number>
+  usedInThisRoundAbilities: AbilityType[] = []; // способности существа, примененные в этом бою
   // !!! Позволяет создавать однотипные эффекты с разным описанием. Если реально не пригодится - заменить на тип эффекта:
   // effects: Effect[] = [];                 // эффекты на существе.
   // currentEffects: Effect[] = [];          // эффекты на существе во время боя
@@ -28,8 +28,14 @@ export class Creature {
   lastDiceTarget: number = null;
 
   constructor(
-    name: string, img: string, hitpoint = 0,
-    weapon = 0, head = 0, hands = 0, legs = 0, body = 0
+    name: string,
+    img: string,
+    hitpoint = 0,
+    weapon = 0,
+    head = 0,
+    hands = 0,
+    legs = 0,
+    body = 0
   ) {
     this.name = name;
     this.img = img;
@@ -43,5 +49,4 @@ export class Creature {
     this.equipment.Shield = ItemFabric.createItem(ItemType.Shield, body) as Shield;
     this.abilities.push(AbilityType.MonsterBasicAttack);
   }
-
 }

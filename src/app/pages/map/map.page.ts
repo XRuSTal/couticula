@@ -8,7 +8,7 @@ import { EventAttackComponent } from './event-attack/event-attack.component';
 
 @Component({
   selector: 'page-map',
-  templateUrl: 'map.page.html'
+  templateUrl: 'map.page.html',
 })
 export class MapPage {
   constructor(
@@ -17,20 +17,17 @@ export class MapPage {
     private settingsService: SettingsService
   ) {}
 
-  ngOnInit() {
-
-  }
+  ngOnInit() {}
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad MapPage');
   }
-  openShop(){
+  openShop() {
     console.log('openPage ShopPage');
     this.navCtrl.push(ShopPage);
   }
-  openInventory(){
+  openInventory() {
     console.log('openPage InventoryPage');
     this.navCtrl.push(InventoryPage);
   }
-
 }

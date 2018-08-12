@@ -16,8 +16,16 @@ export class Cell {
     this.y = y;
   }
 
-  name(): string { return 'x' + this.x + ' y' + this.y; } // debug only
+  name(): string {
+    return 'x' + this.x + ' y' + this.y;
+  } // debug only
   monster(): string {
-    return 's-' + this.mosterLevel1Count + 'b-' + this.mosterLevel2Count + (this.doesBossExists ? 'BB' : '');
+    return (
+      's-' +
+      this.mosterLevel1Count +
+      'b-' +
+      this.mosterLevel2Count +
+      (this.doesBossExists ? 'BB' : '')
+    );
   }
 }

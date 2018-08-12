@@ -6,19 +6,16 @@ import { GameService, MapService, SettingsService } from '@services';
 
 @Component({
   selector: 'event-attack',
-  templateUrl: 'event-attack.component.html'
+  templateUrl: 'event-attack.component.html',
 })
-
 export class EventAttackComponent implements OnInit {
   cell: Cell;
 
   get monstersLevel1(): string[] {
-    return Array<string>(Math.min(5, this.cell.mosterLevel1Count))
-    .fill(this.monsterLevel1Image);
+    return Array<string>(Math.min(5, this.cell.mosterLevel1Count)).fill(this.monsterLevel1Image);
   }
   get monstersLevel2(): string[] {
-    return Array<string>(Math.min(5, this.cell.mosterLevel2Count))
-    .fill(this.monsterLevel2Image);
+    return Array<string>(Math.min(5, this.cell.mosterLevel2Count)).fill(this.monsterLevel2Image);
   }
   get existsBoss(): boolean {
     return this.cell.doesBossExists;
@@ -41,7 +38,7 @@ export class EventAttackComponent implements OnInit {
     console.log(this.cell);
   }
 
-  ngOnInit() { }
+  ngOnInit() {}
   close() {
     this.viewCtrl.dismiss();
   }

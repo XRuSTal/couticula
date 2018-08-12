@@ -9,14 +9,12 @@ import { NavController, NavParams } from 'ionic-angular';
 */
 @Component({
   selector: 'page-multiplayer',
-  templateUrl: 'multiplayer.page.html'
+  templateUrl: 'multiplayer.page.html',
 })
 export class MultiplayerPage {
-
   constructor(public navCtrl: NavController, public navParams: NavParams) {}
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad MultiplayerPage');
   }
-
 }

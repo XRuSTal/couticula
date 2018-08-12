@@ -1,1 +1,5 @@
-export enum HeroClass { Warrior, Prist, Scout };
+export enum HeroClass {
+  Warrior,
+  Prist,
+  Scout,
+}

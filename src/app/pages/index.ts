@@ -9,7 +9,6 @@ import { SinglePage } from './single/single.page';
 import { SHOP_COMPONENTS, ShopPage } from './shop';
 import { StartPage } from './start/start.page';
 
-
 const PAGES_COMPONENTS: any[] = [
   BattlePage,
   CHOICE_HERO_COMPONENTS,
@@ -21,7 +20,7 @@ const PAGES_COMPONENTS: any[] = [
   SHOP_COMPONENTS,
   SinglePage,
   StartPage,
-]
+];
 
 export {
   PAGES_COMPONENTS,
@@ -34,5 +33,5 @@ export {
   SettingsPage,
   ShopPage,
   SinglePage,
-  StartPage
-}
+  StartPage,
+};

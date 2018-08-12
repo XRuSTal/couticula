@@ -14,5 +14,4 @@ export class CardHeroComponent {
     return Hero.getHeroClassName(this.hero.heroClass);
   }
   constructor(public navCtrl: NavController, public navParams: NavParams) {}
-
 }

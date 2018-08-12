@@ -1,11 +1,16 @@
 import { Ability, ShopAbilitiesPage } from '@models';
 import { ShopPageType } from '@enums';
 
-
 export class ShopAbilitiesPages {
   pages: ShopAbilitiesPage[];
 
-  constructor(attack: Ability[], heal: Ability[], magic: Ability[], defense: Ability[], special: Ability[]) {
+  constructor(
+    attack: Ability[],
+    heal: Ability[],
+    magic: Ability[],
+    defense: Ability[],
+    special: Ability[]
+  ) {
     this.pages = [
       { typePage: ShopPageType.Attack, abilities: attack, title: 'Атака' },
       { typePage: ShopPageType.Heal, abilities: heal, title: 'Защита' },

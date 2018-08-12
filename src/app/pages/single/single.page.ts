@@ -7,23 +7,20 @@ import { GameService } from '@services';
 
 @Component({
   selector: 'page-single',
-  templateUrl: 'single.page.html'
+  templateUrl: 'single.page.html',
 })
 export class SinglePage {
-
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     private gameService: GameService
   ) {}
-  ngOnInit(){
-  }
+  ngOnInit() {}
   ionViewDidLoad() {
     console.log('ionViewDidLoad SinglePage');
     //TODO: панель загрузки
-    this.gameService.startGame()
-    .then(() => {
-      console.log('startGame')
+    this.gameService.startGame().then(() => {
+      console.log('startGame');
       this.openPage({ title: 'ChoiceHeroPage', component: ChoiceHeroPage });
     });
   }

@@ -5,5 +5,4 @@ export class Effect {
   description: string;
   //image: ImageType;
   effectType: EffectType;
-
 }

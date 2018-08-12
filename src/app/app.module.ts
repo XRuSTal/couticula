@@ -11,27 +11,15 @@ import { SHARED_SERVICES } from '@shared/services';
 import { MyApp } from './app.component';
 
 @NgModule({
-  declarations: [
-    MyApp,
-    PAGES_COMPONENTS,
-    SHARED_COMPONENTS,
-    SHARED_PIPES
-  ],
-  imports: [
-    BrowserModule,
-    IonicModule.forRoot(MyApp/*,{tabsPlacement: 'bottom'}*/)
-  ],
+  declarations: [MyApp, PAGES_COMPONENTS, SHARED_COMPONENTS, SHARED_PIPES],
+  imports: [BrowserModule, IonicModule.forRoot(MyApp /*,{tabsPlacement: 'bottom'}*/)],
   bootstrap: [IonicApp],
-  entryComponents: [
-    MyApp,
-    PAGES_COMPONENTS,
-    SHARED_COMPONENTS
-  ],
+  entryComponents: [MyApp, PAGES_COMPONENTS, SHARED_COMPONENTS],
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    { provide: ErrorHandler, useClass: IonicErrorHandler },
     SHARED_SERVICES,
-  ]
+  ],
 })
 export class AppModule {}

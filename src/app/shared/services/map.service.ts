@@ -19,8 +19,7 @@ export class MapService {
     return this.gameMap;
   }
 
-  constructor(private settingsService: SettingsService) {
-  }
+  constructor(private settingsService: SettingsService) {}
 
   createMap(): Promise<void> {
     return new Promise<void>(resolve => {
@@ -93,9 +92,10 @@ export class MapService {
     }
   }
   private createMonsterInCell(cell: Cell) {
-    const enemyGroupSettings = this.settingsService.gameMode === GameMode.Easy
-      ? EnemyGroupFabric.createMostersCasual(cell)
-      : EnemyGroupFabric.createMostersTrueHard(cell);
+    const enemyGroupSettings =
+      this.settingsService.gameMode === GameMode.Easy
+        ? EnemyGroupFabric.createMostersCasual(cell)
+        : EnemyGroupFabric.createMostersTrueHard(cell);
 
     cell.mosterLevel1Count = enemyGroupSettings.mosterLevel1Count;
     cell.mosterLevel2Count = enemyGroupSettings.mosterLevel2Count;
@@ -133,10 +133,9 @@ export class MapService {
       const wayTop = this.doesWayExist(cell, 0, 1);
       const wayBottom = this.doesWayExist(cell, 0, -1);
       const cellSettings = CellSettings.find(
-        p => p.left === wayLeft
-        && p.top === wayTop
-        && p.right === wayRight
-        && p.bottom === wayBottom);
+        p =>
+          p.left === wayLeft && p.top === wayTop && p.right === wayRight && p.bottom === wayBottom
+      );
       if (cellSettings) {
         return cellSettings.img;
       }

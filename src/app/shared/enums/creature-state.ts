@@ -1,1 +1,5 @@
-export enum CreatureState { Alive, Dead, DeadInThisTurn };
+export enum CreatureState {
+  Alive,
+  Dead,
+  DeadInThisTurn,
+}
