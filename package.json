@@ -11,8 +11,7 @@
     "build": "ionic-app-scripts build",
     "lint": "ionic-app-scripts lint",
     "ionic:build": "ionic-app-scripts build",
-    "ionic:serve": "ionic-app-scripts serve",
-    "prettier": "./node_modules/.bin/prettier --write \"**/*.ts\""
+    "ionic:serve": "ionic-app-scripts serve"
   },
   "husky": {
     "hooks": {

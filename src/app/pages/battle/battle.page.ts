@@ -15,6 +15,6 @@ export class BattlePage {
   constructor(public navCtrl: NavController, public navParams: NavParams) {}
 
   ionViewDidLoad() {
-    console.log("ionViewDidLoad BattlePage")
+    console.log('ionViewDidLoad BattlePage');
   }
 }
