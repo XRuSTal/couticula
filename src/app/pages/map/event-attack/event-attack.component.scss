@@ -1,81 +1,72 @@
-event-attack {
-    .header {
-        height: 10vh;
-        padding-top: 3vh;
-        font-size: 4vh;
-        font-weight: bold;
-        text-align: center;
-        vertical-align: bottom;
+.map__event-attack {
+
+  &__header {
+    height: 10vh;
+    padding-top: 3vh;
+    font-size: 4vh;
+    font-weight: bold;
+    text-align: center;
+    vertical-align: bottom;
+  }
+
+  &__monsters {
+    text-align: center;
+    position: relative;
+    height: 30vh;
+
+    &__boss, &__level2, &__level1 {
+      left: 0;
+      right: 0;
     }
-    .monsters{        
-        text-align: center; 
-        position: relative; 
+
+    &__boss {
+      position: absolute;
+      .cell-image {
         height: 30vh;
-
-        .monster-boss, .monster-level2, .monster-level1 {
-            left: 0;
-            right: 0;
-        }
-
-        .monster-boss {
-            position: absolute;
-            .cell-image {
-                height: 30vh;
-            }
-        }
-
-        .monster-level2 {
-            position: absolute;
-            bottom: 0;
-            .cell-image {
-                height: 21vh;
-                margin-left: -7vh;
-                margin-right: -7vh;
-            }
-        }
-        
-        .monster-level1 {
-            position: absolute;
-            bottom: 0;
-            .cell-image {
-                height: 15vh;
-                margin-left: -4vh;
-                margin-right: -4vh;
-            }
-        }
+      }
     }
-    .buttons {
-        height: 10vh;
-        display: flex;
-        overflow: hidden;
-        justify-content: space-between;
-        .buttons_start {
-            text-align: left;
-            button {
-                background-color: darkslategray;
-            }
-        }
-        .buttons_end {
-            text-align: right;
-            button {
-                background-color: red;
-            }
-        }
-        button {
-            border-radius: 1vw;
-            font-size: 3vh;
-        }
+
+    &__level2 {
+      position: absolute;
+      bottom: 0;
+      .cell-image {
+        height: 21vh;
+        margin-left: -7vh;
+        margin-right: -7vh;
+      }
     }
-    /*ion-toolbar ion-buttons {
-        height: 8vh;
-        position: relative; 
-        padding-top: 1vh;
-        padding-bottom: 1vh;
-        button {
-            position: absolute !important; 
-            bottom: 0;
-            background-color: red;
-            font-size: 4vh !important;
-        }
-    }*/
+
+    &__level1 {
+      position: absolute;
+      bottom: 0;
+      .cell-image {
+        height: 15vh;
+        margin-left: -4vh;
+        margin-right: -4vh;
+      }
+    }
+  }
+
+  &__buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-content: space-between;
+    grid-column-gap: 5vh;
+    padding: 1vh;
+    overflow: hidden;
+
+    button {
+      margin: 0;
+      width: 100%;
+      border-radius: 1vw;
+      font-size: 3vh;
+    }
+
+    .buttons_start button {
+      background-color: darkslategray;
+    }
+    .buttons_end button {
+      background-color: red;
+    }
+  }
 }
