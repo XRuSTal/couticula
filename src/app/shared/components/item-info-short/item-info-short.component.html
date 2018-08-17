@@ -1,6 +1,8 @@
 <div class="item-info-short"
+     [ngClass]="{ 'item-info-short_disabled': !hasValue }"
      [ngStyle]="{ 'backgroundImage': 'url(' + item.img + ')' }">
-  <div class="item-info-short__value"
+  <div *ngIf="hasValue"
+       class="item-info-short__value"
        [ngStyle]="{ 'background-position-x': -17.5 * (item.value - 1) + 'px' }">
   </div>
 </div>

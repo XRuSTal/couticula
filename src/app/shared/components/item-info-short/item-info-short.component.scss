@@ -7,6 +7,10 @@
   background-size: cover;
   border-radius: 2vh;
 
+  &_disabled {
+    opacity: .5;
+  }
+
   &__value {
     height: 40%;
     width: 40%;
