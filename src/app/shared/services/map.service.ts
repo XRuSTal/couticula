@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 import { Cell, EnemyGroupSettings } from '@models';
 import { CellSettings } from '@shared/db';
@@ -10,16 +12,20 @@ import { SettingsService } from './settings.service';
 
 @Injectable()
 export class MapService {
-  xCurrentMap: number;
-  yCurrentMap: number;
+  visibleMap$: Observable<Cell[]>;
 
   private gameMap: Cell[][];
+  private visibleMapSource: BehaviorSubject<Cell[]> = new BehaviorSubject<Cell[]>([]);
+  private xCurrentMap: number;
+  private yCurrentMap: number;
 
   get map() {
     return this.gameMap;
   }
 
-  constructor(private settingsService: SettingsService) {}
+  constructor(private settingsService: SettingsService) {
+    this.visibleMap$ = this.visibleMapSource.asObservable();
+  }
 
   createMap(): Promise<void> {
     return new Promise<void>(resolve => {
@@ -31,6 +37,7 @@ export class MapService {
       cell.isWall = false;
       cell.isClear = true;
       this.generateOneWay(this.xCurrentMap, this.yCurrentMap);
+      this.visibleMapSource.next(this.getVisibleMap());
       resolve();
     });
   }
@@ -52,9 +59,28 @@ export class MapService {
     if (!this.isEmptyCell(x, y) && !this.map[x][y].isWall) {
       this.map[x][y].isClear = true;
       this.generateOneWay(x, y);
+      this.visibleMapSource.next(this.getVisibleMap());
     }
   }
+  setCurrentPosition(x: number, y: number) {
+    this.xCurrentMap = x;
+    this.yCurrentMap = y;
+    this.visibleMapSource.next(this.getVisibleMap());
+  }
 
+  private getVisibleMap() {
+    const map: Cell[] = [];
+    const cntX = this.settingsService.countCellVisibleX;
+    const cntY = this.settingsService.countCellVisibleY;
+    for (let i = cntY - 1; i >= 0; i--) {
+      for (let j = 0; j < cntX; j++) {
+        const yGlobal = this.yCurrentMap + i - Math.floor(cntY / 2);
+        const xGlobal = this.xCurrentMap + j - Math.floor(cntX / 2);
+        map.push(this.getCell(xGlobal, yGlobal));
+      }
+    }
+    return map;
+  }
   private createEmptyCell(x: number, y: number): Cell {
     const cell: Cell = new Cell(x, y);
     if (this.gameMap[x] == null) {

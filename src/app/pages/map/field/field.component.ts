@@ -1,34 +1,27 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { AlertController, NavController, NavParams, PopoverController } from 'ionic-angular';
 
 import { Cell } from '@models';
 import { MapService, SettingsService } from '@services';
 
-import { EventAttackComponent } from '../index'; // TODO: убрать зависимость от родительского компонента
+import { EventAttackComponent } from '../event-attack/event-attack.component';
+import { Subscription } from '../../../../../node_modules/rxjs/Subscription';
 
 @Component({
   selector: 'field',
   templateUrl: 'field.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FieldComponent {
+export class FieldComponent implements OnInit, OnDestroy {
+  visibleMap: Cell[];
+
+  private subscriptions: Subscription[] = [];
+
   get cntX() {
     return this.settingsService.countCellVisibleX;
   }
   get cntY() {
     return this.settingsService.countCellVisibleY;
-  }
-  get visibleMap() {
-    const map: Cell[] = [];
-    const cntX = this.settingsService.countCellVisibleX;
-    const cntY = this.settingsService.countCellVisibleY;
-    for (let i = cntY - 1; i >= 0; i--) {
-      for (let j = 0; j < cntX; j++) {
-        const yGlobal = this.mapService.yCurrentMap + i - Math.floor(cntY / 2);
-        const xGlobal = this.mapService.xCurrentMap + j - Math.floor(cntX / 2);
-        map.push(this.mapService.getCell(xGlobal, yGlobal));
-      }
-    }
-    return map;
   }
 
   constructor(
@@ -36,16 +29,27 @@ export class FieldComponent {
     public popoverCtrl: PopoverController,
     public navCtrl: NavController,
     public navParams: NavParams,
+    private cd: ChangeDetectorRef,
     private mapService: MapService,
     private settingsService: SettingsService
   ) {}
 
+  ngOnInit() {
+    this.subscriptions.push(this.mapService.visibleMap$.subscribe(map => {
+      this.visibleMap = map;
+      this.cd.markForCheck();
+    }));
+  }
+  ngOnDestroy() {
+    this.subscriptions.forEach(s => s.unsubscribe());
+  }
+
   onCellSelected(cell: Cell) {
     console.log(cell);
     if (cell) {
-      this.mapService.xCurrentMap = cell.x;
-      this.mapService.yCurrentMap = cell.y;
+      this.mapService.setCurrentPosition(cell.x, cell.y);
       this.mapService.clearCell(cell.x, cell.y);
+      this.cd.markForCheck();
     }
   }
   onCellSelectedEvent(cell: Cell) {

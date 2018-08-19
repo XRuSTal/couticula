@@ -1,11 +1,12 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 import { Cell } from '@models';
 
 @Component({
   selector: 'cell',
   templateUrl: 'cell.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CellComponent implements OnInit {
+export class CellComponent implements OnChanges {
   @Input() cell: Cell;
   @Output() clicked = new EventEmitter();
   @Output() clickedEvent = new EventEmitter();
@@ -27,7 +28,12 @@ export class CellComponent implements OnInit {
     return 'assets/img/map/event-attack.png';
   }
 
-  ngOnInit() {}
+  constructor(private cd: ChangeDetectorRef) {
+  }
+
+  ngOnChanges() {
+    this.cd.markForCheck();
+  }
   click() {
     // console.log('qwe');
     this.clicked.emit();
