@@ -1,4 +1,10 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { AlertController, NavController, NavParams, PopoverController } from 'ionic-angular';
 
 import { Cell } from '@models';
@@ -35,10 +41,12 @@ export class FieldComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.subscriptions.push(this.mapService.visibleMap$.subscribe(map => {
-      this.visibleMap = map;
-      this.cd.markForCheck();
-    }));
+    this.subscriptions.push(
+      this.mapService.visibleMap$.subscribe(map => {
+        this.visibleMap = map;
+        this.cd.markForCheck();
+      })
+    );
   }
   ngOnDestroy() {
     this.subscriptions.forEach(s => s.unsubscribe());
@@ -49,7 +57,6 @@ export class FieldComponent implements OnInit, OnDestroy {
     if (cell) {
       this.mapService.setCurrentPosition(cell.x, cell.y);
       this.mapService.clearCell(cell.x, cell.y);
-      this.cd.markForCheck();
     }
   }
   onCellSelectedEvent(cell: Cell) {

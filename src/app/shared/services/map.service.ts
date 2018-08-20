@@ -57,6 +57,7 @@ export class MapService {
   }
   clearCell(x: number, y: number) {
     if (!this.isEmptyCell(x, y) && !this.map[x][y].isWall) {
+      this.map[x][y] = this.map[x][y].copy();
       this.map[x][y].isClear = true;
       this.generateOneWay(x, y);
       this.visibleMapSource.next(this.getVisibleMap());

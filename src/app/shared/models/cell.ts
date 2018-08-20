@@ -16,6 +16,11 @@ export class Cell {
     this.y = y;
   }
 
+  copy() {
+    const cell = new Cell(this.x, this.y);
+    Object.assign(cell, this);
+    return cell;
+  }
   name(): string {
     return 'x' + this.x + ' y' + this.y;
   } // debug only
