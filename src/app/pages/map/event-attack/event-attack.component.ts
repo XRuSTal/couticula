@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { NavParams, ViewController } from 'ionic-angular';
+import { NavParams, PopoverController, ViewController } from 'ionic-angular';
 
 import { Cell } from '@models';
 import { GameService, MapService, SettingsService } from '@services';
+
+import { EventWinComponent } from '../event-win/event-win.component';
 
 @Component({
   selector: 'event-attack',
@@ -32,6 +34,7 @@ export class EventAttackComponent implements OnInit {
   constructor(
     private params: NavParams,
     public viewCtrl: ViewController,
+    public popoverCtrl: PopoverController,
     private mapService: MapService
   ) {
     this.cell = this.params.get('cell');
@@ -45,5 +48,14 @@ export class EventAttackComponent implements OnInit {
   attack() {
     this.mapService.clearCell(this.cell.x, this.cell.y);
     this.viewCtrl.dismiss();
+
+    const popover = this.popoverCtrl.create(
+      EventWinComponent,
+      { cell: this.cell },
+      { cssClass: 'popover-event-win' }
+    );
+    popover.present({
+      // ev: myEvent
+    });
   }
 }

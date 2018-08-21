@@ -1,0 +1,40 @@
+.map__event-attack {
+
+  &__header {
+    height: 10vh;
+    padding-top: 3vh;
+    font-size: 4vh;
+    font-weight: bold;
+    text-align: center;
+    vertical-align: bottom;
+  }
+
+  &__treasures {
+    text-align: center;
+    position: relative;
+    height: 30vh;
+  }
+
+  &__buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-content: space-between;
+    grid-column-gap: 5vh;
+    padding: 1vh;
+    overflow: hidden;
+
+    button {
+      margin: 0;
+      width: 100%;
+      border-radius: 1vw;
+      font-size: 3vh;
+    }
+
+    .buttons_start button {
+      background-color: darkslategray;
+    }
+    .buttons_end button {
+      background-color: red;
+    }
+  }
+}
