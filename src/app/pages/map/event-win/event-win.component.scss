@@ -1,4 +1,4 @@
-.map__event-attack {
+.map__event-win {
 
   &__header {
     height: 10vh;
@@ -10,9 +10,39 @@
   }
 
   &__treasures {
+    display: grid;
+    grid-template-rows: auto auto auto;
     text-align: center;
-    position: relative;
-    height: 30vh;
+    padding: 2vh;
+
+    &__title {
+      padding: 1vh;
+    }
+
+    &__items {
+      display: grid;
+      grid-template-columns: repeat(5, 12vh);
+      grid-template-rows: repeat(2, 12vh);
+      grid-column-gap: 2vh;
+      grid-row-gap: 2vh;
+      justify-items: center;
+
+      &__item {
+        height: 12vh;
+        width: 12vh;
+        border-radius: 2vh;
+      }
+    }
+
+    &__heroes {
+      &__description {
+
+      }
+      &__list {
+        display: block;
+        height: 20vh;
+      }
+    }
   }
 
   &__buttons {
@@ -28,13 +58,6 @@
       width: 100%;
       border-radius: 1vw;
       font-size: 3vh;
-    }
-
-    .buttons_start button {
-      background-color: darkslategray;
-    }
-    .buttons_end button {
-      background-color: red;
     }
   }
 }

@@ -5,6 +5,8 @@ import { Cell } from '@models';
 import { GameService, MapService, SettingsService } from '@services';
 
 import { EventWinComponent } from '../event-win/event-win.component';
+import { ItemFabric } from '@app/shared/fabrics';
+import { ItemType } from '@app/shared/enums';
 
 @Component({
   selector: 'event-attack',
@@ -49,9 +51,10 @@ export class EventAttackComponent implements OnInit {
     this.mapService.clearCell(this.cell.x, this.cell.y);
     this.viewCtrl.dismiss();
 
+    const treasures = [ItemFabric.createItem(ItemType.Weapon, 6), ItemFabric.createItem(ItemType.Shield, 5, 4)];
     const popover = this.popoverCtrl.create(
       EventWinComponent,
-      { cell: this.cell },
+      { treasures },
       { cssClass: 'popover-event-win' }
     );
     popover.present({
