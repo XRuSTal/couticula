@@ -41,6 +41,7 @@ export class HeroService {
       if (hero.maxItemValue < item.value) {
         // предмет не подходит
         resolve(false);
+        return;
       }
       let oldItem: Item;
       switch (item.type) {

@@ -11,6 +11,8 @@ import { HeroService, MapService } from '@services';
 export class EventWinComponent implements OnInit {
   treasures: Item[];
 
+  private selectedHero: Hero;
+
   get heroes() {
     return this.heroService.heroes;
   }
@@ -22,6 +24,7 @@ export class EventWinComponent implements OnInit {
     private mapService: MapService
   ) {
     this.treasures = this.params.get('treasures');
+    this.selectedHero = this.heroes[0];
   }
 
   ngOnInit() {}
@@ -31,8 +34,14 @@ export class EventWinComponent implements OnInit {
   }
 
   choseHero(hero: Hero) {
-    this.treasures.forEach(item => {
-      this.heroService.equipItem(hero.id, item);
-    });
+    this.selectedHero = hero;
+  }
+
+  choseItem(index: number) {
+    if (this.treasures.length <= index) {
+      return;
+    }
+    const item = this.treasures.splice(index, 1)[0];
+    this.heroService.addItemToInventory(this.selectedHero, item);
   }
 }

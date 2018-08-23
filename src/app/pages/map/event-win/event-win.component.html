@@ -5,7 +5,8 @@
 <div class="map__event-win__content">
   <div class="map__event-win__content__heroes">
     <div class="map__event-win__content__heroes__description">Какому герою отдать:</div>
-    <heroes-info-short [heroes]="heroes" [isNewHeroAvailable]="false"
+    <heroes-info-short [heroes]="heroes"
+                       [isNewHeroAvailable]="false"
                        class="map__event-win__content__heroes__list"
                        (selectedHero)="choseHero($event)"></heroes-info-short>
   </div>
@@ -14,8 +15,9 @@
     <div class="map__event-win__content__treasures__description">Сокровища</div>
 
     <div class="map__event-win__content__treasures__items">
-      <div *ngFor="let item of treasures" class="map__event-win__content__treasures__items__item">
-        <item-info-short [item]='item'></item-info-short>
+      <div *ngFor="let item of treasures; index as i" class="map__event-win__content__treasures__items__item">
+        <item-info-short [item]='item'
+                         (click)="choseItem(i)"></item-info-short>
       </div>
     </div>
   </div>
