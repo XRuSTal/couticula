@@ -1,6 +1,7 @@
-import { NgModule, ErrorHandler } from '@angular/core';
+import { ErrorHandler, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
@@ -12,7 +13,11 @@ import { MyApp } from './app.component';
 
 @NgModule({
   declarations: [MyApp, PAGES_COMPONENTS, SHARED_COMPONENTS, SHARED_PIPES],
-  imports: [BrowserModule, IonicModule.forRoot(MyApp /*,{tabsPlacement: 'bottom'}*/)],
+  imports: [
+    BrowserModule,
+    BrowserAnimationsModule,
+    IonicModule.forRoot(MyApp /*,{tabsPlacement: 'bottom'}*/),
+  ],
   bootstrap: [IonicApp],
   entryComponents: [MyApp, PAGES_COMPONENTS, SHARED_COMPONENTS],
   providers: [

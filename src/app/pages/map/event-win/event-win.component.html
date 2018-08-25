@@ -15,7 +15,9 @@
     <div class="map__event-win__content__treasures__description">Сокровища</div>
 
     <div class="map__event-win__content__treasures__items">
-      <div *ngFor="let item of treasures; index as i" class="map__event-win__content__treasures__items__item">
+      <div *ngFor="let item of treasures; index as i"
+           [@scaleInOut]="'in'"
+           class="map__event-win__content__treasures__items__item">
         <item-info-short [item]='item'
                          (click)="choseItem(i)"></item-info-short>
       </div>
