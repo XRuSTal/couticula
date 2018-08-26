@@ -43,7 +43,6 @@ export class EventWinComponent implements OnInit {
 
   choseHero(hero: Hero) {
     this.selectedHero = hero;
-    this.treasures.push(...this.params.get('treasures'));
   }
 
   choseItem(index: number) {
