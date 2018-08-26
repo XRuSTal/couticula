@@ -11,7 +11,7 @@ import { HeroService, MapService } from '@services';
   animations: [
     trigger('scaleInOut', [
       state('in', style({ transform: 'scale(1)' })),
-      transition('void => *', [style({ transform: 'scale(0)' }), animate(100)]),
+      transition('void => *', [style({ transform: 'scale(0)' }), animate(500)]),
       transition('* => void', [animate(100, style({ transform: 'scale(0)' }))]),
     ]),
   ],
@@ -32,6 +32,7 @@ export class EventWinComponent implements OnInit {
     private mapService: MapService
   ) {
     this.treasures = this.params.get('treasures');
+    this.selectedHero = this.heroes[0];
   }
 
   ngOnInit() {}
