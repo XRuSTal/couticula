@@ -7,8 +7,7 @@ import { Item } from '@models';
   templateUrl: 'item-info-short.component.html',
 })
 export class ItemInfoShortComponent {
-  @Input()
-  item: Item;
+  @Input() item: Item;
 
   get hasValue() {
     return this.item.value !== 0;
