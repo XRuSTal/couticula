@@ -3,6 +3,9 @@
      [ngStyle]="{ 'backgroundImage': 'url(' + item.img + ')' }">
   <div *ngIf="hasValue"
        class="item-info-short__value"
-       [ngStyle]="{ 'backgroundImage': 'url(assets/img/dices/dice' + item.value + '.png)' }">
+       [ngStyle]="{
+          'backgroundImage': 'url(assets/img/dices/dice' + item.value + '.png)',
+          'backgroundColor': backgroundColor
+        }">
   </div>
 </div>

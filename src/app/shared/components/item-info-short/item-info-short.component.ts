@@ -9,6 +9,9 @@ import { Item } from '@models';
 export class ItemInfoShortComponent {
   @Input() item: Item;
 
+  get backgroundColor() {
+    return Item.getItemColor(this.item.value);
+  }
   get hasValue() {
     return this.item.value !== 0;
   }

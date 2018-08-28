@@ -13,13 +13,11 @@
     </div>
 
     <div class="shop__equipment__values">
-      <div *ngFor="let value of [1,2,3,4,5,6]"
+      <div *ngFor="let itemValue of itemValues"
            class="shop__equipment__values__value"
-           [ngClass]="{
-                        'shop__equipment__values__value_quality_good': value === 4 || value === 5,
-                        'shop__equipment__values__value_quality_best': value === 6
-                      }">
-        +{{value}}
+           [ngClass]="{ 'shop__equipment__values__value_quality_good': itemValue.value >= 4 }"
+           [ngStyle]="{ 'color': itemValue.color }">
+        +{{itemValue.value}}
       </div>
     </div>
     <div *ngFor="let e of equipment" class="shop__equipment__values">

@@ -25,6 +25,16 @@ export class Item {
     this.description = description;
   }
 
+  static getItemColor(value: number) {
+    switch (value) {
+      case 6: return 'orangered';
+      case 5: return 'orange';
+      case 4:
+      case 3: return 'lightskyblue';
+      default: return 'white';
+    }
+  }
+
   static getItemTypeImage(itemType: ItemType) {
     const imageName = Item.getItemTypeImageName(itemType);
     return `assets/img/items/${imageName}.jpg`;

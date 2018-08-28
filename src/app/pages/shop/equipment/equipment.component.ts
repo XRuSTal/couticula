@@ -3,7 +3,7 @@ import { NavController } from 'ionic-angular';
 import { Subscription } from 'rxjs/Subscription';
 
 import { ItemType } from '@enums';
-import { Hero, ShopEquipmentHitpoints } from '@models';
+import { Hero, Item, ShopEquipmentHitpoints } from '@models';
 import { HeroService, PlayerService, ShopService } from '@services';
 
 @Component({
@@ -12,6 +12,7 @@ import { HeroService, PlayerService, ShopService } from '@services';
 })
 export class EquipmentComponent implements OnInit, OnDestroy {
   shopEquipment: ShopEquipmentHitpoints;
+  itemValues = [1, 2, 3, 4, 5, 6].map(value => ({ value, color: Item.getItemColor(value) }));
 
   private subscriptions: Subscription[] = [];
 
