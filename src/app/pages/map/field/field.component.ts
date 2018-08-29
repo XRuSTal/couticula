@@ -62,14 +62,19 @@ export class FieldComponent implements OnInit, OnDestroy {
   onCellSelectedEvent(cell: Cell) {
     console.log(cell);
     if (cell) {
-      const popover = this.popoverCtrl.create(
-        EventAttackComponent,
-        { cell },
-        { cssClass: 'popover-event-attack' }
-      );
-      popover.present({
-        // ev: myEvent
-      });
+      if (!cell.isClear) {
+        const popover = this.popoverCtrl.create(
+          EventAttackComponent,
+          { cell },
+          { cssClass: 'popover-event-attack' }
+        );
+        popover.present({
+          // ev: myEvent
+        });
+      } else if (!cell.isTravel) {
+        // TODO: окно с событием
+        this.mapService.markCellAsInvestigated(cell.x, cell.y);
+      }
     }
   }
   swipeEvent(e) {

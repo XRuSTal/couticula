@@ -1,7 +1,7 @@
 .map__field__cell {
   position: relative;
 
-  &__event {
+  &__battle-event {
     position: absolute;
     top: 0;
     z-index: 1;
@@ -9,6 +9,14 @@
     &_exists-boss {
       background-color: red;
     }
+  }
+
+  &__search-event {
+    position: absolute;
+    z-index: 1;
+    max-width: 50%;
+    left: 25%;
+    top: 25%;
   }
 
   &__info {

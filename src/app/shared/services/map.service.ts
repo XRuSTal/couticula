@@ -63,6 +63,13 @@ export class MapService {
       this.visibleMapSource.next(this.getVisibleMap());
     }
   }
+  markCellAsInvestigated(x: number, y: number) {
+    if (!this.isEmptyCell(x, y) && !this.map[x][y].isWall) {
+      this.map[x][y] = this.map[x][y].copy();
+      this.map[x][y].isTravel = true;
+      this.visibleMapSource.next(this.getVisibleMap());
+    }
+  }
   setCurrentPosition(x: number, y: number) {
     this.xCurrentMap = x;
     this.yCurrentMap = y;
