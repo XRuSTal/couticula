@@ -15,7 +15,7 @@
     <div class="map__event-win__content__treasures__description">Сокровища</div>
 
     <div class="map__event-win__content__treasures__items">
-      <div *ngFor="let item of treasures; index as i"
+      <div *ngFor="let item of cell.treasures; index as i"
            [@scaleInOut]="'in'"
            class="map__event-win__content__treasures__items__item">
         <item-info-short [item]='item'

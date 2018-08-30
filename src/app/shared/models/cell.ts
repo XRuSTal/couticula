@@ -1,3 +1,5 @@
+import { Item } from './item';
+
 export class Cell {
   x: number;
   y: number;
@@ -10,6 +12,7 @@ export class Cell {
   doesBossExists = false;
   mosterLevel1Count = 0;
   mosterLevel2Count = 0;
+  treasures: Item[] = [];
 
   constructor(x: number, y: number) {
     this.x = x;

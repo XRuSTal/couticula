@@ -11,6 +11,7 @@ import { Cell } from '@models';
 import { MapService, SettingsService } from '@services';
 
 import { EventAttackComponent } from '../event-attack/event-attack.component';
+import { EventWinComponent } from '../event-win/event-win.component';
 import { Subscription } from '../../../../../node_modules/rxjs/Subscription';
 
 @Component({
@@ -56,7 +57,6 @@ export class FieldComponent implements OnInit, OnDestroy {
     console.log(cell);
     if (cell) {
       this.mapService.setCurrentPosition(cell.x, cell.y);
-      this.mapService.clearCell(cell.x, cell.y);
     }
   }
   onCellSelectedEvent(cell: Cell) {
@@ -74,6 +74,15 @@ export class FieldComponent implements OnInit, OnDestroy {
       } else if (!cell.isTravel) {
         // TODO: окно с событием
         this.mapService.markCellAsInvestigated(cell.x, cell.y);
+      } else if (cell.treasures.length > 0) {
+        const popover = this.popoverCtrl.create(
+          EventWinComponent,
+          { cell },
+          { cssClass: 'popover-event-win' }
+        );
+        popover.present({
+          // ev: myEvent
+        });
       }
     }
   }

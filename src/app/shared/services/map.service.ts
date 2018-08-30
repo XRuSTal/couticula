@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
-import { Cell, EnemyGroupSettings } from '@models';
+import { Cell, EnemyGroupSettings, Item } from '@models';
 import { CellSettings } from '@shared/db';
 import { GameMode } from '@shared/enums';
 import { EnemyGroupFabric } from '@shared/fabrics';
@@ -55,10 +55,11 @@ export class MapService {
     }
     return false;
   }
-  clearCell(x: number, y: number) {
+  removeMonstersOnCell(x: number, y: number, treasures: Item[]) {
     if (!this.isEmptyCell(x, y) && !this.map[x][y].isWall) {
       this.map[x][y] = this.map[x][y].copy();
       this.map[x][y].isClear = true;
+      this.map[x][y].treasures = treasures;
       this.generateOneWay(x, y);
       this.visibleMapSource.next(this.getVisibleMap());
     }

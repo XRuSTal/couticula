@@ -48,13 +48,19 @@ export class EventAttackComponent implements OnInit {
     this.viewCtrl.dismiss();
   }
   attack() {
-    this.mapService.clearCell(this.cell.x, this.cell.y);
+    // TODO: battle
+    const treasures = [
+      ItemFabric.createItem(ItemType.Weapon, 6),
+      ItemFabric.createItem(ItemType.Shield, 5, 4),
+    ];
+
+    this.mapService.removeMonstersOnCell(this.cell.x, this.cell.y, treasures);
+    this.cell = this.mapService.getCell(this.cell.x, this.cell.y);
     this.viewCtrl.dismiss();
 
-    const treasures = [ItemFabric.createItem(ItemType.Weapon, 6), ItemFabric.createItem(ItemType.Shield, 5, 4)];
     const popover = this.popoverCtrl.create(
       EventWinComponent,
-      { treasures },
+      { cell: this.cell },
       { cssClass: 'popover-event-win' }
     );
     popover.present({

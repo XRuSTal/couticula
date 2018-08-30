@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { NavParams, ViewController } from 'ionic-angular';
 
-import { Hero, Item } from '@models';
+import { Cell, Hero, Item } from '@models';
 import { HeroService, MapService } from '@services';
 
 @Component({
@@ -17,7 +17,7 @@ import { HeroService, MapService } from '@services';
   ],
 })
 export class EventWinComponent implements OnInit {
-  treasures: Item[];
+  cell: Cell;
 
   private selectedHero: Hero;
 
@@ -31,7 +31,7 @@ export class EventWinComponent implements OnInit {
     private heroService: HeroService,
     private mapService: MapService
   ) {
-    this.treasures = this.params.get('treasures');
+    this.cell = this.params.get('cell');
     this.selectedHero = this.heroes[0];
   }
 
@@ -46,10 +46,10 @@ export class EventWinComponent implements OnInit {
   }
 
   choseItem(index: number) {
-    if (this.treasures.length <= index) {
+    if (this.cell.treasures.length <= index) {
       return;
     }
-    const item = this.treasures.splice(index, 1)[0];
+    const item = this.cell.treasures.splice(index, 1)[0];
     this.heroService.addItemToInventory(this.selectedHero, item);
   }
 }

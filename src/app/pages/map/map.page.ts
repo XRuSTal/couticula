@@ -1,10 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 
-import { ShopPage, InventoryPage } from '@pages';
+import { InventoryPage, ShopPage } from '@pages';
 import { GameService, SettingsService } from '@services';
-
-import { EventAttackComponent } from './event-attack/event-attack.component';
 
 @Component({
   selector: 'page-map',
