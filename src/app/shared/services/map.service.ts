@@ -36,6 +36,7 @@ export class MapService {
       cell.deep = 0;
       cell.isWall = false;
       cell.isClear = true;
+      cell.isTravel = true;
       this.generateOneWay(this.xCurrentMap, this.yCurrentMap);
       this.visibleMapSource.next(this.getVisibleMap());
       resolve();
