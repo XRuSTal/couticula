@@ -6,8 +6,8 @@ import { Cell, Hero, Item } from '@models';
 import { HeroService, MapService } from '@services';
 
 @Component({
-  selector: 'event-win',
-  templateUrl: 'event-win.component.html',
+  selector: 'event-treasures',
+  templateUrl: 'event-treasures.component.html',
   animations: [
     trigger('scaleInOut', [
       state('in', style({ transform: 'scale(1)' })),
@@ -16,7 +16,7 @@ import { HeroService, MapService } from '@services';
     ]),
   ],
 })
-export class EventWinComponent implements OnInit {
+export class EventTreasuresComponent implements OnInit {
   cell: Cell;
 
   private selectedHero: Hero;

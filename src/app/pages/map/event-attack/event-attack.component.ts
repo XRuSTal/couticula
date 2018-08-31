@@ -4,7 +4,7 @@ import { NavParams, PopoverController, ViewController } from 'ionic-angular';
 import { Cell } from '@models';
 import { GameService, MapService, SettingsService } from '@services';
 
-import { EventWinComponent } from '../event-win/event-win.component';
+import { EventTreasuresComponent } from '../event-treasures/event-treasures.component';
 import { ItemFabric } from '@app/shared/fabrics';
 import { ItemType } from '@app/shared/enums';
 
@@ -59,9 +59,9 @@ export class EventAttackComponent implements OnInit {
     this.viewCtrl.dismiss();
 
     const popover = this.popoverCtrl.create(
-      EventWinComponent,
+      EventTreasuresComponent,
       { cell: this.cell },
-      { cssClass: 'popover-event-win' }
+      { cssClass: 'popover-event-treasures' }
     );
     popover.present({
       // ev: myEvent

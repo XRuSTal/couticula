@@ -11,7 +11,7 @@ import { Cell } from '@models';
 import { MapService, SettingsService } from '@services';
 
 import { EventAttackComponent } from '../event-attack/event-attack.component';
-import { EventWinComponent } from '../event-win/event-win.component';
+import { EventTreasuresComponent } from '../event-treasures/event-treasures.component';
 import { Subscription } from '../../../../../node_modules/rxjs/Subscription';
 
 @Component({
@@ -60,34 +60,43 @@ export class FieldComponent implements OnInit, OnDestroy {
     }
   }
   onCellSelectedEvent(cell: Cell) {
-    console.log(cell);
     if (cell) {
       if (!cell.isClear) {
-        const popover = this.popoverCtrl.create(
-          EventAttackComponent,
-          { cell },
-          { cssClass: 'popover-event-attack' }
-        );
-        popover.present({
-          // ev: myEvent
-        });
+        this.showEventAttackComponent(cell);
       } else if (!cell.isTravel) {
-        // TODO: окно с событием
-        this.mapService.markCellAsInvestigated(cell.x, cell.y);
+        this.showEventSearchComponent(cell);
       } else if (cell.treasures.length > 0) {
-        const popover = this.popoverCtrl.create(
-          EventWinComponent,
-          { cell },
-          { cssClass: 'popover-event-win' }
-        );
-        popover.present({
-          // ev: myEvent
-        });
+        this.showEventWinComponent(cell);
       }
     }
   }
   swipeEvent(e) {
     console.clear();
     console.log(e);
+  }
+
+  private showEventAttackComponent(cell: Cell) {
+    const popover = this.popoverCtrl.create(
+      EventAttackComponent,
+      { cell },
+      { cssClass: 'popover-event-attack' }
+    );
+    popover.present({
+      // ev: myEvent
+    });
+  }
+  private showEventSearchComponent(cell: Cell) {
+    // TODO: окно с событием
+    this.mapService.markCellAsInvestigated(cell.x, cell.y);
+  }
+  private showEventWinComponent(cell: Cell) {
+    const popover = this.popoverCtrl.create(
+      EventTreasuresComponent,
+      { cell },
+      { cssClass: 'popover-event-treasures' }
+    );
+    popover.present({
+      // ev: myEvent
+    });
   }
 }
