@@ -1,0 +1,34 @@
+.map__event-search {
+
+  &__header {
+    height: 10vh;
+    padding-top: 3vh;
+    font-size: 4vh;
+    font-weight: bold;
+    text-align: center;
+    vertical-align: bottom;
+  }
+
+  &__content {
+    display: grid;
+    grid-template-rows: auto;
+    text-align: center;
+    padding: 2vh;
+  }
+
+  &__buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-content: space-between;
+    grid-column-gap: 5vh;
+    padding: 1vh;
+    overflow: hidden;
+
+    button {
+      margin: 0;
+      width: 100%;
+      border-radius: 1vw;
+      font-size: 3vh;
+    }
+  }
+}

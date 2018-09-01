@@ -11,6 +11,7 @@ import { Cell } from '@models';
 import { MapService, SettingsService } from '@services';
 
 import { EventAttackComponent } from '../event-attack/event-attack.component';
+import { EventSearchComponent } from '../event-search/event-search.component';
 import { EventTreasuresComponent } from '../event-treasures/event-treasures.component';
 import { Subscription } from '../../../../../node_modules/rxjs/Subscription';
 
@@ -86,7 +87,14 @@ export class FieldComponent implements OnInit, OnDestroy {
     });
   }
   private showEventSearchComponent(cell: Cell) {
-    // TODO: окно с событием
+    const popover = this.popoverCtrl.create(
+      EventSearchComponent,
+      { cell },
+      { cssClass: 'popover-event-search' }
+    );
+    popover.present({
+      // ev: myEvent
+    });
     this.mapService.markCellAsInvestigated(cell.x, cell.y);
   }
   private showEventWinComponent(cell: Cell) {
