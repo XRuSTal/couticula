@@ -14,9 +14,8 @@
   &__search-event, &__treasures {
     position: absolute;
     z-index: 1;
-    max-width: 50%;
-    left: 25%;
-    top: 25%;
+    top: 0;
+    padding: 25%;
   }
 
   &__info {
