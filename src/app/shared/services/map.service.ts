@@ -72,6 +72,16 @@ export class MapService {
       this.visibleMapSource.next(this.getVisibleMap());
     }
   }
+  removeTreasureOnCellByIndex(x: number, y: number, index: number) {
+    if (this.map[x][y].treasures && this.map[x][y].treasures.length > index) {
+      const item = this.map[x][y].treasures.splice(index, 1)[0];
+      if (this.map[x][y].treasures.length === 0) {
+        this.map[x][y] = this.map[x][y].copy();
+        this.visibleMapSource.next(this.getVisibleMap());
+      }
+      return item;
+    }
+  }
   setCurrentPosition(x: number, y: number) {
     this.xCurrentMap = x;
     this.yCurrentMap = y;

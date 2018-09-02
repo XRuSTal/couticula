@@ -46,10 +46,9 @@ export class EventTreasuresComponent implements OnInit {
   }
 
   choseItem(index: number) {
-    if (this.cell.treasures.length <= index) {
-      return;
+    const item = this.mapService.removeTreasureOnCellByIndex(this.cell.x, this.cell.y, index);
+    if (item) {
+      this.heroService.addItemToInventory(this.selectedHero, item);
     }
-    const item = this.cell.treasures.splice(index, 1)[0];
-    this.heroService.addItemToInventory(this.selectedHero, item);
   }
 }
