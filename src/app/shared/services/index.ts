@@ -1,3 +1,4 @@
+import { EventSearchService } from './event-search.service';
 import { GameService } from './game.service';
 import { HeroService } from './hero.service';
 import { HttpService } from './http.service';
@@ -8,6 +9,7 @@ import { SettingsService } from './settings.service';
 import { ShopService } from './shop.service';
 
 const SHARED_SERVICES: any[] = [
+  EventSearchService,
   GameService,
   HeroService,
   HttpService,
@@ -19,6 +21,7 @@ const SHARED_SERVICES: any[] = [
 
 export {
   SHARED_SERVICES,
+  EventSearchService,
   GameService,
   HeroService,
   HttpService,
