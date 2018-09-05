@@ -19,7 +19,6 @@ export class DiceComponent implements OnInit {
   ngOnInit() {}
 
   animate(value: number, delay: number, animateInterval = 100) {
-    console.log('RESULT', value);
     interval(animateInterval)
       .pipe(
         finalize(() => {
@@ -29,7 +28,6 @@ export class DiceComponent implements OnInit {
       )
       .subscribe(() => {
         this.value = Random.throwDiceD6();
-        console.log(this.value);
       });
   }
 }

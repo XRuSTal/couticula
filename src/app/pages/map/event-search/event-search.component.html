@@ -3,7 +3,12 @@
 </ion-toolbar>
 
 <div class="map__event-search__content">
+  <dice class="map__event-search__content__dice"
+        [hidden]="!isShownDice"></dice>
 
+  <div class="map__event-search__content__event">
+    <span *ngIf="lastEvent">{{lastEvent.text}}</span>
+  </div>
 </div>
 
 <div class="map__event-search__buttons">
