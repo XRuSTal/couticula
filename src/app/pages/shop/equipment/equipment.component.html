@@ -22,6 +22,7 @@
     </div>
     <div *ngFor="let e of equipment" class="shop__equipment__values">
       <div *ngFor="let item of (e.items | availableItems: choosenHero)"
+            [@flyInOutLeft]="'in'"
             class="shop__equipment__values__value"
             [ngClass]="{
                         'shop__equipment__values__value_not-available-price': item.cost > playerGold,
@@ -38,6 +39,7 @@
     </div>
     <div class="shop__equipment__values">
       <div *ngFor="let item of (shopEquipment.hitpoints.items | availableHitPoints: choosenHero)"
+           [@flyInOutRight]="'in'"
            class="shop__equipment__values__value"
            [ngClass]="{
                         'shop__equipment__values__value_not-available-price': item.cost > playerGold,

@@ -4,6 +4,7 @@
   ],
   "rules": {
     "no-duplicate-variable": true,
+    "no-empty": false,
     "no-unused-variable": [
       true
     ]

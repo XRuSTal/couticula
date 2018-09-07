@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 import { NavController } from 'ionic-angular';
 import { Subscription } from 'rxjs/Subscription';
 
@@ -9,6 +10,16 @@ import { HeroService, PlayerService, ShopService } from '@services';
 @Component({
   selector: 'equipment',
   templateUrl: 'equipment.component.html',
+  animations: [
+    trigger('flyInOutLeft', [
+      state('in', style({ transform: 'translateX(0)' })),
+      transition('void => *', [style({ transform: 'translateX(-100%)' }), animate(600)]),
+    ]),
+    trigger('flyInOutRight', [
+      state('in', style({ transform: 'translateX(0)' })),
+      transition('void => *', [style({ transform: 'translateX(100%)' }), animate(600)]),
+    ]),
+  ],
 })
 export class EquipmentComponent implements OnInit, OnDestroy {
   shopEquipment: ShopEquipmentHitpoints;
