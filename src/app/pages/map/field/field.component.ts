@@ -95,7 +95,6 @@ export class FieldComponent implements OnInit, OnDestroy {
     popover.present({
       // ev: myEvent
     });
-    this.mapService.markCellAsInvestigated(cell.x, cell.y);
   }
   private showEventWinComponent(cell: Cell) {
     const popover = this.popoverCtrl.create(

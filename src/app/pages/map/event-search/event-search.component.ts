@@ -18,6 +18,8 @@ export class EventSearchComponent implements OnInit, OnDestroy {
   cell: Cell;
   lastEvent: { type: SearchEventType; text: string | number };
   isShownDice = false;
+  investigated = false;
+  isInvestigated = false;
 
   private selectedHero: Hero;
   private subscription: Subscription;
@@ -46,15 +48,24 @@ export class EventSearchComponent implements OnInit, OnDestroy {
         this.dice.animate(event.text as number, 2000);
         setTimeout(() => {
           this.isShownDice = false;
+          this.isInvestigated = false;
         }, 5000);
       }
     });
-    this.eventSearchService.createRandomEvent(this.cell);
   }
 
   ngOnDestroy() {
-    this.mapService.markCellAsInvestigated(this.cell.x, this.cell.y);
     this.subscription.unsubscribe();
+
+    if (this.investigated) {
+      this.mapService.markCellAsInvestigated(this.cell.x, this.cell.y);
+    }
+  }
+
+  search() {
+    this.eventSearchService.createRandomEvent(this.cell);
+    this.isInvestigated = true;
+    this.investigated = true;
   }
 
   close() {
