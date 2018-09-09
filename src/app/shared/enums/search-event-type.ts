@@ -7,4 +7,5 @@ export enum SearchEventType {
   CheckHero,
   SelectedHero,
   NotSelectedHero,
+  SearchIsCompleted,
 }

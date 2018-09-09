@@ -1,10 +1,12 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NavParams, ViewController } from 'ionic-angular';
+import { interval } from 'rxjs/Observable/interval';
 import { Subscription } from 'rxjs/Subscription';
+import { zip } from 'rxjs/operators';
 
 import { SearchEventType } from '@enums';
 import { Cell, Hero, Item } from '@models';
-import { EventSearchService, HeroService, MapService } from '@services';
+import { EventSearchService, HeroService, MapService, SettingsService } from '@services';
 import { DiceComponent } from '@app/shared/components';
 
 @Component({
@@ -33,25 +35,34 @@ export class EventSearchComponent implements OnInit, OnDestroy {
     public viewCtrl: ViewController,
     private eventSearchService: EventSearchService,
     private heroService: HeroService,
-    private mapService: MapService
+    private mapService: MapService,
+    private settingsService: SettingsService
   ) {
     this.cell = this.params.get('cell');
     this.selectedHero = this.heroes[0];
   }
 
   ngOnInit() {
-    this.subscription = this.eventSearchService.events$.subscribe(event => {
-      console.log(event);
-      this.lastEvent = event;
-      if (event.type === SearchEventType.ThrowDice) {
-        this.isShownDice = true;
-        this.dice.animate(event.text as number, 2000);
-        setTimeout(() => {
-          this.isShownDice = false;
-          this.isInvestigated = false;
-        }, 5000);
-      }
-    });
+    this.subscription = this.eventSearchService.events$
+      .pipe(zip(interval(this.settingsService.eventsDelay), (event, i) => event))
+      .subscribe(event => {
+        console.log(event);
+        this.lastEvent = event;
+
+        switch (event.type) {
+          case SearchEventType.ThrowDice:
+            this.isShownDice = true;
+            this.dice.animate(event.text as number, this.settingsService.eventsDelay);
+            this.lastEvent.text = '';
+            break;
+          case SearchEventType.SearchIsCompleted:
+            this.isShownDice = false;
+            this.isInvestigated = false;
+            break;
+          default:
+            break;
+        }
+      });
   }
 
   ngOnDestroy() {

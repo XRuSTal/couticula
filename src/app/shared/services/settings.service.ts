@@ -10,6 +10,7 @@ export class SettingsService {
   countCellVisibleY = 6;
   priceSecondHero = 800;
   priceThirdHero = 1000;
+  eventsDelay = 2000;
 
   private platformWidth: number;
   private platformHeight: number;

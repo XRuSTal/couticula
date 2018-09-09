@@ -1,4 +1,5 @@
-<div class="dice"
+<div *ngIf="value"
+     class="dice"
      [ngStyle]="{
         'backgroundImage': 'url(assets/img/dices/dice' + value + '.png)',
         'backgroundColor': backgroundColor

@@ -26,6 +26,7 @@ export class EventSearchService {
       this.eventsSource.next({ type: SearchEventType.Smth, text: 'Произошло событие!' });
       // определение масштабности события
       dice = Random.throwDiceD6();
+      this.eventsSource.next({ type: SearchEventType.ThrowDice, text: dice });
       if (dice >= 50) {
         // TODO: >= 5
         // событие действует на всех персонажей сразу
@@ -44,11 +45,12 @@ export class EventSearchService {
         // перебор персонажей
         const heroes: Hero[] = [];
         this.heroService.heroes.forEach(hero => {
-          dice = Random.throwDiceD6();
           this.eventsSource.next({
             type: SearchEventType.CheckHero,
             text: hero.name,
           });
+          dice = Random.throwDiceD6();
+          this.eventsSource.next({ type: SearchEventType.ThrowDice, text: dice });
           if (dice >= chance) {
             heroes.push(hero);
             this.eventsSource.next({
@@ -63,6 +65,10 @@ export class EventSearchService {
           }
         });
         // TravelEvent.createEvent(heroes);
+        this.eventsSource.next({
+          type: SearchEventType.SearchIsCompleted,
+          text: 'Пещера исследована',
+        });
       }
     } else {
       this.eventsSource.next({ type: SearchEventType.Nothing, text: 'Ничего не случилось' });
