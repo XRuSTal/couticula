@@ -52,8 +52,7 @@ export class EventSearchComponent implements OnInit, OnDestroy {
         switch (event.type) {
           case SearchEventType.ThrowDice:
             this.isShownDice = true;
-            this.dice.animate(event.text as number, this.settingsService.eventsDelay);
-            this.lastEvent.text = '';
+            this.dice.animate(event.dice, this.settingsService.eventsDelay);
             break;
           case SearchEventType.SearchIsCompleted:
             this.isShownDice = false;

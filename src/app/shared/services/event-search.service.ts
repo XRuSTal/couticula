@@ -3,15 +3,15 @@ import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 
 import { SearchEventType } from '@enums';
-import { Cell, Hero } from '@models';
+import { Cell, EventSearch, Hero } from '@models';
 import { HeroService } from './hero.service';
 import { Random } from './random';
 
 @Injectable()
 export class EventSearchService {
-  events$: Observable<{ type: SearchEventType; text: string | number }>;
+  events$: Observable<EventSearch>;
 
-  private eventsSource = new Subject<{ type: SearchEventType; text: string | number }>();
+  private eventsSource = new Subject<EventSearch>();
 
   constructor(private heroService: HeroService) {
     this.events$ = this.eventsSource.asObservable();
@@ -20,13 +20,21 @@ export class EventSearchService {
   createRandomEvent(cell: Cell) {
     // определение наличия события
     let dice = Random.throwDiceD6();
-    this.eventsSource.next({ type: SearchEventType.ThrowDice, text: dice });
+    this.eventsSource.next({
+      type: SearchEventType.ThrowDice,
+      text: 'Определение наличия события',
+      dice,
+    });
     if (dice >= 1) {
       // TODO: >= 5
       this.eventsSource.next({ type: SearchEventType.Smth, text: 'Произошло событие!' });
       // определение масштабности события
       dice = Random.throwDiceD6();
-      this.eventsSource.next({ type: SearchEventType.ThrowDice, text: dice });
+      this.eventsSource.next({
+        type: SearchEventType.ThrowDice,
+        text: 'Определение масштабности события',
+        dice,
+      });
       if (dice >= 50) {
         // TODO: >= 5
         // событие действует на всех персонажей сразу
@@ -50,7 +58,7 @@ export class EventSearchService {
             text: hero.name,
           });
           dice = Random.throwDiceD6();
-          this.eventsSource.next({ type: SearchEventType.ThrowDice, text: dice });
+          this.eventsSource.next({ type: SearchEventType.ThrowDice, text: hero.name, dice });
           if (dice >= chance) {
             heroes.push(hero);
             this.eventsSource.next({
