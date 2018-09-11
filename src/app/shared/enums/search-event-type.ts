@@ -7,5 +7,12 @@ export enum SearchEventType {
   CheckHero,
   SelectedHero,
   NotSelectedHero,
+  FoundTreasure,
+  FoundSourceHolyWater,
+  FoundSecretPath,
+  LossMoney,
+  LossHitpoints,
+  LossThings,
+  ExistsTrap,
   SearchIsCompleted,
 }

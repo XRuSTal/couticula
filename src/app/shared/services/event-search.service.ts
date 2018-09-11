@@ -35,6 +35,7 @@ export class EventSearchService {
         text: 'Определение масштабности события',
         dice,
       });
+
       if (dice >= 50) {
         // TODO: >= 5
         // событие действует на всех персонажей сразу
@@ -42,44 +43,125 @@ export class EventSearchService {
           type: SearchEventType.AllHeroes,
           text: 'Событие действует на всех!',
         });
-        // TravelEvent.createEvent(player.heroes);
+        this.createEvent(this.heroService.heroes);
       } else {
-        // шанс срабатывания события(для каждого игрока отдельно)
-        const chance = Random.throwDiceD6();
-        this.eventsSource.next({
-          type: SearchEventType.SeparateHeroes,
-          text: `Событие действует на каждого игрока отдельно! (сложность ${chance})`,
-        });
-        // перебор персонажей
-        const heroes: Hero[] = [];
-        this.heroService.heroes.forEach(hero => {
-          this.eventsSource.next({
-            type: SearchEventType.CheckHero,
-            text: hero.name,
-          });
-          dice = Random.throwDiceD6();
-          this.eventsSource.next({ type: SearchEventType.ThrowDice, text: hero.name, dice });
-          if (dice >= chance) {
-            heroes.push(hero);
-            this.eventsSource.next({
-              type: SearchEventType.SelectedHero,
-              text: hero.name + ' избран судьбой',
-            });
-          } else {
-            this.eventsSource.next({
-              type: SearchEventType.NotSelectedHero,
-              text: hero.name + ' стоит в стороне',
-            });
-          }
-        });
-        // TravelEvent.createEvent(heroes);
-        this.eventsSource.next({
-          type: SearchEventType.SearchIsCompleted,
-          text: 'Пещера исследована',
-        });
+        // событие действует на каждого игрока отдельно
+        const heroes = this.checkHeroes();
+        this.createEvent(heroes);
       }
     } else {
       this.eventsSource.next({ type: SearchEventType.Nothing, text: 'Ничего не случилось' });
+    }
+  }
+
+  private checkHeroes() {
+    // шанс срабатывания события(для каждого игрока отдельно)
+    const chance = Random.throwDiceD6();
+    this.eventsSource.next({
+      type: SearchEventType.SeparateHeroes,
+      text: `Событие действует на каждого игрока отдельно! (сложность ${chance})`,
+    });
+    // перебор персонажей
+    const heroes: Hero[] = [];
+    this.heroService.heroes.forEach(hero => {
+      this.eventsSource.next({
+        type: SearchEventType.CheckHero,
+        text: hero.name,
+      });
+      const dice = Random.throwDiceD6();
+      this.eventsSource.next({ type: SearchEventType.ThrowDice, text: hero.name, dice });
+      if (dice >= chance) {
+        heroes.push(hero);
+        this.eventsSource.next({
+          type: SearchEventType.SelectedHero,
+          text: hero.name + ' избран судьбой',
+        });
+      } else {
+        this.eventsSource.next({
+          type: SearchEventType.NotSelectedHero,
+          text: hero.name + ' стоит в стороне',
+        });
+      }
+    });
+    return heroes;
+  }
+
+  private createEvent(heroes: Hero[]) {
+    if (heroes.length === 0) {
+      this.eventsSource.next({ type: SearchEventType.Nothing, text: 'Ничего не случилось' });
+      return;
+    }
+
+    // определение типа события
+    const dice = Random.throwDiceD6();
+    this.eventsSource.next({
+      type: SearchEventType.ThrowDice,
+      text: 'Определение типа события',
+      dice,
+    });
+    if (dice <= 4) {
+      this.createGoodEvent(heroes);
+    } else {
+      this.createBadEvent(heroes);
+    }
+
+    this.eventsSource.next({
+      type: SearchEventType.SearchIsCompleted,
+      text: 'Пещера исследована',
+    });
+  }
+
+  private createGoodEvent(heroes: Hero[]) {
+    const dice = Random.throwDiceD6();
+    this.eventsSource.next({
+      type: SearchEventType.ThrowDice,
+      text: 'Положительное событие',
+      dice,
+    });
+    switch (dice) {
+      case 1:
+      case 2:
+      case 3:
+      case 4:
+        this.eventsSource.next({ type: SearchEventType.FoundTreasure, text: 'Найдено сокровище' });
+        break;
+      case 5:
+        this.eventsSource.next({
+          type: SearchEventType.FoundSourceHolyWater,
+          text: 'Найден родник святой воды',
+        });
+        break;
+      case 6:
+        this.eventsSource.next({
+          type: SearchEventType.FoundSecretPath,
+          text: 'Найден потайной путь',
+        });
+        break;
+    }
+  }
+
+  private createBadEvent(heroes: Hero[]) {
+    const dice = Random.throwDiceD6();
+    this.eventsSource.next({
+      type: SearchEventType.ThrowDice,
+      text: 'Негативное событие',
+      dice,
+    });
+    switch (dice) {
+      case 1:
+      case 2:
+        this.eventsSource.next({ type: SearchEventType.LossMoney, text: 'Потеря денег' });
+        break;
+      case 3:
+      case 4:
+        this.eventsSource.next({ type: SearchEventType.LossHitpoints, text: 'Потеря жизней' });
+        break;
+      case 5:
+        this.eventsSource.next({ type: SearchEventType.LossThings, text: 'Потеря вещей' });
+        break;
+      case 6:
+        this.eventsSource.next({ type: SearchEventType.ExistsTrap, text: 'Присутствует ловушка' });
+        break;
     }
   }
 }
