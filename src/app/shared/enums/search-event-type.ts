@@ -14,5 +14,8 @@ export enum SearchEventType {
   LossHitpoints,
   LossThings,
   ExistsTrap,
+  TrapLossHitpoints,
+  TrapLossThings,
+  TrapLossAllHitpoints,
   SearchIsCompleted,
 }

@@ -160,7 +160,47 @@ export class EventSearchService {
         this.eventsSource.next({ type: SearchEventType.LossThings, text: 'Потеря вещей' });
         break;
       case 6:
-        this.eventsSource.next({ type: SearchEventType.ExistsTrap, text: 'Присутствует ловушка' });
+        this.createTrap(heroes);
+        break;
+    }
+  }
+
+  private createTrap(heroes: Hero[]) {
+    // шанс срабатывания (для каждого игрока отдельно)
+    const chance = Random.throwDiceD6();
+    this.eventsSource.next({
+      type: SearchEventType.ExistsTrap,
+      text: `Присутствует ловушка! (сложность ${chance})`,
+    });
+
+    // определение типа ловушки
+    const dice = Random.throwDiceD6();
+    this.eventsSource.next({
+      type: SearchEventType.ThrowDice,
+      text: 'Определение типа события',
+      dice,
+    });
+    switch (dice) {
+      case 1:
+      case 2:
+      case 3:
+        this.eventsSource.next({
+          type: SearchEventType.TrapLossHitpoints,
+          text: 'Персонажи ранены и теряют по 6*бросок жизней',
+        });
+        break;
+      case 4:
+      case 5:
+        this.eventsSource.next({
+          type: SearchEventType.TrapLossThings,
+          text: 'Персонажи проваливаются в яму и теряют по вещи',
+        });
+        break;
+      case 6:
+        this.eventsSource.next({
+          type: SearchEventType.TrapLossAllHitpoints,
+          text: 'Персонажи проваливаются в яму, остается только 1 жизнь',
+        });
         break;
     }
   }
