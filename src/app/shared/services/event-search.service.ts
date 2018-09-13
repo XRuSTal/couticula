@@ -188,6 +188,7 @@ export class EventSearchService {
           type: SearchEventType.TrapLossHitpoints,
           text: 'Персонажи ранены и теряют по 6*бросок жизней',
         });
+        this.activateTrapLossHitpoints(heroes);
         break;
       case 4:
       case 5:
@@ -203,5 +204,40 @@ export class EventSearchService {
         });
         break;
     }
+
+    // перебор персонажей
+    this.heroService.heroes.forEach(hero => {
+      this.eventsSource.next({
+        type: SearchEventType.CheckHero,
+        text: hero.name,
+      });
+      const dice = Random.throwDiceD6();
+      this.eventsSource.next({ type: SearchEventType.ThrowDice, text: hero.name, dice });
+      if (dice >= chance) {
+        heroes.push(hero);
+        this.eventsSource.next({
+          type: SearchEventType.SelectedHero,
+          text: hero.name + ' избран судьбой',
+        });
+      } else {
+        this.eventsSource.next({
+          type: SearchEventType.NotSelectedHero,
+          text: hero.name + ' стоит в стороне',
+        });
+      }
+    });
+    return heroes;
+  }
+
+  private activateTrapLossHitpoints(heroes: Hero[]) {
+    heroes.forEach(hero => {
+      const dice = Random.throwDiceD6();
+      const maxDamage = dice * 6;
+      const damage = this.heroService.damageHero(hero.id, maxDamage);
+      this.eventsSource.next({
+        type: SearchEventType.HeroLossHitpoints,
+        text: `${hero.name} ранен на ${damage}`,
+      });
+    });
   }
 }

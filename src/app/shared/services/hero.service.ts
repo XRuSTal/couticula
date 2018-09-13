@@ -90,4 +90,12 @@ export class HeroService {
       hero.inventory.splice(index, 1);
     }
   }
+
+  damageHero(heroId: number, damage: number) {
+    const hero = this.heroes.find(p => p.id === heroId);
+    if (hero.hitPoint < damage) {
+      damage = hero.hitPoint - 1;
+    }
+    hero.hitPoint -= damage;
+  }
 }

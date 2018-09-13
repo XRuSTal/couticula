@@ -17,5 +17,6 @@ export enum SearchEventType {
   TrapLossHitpoints,
   TrapLossThings,
   TrapLossAllHitpoints,
+  HeroLossHitpoints,
   SearchIsCompleted,
 }
