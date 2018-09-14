@@ -184,24 +184,14 @@ export class EventSearchService {
       case 1:
       case 2:
       case 3:
-        this.eventsSource.next({
-          type: SearchEventType.TrapLossHitpoints,
-          text: 'Персонажи ранены и теряют по 6*бросок жизней',
-        });
         this.activateTrapLossHitpoints(heroes);
         break;
       case 4:
       case 5:
-        this.eventsSource.next({
-          type: SearchEventType.TrapLossThings,
-          text: 'Персонажи проваливаются в яму и теряют по вещи',
-        });
+        this.activateTrapLossThings(heroes);
         break;
       case 6:
-        this.eventsSource.next({
-          type: SearchEventType.TrapLossAllHitpoints,
-          text: 'Персонажи проваливаются в яму, остается только 1 жизнь',
-        });
+        this.activateTrapLossAllHitpoints(heroes);
         break;
     }
 
@@ -230,6 +220,11 @@ export class EventSearchService {
   }
 
   private activateTrapLossHitpoints(heroes: Hero[]) {
+    this.eventsSource.next({
+      type: SearchEventType.TrapLossHitpoints,
+      text: 'Персонажи ранены и теряют по 6*бросок жизней',
+    });
+
     heroes.forEach(hero => {
       const dice = Random.throwDiceD6();
       const maxDamage = dice * 6;
@@ -237,6 +232,37 @@ export class EventSearchService {
       this.eventsSource.next({
         type: SearchEventType.HeroLossHitpoints,
         text: `${hero.name} ранен на ${damage}`,
+      });
+    });
+  }
+
+  private activateTrapLossThings(heroes: Hero[]) {
+    this.eventsSource.next({
+      type: SearchEventType.TrapLossThings,
+      text: 'Персонажи проваливаются в яму и теряют по вещи',
+    });
+
+    heroes.forEach(hero => {
+      const item = this.heroService.lossHeroThing(hero.id);
+      this.eventsSource.next({
+        type: SearchEventType.HeroLossHitpoints,
+        text: `${hero.name} потерял ${item.name}`,
+      });
+    });
+  }
+
+  private activateTrapLossAllHitpoints(heroes: Hero[]) {
+    this.eventsSource.next({
+      type: SearchEventType.TrapLossAllHitpoints,
+      text: 'Персонажи проваливаются в яму, остается только 1 жизнь',
+    });
+
+    heroes.forEach(hero => {
+      const maxDamage = hero.hitPoint - 1;
+      const damage = this.heroService.damageHero(hero.id, maxDamage);
+      this.eventsSource.next({
+        type: SearchEventType.HeroLossHitpoints,
+        text: `${hero.name} ранен на ${damage} и при смерти`,
       });
     });
   }

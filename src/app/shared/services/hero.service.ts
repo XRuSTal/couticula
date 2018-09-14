@@ -8,6 +8,7 @@ import { HeroTypes } from '@shared/db';
 import { HeroFabric } from '@shared/fabrics';
 
 import { PlayerService } from './player.service';
+import { Random } from './random';
 
 @Injectable()
 export class HeroService {
@@ -97,5 +98,17 @@ export class HeroService {
       damage = hero.hitPoint - 1;
     }
     hero.hitPoint -= damage;
+  }
+
+  lossHeroThing(heroId: number) {
+    const hero = this.heroes.find(p => p.id === heroId);
+    if (hero.inventory.length > 0) {
+      const index = Random.getInt(0, hero.inventory.length - 1);
+      const item = hero.inventory[index];
+      this.removeItemFormInventory(hero, item);
+      return item;
+    } else {
+      return null;
+    }
   }
 }
