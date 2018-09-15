@@ -184,86 +184,95 @@ export class EventSearchService {
       case 1:
       case 2:
       case 3:
-        this.activateTrapLossHitpoints(heroes);
+        this.activateTrapLossHitpoints(heroes, chance);
         break;
       case 4:
       case 5:
-        this.activateTrapLossThings(heroes);
+        this.activateTrapLossThings(heroes, chance);
         break;
       case 6:
-        this.activateTrapLossAllHitpoints(heroes);
+        this.activateTrapLossAllHitpoints(heroes, chance);
         break;
     }
-
-    // перебор персонажей
-    this.heroService.heroes.forEach(hero => {
-      this.eventsSource.next({
-        type: SearchEventType.CheckHero,
-        text: hero.name,
-      });
-      const dice = Random.throwDiceD6();
-      this.eventsSource.next({ type: SearchEventType.ThrowDice, text: hero.name, dice });
-      if (dice >= chance) {
-        heroes.push(hero);
-        this.eventsSource.next({
-          type: SearchEventType.SelectedHero,
-          text: hero.name + ' избран судьбой',
-        });
-      } else {
-        this.eventsSource.next({
-          type: SearchEventType.NotSelectedHero,
-          text: hero.name + ' стоит в стороне',
-        });
-      }
-    });
-    return heroes;
   }
 
-  private activateTrapLossHitpoints(heroes: Hero[]) {
+  private activateTrapLossHitpoints(heroes: Hero[], chance: number) {
     this.eventsSource.next({
       type: SearchEventType.TrapLossHitpoints,
       text: 'Персонажи ранены и теряют по 6*бросок жизней',
     });
 
     heroes.forEach(hero => {
-      const dice = Random.throwDiceD6();
-      const maxDamage = dice * 6;
-      const damage = this.heroService.damageHero(hero.id, maxDamage);
-      this.eventsSource.next({
-        type: SearchEventType.HeroLossHitpoints,
-        text: `${hero.name} ранен на ${damage}`,
-      });
+      const isTrapActivated = this.activateTrap(hero, chance);
+      if (isTrapActivated) {
+        const dice = Random.throwDiceD6();
+        const maxDamage = dice * 6;
+        const damage = this.heroService.damageHero(hero.id, maxDamage);
+        this.eventsSource.next({
+          type: SearchEventType.HeroLossHitpoints,
+          text: `${hero.name} ранен на ${damage}`,
+        });
+      }
     });
   }
 
-  private activateTrapLossThings(heroes: Hero[]) {
+  private activateTrapLossThings(heroes: Hero[], chance: number) {
     this.eventsSource.next({
       type: SearchEventType.TrapLossThings,
       text: 'Персонажи проваливаются в яму и теряют по вещи',
     });
 
     heroes.forEach(hero => {
-      const item = this.heroService.lossHeroThing(hero.id);
-      this.eventsSource.next({
-        type: SearchEventType.HeroLossHitpoints,
-        text: `${hero.name} потерял ${item.name}`,
-      });
+      const isTrapActivated = this.activateTrap(hero, chance);
+      if (isTrapActivated) {
+        const item = this.heroService.lossHeroThing(hero.id);
+        this.eventsSource.next({
+          type: SearchEventType.HeroLossHitpoints,
+          text: `${hero.name} потерял ${item.name}`,
+        });
+      }
     });
   }
 
-  private activateTrapLossAllHitpoints(heroes: Hero[]) {
+  private activateTrapLossAllHitpoints(heroes: Hero[], chance: number) {
     this.eventsSource.next({
       type: SearchEventType.TrapLossAllHitpoints,
       text: 'Персонажи проваливаются в яму, остается только 1 жизнь',
     });
 
     heroes.forEach(hero => {
-      const maxDamage = hero.hitPoint - 1;
-      const damage = this.heroService.damageHero(hero.id, maxDamage);
-      this.eventsSource.next({
-        type: SearchEventType.HeroLossHitpoints,
-        text: `${hero.name} ранен на ${damage} и при смерти`,
-      });
+      const isTrapActivated = this.activateTrap(hero, chance);
+      if (isTrapActivated) {
+        const maxDamage = hero.hitPoint - 1;
+        const damage = this.heroService.damageHero(hero.id, maxDamage);
+        this.eventsSource.next({
+          type: SearchEventType.HeroLossHitpoints,
+          text: `${hero.name} ранен на ${damage} и при смерти`,
+        });
+      }
     });
+  }
+
+  private activateTrap(hero: Hero, chance: number) {
+    this.eventsSource.next({
+      type: SearchEventType.CheckHero,
+      text: hero.name,
+    });
+    const dice = Random.throwDiceD6();
+    this.eventsSource.next({ type: SearchEventType.ThrowDice, text: hero.name, dice });
+    if (dice >= chance) {
+      this.eventsSource.next({
+        type: SearchEventType.ActivateTrap,
+        text: hero.name + ' попал в ловушку',
+      });
+      return true;
+    } else {
+      this.eventsSource.next({
+        type: SearchEventType.NotActivateTrap,
+        text: hero.name + ' избежал ловушки',
+      });
+      return false;
+    }
+
   }
 }
