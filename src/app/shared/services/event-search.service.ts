@@ -160,12 +160,12 @@ export class EventSearchService {
         this.eventsSource.next({ type: SearchEventType.LossThings, text: 'Потеря вещей' });
         break;
       case 6:
-        this.createTrap(heroes);
+        this.createRandomTrap(heroes);
         break;
     }
   }
 
-  private createTrap(heroes: Hero[]) {
+  private createRandomTrap(heroes: Hero[]) {
     // шанс срабатывания (для каждого игрока отдельно)
     const chance = Random.throwDiceD6();
     this.eventsSource.next({
@@ -173,30 +173,29 @@ export class EventSearchService {
       text: `Присутствует ловушка! (сложность ${chance})`,
     });
 
-    // определение типа ловушки
     const dice = Random.throwDiceD6();
     this.eventsSource.next({
       type: SearchEventType.ThrowDice,
-      text: 'Определение типа события',
+      text: 'Определение типа ловушки',
       dice,
     });
     switch (dice) {
       case 1:
       case 2:
       case 3:
-        this.activateTrapLossHitpoints(heroes, chance);
+        this.createTrapLossHitpoints(heroes, chance);
         break;
       case 4:
       case 5:
-        this.activateTrapLossThings(heroes, chance);
+        this.createTrapLossThings(heroes, chance);
         break;
       case 6:
-        this.activateTrapLossAllHitpoints(heroes, chance);
+        this.createTrapLossAllHitpoints(heroes, chance);
         break;
     }
   }
 
-  private activateTrapLossHitpoints(heroes: Hero[], chance: number) {
+  private createTrapLossHitpoints(heroes: Hero[], chance: number) {
     this.eventsSource.next({
       type: SearchEventType.TrapLossHitpoints,
       text: 'Персонажи ранены и теряют по 6*бросок жизней',
@@ -216,7 +215,7 @@ export class EventSearchService {
     });
   }
 
-  private activateTrapLossThings(heroes: Hero[], chance: number) {
+  private createTrapLossThings(heroes: Hero[], chance: number) {
     this.eventsSource.next({
       type: SearchEventType.TrapLossThings,
       text: 'Персонажи проваливаются в яму и теряют по вещи',
@@ -237,7 +236,7 @@ export class EventSearchService {
     this.checkHeroesInTrap(countHeroesInTrap);
   }
 
-  private activateTrapLossAllHitpoints(heroes: Hero[], chance: number) {
+  private createTrapLossAllHitpoints(heroes: Hero[], chance: number) {
     this.eventsSource.next({
       type: SearchEventType.TrapLossAllHitpoints,
       text: 'Персонажи проваливаются в яму, остается только 1 жизнь',
