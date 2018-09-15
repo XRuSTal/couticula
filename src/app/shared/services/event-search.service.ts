@@ -222,9 +222,11 @@ export class EventSearchService {
       text: 'Персонажи проваливаются в яму и теряют по вещи',
     });
 
+    let countHeroesInTrap = 0;
     heroes.forEach(hero => {
       const isTrapActivated = this.activateTrap(hero, chance);
       if (isTrapActivated) {
+        countHeroesInTrap += 1;
         const item = this.heroService.lossHeroThing(hero.id);
         this.eventsSource.next({
           type: SearchEventType.HeroLossHitpoints,
@@ -232,6 +234,7 @@ export class EventSearchService {
         });
       }
     });
+    this.checkHeroesInTrap(countHeroesInTrap);
   }
 
   private activateTrapLossAllHitpoints(heroes: Hero[], chance: number) {
@@ -240,9 +243,11 @@ export class EventSearchService {
       text: 'Персонажи проваливаются в яму, остается только 1 жизнь',
     });
 
+    let countHeroesInTrap = 0;
     heroes.forEach(hero => {
       const isTrapActivated = this.activateTrap(hero, chance);
       if (isTrapActivated) {
+        countHeroesInTrap += 1;
         const maxDamage = hero.hitPoint - 1;
         const damage = this.heroService.damageHero(hero.id, maxDamage);
         this.eventsSource.next({
@@ -251,6 +256,8 @@ export class EventSearchService {
         });
       }
     });
+
+    this.checkHeroesInTrap(countHeroesInTrap);
   }
 
   private activateTrap(hero: Hero, chance: number) {
@@ -274,5 +281,14 @@ export class EventSearchService {
       return false;
     }
 
+  }
+
+  private checkHeroesInTrap(countHeroesInTrap: number) {
+    if (countHeroesInTrap === this.heroService.heroes.length) {
+      this.eventsSource.next({
+        type: SearchEventType.AllHeroesFallen,
+        text: 'Все герои провалились и не смогли выбраться',
+      });
+    }
   }
 }

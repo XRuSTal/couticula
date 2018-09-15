@@ -20,5 +20,6 @@ export enum SearchEventType {
   ActivateTrap,
   NotActivateTrap,
   HeroLossHitpoints,
+  AllHeroesFallen,
   SearchIsCompleted,
 }
