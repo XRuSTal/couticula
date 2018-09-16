@@ -53,6 +53,11 @@ export class EventSearchService {
     } else {
       this.eventsSource.next({ type: SearchEventType.Nothing, text: 'Ничего не случилось' });
     }
+
+    this.eventsSource.next({
+      type: SearchEventType.SearchIsCompleted,
+      text: 'Пещера исследована',
+    });
   }
 
   private checkHeroes() {
@@ -100,16 +105,11 @@ export class EventSearchService {
       text: 'Определение типа события',
       dice,
     });
-    if (dice <= 4) {
+    if (dice <= 0.4) {
       this.createGoodEvent(heroes);
     } else {
       this.createBadEvent(heroes);
     }
-
-    this.eventsSource.next({
-      type: SearchEventType.SearchIsCompleted,
-      text: 'Пещера исследована',
-    });
   }
 
   private createGoodEvent(heroes: Hero[]) {
