@@ -46,4 +46,12 @@ export class PlayerService {
   addonInventory(item: Item) {
     this.inventory.push(item);
   }
+
+  lossGold(value: number) {
+    const lostGold = value < this.playerGold ? this.playerGold : value;
+
+    this.playerGold -= lostGold;
+    this.playerGoldSource.next(this.playerGold);
+    return lostGold;
+  }
 }
