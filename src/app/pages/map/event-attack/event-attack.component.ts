@@ -1,18 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { NavParams, PopoverController, ViewController } from 'ionic-angular';
+import { Component } from '@angular/core';
+import { NavController, NavParams, ViewController } from 'ionic-angular';
 
 import { Cell } from '@models';
-import { GameService, MapService, SettingsService } from '@services';
-
-import { EventTreasuresComponent } from '../event-treasures/event-treasures.component';
-import { ItemFabric } from '@app/shared/fabrics';
-import { ItemType } from '@app/shared/enums';
+import { BattlePage } from '@pages';
 
 @Component({
   selector: 'event-attack',
   templateUrl: 'event-attack.component.html',
 })
-export class EventAttackComponent implements OnInit {
+export class EventAttackComponent {
   cell: Cell;
 
   get monstersLevel1(): string[] {
@@ -34,37 +30,19 @@ export class EventAttackComponent implements OnInit {
     return 'assets/img/map/event-attack-monster-boss.png';
   }
   constructor(
+    private navCtrl: NavController,
     private params: NavParams,
-    public viewCtrl: ViewController,
-    public popoverCtrl: PopoverController,
-    private mapService: MapService
+    public viewCtrl: ViewController
   ) {
     this.cell = this.params.get('cell');
     console.log(this.cell);
   }
 
-  ngOnInit() {}
   close() {
     this.viewCtrl.dismiss();
   }
   attack() {
-    // TODO: battle
-    const treasures = [
-      ItemFabric.createItem(ItemType.Weapon, 6),
-      ItemFabric.createItem(ItemType.Shield, 5, 4),
-    ];
-
-    this.mapService.removeMonstersOnCell(this.cell.x, this.cell.y, treasures);
-    this.cell = this.mapService.getCell(this.cell.x, this.cell.y);
+    this.navCtrl.push(BattlePage, { cell: this.cell });
     this.viewCtrl.dismiss();
-
-    const popover = this.popoverCtrl.create(
-      EventTreasuresComponent,
-      { cell: this.cell },
-      { cssClass: 'popover-event-treasures' }
-    );
-    popover.present({
-      // ev: myEvent
-    });
   }
 }

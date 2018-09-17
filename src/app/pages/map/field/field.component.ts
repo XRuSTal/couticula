@@ -7,8 +7,10 @@ import {
 } from '@angular/core';
 import { AlertController, NavController, NavParams, PopoverController } from 'ionic-angular';
 
+import { ItemFabric } from '@app/shared/fabrics';
+import { ItemType } from '@app/shared/enums';
 import { Cell } from '@models';
-import { MapService, SettingsService } from '@services';
+import { BattleService, MapService, SettingsService } from '@services';
 
 import { EventAttackComponent } from '../event-attack/event-attack.component';
 import { EventSearchComponent } from '../event-search/event-search.component';
@@ -38,6 +40,7 @@ export class FieldComponent implements OnInit, OnDestroy {
     public navCtrl: NavController,
     public navParams: NavParams,
     private cd: ChangeDetectorRef,
+    private battleService: BattleService,
     private mapService: MapService,
     private settingsService: SettingsService
   ) {}
@@ -47,6 +50,27 @@ export class FieldComponent implements OnInit, OnDestroy {
       this.mapService.visibleMap$.subscribe(map => {
         this.visibleMap = map;
         this.cd.markForCheck();
+      })
+    );
+
+    this.subscriptions.push(
+      this.battleService.events$.subscribe(cell => {
+        const treasures = [
+          ItemFabric.createItem(ItemType.Weapon, 6),
+          ItemFabric.createItem(ItemType.Shield, 5, 4),
+        ];
+
+        this.mapService.removeMonstersOnCell(cell.x, cell.y, treasures);
+        cell = this.mapService.getCell(cell.x, cell.y);
+
+        const popover = this.popoverCtrl.create(
+          EventTreasuresComponent,
+          { cell },
+          { cssClass: 'popover-event-treasures' }
+        );
+        popover.present({
+          // ev: myEvent
+        });
       })
     );
   }

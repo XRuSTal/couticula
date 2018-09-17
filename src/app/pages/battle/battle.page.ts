@@ -1,20 +1,34 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
-/*
-  Generated class for the Battle page.
+import { Cell } from '@models';
+import { BattleService } from '@services';
 
-  See http://ionicframework.com/docs/v2/components/#navigation for more info on
-  Ionic pages and navigation.
-*/
 @Component({
   selector: 'page-battle',
   templateUrl: 'battle.page.html',
 })
 export class BattlePage {
-  constructor(public navCtrl: NavController, public navParams: NavParams) {}
+  cell: Cell;
+
+  constructor(
+    public navCtrl: NavController,
+    private params: NavParams,
+    private battleService: BattleService
+  ) {
+    this.cell = this.params.get('cell');
+  }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad BattlePage');
+  }
+
+  ngOnInit() {
+    this.battleService.createBattle(this.cell);
+  }
+
+  close() {
+    this.navCtrl.pop();
+    this.battleService.endBattle();
   }
 }
