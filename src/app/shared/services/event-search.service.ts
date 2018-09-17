@@ -37,8 +37,7 @@ export class EventSearchService {
         dice,
       });
 
-      if (dice >= 50) {
-        // TODO: >= 5
+      if (dice >= 5) {
         // событие действует на всех персонажей сразу
         this.eventsSource.next({
           type: SearchEventType.AllHeroes,
@@ -105,7 +104,7 @@ export class EventSearchService {
       text: 'Определение типа события',
       dice,
     });
-    if (dice <= 0.4) {
+    if (dice <= 4) {
       this.createGoodEvent(heroes);
     } else {
       this.createBadEvent(heroes);
