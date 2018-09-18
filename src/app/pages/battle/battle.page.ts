@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
 import { Cell } from '@models';
+import { InventoryPage } from '@pages';
 import { BattleService } from '@services';
 
 @Component({
@@ -25,6 +26,10 @@ export class BattlePage {
 
   ngOnInit() {
     this.battleService.createBattle(this.cell);
+  }
+
+  openInventory() {
+    this.navCtrl.push(InventoryPage);
   }
 
   close() {
