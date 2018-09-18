@@ -42,8 +42,7 @@ export class InventoryPage {
   }
 
   close() {
-    console.log('openPage map');
-    this.navCtrl.push(MapPage);
+    this.navCtrl.pop();
   }
 
   getItemTypeImage(item: Item) {
