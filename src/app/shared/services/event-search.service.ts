@@ -126,10 +126,7 @@ export class EventSearchService {
         this.eventsSource.next({ type: SearchEventType.FoundTreasure, text: 'Найдено сокровище' });
         break;
       case 5:
-        this.eventsSource.next({
-          type: SearchEventType.FoundSourceHolyWater,
-          text: 'Найден родник святой воды',
-        });
+        this.restoreHitpoints(heroes);
         break;
       case 6:
         this.eventsSource.next({
@@ -162,6 +159,33 @@ export class EventSearchService {
       case 6:
         this.createRandomTrap(heroes);
         break;
+    }
+  }
+
+  private restoreHitpoints(heroes: Hero[]) {
+    this.eventsSource.next({
+      type: SearchEventType.FoundSourceHolyWater,
+      text: 'Найден родник святой воды',
+    });
+
+    const hurtHeroes = heroes.filter(hero => hero.hitPoint !== hero.maxHitPoint);
+    if (hurtHeroes.length === 0) {
+      this.eventsSource.next({
+        type: SearchEventType.HeroRestoreHitpoints,
+        text: 'Все герои здоровы',
+      });
+    } else {
+      hurtHeroes.forEach(hero => {
+        const dice = Random.throwDiceD6();
+        this.eventsSource.next({ type: SearchEventType.ThrowDice, text: hero.name, dice });
+
+        const maxHealHitPoint = dice * 5;
+        const healHitPoint = this.heroService.healHero(hero.id, maxHealHitPoint);
+        this.eventsSource.next({
+          type: SearchEventType.HeroRestoreHitpoints,
+          text: `${hero.name} вылечен на ${healHitPoint}`,
+        });
+      });
     }
   }
 
