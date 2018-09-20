@@ -92,12 +92,22 @@ export class HeroService {
     }
   }
 
+  healHero(heroId: number, healHitPoint: number) {
+    const hero = this.heroes.find(p => p.id === heroId);
+    if (hero.hitPoint + healHitPoint > hero.maxHitPoint) {
+      healHitPoint = hero.maxHitPoint - hero.hitPoint;
+    }
+    hero.hitPoint += healHitPoint;
+    return healHitPoint;
+  }
+
   damageHero(heroId: number, damage: number) {
     const hero = this.heroes.find(p => p.id === heroId);
     if (hero.hitPoint < damage) {
       damage = hero.hitPoint - 1;
     }
     hero.hitPoint -= damage;
+    return damage;
   }
 
   lossHeroThing(heroId: number) {
