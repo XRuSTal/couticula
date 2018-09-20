@@ -110,7 +110,7 @@ export class HeroService {
     return damage;
   }
 
-  lossHeroThing(heroId: number) {
+  loseHeroThing(heroId: number) {
     const hero = this.heroes.find(p => p.id === heroId);
     if (hero.inventory.length > 0) {
       const index = Random.getInt(0, hero.inventory.length - 1);

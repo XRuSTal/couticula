@@ -2,8 +2,9 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 
-import { SearchEventType } from '@enums';
-import { Cell, EventSearch, Hero } from '@models';
+import { SearchEventType, ItemType } from '@enums';
+import { Cell, EventSearch, Hero, Item } from '@models';
+import { ItemFabric } from '@shared/fabrics';
 import { HeroService } from './hero.service';
 import { PlayerService } from './player.service';
 import { Random } from './random';
@@ -123,7 +124,7 @@ export class EventSearchService {
       case 2:
       case 3:
       case 4:
-        this.eventsSource.next({ type: SearchEventType.FoundTreasure, text: 'Найдено сокровище' });
+        this.findTreasure(heroes);
         break;
       case 5:
         this.restoreHitpoints(heroes);
@@ -160,6 +161,30 @@ export class EventSearchService {
         this.createRandomTrap(heroes);
         break;
     }
+  }
+
+  private findTreasure(heroes: Hero[]) {
+    this.eventsSource.next({
+      type: SearchEventType.FoundTreasure,
+      text: 'Найдено сокровище',
+    });
+
+    heroes.forEach(hero => {
+      const dice = Random.throwDiceD6();
+      this.eventsSource.next({ type: SearchEventType.ThrowDice, text: hero.name, dice });
+
+      const item: Item = this.generateTreasure();
+      this.heroService.equipItem(hero.id, item);
+      this.eventsSource.next({
+        type: SearchEventType.HeroFoundTreasure,
+        text: `${hero.name} нашел ${item.name}`,
+      });
+    });
+  }
+
+  // заглушка генерации сокровищ
+  private generateTreasure() {
+    return ItemFabric.createItem(ItemType.Weapon, 3);
   }
 
   private restoreHitpoints(heroes: Hero[]) {
@@ -209,8 +234,8 @@ export class EventSearchService {
 
   private lossHitpoints(heroes: Hero[]) {
     this.eventsSource.next({
-      type: SearchEventType.LossMoney,
-      text: 'Потеря денег',
+      type: SearchEventType.LossHitpoints,
+      text: 'Ранение персонажей',
     });
 
     heroes.forEach(hero => {
@@ -228,7 +253,7 @@ export class EventSearchService {
 
   private lossThings(heroes: Hero[]) {
     this.eventsSource.next({
-      type: SearchEventType.LossMoney,
+      type: SearchEventType.LossThings,
       text: 'Потеря предмета',
     });
 
@@ -236,7 +261,7 @@ export class EventSearchService {
       const dice = Random.throwDiceD6();
       this.eventsSource.next({ type: SearchEventType.ThrowDice, text: hero.name, dice });
 
-      const item = this.heroService.lossHeroThing(hero.id);
+      const item = this.heroService.loseHeroThing(hero.id);
       this.eventsSource.next({
         type: SearchEventType.HeroLossThing,
         text: `${hero.name} потерял ${item.name}`,
@@ -305,7 +330,7 @@ export class EventSearchService {
       const isTrapActivated = this.activateTrap(hero, chance);
       if (isTrapActivated) {
         countHeroesInTrap += 1;
-        const item = this.heroService.lossHeroThing(hero.id);
+        const item = this.heroService.loseHeroThing(hero.id);
         this.eventsSource.next({
           type: SearchEventType.HeroLossThing,
           text: `${hero.name} потерял ${item.name}`,

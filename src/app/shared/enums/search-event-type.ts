@@ -10,6 +10,7 @@ export enum SearchEventType {
   FoundTreasure,
   FoundSourceHolyWater,
   FoundSecretPath,
+  HeroFoundTreasure,
   HeroRestoreHitpoints,
   LossMoney,
   LossHitpoints,
