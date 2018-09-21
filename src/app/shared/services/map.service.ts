@@ -32,13 +32,7 @@ export class MapService {
       this.gameMap = [];
       this.xCurrentMap = 0;
       this.yCurrentMap = 0;
-      const cell = this.createEmptyCell(this.xCurrentMap, this.yCurrentMap);
-      cell.deep = 0;
-      cell.isWall = false;
-      cell.isClear = true;
-      cell.isTravel = true;
-      this.generateOneWay(this.xCurrentMap, this.yCurrentMap);
-      this.visibleMapSource.next(this.getVisibleMap());
+      this.createEntryPoint(this.xCurrentMap, this.yCurrentMap);
       resolve();
     });
   }
@@ -87,6 +81,12 @@ export class MapService {
     this.yCurrentMap = y;
     this.visibleMapSource.next(this.getVisibleMap());
   }
+  generateSecretPath() {
+    // TODO: генерация новой точки входа
+    this.xCurrentMap = 10;
+    this.yCurrentMap = 10;
+    this.createEntryPoint(this.xCurrentMap, this.yCurrentMap);
+  }
 
   private getVisibleMap() {
     const map: Cell[] = [];
@@ -108,6 +108,15 @@ export class MapService {
     }
     this.gameMap[x][y] = cell;
     return this.gameMap[x][y];
+  }
+  private createEntryPoint(x: number, y: number) {
+    const cell = this.createEmptyCell(x, y);
+    cell.deep = 0;
+    cell.isWall = false;
+    cell.isClear = true;
+    cell.isTravel = true;
+    this.generateOneWay(x, y);
+    this.visibleMapSource.next(this.getVisibleMap());
   }
   private generateOneWay(x: number, y: number) {
     const deep = this.gameMap[x][y].deep;

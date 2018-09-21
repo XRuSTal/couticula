@@ -2,10 +2,11 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 
-import { SearchEventType, ItemType } from '@enums';
+import { ItemType, SearchEventType } from '@enums';
 import { Cell, EventSearch, Hero, Item } from '@models';
 import { ItemFabric } from '@shared/fabrics';
 import { HeroService } from './hero.service';
+import { MapService } from './map.service';
 import { PlayerService } from './player.service';
 import { Random } from './random';
 
@@ -15,7 +16,11 @@ export class EventSearchService {
 
   private eventsSource = new Subject<EventSearch>();
 
-  constructor(private heroService: HeroService, private playerService: PlayerService) {
+  constructor(
+    private heroService: HeroService,
+    private mapService: MapService,
+    private playerService: PlayerService
+  ) {
     this.events$ = this.eventsSource.asObservable();
   }
 
@@ -130,10 +135,7 @@ export class EventSearchService {
         this.restoreHitpoints(heroes);
         break;
       case 6:
-        this.eventsSource.next({
-          type: SearchEventType.FoundSecretPath,
-          text: 'Найден потайной путь',
-        });
+        this.findSecretPath(heroes);
         break;
     }
   }
@@ -212,6 +214,14 @@ export class EventSearchService {
         });
       });
     }
+  }
+
+  private findSecretPath(heroes: Hero[]) {
+    this.eventsSource.next({
+      type: SearchEventType.FoundSecretPath,
+      text: 'Найден потайной путь',
+    });
+    this.mapService.generateSecretPath();
   }
 
   private lossMoney(heroes: Hero[]) {
