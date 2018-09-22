@@ -192,7 +192,7 @@ export class EventSearchService {
   private restoreHitpoints(heroes: Hero[]) {
     this.eventsSource.next({
       type: SearchEventType.FoundSourceHolyWater,
-      text: 'Найден родник святой воды',
+      text: 'Найден целебный родник',
     });
 
     const hurtHeroes = heroes.filter(hero => hero.hitPoint !== hero.maxHitPoint);
@@ -217,11 +217,18 @@ export class EventSearchService {
   }
 
   private findSecretPath(heroes: Hero[]) {
-    this.eventsSource.next({
-      type: SearchEventType.FoundSecretPath,
-      text: 'Найден потайной путь',
-    });
-    this.mapService.generateSecretPath();
+    const isCreated = this.mapService.generateSecretPath();
+    if (isCreated) {
+      this.eventsSource.next({
+        type: SearchEventType.FoundSecretPath,
+        text: 'Найден потайной путь!',
+      });
+    } else {
+      this.eventsSource.next({
+        type: SearchEventType.Nothing,
+        text: 'Найден потайной путь, но он завален.',
+      });
+    }
   }
 
   private lossMoney(heroes: Hero[]) {
@@ -245,7 +252,7 @@ export class EventSearchService {
   private lossHitpoints(heroes: Hero[]) {
     this.eventsSource.next({
       type: SearchEventType.LossHitpoints,
-      text: 'Ранение персонажей',
+      text: 'Обвал пещеры',
     });
 
     heroes.forEach(hero => {
@@ -264,7 +271,7 @@ export class EventSearchService {
   private lossThings(heroes: Hero[]) {
     this.eventsSource.next({
       type: SearchEventType.LossThings,
-      text: 'Потеря предмета',
+      text: 'Потеря/поломка предмета',
     });
 
     heroes.forEach(hero => {

@@ -82,10 +82,36 @@ export class MapService {
     this.visibleMapSource.next(this.getVisibleMap());
   }
   generateSecretPath() {
-    // TODO: генерация новой точки входа
-    this.xCurrentMap = 10;
-    this.yCurrentMap = 10;
-    this.createEntryPoint(this.xCurrentMap, this.yCurrentMap);
+    const secretPath = this.tryCreateSecretPath();
+
+    if (secretPath) {
+      const currentCell = this.getCell(this.xCurrentMap, this.yCurrentMap);
+      this.createEntryPoint(secretPath.x, secretPath.y, currentCell.deep);
+      const targetCell = this.getCell(secretPath.x, secretPath.y);
+      targetCell.cave = { x: this.xCurrentMap, y: this.yCurrentMap };
+      currentCell.cave = { x: secretPath.x, y: secretPath.y };
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  private tryCreateSecretPath() {
+    const radius = 5;
+    const tryCount = 10; // защита от зацикливания на больших картах
+    let xCave: number, yCave: number;
+
+    for (let count = 0; count < tryCount; count++) {
+      xCave = this.xCurrentMap + Random.getInt(-radius, radius);
+      yCave = this.yCurrentMap + Random.getInt(-radius, radius);
+      if (this.isEmptyCell(xCave, yCave)) {
+        return {
+          x: xCave,
+          y: yCave,
+        };
+      }
+    }
+    return null;
   }
 
   private getVisibleMap() {
@@ -109,9 +135,9 @@ export class MapService {
     this.gameMap[x][y] = cell;
     return this.gameMap[x][y];
   }
-  private createEntryPoint(x: number, y: number) {
+  private createEntryPoint(x: number, y: number, deep = 0) {
     const cell = this.createEmptyCell(x, y);
-    cell.deep = 0;
+    cell.deep = deep;
     cell.isWall = false;
     cell.isClear = true;
     cell.isTravel = true;

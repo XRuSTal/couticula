@@ -9,6 +9,7 @@ export class Cell {
   ways = '?'; // debug only
   isClear = false; // убиты ли монстры
   isTravel = false; // сработало ли событие
+  cave?: { x: number; y: number };
   doesBossExists = false;
   mosterLevel1Count = 0;
   mosterLevel2Count = 0;
