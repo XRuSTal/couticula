@@ -15,9 +15,17 @@ import { Cell } from '@models';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CellComponent implements OnChanges {
-  @Input() cell: Cell;
-  @Output() clicked = new EventEmitter();
-  @Output() clickedEvent = new EventEmitter();
+  @Input()
+  cell: Cell;
+  @Output()
+  clicked = new EventEmitter();
+  @Output()
+  clickedEvent = new EventEmitter();
+
+  imageBattleEvent = 'assets/img/map/event-attack.png';
+  imageSearchEvent = 'assets/img/map/search.png';
+  imageCave = 'assets/img/map/cave.png';
+  imageTreasures = 'assets/img/map/treasure.png';
 
   get image() {
     if (this.cell) {
@@ -35,17 +43,17 @@ export class CellComponent implements OnChanges {
   get existsSearchEvent(): boolean {
     return this.cell && !this.cell.isWall && this.cell.isClear && !this.cell.isTravel;
   }
+  get existsCave(): boolean {
+    return this.cell && !!this.cell.cave;
+  }
   get existsTreasures(): boolean {
-    return this.cell && !this.cell.isWall && this.cell.isClear && this.cell.isTravel && this.cell.treasures.length > 0;
-  }
-  get imageBattleEvent() {
-    return 'assets/img/map/event-attack.png';
-  }
-  get imageSearchEvent() {
-    return 'assets/img/map/search.png';
-  }
-  get imageTreasures() {
-    return 'assets/img/map/treasure.png';
+    return (
+      this.cell &&
+      !this.cell.isWall &&
+      this.cell.isClear &&
+      this.cell.isTravel &&
+      this.cell.treasures.length > 0
+    );
   }
 
   constructor(private cd: ChangeDetectorRef) {}

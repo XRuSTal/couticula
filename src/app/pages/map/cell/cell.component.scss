@@ -11,11 +11,14 @@
     }
   }
 
-  &__search-event, &__treasures {
+  &__search-event, &__treasures, &__cave {
     position: absolute;
     z-index: 1;
     top: 0;
     padding: 25%;
+  }
+  &__cave {
+    padding: 15%;
   }
 
   &__info {

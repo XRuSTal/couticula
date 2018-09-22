@@ -49,11 +49,11 @@ export class EventSearchService {
           type: SearchEventType.AllHeroes,
           text: 'Событие действует на всех!',
         });
-        this.createEvent(this.heroService.heroes);
+        this.createEvent(cell, this.heroService.heroes);
       } else {
         // событие действует на каждого игрока отдельно
         const heroes = this.checkHeroes();
-        this.createEvent(heroes);
+        this.createEvent(cell, heroes);
       }
     } else {
       this.eventsSource.next({ type: SearchEventType.Nothing, text: 'Ничего не случилось' });
@@ -97,7 +97,7 @@ export class EventSearchService {
     return heroes;
   }
 
-  private createEvent(heroes: Hero[]) {
+  private createEvent(cell: Cell, heroes: Hero[]) {
     if (heroes.length === 0) {
       this.eventsSource.next({ type: SearchEventType.Nothing, text: 'Ничего не случилось' });
       return;
@@ -110,15 +110,15 @@ export class EventSearchService {
       text: 'Определение типа события',
       dice,
     });
-    if (dice <= 4) {
-      this.createGoodEvent(heroes);
+    if (dice <= 40) {
+      this.createGoodEvent(cell, heroes);
     } else {
       this.createBadEvent(heroes);
     }
   }
 
-  private createGoodEvent(heroes: Hero[]) {
-    const dice = Random.throwDiceD6();
+  private createGoodEvent(cell: Cell, heroes: Hero[]) {
+    const dice = 6; // Random.throwDiceD6();
     this.eventsSource.next({
       type: SearchEventType.ThrowDice,
       text: 'Положительное событие',
@@ -135,7 +135,7 @@ export class EventSearchService {
         this.restoreHitpoints(heroes);
         break;
       case 6:
-        this.findSecretPath(heroes);
+        this.findSecretPath(cell, heroes);
         break;
     }
   }
@@ -216,8 +216,8 @@ export class EventSearchService {
     }
   }
 
-  private findSecretPath(heroes: Hero[]) {
-    const isCreated = this.mapService.generateSecretPath();
+  private findSecretPath(cell: Cell, heroes: Hero[]) {
+    const isCreated = this.mapService.generateSecretPath(cell.x, cell.y);
     if (isCreated) {
       this.eventsSource.next({
         type: SearchEventType.FoundSecretPath,
@@ -226,7 +226,7 @@ export class EventSearchService {
     } else {
       this.eventsSource.next({
         type: SearchEventType.Nothing,
-        text: 'Найден потайной путь, но он завален.',
+        text: 'Найден потайной путь, но он завален',
       });
     }
   }

@@ -92,6 +92,8 @@ export class FieldComponent implements OnInit, OnDestroy {
         this.showEventSearchComponent(cell);
       } else if (cell.treasures.length > 0) {
         this.showEventWinComponent(cell);
+      } else if (cell.cave) {
+        this.mapService.setCurrentPosition(cell.cave.x, cell.cave.y);
       }
     }
   }

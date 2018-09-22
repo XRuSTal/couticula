@@ -11,9 +11,13 @@
        src="{{imageSearchEvent}}"
        class="map__field__cell__search-event"
        (click)="clickEvent()">
+  <img *ngIf="existsCave"
+       src="{{imageCave}}"
+       class="map__field__cell__cave"
+       (click)="clickEvent()">
   <img *ngIf="existsTreasures"
        src="{{imageTreasures}}"
        class="map__field__cell__treasures"
        (click)="clickEvent()">
-  <!--<span *ngIf="cell" class="map__field__cell__info">X:{{cell.x}}-Y:{{cell.y}}</span>-->
+       <!--<span *ngIf="cell" class="map__field__cell__info">X:{{cell.x}}-Y:{{cell.y}}</span>-->
 </div>

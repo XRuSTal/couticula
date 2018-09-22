@@ -81,14 +81,14 @@ export class MapService {
     this.yCurrentMap = y;
     this.visibleMapSource.next(this.getVisibleMap());
   }
-  generateSecretPath() {
+  generateSecretPath(x: number, y: number) {
     const secretPath = this.tryCreateSecretPath();
 
     if (secretPath) {
-      const currentCell = this.getCell(this.xCurrentMap, this.yCurrentMap);
+      const currentCell = this.getCell(x, y);
       this.createEntryPoint(secretPath.x, secretPath.y, currentCell.deep);
       const targetCell = this.getCell(secretPath.x, secretPath.y);
-      targetCell.cave = { x: this.xCurrentMap, y: this.yCurrentMap };
+      targetCell.cave = { x, y };
       currentCell.cave = { x: secretPath.x, y: secretPath.y };
       return true;
     } else {
