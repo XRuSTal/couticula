@@ -7,6 +7,10 @@ export class Random {
     return Math.floor(Math.random() * (max - min + 1) + min);
   }
 
+  static throwDiceD3(): number {
+    return Random.getInt(1, 3);
+  }
+
   static throwDiceD6(): number {
     return Random.getInt(1, 6);
   }
