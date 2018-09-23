@@ -11,4 +11,14 @@ export class ItemFabric {
       return new Item(type, value, itemInfo.name, itemInfo.img);
     }
   }
+
+  static createRandomBottle(): Item {
+    return null;
+  }
+  static createRandomEquipment(): Item {
+    return null;
+  }
+  static createRandomGoldBag(): Item {
+    return null;
+  }
 }

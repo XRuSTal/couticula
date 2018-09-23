@@ -8,6 +8,7 @@ import { ItemFabric } from '@shared/fabrics';
 import { HeroService } from './hero.service';
 import { MapService } from './map.service';
 import { PlayerService } from './player.service';
+import { TreasureService } from './treasure.service';
 import { Random } from './random';
 
 @Injectable()
@@ -19,7 +20,8 @@ export class EventSearchService {
   constructor(
     private heroService: HeroService,
     private mapService: MapService,
-    private playerService: PlayerService
+    private playerService: PlayerService,
+    private treasureService: TreasureService
   ) {
     this.events$ = this.eventsSource.asObservable();
   }
@@ -118,7 +120,7 @@ export class EventSearchService {
   }
 
   private createGoodEvent(cell: Cell, heroes: Hero[]) {
-    const dice = 6; // Random.throwDiceD6();
+    const dice = Random.throwDiceD6();
     this.eventsSource.next({
       type: SearchEventType.ThrowDice,
       text: 'Положительное событие',
@@ -175,18 +177,13 @@ export class EventSearchService {
       const dice = Random.throwDiceD6();
       this.eventsSource.next({ type: SearchEventType.ThrowDice, text: hero.name, dice });
 
-      const item: Item = this.generateTreasure();
+      const item: Item = this.treasureService.generateTreasure(1)[0];
       this.heroService.equipItem(hero.id, item);
       this.eventsSource.next({
         type: SearchEventType.HeroFoundTreasure,
         text: `${hero.name} нашел ${item.name}`,
       });
     });
-  }
-
-  // заглушка генерации сокровищ
-  private generateTreasure() {
-    return ItemFabric.createItem(ItemType.Weapon, 3);
   }
 
   private restoreHitpoints(heroes: Hero[]) {
