@@ -31,4 +31,19 @@ export const Items = [
     name: 'Щит',
     img: 'assets/img/items/shield.jpg',
   },
+  {
+    type: ItemType.BottleOfHeal,
+    name: 'Зелье лечения',
+    img: 'assets/img/items/bottle-heal.jpg',
+  },
+  {
+    type: ItemType.BottleOfStan,
+    name: 'Колба парализующего газа',
+    img: 'assets/img/items/bottle-stan.jpg',
+  },
+  {
+    type: ItemType.BottleOfPoison,
+    name: 'Яд лесной жабы',
+    img: 'assets/img/items/bottle-poison.jpg',
+  },
 ];

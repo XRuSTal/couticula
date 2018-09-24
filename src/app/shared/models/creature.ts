@@ -41,12 +41,12 @@ export class Creature {
     this.img = img;
     this.hitPoint = hitpoint;
     this.maxHitPoint = hitpoint;
-    this.equipment.Weapon = ItemFabric.createItem(ItemType.Weapon, weapon);
-    this.equipment.Head = ItemFabric.createItem(ItemType.Head, head);
-    this.equipment.Hands = ItemFabric.createItem(ItemType.Hands, hands);
-    this.equipment.Legs = ItemFabric.createItem(ItemType.Legs, legs);
-    this.equipment.Body = ItemFabric.createItem(ItemType.Body, body);
-    this.equipment.Shield = ItemFabric.createItem(ItemType.Shield, body) as Shield;
+    this.equipment.Weapon = ItemFabric.createEquipment(ItemType.Weapon, weapon);
+    this.equipment.Head = ItemFabric.createEquipment(ItemType.Head, head);
+    this.equipment.Hands = ItemFabric.createEquipment(ItemType.Hands, hands);
+    this.equipment.Legs = ItemFabric.createEquipment(ItemType.Legs, legs);
+    this.equipment.Body = ItemFabric.createEquipment(ItemType.Body, body);
+    this.equipment.Shield = ItemFabric.createEquipment(ItemType.Shield, body) as Shield;
     this.abilities.push(AbilityType.MonsterBasicAttack);
   }
 }

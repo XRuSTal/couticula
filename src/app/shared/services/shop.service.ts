@@ -217,7 +217,7 @@ export class ShopService {
           if (currentHero.maxItemValue >= item.value) {
             this.playerService.decreaseGold(item.cost).then(success => {
               if (success) {
-                const newItem = ItemFabric.createItem(this.choosenItem.itemType, item.value);
+                const newItem = ItemFabric.createEquipment(this.choosenItem.itemType, item.value);
                 this.heroService.equipItem(hero.id, newItem).then(success => {
                   if (!success) {
                     this.playerService.addonInventory(newItem);
