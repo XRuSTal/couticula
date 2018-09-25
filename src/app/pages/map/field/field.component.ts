@@ -10,7 +10,7 @@ import { AlertController, NavController, NavParams, PopoverController } from 'io
 import { ItemFabric } from '@app/shared/fabrics';
 import { ItemType } from '@app/shared/enums';
 import { Cell } from '@models';
-import { BattleService, MapService, SettingsService } from '@services';
+import { BattleService, MapService, SettingsService, TreasureService } from '@services';
 
 import { EventAttackComponent } from '../event-attack/event-attack.component';
 import { EventSearchComponent } from '../event-search/event-search.component';
@@ -42,6 +42,7 @@ export class FieldComponent implements OnInit, OnDestroy {
     private cd: ChangeDetectorRef,
     private battleService: BattleService,
     private mapService: MapService,
+    private treasureService: TreasureService,
     private settingsService: SettingsService
   ) {}
 
@@ -55,10 +56,8 @@ export class FieldComponent implements OnInit, OnDestroy {
 
     this.subscriptions.push(
       this.battleService.events$.subscribe(cell => {
-        const treasures = [
-          ItemFabric.createItem(ItemType.Weapon, 6),
-          ItemFabric.createItem(ItemType.Shield, 5, 4),
-        ];
+        const countTreasure = 7;
+        const treasures = this.treasureService.generateTreasure(countTreasure);
 
         this.mapService.removeMonstersOnCell(cell.x, cell.y, treasures);
         cell = this.mapService.getCell(cell.x, cell.y);
