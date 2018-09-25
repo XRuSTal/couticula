@@ -84,6 +84,7 @@ page-inventory {
 
     &__hero-inventory {
       display: grid;
+      overflow-y: auto;
       grid-template-columns: repeat(3, 13vh);
       grid-template-rows: repeat(6, 13vh) auto;
       grid-column-gap: 2vh;
