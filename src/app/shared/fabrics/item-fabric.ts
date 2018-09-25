@@ -77,7 +77,28 @@ export class ItemFabric {
   }
 
   static createRandomGoldBag(): Item {
-    return null;
+    const sizeBag = Random.throwDiceD6();
+    const value = Random.throwDiceD6();
+    let gold: number;
+    let name: string;
+    switch (sizeBag) {
+      case 1:
+      case 2:
+      case 3:
+        gold = 100 * value;
+        name = 'Гроши';
+        break;
+      case 4:
+      case 5:
+        gold = 200 * value;
+        name = 'Мошна';
+        break;
+      case 6:
+        gold = 300 * value;
+        name = 'Кошель';
+        break;
+    }
+    return new Item(ItemType.Gold, gold, name, 'assets/img/items/gold-bag.jpg');
   }
 
   private static createRandomShield(value: number): Item {
