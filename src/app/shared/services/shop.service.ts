@@ -218,10 +218,8 @@ export class ShopService {
             this.playerService.decreaseGold(item.cost).then(success => {
               if (success) {
                 const newItem = ItemFabric.createEquipment(this.choosenItem.itemType, item.value);
-                this.heroService.equipItem(hero.id, newItem).then(success => {
-                  if (!success) {
-                    this.playerService.addonInventory(newItem);
-                  }
+                this.heroService.addItemToInventory(hero, newItem);
+                this.heroService.equipItem(hero.id, newItem).then(() => {
                   resolve(success);
                 });
               }

@@ -120,7 +120,7 @@ export class EventSearchService {
   }
 
   private createGoodEvent(cell: Cell, heroes: Hero[]) {
-    const dice = Random.throwDiceD6();
+    const dice = 1; // Random.throwDiceD6();
     this.eventsSource.next({
       type: SearchEventType.ThrowDice,
       text: 'Положительное событие',
@@ -178,7 +178,7 @@ export class EventSearchService {
       this.eventsSource.next({ type: SearchEventType.ThrowDice, text: hero.name, dice });
 
       const item: Item = this.treasureService.generateTreasure(1)[0];
-      this.heroService.equipItem(hero.id, item);
+      this.heroService.addItemToInventory(hero, item);
       this.eventsSource.next({
         type: SearchEventType.HeroFoundTreasure,
         text: `${hero.name} нашел ${item.name}`,
