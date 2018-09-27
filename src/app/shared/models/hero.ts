@@ -38,6 +38,7 @@ export class Hero extends Creature {
 
   setAddonHitPoints(value: number) {
     this.hitPoint += value - this.addonHitPoint;
+    this.maxHitPoint += value - this.addonHitPoint;
     this.addonHitPoint = value;
   }
 }
