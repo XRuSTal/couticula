@@ -44,8 +44,11 @@ export class HeroService {
         this.removeItemFormInventory(hero, item);
         resolve(true);
       } else if (this.checkItemTypeOnEquipment(item.type)) {
-        const isEquip = this.tryEquipItem(hero, item);
-        resolve(isEquip);
+        const isEquipped = this.tryEquipItem(hero, item);
+        resolve(isEquipped);
+      } else if (item.type === ItemType.BottleOfHeal) {
+        const isUsed = this.tryUseHealBottle(hero, item);
+        resolve(isUsed);
       } else {
         resolve(false);
       }
@@ -93,6 +96,19 @@ export class HeroService {
       this.addItemToInventory(hero, oldItem);
     }
     return true;
+  }
+
+  private tryUseHealBottle(hero: Hero, item: Item) {
+    const dice = Random.throwDiceD6();
+    const maxHealHitPoint = dice * 5;
+    const healHitPoint = this.healHero(hero.id, maxHealHitPoint);
+
+    if (healHitPoint > 0) {
+      this.removeItemFormInventory(hero, item);
+      return true;
+    } else {
+      return false;
+    }
   }
 
   addItemToInventory(hero: Hero, item: Item) {
