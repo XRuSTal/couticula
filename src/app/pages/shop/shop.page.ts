@@ -4,7 +4,7 @@ import { Subscription } from 'rxjs/Subscription';
 
 import { ShopPageType } from '@enums';
 import { Hero, ShopAbilitiesPages } from '@models';
-import { ChoiceHeroPage, MapPage } from '@pages';
+import { ChoiceHeroPage } from '@pages';
 import { HeroService, PlayerService, ShopService } from '@services';
 
 import { AbilityListComponent, EquipmentComponent } from './index';
@@ -74,8 +74,7 @@ export class ShopPage implements OnInit, OnDestroy {
   }
 
   close() {
-    console.log('openPage map');
-    this.navCtrl.push(MapPage);
+    this.navCtrl.pop();
   }
   buy() {
     const selectedTab = this.tabRef.getSelected();
