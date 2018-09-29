@@ -1,7 +1,7 @@
 <div class="item-info-short"
      [ngClass]="{ 'item-info-short_disabled': !hasValue }"
      [ngStyle]="{ 'backgroundImage': 'url(' + item.img + ')' }">
-  <div *ngIf="hasValue"
+  <div *ngIf="isValueShown"
        class="item-info-short__value"
        [ngStyle]="{
           'backgroundImage': 'url(assets/img/dices/dice' + item.value + '.png)',

@@ -9,6 +9,9 @@ import { Item } from '@models';
 export class ItemInfoShortComponent {
   @Input() item: Item;
 
+  get isValueShown() {
+    return Item.checkItemTypeOnEquipment(this.item.type) && this.item.value;
+  }
   get backgroundColor() {
     return Item.getItemColor(this.item.value);
   }

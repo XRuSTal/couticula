@@ -43,7 +43,7 @@ export class HeroService {
         this.playerService.increaseGold(item.value);
         this.removeItemFormInventory(hero, item);
         resolve(true);
-      } else if (this.checkItemTypeOnEquipment(item.type)) {
+      } else if (Item.checkItemTypeOnEquipment(item.type)) {
         const isEquipped = this.tryEquipItem(hero, item);
         resolve(isEquipped);
       } else if (item.type === ItemType.BottleOfHeal) {
@@ -149,18 +149,5 @@ export class HeroService {
     } else {
       return null;
     }
-  }
-
-  private checkItemTypeOnEquipment(type: ItemType) {
-    return (
-      [
-        ItemType.Weapon,
-        ItemType.Head,
-        ItemType.Hands,
-        ItemType.Legs,
-        ItemType.Body,
-        ItemType.Shield,
-      ].indexOf(type) !== -1
-    );
   }
 }

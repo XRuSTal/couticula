@@ -25,6 +25,19 @@ export class Item {
     this.description = description;
   }
 
+  static checkItemTypeOnEquipment(type: ItemType) {
+    return (
+      [
+        ItemType.Weapon,
+        ItemType.Head,
+        ItemType.Hands,
+        ItemType.Legs,
+        ItemType.Body,
+        ItemType.Shield,
+      ].indexOf(type) !== -1
+    );
+  }
+
   static getItemColor(value: number) {
     switch (value) {
       case 6:
