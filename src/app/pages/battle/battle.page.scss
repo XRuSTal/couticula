@@ -35,5 +35,78 @@ page-battle {
         color: white;
       }
     }
+
+    .battle-field {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      grid-template-rows: auto 1fr auto;
+      grid-template-areas: "monster monster"
+                           "creatures dices"
+                           "hero hero";
+
+      &__target {
+        height: 25vh;
+        display: grid;
+        grid-template-columns: auto auto 1fr;
+        grid-template-rows: 1fr 1fr;
+        grid-template-areas: "img equipment effects"
+                             "img equipment abilities";
+        background-color: gold;
+
+        &__image {
+          width: 25vh;
+          grid-row: img;
+          grid-column: img;
+          background-color: red;
+        }
+        &__equipment {
+          width: 20vh;
+          grid-row: equipment;
+          grid-column: equipment;
+          background-color: green;
+        }
+        &__effects {
+          grid-row: effects;
+          grid-column: effects;
+          background-color: blueviolet;
+        }
+        &__abilites {
+          grid-row: abilities;
+          grid-column: abilities;
+          background-color: darkcyan;
+        }
+
+        &_monster {
+          grid-row: monster;
+          grid-column: monster;
+        }
+        &_hero {
+          grid-row: hero;
+          grid-column: hero;
+        }
+      }
+
+      &__creatures {
+        grid-row: creatures;
+        grid-column: creatures;
+        background-color: gray;
+      }
+
+      &__dices {
+        grid-row: dices;
+        grid-column: dices;
+        height: 20vh;
+        width: 20vh;
+        display: grid;
+        grid-template-rows: 1fr 1fr;
+        background-color: brown;
+
+        &__target-dice, &__value-dice {
+          height: 8vh;
+          width: 8vh;
+          background-color: black;
+        }
+      }
+    }
   }
 }
