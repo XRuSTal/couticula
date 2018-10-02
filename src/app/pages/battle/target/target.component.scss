@@ -1,0 +1,39 @@
+target {
+  display: grid;
+  grid-template-columns: auto auto 1fr;
+  grid-template-rows: 1fr 1fr;
+  grid-template-areas: "img equipment effects"
+                       "img equipment abilities";
+  background-color: gold;
+
+  .battle-field__target {
+    &__image {
+      width: 25vh;
+      grid-row: img;
+      grid-column: img;
+      background-color: red;
+
+      ion-img {
+        height: 100%;
+        width: 100%;
+        border-radius: 2vh;
+      }
+    }
+    &__equipment {
+      width: 20vh;
+      grid-row: equipment;
+      grid-column: equipment;
+      background-color: green;
+    }
+    &__effects {
+      grid-row: effects;
+      grid-column: effects;
+      background-color: blueviolet;
+    }
+    &__abilites {
+      grid-row: abilities;
+      grid-column: abilities;
+      background-color: darkcyan;
+    }
+  }
+}
