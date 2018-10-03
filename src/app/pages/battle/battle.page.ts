@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
-import { Cell } from '@models';
+import { Cell, Creature } from '@models';
 import { InventoryPage } from '@pages';
 import { BattleService } from '@services';
 
@@ -11,6 +11,14 @@ import { BattleService } from '@services';
 })
 export class BattlePage {
   cell: Cell;
+  creatures: Creature[];
+
+  get targetMonter() {
+    return this.creatures[0];
+  }
+  get targetHero() {
+    return this.creatures[1];
+  }
 
   constructor(
     public navCtrl: NavController,
@@ -26,6 +34,7 @@ export class BattlePage {
 
   ngOnInit() {
     this.battleService.createBattle(this.cell);
+    this.creatures = this.battleService.creatures;
   }
 
   openInventory() {
