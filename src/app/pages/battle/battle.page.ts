@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
 import { Cell, Creature } from '@models';
@@ -8,6 +8,7 @@ import { BattleService } from '@services';
 @Component({
   selector: 'page-battle',
   templateUrl: 'battle.page.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BattlePage {
   cell: Cell;
@@ -21,6 +22,7 @@ export class BattlePage {
   }
 
   constructor(
+    private cd: ChangeDetectorRef,
     public navCtrl: NavController,
     private params: NavParams,
     private battleService: BattleService
@@ -35,6 +37,7 @@ export class BattlePage {
   ngOnInit() {
     this.battleService.createBattle(this.cell);
     this.creatures = this.battleService.creatures;
+    this.cd.markForCheck();
   }
 
   openInventory() {
