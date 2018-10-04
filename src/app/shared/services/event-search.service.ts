@@ -34,8 +34,7 @@ export class EventSearchService {
       text: 'Определение наличия события',
       dice,
     });
-    if (dice >= 1) {
-      // TODO: >= 5
+    if (dice >= 5) {
       this.eventsSource.next({ type: SearchEventType.Smth, text: 'Произошло событие!' });
       // определение масштабности события
       dice = Random.throwDiceD6();
@@ -120,7 +119,7 @@ export class EventSearchService {
   }
 
   private createGoodEvent(cell: Cell, heroes: Hero[]) {
-    const dice = 1; // Random.throwDiceD6();
+    const dice = Random.throwDiceD6();
     this.eventsSource.next({
       type: SearchEventType.ThrowDice,
       text: 'Положительное событие',
