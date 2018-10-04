@@ -7,16 +7,40 @@ target {
   background-color: gold;
 
   .battle-field__target {
-    &__image {
+    &__main {
       width: 25vh;
       grid-row: img;
       grid-column: img;
-      background-color: red;
 
-      ion-img {
+      &__image {
         height: 100%;
         width: 100%;
         border-radius: 2vh;
+      }
+
+      &__name {
+        width: 100%;
+        position: relative;
+        top: 0;
+        text-align: center;
+        font-size: 4vh;
+        font-weight: bold;
+        color: white;
+      }
+
+      &__hitpoints {
+        width: 100%;
+        position: relative;
+        bottom: 0;
+        border-radius: 0 0 2vh 2vh;
+        text-align: center;
+        font-size: 3.5vh;
+        font-weight: bold;
+        color: red;
+        background-color:rgba(0, 0, 0, 0.7);
+        &__icon{
+          color: red;
+        }
       }
     }
     &__equipment {

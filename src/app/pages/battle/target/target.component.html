@@ -1,6 +1,15 @@
-<div class="battle-field__target__image">
-  <ion-img src="{{creature.img}}" ></ion-img>
+<div class="battle-field__target__main">
+  <ion-img src="{{creature.img}}"
+           class="battle-field__target__main__image" ></ion-img>
+
+  <div class="battle-field__target__main__name">{{creature.name}}</div>
+
+  <div class="battle-field__target__main__hitpoints">
+    {{creature.hitPoint}}/{{creature.maxHitPoint}}
+    <ion-icon name="heart" class="battle-field__target__main__hitpoints__icon"></ion-icon>
+  </div>
 </div>
+
 <div class="battle-field__target__equipment"></div>
 <div class="battle-field__target__effects"></div>
 <div *ngIf="isShownAbilities" class="battle-field__target__abilites"></div>
