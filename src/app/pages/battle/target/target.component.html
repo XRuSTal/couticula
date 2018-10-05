@@ -10,6 +10,10 @@
   </div>
 </div>
 
-<div class="battle-field__target__equipment"></div>
+<div class="battle-field__target__equipment">
+  <item-info-short *ngFor="let item of creature.equipment.items"
+                   [item]='item'
+                   class="battle-field__target__equipment__item"></item-info-short>
+</div>
 <div class="battle-field__target__effects"></div>
 <div *ngIf="isShownAbilities" class="battle-field__target__abilites"></div>

@@ -53,7 +53,18 @@ target {
       width: 20vh;
       grid-row: equipment;
       grid-column: equipment;
+      display: grid;
+      grid-template-columns: auto auto;
+      grid-gap: .5vh;
+      padding: .5vh;
       background-color: green;
+
+      &__item {
+        display: block;
+        height: 100%;
+        width: 100%;
+        border-radius: 1vh;
+      }
     }
     &__effects {
       grid-row: effects;
