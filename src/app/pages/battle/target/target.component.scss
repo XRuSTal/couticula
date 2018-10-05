@@ -8,9 +8,10 @@ target {
 
   .battle-field__target {
     &__main {
-      width: 25vh;
+      width: 30vh;
       grid-row: img;
       grid-column: img;
+      position: relative;
 
       &__image {
         height: 100%;
@@ -20,21 +21,26 @@ target {
 
       &__name {
         width: 100%;
-        position: relative;
+        position: absolute;
         top: 0;
         text-align: center;
         font-size: 4vh;
-        font-weight: bold;
         color: white;
+        text-shadow:
+          -1px -1px 0 #000,
+          1px -1px 0 #000,
+          -1px 1px 0 #000,
+          1px 1px 0 #000,
+          0 0 10px #000;
       }
 
       &__hitpoints {
         width: 100%;
-        position: relative;
+        position: absolute;
         bottom: 0;
         border-radius: 0 0 2vh 2vh;
         text-align: center;
-        font-size: 3.5vh;
+        font-size: 4vh;
         font-weight: bold;
         color: red;
         background-color:rgba(0, 0, 0, 0.7);
