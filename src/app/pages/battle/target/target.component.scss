@@ -34,6 +34,19 @@ target {
           0 0 10px #000;
       }
 
+      &__info {
+        width: 5vh;
+        height: 5vh;
+        border-radius: 2.5vh;
+        position: absolute;
+        top: 0;
+        right: 0;
+        color: white;
+        background-color: black;
+        font-size: 3vh;
+        padding: 1vh 2vh;
+      }
+
       &__hitpoints {
         width: 100%;
         position: absolute;

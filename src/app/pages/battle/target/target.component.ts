@@ -19,4 +19,8 @@ export class TargetComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     // this.subscriptions.forEach(s => s.unsubscribe);
   }
+
+  showCreatureDescription() {
+    console.log(this.creature.description);
+  }
 }
