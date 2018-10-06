@@ -62,7 +62,19 @@ page-battle {
       &__creatures {
         grid-row: creatures;
         grid-column: creatures;
+        display: grid;
+        justify-content: space-around;
+        max-width: calc(100vw - 16vh);
         background-color: gray;
+
+        &__creature {
+          margin: auto;
+          background-color: green;
+
+          &_selected {
+            border: solid gold 1vh;
+          }
+        }
       }
 
       &__dices {

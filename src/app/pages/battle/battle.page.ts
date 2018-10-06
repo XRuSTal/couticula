@@ -1,3 +1,4 @@
+import { animate, state, style, transition, trigger } from '@angular/animations';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
@@ -9,13 +10,21 @@ import { BattleService } from '@services';
   selector: 'page-battle',
   templateUrl: 'battle.page.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  animations: [
+    trigger('scaleSelected', [
+      state('selected', style({ transform: 'scale(1.2)' })),
+      transition('selected => *', [animate('400ms ease-out')]),
+      transition('* => selected', [animate('200ms ease-in')]),
+    ]),
+  ],
 })
 export class BattlePage {
   cell: Cell;
   creatures: Creature[];
+  selectedCreatureIndex = 0;
 
   get targetMonter() {
-    return this.creatures[0];
+    return this.creatures[this.selectedCreatureIndex];
   }
   get targetHero() {
     return this.creatures[1];
@@ -42,6 +51,10 @@ export class BattlePage {
 
   openInventory() {
     this.navCtrl.push(InventoryPage);
+  }
+
+  selectedCreature(index: number) {
+    this.selectedCreatureIndex = index;
   }
 
   close() {

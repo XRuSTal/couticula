@@ -11,24 +11,31 @@
     </ion-buttons>
   </ion-toolbar>
 
-  <button ion-button color="dark" (click)="close()">Автопобеда</button>
-
   <div class="battle-field">
     <target [isShownAbilities]="false"
             [creature]="targetMonter"
             class="battle-field__target battle-field__target_monster"></target>
-    <div class="battle-field__creatures">
-      <div class="battle-field__creatures__scroll-before"></div>
-      <div class="battle-field__creatures"></div>
-      <div class="battle-field__creatures__scroll-after"></div>
+
+    <div class="battle-field__creatures"
+         [ngStyle]="{ 'grid-template-columns': 'repeat(' + creatures.length + ', minmax(10vh, auto))' }">
+      <div *ngFor="let creature of creatures; let i = index;"
+           (click)="selectedCreature(i)"
+           [@scaleSelected]="i === selectedCreatureIndex ? 'selected' : ''"
+           class="battle-field__creatures__creature"
+           [ngClass]="{ 'battle-field__creatures__creature_selected': i === selectedCreatureIndex }"
+           [ngStyle]="{
+              'height': (27 - creatures.length * 1.5) + 'vh',
+              'width': (27 - creatures.length * 1.5) + 'vh'
+            }">
+      </div>
     </div>
     <div class="battle-field__dices">
       <div class="battle-field__dices__target-dice"></div>
       <div class="battle-field__dices__value-dice"></div>
     </div>
+
     <target [isShownAbilities]="true"
             [creature]="targetHero"
             class="battle-field__target battle-field__target_hero"></target>
   </div>
 </ion-content>
-
