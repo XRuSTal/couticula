@@ -49,6 +49,7 @@ target {
         }
       }
     }
+
     &__equipment {
       width: 20vh;
       grid-row: equipment;
@@ -66,15 +67,39 @@ target {
         border-radius: 1vh;
       }
     }
+
     &__effects {
       grid-row: effects;
       grid-column: effects;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, 10vh);
+      grid-column-gap: 2vh;
+      padding: 0 2vh;
       background-color: blueviolet;
+
+      &__effect {
+        height: 10vh;
+        width: 10vh;
+        margin: auto 0;
+        display: block;
+      }
     }
+
     &__abilites {
       grid-row: abilities;
       grid-column: abilities;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, 10vh);
+      grid-column-gap: 2vh;
+      padding: 0 2vh;
       background-color: darkcyan;
+
+      &__ability {
+        height: 10vh;
+        width: 10vh;
+        margin: auto 0;
+        display: block;
+      }
     }
   }
 }

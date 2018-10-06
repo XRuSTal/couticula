@@ -15,5 +15,15 @@
                    [item]='item'
                    class="battle-field__target__equipment__item"></item-info-short>
 </div>
-<div class="battle-field__target__effects"></div>
-<div *ngIf="isShownAbilities" class="battle-field__target__abilites"></div>
+
+<div class="battle-field__target__effects">
+  <ion-img *ngFor="let effect of creature.currentEffects"
+           src="assets/img/effects/poisoned.jpg"
+           class="battle-field__target__effects__effect" ></ion-img>
+</div>
+
+<div *ngIf="isShownAbilities" class="battle-field__target__abilites">
+  <ion-img *ngFor="let ability of creature.abilities"
+           src="assets/img/abilities/decrease-regeneration-1.jpg"
+           class="battle-field__target__abilites__ability" ></ion-img>
+</div>
