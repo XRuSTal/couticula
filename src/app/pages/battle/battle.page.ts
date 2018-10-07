@@ -12,7 +12,7 @@ import { BattleService } from '@services';
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [
     trigger('scaleSelected', [
-      state('selected', style({ transform: 'scale(1.2)' })),
+      state('selected', style({ transform: 'scale(1.3)' })),
       transition('selected => *', [animate('400ms ease-out')]),
       transition('* => selected', [animate('200ms ease-in')]),
     ]),

@@ -72,6 +72,7 @@ page-battle {
           background-color: green;
 
           &_selected {
+            border-radius: 3vh;
             border: solid gold 1vh;
           }
         }
