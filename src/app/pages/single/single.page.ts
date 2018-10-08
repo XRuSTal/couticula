@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
-import { ChoiceHeroPage } from '@pages';
+import { ChoiceHeroPage, MapPage, ShopPage } from '@pages';
 
 import { GameService } from '@services';
 
@@ -17,16 +17,17 @@ export class SinglePage {
   ) {}
   ngOnInit() {}
   ionViewDidLoad() {
-    console.log('ionViewDidLoad SinglePage');
-    //TODO: панель загрузки
+    // TODO: панель загрузки
     this.gameService.startGame().then(() => {
-      console.log('startGame');
-      this.openPage({ title: 'ChoiceHeroPage', component: ChoiceHeroPage });
+      this.openFirstGamePage();
     });
   }
-  openPage(page) {
-    console.log('openPage ' + page.title);
-    this.navCtrl.push(page.component);
-    //this.navCtrl.setRoot(page.component);
+
+  openFirstGamePage() {
+    this.navCtrl.setPages([
+      { page: MapPage },
+      { page: ShopPage },
+      { page: ChoiceHeroPage },
+    ]);
   }
 }

@@ -3,7 +3,6 @@ import { NavController, NavParams } from 'ionic-angular';
 import { Subscription } from 'rxjs/Subscription';
 
 import { HeroSettings } from '@models';
-import { MapPage, ShopPage } from '@pages';
 import { GameService, HeroService, ShopService } from '@services';
 
 @Component({
@@ -37,9 +36,7 @@ export class ChoiceHeroPage implements OnInit, OnDestroy {
   }
   selectHero(hero: HeroSettings) {
     this.heroService.addNewHero(hero.heroClass).then(() => {
-      console.log('openPage shop');
-      this.navCtrl.push(MapPage);
-      this.navCtrl.push(ShopPage);
+      this.navCtrl.pop();
     });
   }
 }
