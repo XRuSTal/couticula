@@ -14,6 +14,7 @@
   <div class="battle-field">
     <target [isShownAbilities]="false"
             [creature]="targetMonter"
+            (selectAbility)="selectAbility"
             class="battle-field__target battle-field__target_monster"></target>
 
     <div class="battle-field__creatures"
@@ -37,6 +38,8 @@
 
     <target [isShownAbilities]="true"
             [creature]="targetHero"
+            [selectedAbilityIndex]="selectedHeroAbilityIndex"
+            (selectAbilityIndex)="onSelectAbilityIndex($event)"
             class="battle-field__target battle-field__target_hero"></target>
   </div>
 </ion-content>

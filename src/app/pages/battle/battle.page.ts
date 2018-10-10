@@ -22,6 +22,7 @@ export class BattlePage {
   cell: Cell;
   creatures: Creature[];
   selectedCreatureIndex = 0;
+  selectedHeroAbilityIndex = 0;
 
   get targetMonter() {
     return this.creatures[this.selectedCreatureIndex];
@@ -60,5 +61,9 @@ export class BattlePage {
   close() {
     this.navCtrl.pop();
     this.battleService.endBattle();
+  }
+
+  onSelectAbilityIndex(selectedAbilityIndex: number) {
+    this.selectedHeroAbilityIndex = selectedAbilityIndex;
   }
 }

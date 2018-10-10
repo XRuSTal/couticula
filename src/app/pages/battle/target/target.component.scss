@@ -113,6 +113,11 @@ target {
         width: 10vh;
         margin: auto 0;
         display: block;
+
+        &_selected {
+          border-radius: 2vh;
+          border: solid gold 1vh;
+        }
       }
     }
   }
