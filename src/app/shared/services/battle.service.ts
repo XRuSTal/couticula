@@ -3,6 +3,7 @@ import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 
 import { Cell, Creature } from '@models';
+import { CreatureFabric } from '@shared/fabrics';
 import { HeroService } from './hero.service';
 import { SettingsService } from './settings.service';
 
@@ -33,7 +34,8 @@ export class BattleService {
   }
 
   private generateMonsters() {
-    this.creatures.push(new Creature('Существо', 'assets/img/monsters/enemy.jpg', 10, 1, 2, 3, 4, 5));
+    this.creatures.push(CreatureFabric.createRandomCreatureLevel1());
+    this.creatures.push(CreatureFabric.createRandomCreatureLevel2());
   }
   private setCreaturesOrder() {
     // TODO: случайная сортировка
