@@ -59,6 +59,7 @@ export enum AbilityType {
   MonsterAddonSunLazy,
   MonsterAttackEqualsTargetArmor,
   MonsterBasicAttack,
+  MonsterBasicAttackTwoTargets,
   MonsterBasicAttackWithRandomEnemyTarget,
   MonsterBasicHeal,
   MonsterDoubleBasicAttack,
