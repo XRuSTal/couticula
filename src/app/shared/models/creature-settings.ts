@@ -1,4 +1,4 @@
-import { Ability } from './ability';
+import { AbilityType, EffectType } from '@enums';
 import { Item } from './item';
 
 export interface CreatureSettings {
@@ -13,5 +13,6 @@ export interface CreatureSettings {
   legs: number;
   body: number;
   inventory: Item[];
-  abilites: Ability[];
+  abilites: AbilityType[];
+  effects: EffectType[];
 }

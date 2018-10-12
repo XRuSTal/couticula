@@ -1,4 +1,5 @@
-import { CreatureSettings, Item } from '@app/shared/models';
+import { AbilityType, EffectType } from '@enums';
+import { CreatureSettings, Item } from '@models';
 
 export const CreaturesLevel2: CreatureSettings[] = [
   {
@@ -14,5 +15,6 @@ export const CreaturesLevel2: CreatureSettings[] = [
     description: 'Игнорирует щиты',
     inventory: [],
     abilites: [],
+    effects: [ EffectType.AttackWithIgnoringShield ],
   },
 ];

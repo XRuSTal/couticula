@@ -1,4 +1,5 @@
-import { CreatureSettings, Item } from '@app/shared/models';
+import { AbilityType, EffectType } from '@enums';
+import { CreatureSettings, Item } from '@models';
 
 export const CreaturesLevel1: CreatureSettings[] = [
   {
@@ -14,5 +15,6 @@ export const CreaturesLevel1: CreatureSettings[] = [
     description: 'Яд 1, шанс 1d6',
     inventory: [],
     abilites: [],
+    effects: [ EffectType.AttackWithPoisonWeak1 ],
   },
 ];
