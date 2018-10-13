@@ -7,6 +7,7 @@ import { Item } from './item';
 import { Shield } from './shield';
 
 export class Creature {
+  id: number;
   name: string;
   // image: ImageType = ImageType.NoImage;
   description = '';
@@ -28,6 +29,7 @@ export class Creature {
   lastDiceTarget: number = null;
 
   constructor(
+    id: number,
     name: string,
     img: string,
     hitpoint = 0,
@@ -37,6 +39,7 @@ export class Creature {
     legs = 0,
     body = 0
   ) {
+    this.id = id;
     this.name = name;
     this.img = img;
     this.hitPoint = hitpoint;
@@ -48,5 +51,9 @@ export class Creature {
     this.equipment.Body = ItemFabric.createEquipment(ItemType.Body, body);
     this.equipment.Shield = ItemFabric.createEquipment(ItemType.Shield, body) as Shield;
     this.abilities.push(AbilityType.MonsterBasicAttack);
+  }
+
+  isExistsEffect(effectType: EffectType) {
+    return (this.currentEffects.some(p => p.effectType === effectType));
   }
 }

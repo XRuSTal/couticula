@@ -2,7 +2,6 @@ import { AbilityType, HeroClass } from '@enums';
 import { Creature } from './creature';
 
 export class Hero extends Creature {
-  id: number;
   heroClass: HeroClass;
   addonHitPoint: number;
   maxAddonHitPoint: number;
@@ -12,6 +11,7 @@ export class Hero extends Creature {
   shopHideAbilities: AbilityType[];
 
   constructor(
+    id: number,
     name: string,
     img: string,
     hitpoint = 0,
@@ -21,7 +21,7 @@ export class Hero extends Creature {
     legs = 0,
     body = 0
   ) {
-    super(name, img, hitpoint, weapon, head, hands, legs, body);
+    super(id, name, img, hitpoint, weapon, head, hands, legs, body);
     this.addonHitPoint = 0;
   }
 

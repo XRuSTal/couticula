@@ -1,15 +1,24 @@
-import { HeroClass } from '@enums';
+import { AbilityType, EffectType, HeroClass } from '@enums';
+import { HeroSettings } from '@models';
 
-export const HeroTypes = [
+export const HeroTypes: HeroSettings[] = [
   {
     heroClass: HeroClass.Warrior,
     name: 'Воин',
     img: 'assets/img/heroes/warrior.jpg',
     hitPoint: 50,
     maxAddonHitPoint: 70,
+    weapon: 0,
+    head: 0,
+    hands: 0,
+    legs: 0,
+    body: 0,
     maxArmorValue: 6,
     maxWeaponValue: 6,
     description: '+1 к силовому вскрытию сундуков.',
+    inventory: [],
+    abilites: [ AbilityType.HeroSimpleAttack ],
+    effects: [ EffectType.ForceBreakingChests ],
   },
   {
     heroClass: HeroClass.Prist,
@@ -17,9 +26,17 @@ export const HeroTypes = [
     img: 'assets/img/heroes/prist.jpg',
     hitPoint: 50,
     maxAddonHitPoint: 70,
+    weapon: 0,
+    head: 0,
+    hands: 0,
+    legs: 0,
+    body: 0,
     maxArmorValue: 6,
     maxWeaponValue: 6,
     description: 'вместо атаки лечение.',
+    inventory: [],
+    abilites: [ AbilityType.HeroSimpleHeal ],
+    effects: [],
   },
   {
     heroClass: HeroClass.Scout,
@@ -27,9 +44,16 @@ export const HeroTypes = [
     img: 'assets/img/heroes/scout.jpg',
     hitPoint: 30,
     maxAddonHitPoint: 20,
+    weapon: 0,
+    head: 0,
+    hands: 0,
+    legs: 0,
+    body: 0,
     maxArmorValue: 3,
     maxWeaponValue: 3,
-    description:
-      '+1 к вскрытию сундуков, максимальная броня/оружие 3, максимум 50 хитов, ударяет цель дважды.',
+    description: '+1 к вскрытию сундуков, максимальная броня/оружие 3, максимум 50 хитов, ударяет цель дважды.',
+    inventory: [],
+    abilites: [ AbilityType.HeroDoubleSimpleAttack ],
+    effects: [ EffectType.BreakingChests ],
   },
 ];

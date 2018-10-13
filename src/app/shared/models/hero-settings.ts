@@ -1,12 +1,9 @@
 import { HeroClass } from '@enums';
+import { CreatureSettings } from '@models';
 
-export interface HeroSettings {
-  description: string;
+export interface HeroSettings extends CreatureSettings {
   heroClass: HeroClass;
-  hitPoint: number;
-  img: string;
   maxAddonHitPoint: number;
   maxArmorValue: number;
   maxWeaponValue: number;
-  name: string;
 }
