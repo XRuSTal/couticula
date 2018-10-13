@@ -20,7 +20,7 @@
     </button> -->
     <button *ngFor="let page of pages"
             ion-button block color="light"
-            [disabled]="page.title !== 'Single'"
+            [disabled]="page.title === 'Multiplayer'"
             (click)="openPage(page)">{{page.title}}</button>
   </ion-list>
 

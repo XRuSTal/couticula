@@ -16,7 +16,11 @@ import { MyApp } from './app.component';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    IonicModule.forRoot(MyApp /*,{tabsPlacement: 'bottom'}*/),
+    IonicModule.forRoot(MyApp, {
+      // tabsPlacement: 'bottom',
+      scrollPadding: false,
+      scrollAssist: false,
+    }),
   ],
   bootstrap: [IonicApp],
   entryComponents: [MyApp, PAGES_COMPONENTS, SHARED_COMPONENTS],

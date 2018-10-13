@@ -4,13 +4,14 @@ import { GameMode } from '@shared/enums';
 
 @Injectable()
 export class SettingsService {
+  autoWin = false;
   apiUrl = '/api';
   gameMode: GameMode = GameMode.Hard;
   countCellVisibleX = 11;
   countCellVisibleY = 6;
   priceSecondHero = 800;
   priceThirdHero = 1000;
-  eventsDelay = 2000;
+  eventsDelay = 600;
 
   private platformWidth: number;
   private platformHeight: number;
