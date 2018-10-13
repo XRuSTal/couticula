@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 
-import { CreatureState, EffectType } from '@enus';
+import { CreatureState, EffectType } from '@enums';
 import { Cell, Creature, Hero } from '@models';
 import { CreatureFabric } from '@shared/fabrics';
 import { HeroService } from './hero.service';

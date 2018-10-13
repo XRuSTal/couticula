@@ -5,7 +5,7 @@ import { of } from 'rxjs/observable/of';
 import { HeroClass, ItemType } from '@enums';
 import { Hero, HeroSettings, Item, Shield } from '@models';
 import { HeroTypes } from '@shared/db';
-import { HeroFabric } from '@shared/fabrics';
+import { CreatureFabric } from '@shared/fabrics';
 
 import { PlayerService } from './player.service';
 import { Random } from './random';
@@ -27,7 +27,7 @@ export class HeroService {
   }
   addNewHero(heroClass: HeroClass): Promise<any> {
     return new Promise(resolve => {
-      const newHero: Hero = HeroFabric.createHero(heroClass);
+      const newHero: Hero = CreatureFabric.createHero(heroClass);
       // newHero.uniqueAbilities = heroInfo.uniqueAbilities;
       this.heroes.push(newHero);
       resolve();
