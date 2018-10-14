@@ -1,8 +1,9 @@
 import { EffectType } from '@enums';
 
-export class Effect {
+export interface Effect {
   name: string;
   description: string;
-  //image: ImageType;
+  img: string;
+  // image: ImageType;
   effectType: EffectType;
 }
