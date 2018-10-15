@@ -53,7 +53,35 @@ export class Creature {
     this.abilities.push(AbilityType.MonsterBasicAttack);
   }
 
+  dropAbility(abilityType: AbilityType) {
+    const indexAbility = this.abilities.findIndex(ability => ability === abilityType);
+    if (indexAbility !== -1) {
+      this.abilities.splice(indexAbility, 1);
+    }
+  }
+  dropCurrentAbility(abilityType: AbilityType) {
+    const indexAbility = this.currentAbilities.findIndex(ability => ability === abilityType);
+    if (indexAbility !== -1) {
+      this.currentAbilities.splice(indexAbility, 1);
+    }
+  }
+  dropCurrentEffects(effectType: EffectType) {
+    const indexEffect = this.currentEffects.findIndex(effect => effect.effectType === effectType);
+    if (indexEffect !== -1) {
+      this.currentEffects.splice(indexEffect, 1);
+    }
+  }
+  dropEffects(effectType: EffectType) {
+    const indexEffect = this.effects.findIndex(effect => effect.effectType === effectType);
+    if (indexEffect !== -1) {
+      this.effects.splice(indexEffect, 1);
+    }
+  }
+
   isExistsEffect(effectType: EffectType) {
     return (this.currentEffects.some(p => p.effectType === effectType));
+  }
+  isExistsSomeEffects(effectTypes: EffectType[]): boolean {
+    return (this.currentEffects.some(p => effectTypes.indexOf(p.effectType) !== -1));
   }
 }
