@@ -65,17 +65,23 @@ export class Creature {
       this.currentAbilities.splice(indexAbility, 1);
     }
   }
-  dropCurrentEffects(effectType: EffectType) {
+  dropCurrentEffect(effectType: EffectType) {
     const indexEffect = this.currentEffects.findIndex(effect => effect.effectType === effectType);
     if (indexEffect !== -1) {
       this.currentEffects.splice(indexEffect, 1);
     }
   }
-  dropEffects(effectType: EffectType) {
+  dropCurrentEffects(effectType: EffectType[]) {
+      effectType.forEach(p => this.dropCurrentEffect(p));
+  }
+  dropEffect(effectType: EffectType) {
     const indexEffect = this.effects.findIndex(effect => effect.effectType === effectType);
     if (indexEffect !== -1) {
       this.effects.splice(indexEffect, 1);
     }
+  }
+  dropEffects(effectType: EffectType[]) {
+      effectType.forEach(p => this.dropEffect(p));
   }
 
   isExistsEffect(effectType: EffectType) {
