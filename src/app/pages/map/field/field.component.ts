@@ -55,7 +55,7 @@ export class FieldComponent implements OnInit, OnDestroy {
     );
 
     this.subscriptions.push(
-      this.battleService.events$.subscribe(cell => {
+      this.battleService.endEvent$.subscribe(cell => {
         const treasuresCount = this.treasureService.calcTreasuresCountAfterBattle(cell);
         const treasures = this.treasureService.generateTreasure(treasuresCount);
 

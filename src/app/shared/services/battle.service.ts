@@ -3,7 +3,7 @@ import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
-import { BattleState, CreatureState, EffectType } from '@enums';
+import { BattleState, CreatureState, EffectType, AbilityType } from '@enums';
 import { Cell, Creature, Hero } from '@models';
 import { CreatureFabric } from '@shared/fabrics';
 import { HeroService } from './hero.service';
@@ -12,12 +12,16 @@ import { SettingsService } from './settings.service';
 @Injectable()
 export class BattleService {
   battleState$: Observable<BattleState>;
-  events$: Observable<Cell>;
+  events$: Observable<any>;
+  endEvent$: Observable<Cell>;
 
   private cell: Cell;
   private battleStateSource: BehaviorSubject<BattleState> = new BehaviorSubject<BattleState>(BattleState.Begin);
-  private eventsSource: Subject<Cell> = new Subject<Cell>();
+  private endEventSource: Subject<Cell> = new Subject<Cell>();
+  private eventsSource: Subject<any> = new Subject<any>();
   private monsters: Creature[] = [];
+  private currentCreature: number;
+  private currentRound: number;
   private currentTargetForMonsters: number;
   creatures: Creature[] = [];
 
@@ -25,11 +29,14 @@ export class BattleService {
     private heroService: HeroService,
     private settingsService: SettingsService,
   ) {
+    this.endEvent$ = this.endEventSource.asObservable();
     this.events$ = this.eventsSource.asObservable();
   }
 
   createBattle(cell: Cell) {
     this.cell = cell;
+    this.currentRound = 0;
+
     this.prepareHeroBeforeBattle();
     this.generateMonsters();
     this.setCreaturesOrder();
@@ -37,10 +44,33 @@ export class BattleService {
     this.setNewTargetForMonster();
   }
 
+  startBattle() {
+    this.battleStateSource.next(BattleState.Begin);
+
+    if (this.settingsService.autoWin) {
+      this.endBattle();
+    } else {
+      // this.newRound();
+    }
+  }
+
   endBattle() {
     this.prepareHeroAfterWin();
     this.battleStateSource.next(BattleState.Win);
-    this.eventsSource.next(this.cell);
+    this.endEventSource.next(this.cell);
+  }
+
+  heroAction(ability: AbilityType, target: number) {
+    if (this.battleStateSource.value === BattleState.PlayerTurn) {
+      // TODO
+      this.eventsSource.next({
+        state: BattleState.PlayerTurn,
+        currentCreature: this.currentCreature,
+        ability,
+        target,
+      });
+      this.battleStateSource.next(BattleState.NewTurn);
+    }
   }
 
   private generateMonsters() {
@@ -59,6 +89,7 @@ export class BattleService {
     this.creatures.push(...this.heroService.heroes);
 
     this.creatures.sort(() => Math.random() - 0.5);
+    this.currentCreature = this.creatures[0].id;
   }
   private setInitialEffectsAndAbilities() {
     this.creatures.forEach((p, i, arr) => {
@@ -99,5 +130,27 @@ export class BattleService {
       hero.usedInThisRoundAbilities = [];
       hero.usedInThisBattleAbilities = [];
     });
+  }
+
+  private newRound() {
+    this.battleStateSource.next(BattleState.NewRound);
+    this.currentRound += 1;
+    this.creatures.forEach(creature => {
+      creature.usedInThisRoundAbilities = [];
+      // снятие эффектов в конце раунда
+      creature.dropCurrentEffects([EffectType.BlockHeal, EffectType.MagicProtection, EffectType.Suppression]);
+    });
+
+    /* if (!this.isBattleEnd()) {
+      this.changeTurn();
+    } */
+}
+  private startTurn() {
+    const creature: Creature = this.creatures[this.currentCreature];
+  }
+  private endTurn() {
+    const creature: Creature = this.creatures[this.currentCreature];
+    // снятие эффектов в конце хода существа
+    creature.dropCurrentEffects([EffectType.Course, EffectType.Imbecility, EffectType.Slackness]);
   }
 }
