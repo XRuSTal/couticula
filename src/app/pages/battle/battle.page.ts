@@ -2,9 +2,10 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
-import { Cell, Creature } from '@models';
+import { Cell, Creature, Hero } from '@models';
 import { InventoryPage } from '@pages';
 import { BattleService } from '@services';
+import { BattleState } from '@app/shared/enums';
 
 @Component({
   selector: 'page-battle',
@@ -28,7 +29,7 @@ export class BattlePage {
     return this.creatures[this.selectedCreatureIndex];
   }
   get targetHero() {
-    return this.creatures[1];
+    return this.creatures.find(creature => creature instanceof Hero);
   }
 
   constructor(
@@ -46,8 +47,29 @@ export class BattlePage {
 
   ngOnInit() {
     this.battleService.createBattle(this.cell);
+    this.battleService.startBattle();
     this.creatures = this.battleService.creatures;
     this.cd.markForCheck();
+
+    this.battleService.events$.subscribe(event => {
+      console.log(event);
+      switch (event.state) {
+        case BattleState.Begin:
+        break;
+        case BattleState.NewRound:
+        break;
+        case BattleState.NewTurn:
+        break;
+        case BattleState.PlayerTurn:
+        break;
+        case BattleState.MonsterTurn:
+        break;
+        case BattleState.Lose:
+        case BattleState.Win:
+        this.close();
+        break;
+      }
+    });
   }
 
   openInventory() {
@@ -58,6 +80,14 @@ export class BattlePage {
     this.selectedCreatureIndex = index;
   }
 
+  clickDice() {
+    this.setHeroAction();
+  }
+  clickTarget() {
+    // TODO убрать после реализации боя
+    this.close();
+  }
+
   close() {
     this.navCtrl.pop();
     this.battleService.endBattle();
@@ -65,5 +95,10 @@ export class BattlePage {
 
   onSelectAbilityIndex(selectedAbilityIndex: number) {
     this.selectedHeroAbilityIndex = selectedAbilityIndex;
+  }
+
+  private setHeroAction() {
+    const selectedAbility = this.targetHero.abilities[this.selectedHeroAbilityIndex];
+    this.battleService.heroAction(selectedAbility, this.targetMonter.id);
   }
 }

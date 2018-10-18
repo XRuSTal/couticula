@@ -3,22 +3,29 @@ import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
-import { BattleState, CreatureState, EffectType, AbilityType } from '@enums';
+import { AbilityType, BattleState, CreatureState, EffectType } from '@enums';
 import { Cell, Creature, Hero } from '@models';
 import { CreatureFabric } from '@shared/fabrics';
 import { HeroService } from './hero.service';
 import { SettingsService } from './settings.service';
 
+interface BattleEvent {
+  state: BattleState;
+  currentCreature: number;
+  ability: AbilityType;
+  target: number;
+}
+
 @Injectable()
 export class BattleService {
   battleState$: Observable<BattleState>;
-  events$: Observable<any>;
+  events$: Observable<BattleEvent>;
   endEvent$: Observable<Cell>;
 
   private cell: Cell;
   private battleStateSource: BehaviorSubject<BattleState> = new BehaviorSubject<BattleState>(BattleState.Begin);
   private endEventSource: Subject<Cell> = new Subject<Cell>();
-  private eventsSource: Subject<any> = new Subject<any>();
+  private eventsSource: Subject<BattleEvent> = new Subject<BattleEvent>();
   private monsters: Creature[] = [];
   private currentCreature: number;
   private currentRound: number;

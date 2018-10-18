@@ -32,8 +32,8 @@
       </div>
     </div>
     <div class="battle-field__dices">
-      <div class="battle-field__dices__target-dice"></div>
-      <div class="battle-field__dices__value-dice"></div>
+      <div class="battle-field__dices__target-dice" (click)="clickTarget()"></div>
+      <div class="battle-field__dices__value-dice" (click)="clickDice()"></div>
     </div>
 
     <target [isShownAbilities]="true"
