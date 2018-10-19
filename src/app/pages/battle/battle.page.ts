@@ -90,7 +90,7 @@ export class BattlePage {
 
   close() {
     this.navCtrl.pop();
-    this.battleService.endBattle();
+    this.battleService.winBattle();
   }
 
   onSelectAbilityIndex(selectedAbilityIndex: number) {

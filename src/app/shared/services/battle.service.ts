@@ -11,9 +11,9 @@ import { SettingsService } from './settings.service';
 
 interface BattleEvent {
   state: BattleState;
-  currentCreature: number;
-  ability: AbilityType;
-  target: number;
+  currentCreature?: number;
+  ability?: AbilityType;
+  target?: number;
 }
 
 @Injectable()
@@ -55,17 +55,12 @@ export class BattleService {
     this.battleStateSource.next(BattleState.Begin);
 
     if (this.settingsService.autoWin) {
-      this.endBattle();
+      this.winBattle();
     } else {
-      // this.newRound();
+      this.newRound();
     }
   }
 
-  endBattle() {
-    this.prepareHeroAfterWin();
-    this.battleStateSource.next(BattleState.Win);
-    this.endEventSource.next(this.cell);
-  }
 
   heroAction(ability: AbilityType, target: number) {
     if (this.battleStateSource.value === BattleState.PlayerTurn) {
@@ -80,6 +75,16 @@ export class BattleService {
     }
   }
 
+  winBattle() {
+    this.prepareHeroAfterWin();
+    this.eventsSource.next({ state: BattleState.Win });
+    this.battleStateSource.next(BattleState.Win);
+    this.endEventSource.next(this.cell);
+  }
+  private loseBattle() {
+    this.eventsSource.next({ state: BattleState.Lose });
+    this.battleStateSource.next(BattleState.Lose);
+  }
   private generateMonsters() {
     for (let index = 0; index < this.cell.mosterLevel1Count; index++) {
       this.creatures.push(CreatureFabric.createRandomCreatureLevel1());
@@ -139,6 +144,20 @@ export class BattleService {
     });
   }
 
+  private checkBattleEnd() {
+    const cntMonsters = this.creatures.filter(
+      creature => !(creature instanceof Hero) && creature.state === CreatureState.Alive
+    ).length;
+    const cntHeroes = this.creatures.filter(
+      creature => creature instanceof Hero && creature.state === CreatureState.Alive
+    ).length;
+
+    if (cntHeroes === 0) {
+      this.loseBattle();
+    } else if (cntMonsters === 0) {
+      this.winBattle();
+    }
+  }
   private newRound() {
     this.battleStateSource.next(BattleState.NewRound);
     this.currentRound += 1;
@@ -148,10 +167,15 @@ export class BattleService {
       creature.dropCurrentEffects([EffectType.BlockHeal, EffectType.MagicProtection, EffectType.Suppression]);
     });
 
-    /* if (!this.isBattleEnd()) {
+    this.checkBattleEnd();
+    if (this.battleStateSource.value === BattleState.NewRound) {
       this.changeTurn();
-    } */
-}
+    }
+  }
+  private changeTurn() {
+    this.startTurn();
+    this.endTurn();
+  }
   private startTurn() {
     const creature: Creature = this.creatures[this.currentCreature];
   }
