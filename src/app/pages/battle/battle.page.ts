@@ -24,7 +24,12 @@ export class BattlePage {
   creatures: Creature[];
   selectedCreatureIndex = 0;
   selectedHeroAbilityIndex = 0;
+  currentCreatureId: number;
 
+  get creaturesOrder() {
+    const currentCreatureIndex = this.creatures.findIndex(creature => creature.id === this.currentCreatureId);
+    return [...this.creatures.slice(currentCreatureIndex), ...this.creatures.slice(0, currentCreatureIndex)];
+  }
   get targetMonter() {
     return this.creatures[this.selectedCreatureIndex];
   }
@@ -59,6 +64,7 @@ export class BattlePage {
         case BattleState.NewRound:
         break;
         case BattleState.NewTurn:
+        this.currentCreatureId = event.currentCreature;
         break;
         case BattleState.PlayerTurn:
         break;

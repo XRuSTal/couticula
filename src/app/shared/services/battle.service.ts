@@ -27,7 +27,7 @@ export class BattleService {
   private endEventSource: Subject<Cell> = new Subject<Cell>();
   private eventsSource: Subject<BattleEvent> = new Subject<BattleEvent>();
   private monsters: Creature[] = [];
-  private currentCreature: number;
+  private currentCreature: { id: number; index: number; };
   private currentRound: number;
   private currentTargetForMonsters: number;
   creatures: Creature[] = [];
@@ -63,16 +63,22 @@ export class BattleService {
 
 
   heroAction(ability: AbilityType, target: number) {
-    if (this.battleStateSource.value === BattleState.PlayerTurn) {
+    this.eventsSource.next({
+      state: BattleState.NewTurn,
+      currentCreature: this.currentCreature.id,
+    });
+    this.changeTurn();
+
+    /* if (this.battleStateSource.value === BattleState.PlayerTurn) {
       // TODO
       this.eventsSource.next({
         state: BattleState.PlayerTurn,
-        currentCreature: this.currentCreature,
+        currentCreature: this.currentCreature.id,
         ability,
         target,
       });
       this.battleStateSource.next(BattleState.NewTurn);
-    }
+    } */
   }
 
   winBattle() {
@@ -101,7 +107,10 @@ export class BattleService {
     this.creatures.push(...this.heroService.heroes);
 
     this.creatures.sort(() => Math.random() - 0.5);
-    this.currentCreature = this.creatures[0].id;
+    this.currentCreature = {
+      id: this.creatures[0].id,
+      index: 0
+    };
   }
   private setInitialEffectsAndAbilities() {
     this.creatures.forEach((p, i, arr) => {
@@ -173,15 +182,39 @@ export class BattleService {
     }
   }
   private changeTurn() {
+    this.setNextCreature();
     this.startTurn();
     this.endTurn();
   }
+  private setNextCreature() {
+    let nextCreatureIndex = this.creatures.findIndex((creature, index) =>
+      creature.state === CreatureState.Alive && index > this.currentCreature.index
+    );
+    if (nextCreatureIndex === -1) {
+      nextCreatureIndex = this.creatures.findIndex(creature => creature.state === CreatureState.Alive);
+    }
+    this.currentCreature = {
+      index: nextCreatureIndex,
+      id: this.creatures[nextCreatureIndex].id,
+    };
+  }
   private startTurn() {
-    const creature: Creature = this.creatures[this.currentCreature];
+    const creature: Creature = this.creatures[this.currentCreature.index];
+    if (creature instanceof Hero) {
+      this.heroTurn();
+    } else {
+      this.monsterTurn();
+    }
   }
   private endTurn() {
-    const creature: Creature = this.creatures[this.currentCreature];
+    const creature: Creature = this.creatures[this.currentCreature.index];
     // снятие эффектов в конце хода существа
     creature.dropCurrentEffects([EffectType.Course, EffectType.Imbecility, EffectType.Slackness]);
+  }
+  private heroTurn() {
+    console.log('heroTurn');
+  }
+  private monsterTurn() {
+    console.log('monsterTurn');
   }
 }
