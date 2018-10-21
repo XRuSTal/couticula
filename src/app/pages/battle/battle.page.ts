@@ -22,16 +22,17 @@ import { BattleState } from '@app/shared/enums';
 export class BattlePage {
   cell: Cell;
   creatures: Creature[];
-  selectedCreatureIndex = 0;
+  selectedCreatureId: number;
   selectedHeroAbilityIndex = 0;
-  currentCreatureId: number;
+  currentCreature: { id: number; index: number; };
+  lastCreatureInRound: number;
+  currentRound = 1;
 
   get creaturesOrder() {
-    const currentCreatureIndex = this.creatures.findIndex(creature => creature.id === this.currentCreatureId);
-    return [...this.creatures.slice(currentCreatureIndex), ...this.creatures.slice(0, currentCreatureIndex)];
+    return [...this.creatures.slice(this.currentCreature.index), ...this.creatures.slice(0, this.currentCreature.index)];
   }
   get targetMonter() {
-    return this.creatures[this.selectedCreatureIndex];
+    return this.creatures.find(creature => creature.id === this.selectedCreatureId);
   }
   get targetHero() {
     return this.creatures.find(creature => creature instanceof Hero);
@@ -54,6 +55,9 @@ export class BattlePage {
     this.battleService.createBattle(this.cell);
     this.battleService.startBattle();
     this.creatures = this.battleService.creatures;
+    this.currentCreature = { id: this.creatures[0].id, index: 0 };
+    this.selectedCreatureId = this.currentCreature.id;
+    this.lastCreatureInRound = this.creatures[this.creatures.length - 1].id;
     this.cd.markForCheck();
 
     this.battleService.events$.subscribe(event => {
@@ -62,9 +66,11 @@ export class BattlePage {
         case BattleState.Begin:
         break;
         case BattleState.NewRound:
+        this.currentRound++;
         break;
         case BattleState.NewTurn:
-        this.currentCreatureId = event.currentCreature;
+        const currentCreatureIndex = this.creatures.findIndex(creature => creature.id === event.currentCreature);
+        this.currentCreature = { id: event.currentCreature, index: currentCreatureIndex };
         break;
         case BattleState.PlayerTurn:
         break;
@@ -82,8 +88,8 @@ export class BattlePage {
     this.navCtrl.push(InventoryPage);
   }
 
-  selectedCreature(index: number) {
-    this.selectedCreatureIndex = index;
+  selectedCreature(creatureId: number) {
+    this.selectedCreatureId = creatureId;
   }
 
   clickDice() {

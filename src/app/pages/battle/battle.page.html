@@ -18,18 +18,29 @@
             class="battle-field__target battle-field__target_monster"></target>
 
     <div class="battle-field__creatures"
-         [ngStyle]="{ 'grid-template-columns': 'repeat(' + creatures.length + ', minmax(10vh, auto))' }">
-      <div *ngFor="let creature of creatures; let i = index;"
-           (click)="selectedCreature(i)"
-           [@scaleSelected]="i === selectedCreatureIndex ? 'selected' : ''"
-           class="battle-field__creatures__creature"
-           [ngClass]="{ 'battle-field__creatures__creature_selected': i === selectedCreatureIndex }"
-           [ngStyle]="{
-              'height': (27 - creatures.length * 1.5) + 'vh',
-              'width': (27 - creatures.length * 1.5) + 'vh'
-            }">
-        <creature-info-short [creature]='creature'></creature-info-short>
-      </div>
+         [ngStyle]="{ 'grid-template-columns': 'repeat(' + (creatures.length + 1) + ', minmax(10vh, auto))' }">
+      <ng-container *ngFor="let creature of creaturesOrder">
+        <div (click)="selectedCreature(creature.id)"
+             [@scaleSelected]="creature.id === selectedCreatureId ? 'selected' : ''"
+             class="battle-field__creatures__creature"
+             [ngClass]="{ 'battle-field__creatures__creature_selected': creature.id === selectedCreatureId }"
+             [ngStyle]="{
+                'height': (27 - creatures.length * 1.5) + 'vh',
+                'width': (27 - creatures.length * 1.5) + 'vh'
+              }">
+          <creature-info-short [creature]='creature'></creature-info-short>
+        </div>
+        <div *ngIf="creature.id === lastCreatureInRound"
+              class="battle-field__creatures__round"
+              [ngStyle]="{
+                'height': (27 - creatures.length * 1.5) + 'vh',
+                'width': '8vh'
+              }">
+          <div class="battle-field__creatures__round__border"></div>
+          <div class="battle-field__creatures__round__value"
+               [ngClass]="{ 'battle-field__creatures__round__value_big': currentRound > 9 }">{{currentRound}}</div>
+        </div>
+      </ng-container>
     </div>
     <div class="battle-field__dices">
       <div class="battle-field__dices__target-dice" (click)="clickTarget()"></div>

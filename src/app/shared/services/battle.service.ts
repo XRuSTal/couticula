@@ -191,6 +191,9 @@ export class BattleService {
       creature.state === CreatureState.Alive && index > this.currentCreature.index
     );
     if (nextCreatureIndex === -1) {
+      this.eventsSource.next({
+        state: BattleState.NewRound,
+      });
       nextCreatureIndex = this.creatures.findIndex(creature => creature.state === CreatureState.Alive);
     }
     this.currentCreature = {
