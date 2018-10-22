@@ -63,11 +63,11 @@ export class BattleService {
 
 
   heroAction(ability: AbilityType, target: number) {
+    this.turn();
     this.eventsSource.next({
       state: BattleState.NewTurn,
       currentCreature: this.currentCreature.id,
     });
-    this.changeTurn();
 
     /* if (this.battleStateSource.value === BattleState.PlayerTurn) {
       // TODO
@@ -107,10 +107,6 @@ export class BattleService {
     this.creatures.push(...this.heroService.heroes);
 
     this.creatures.sort(() => Math.random() - 0.5);
-    this.currentCreature = {
-      id: this.creatures[0].id,
-      index: 0
-    };
   }
   private setInitialEffectsAndAbilities() {
     this.creatures.forEach((p, i, arr) => {
@@ -169,6 +165,7 @@ export class BattleService {
   }
   private newRound() {
     this.battleStateSource.next(BattleState.NewRound);
+    this.eventsSource.next({ state: BattleState.NewRound });
     this.currentRound += 1;
     this.creatures.forEach(creature => {
       creature.usedInThisRoundAbilities = [];
@@ -177,29 +174,37 @@ export class BattleService {
     });
 
     this.checkBattleEnd();
+
     if (this.battleStateSource.value === BattleState.NewRound) {
-      this.changeTurn();
+      this.setFirstCreature();
+      // this.turn();
     }
   }
-  private changeTurn() {
-    this.setNextCreature();
+  private turn() {
     this.startTurn();
     this.endTurn();
+    this.setNextCreature();
+  }
+  private setFirstCreature() {
+    const firstCreatureIndex = this.creatures.findIndex(creature => creature.state === CreatureState.Alive);
+    this.currentCreature = {
+      index: firstCreatureIndex,
+      id: this.creatures[firstCreatureIndex].id,
+    };
   }
   private setNextCreature() {
-    let nextCreatureIndex = this.creatures.findIndex((creature, index) =>
+    const nextCreatureIndex = this.creatures.findIndex((creature, index) =>
       creature.state === CreatureState.Alive && index > this.currentCreature.index
     );
+
     if (nextCreatureIndex === -1) {
-      this.eventsSource.next({
-        state: BattleState.NewRound,
-      });
-      nextCreatureIndex = this.creatures.findIndex(creature => creature.state === CreatureState.Alive);
+      this.newRound();
+    } else {
+      this.currentCreature = {
+        index: nextCreatureIndex,
+        id: this.creatures[nextCreatureIndex].id,
+      };
     }
-    this.currentCreature = {
-      index: nextCreatureIndex,
-      id: this.creatures[nextCreatureIndex].id,
-    };
   }
   private startTurn() {
     const creature: Creature = this.creatures[this.currentCreature.index];
