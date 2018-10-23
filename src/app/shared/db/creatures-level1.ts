@@ -14,7 +14,7 @@ export const CreaturesLevel1: CreatureSettings[] = [
     body: 0,
     description: 'Яд 1, шанс 1d6',
     inventory: [],
-    abilites: [],
+    abilites: [ AbilityType.MonsterBasicAttack ],
     effects: [ EffectType.AttackWithPoisonWeak1 ],
   },
 ];

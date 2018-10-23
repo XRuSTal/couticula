@@ -5,5 +5,6 @@ export * from './creatures-level2';
 export * from './effects';
 export * from './hero-types';
 export * from './items';
+export * from './monster-abilities';
 export * from './monsters-settings';
 export * from './shop';

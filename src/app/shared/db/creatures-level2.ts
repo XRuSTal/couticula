@@ -14,7 +14,7 @@ export const CreaturesLevel2: CreatureSettings[] = [
     body: 1,
     description: 'Игнорирует щиты',
     inventory: [],
-    abilites: [],
+    abilites: [ AbilityType.MonsterBasicAttack ],
     effects: [ EffectType.AttackWithIgnoringShield ],
   },
 ];

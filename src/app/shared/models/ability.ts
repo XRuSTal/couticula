@@ -62,7 +62,7 @@ export class Ability {
   isImmediateAction: boolean;
   isAddonAction: boolean;
   countTarget: number;
-  //combo: AbilityType[];
+  combo?: AbilityType[];
   /*constructor(name: string, description: string, image: ImageType, cost: number, abilityFunction: Helpers.Func<void, AbilityResult>, options) {
     //this.isImmediateAction = immediateAction;
     this.name = name;

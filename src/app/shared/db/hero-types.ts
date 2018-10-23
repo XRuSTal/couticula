@@ -17,7 +17,7 @@ export const HeroTypes: HeroSettings[] = [
     maxWeaponValue: 6,
     description: '+1 к силовому вскрытию сундуков.',
     inventory: [],
-    abilites: [ AbilityType.HeroSimpleAttack ],
+    abilites: [ AbilityType.HeroBasicAttack ],
     effects: [ EffectType.ForceBreakingChests ],
   },
   {

@@ -1,7 +1,7 @@
 export enum AbilityType {
   // Attack:
   HeroDoubleSimpleAttack,
-  HeroSimpleAttack,
+  HeroBasicAttack,
   HeroSimpleAttackTwoTargets,
   HeroPoisonMedium,
   HeroPoisonStrong,
@@ -59,6 +59,7 @@ export enum AbilityType {
   MonsterAddonSunLazy,
   MonsterAttackEqualsTargetArmor,
   MonsterBasicAttack,
+  MonsterBasicAttackAnotherTarget,
   MonsterBasicAttackTwoTargets,
   MonsterBasicAttackWithRandomEnemyTarget,
   MonsterBasicHeal,
