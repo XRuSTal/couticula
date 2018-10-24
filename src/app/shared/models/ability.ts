@@ -1,7 +1,8 @@
 import { AbilityType } from '@enums';
+import { AbilitySettings } from './ability-settings';
 
 // TODO: перенести в магазин (shop.ts)
-var AbilitiesShop = {
+/* var AbilitiesShop = {
   Attack: [
     //AbilityType.HeroSimpleAttack, // Базовая способность всех существ
     AbilityType.HeroPoisonWeak,     // Яд шанс 1/6, урон 2
@@ -48,32 +49,31 @@ var AbilitiesShop = {
     AbilityType.AddSecondHero,      // Найм второго героя
     AbilityType.AddThirdHero,       // Найм третьего героя
   ],
-};
+}; */
 
 export class Ability {
   type: AbilityType;
   name: string;
   description: string;
-  //ability: Helpers.Func<void, AbilityResult>;
-  //image: ImageType;
-  img: string;
-  cost: number;
+  ability: () => any; // AbilityResult;
+  image: string;
+  // cost: number;
   maxUseCount: number;
   isImmediateAction: boolean;
   isAddonAction: boolean;
   countTarget: number;
   combo?: AbilityType[];
-  /*constructor(name: string, description: string, image: ImageType, cost: number, abilityFunction: Helpers.Func<void, AbilityResult>, options) {
-    //this.isImmediateAction = immediateAction;
-    this.name = name;
-    this.description = description;
-    this.image = image;
-    this.cost = cost;
+
+  constructor(settings: AbilitySettings, abilityFunction: () => any) {
+    this.type = settings.type;
+    this.name = settings.name;
+    this.description = settings.description;
+    this.image = settings.image;
+    this.isImmediateAction = settings.isImmediateAction || false;
+    this.isAddonAction = settings.isAddonAction || false;
+    this.maxUseCount = settings.maxUseCount || null;
+    this.countTarget = settings.countTarget || 1;
+    this.combo = settings.combo || null;
     this.ability = abilityFunction;
-    this.isImmediateAction = options.isImmediateAction || false;
-    this.isAddonAction = options.isAddonAction || false;
-    this.maxUseCount = options.maxUseCount || null;
-    this.combo = options.combo || null;
-    this.countTarget = options.countTarget || 1;
-  }*/
+  }
 }

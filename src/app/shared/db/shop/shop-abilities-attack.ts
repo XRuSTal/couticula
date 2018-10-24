@@ -1,12 +1,12 @@
 import { AbilityType } from '@app/shared/enums';
-import { Ability } from '@app/shared/models';
+import { AbilitySettings } from '@app/shared/models';
 
-export const ShopAbilitiesAttack: Ability[] = [
+export const ShopAbilitiesAttack: AbilitySettings[] = [
   {
     type: AbilityType.HeroCastDecreaseRegeneration1,
     name: 'Ослабление регенерации.',
     description: 'Снижение регенерации на 1 до конца боя',
-    img: 'assets/img/abilities/decrease-regeneration-1.jpg',
+    image: 'assets/img/abilities/decrease-regeneration-1.jpg',
     cost: 300,
     maxUseCount: 1,
     isImmediateAction: false,
@@ -17,7 +17,7 @@ export const ShopAbilitiesAttack: Ability[] = [
     type: AbilityType.HeroCastSlackness,
     name: 'Вялость',
     description: 'На следующий ход урон цели снижается на 2',
-    img: 'assets/img/abilities/sadness.jpg',
+    image: 'assets/img/abilities/sadness.jpg',
     cost: 200,
     maxUseCount: 1,
     isImmediateAction: false,
@@ -28,7 +28,7 @@ export const ShopAbilitiesAttack: Ability[] = [
     type: AbilityType.HeroHealWithAllies,
     name: 'Совместное лечение',
     description: 'При лечении союзников лечит себе 4 жизни',
-    img: 'assets/img/abilities/heal-with-allies.jpg',
+    image: 'assets/img/abilities/heal-with-allies.jpg',
     cost: 400,
     maxUseCount: 1,
     isImmediateAction: true,
@@ -39,7 +39,7 @@ export const ShopAbilitiesAttack: Ability[] = [
     type: AbilityType.HeroCastDecreaseRegeneration1,
     name: 'Ослабление регенерации.',
     description: 'Снижение регенерации на 1 до конца боя',
-    img: 'assets/img/abilities/decrease-regeneration-1.jpg',
+    image: 'assets/img/abilities/decrease-regeneration-1.jpg',
     cost: 300,
     maxUseCount: 1,
     isImmediateAction: false,
@@ -50,7 +50,7 @@ export const ShopAbilitiesAttack: Ability[] = [
     type: AbilityType.HeroCastSlackness,
     name: 'Вялость',
     description: 'На следующий ход урон цели снижается на 2',
-    img: 'assets/img/abilities/sadness.jpg',
+    image: 'assets/img/abilities/sadness.jpg',
     cost: 200,
     maxUseCount: 1,
     isImmediateAction: false,
@@ -61,7 +61,7 @@ export const ShopAbilitiesAttack: Ability[] = [
     type: AbilityType.HeroHealWithAllies,
     name: 'Совместное лечение',
     description: 'При лечении союзников лечит себе 4 жизни',
-    img: 'assets/img/abilities/heal-with-allies.jpg',
+    image: 'assets/img/abilities/heal-with-allies.jpg',
     cost: 400,
     maxUseCount: 1,
     isImmediateAction: true,

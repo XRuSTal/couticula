@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { Subscription } from 'rxjs/Subscription';
 
-import { Ability, ShopAbilitiesPage } from '@models';
+import { AbilitySettings, ShopAbilitiesPage } from '@models';
 import { PlayerService, ShopService } from '@services';
 
 @Component({
@@ -18,7 +18,7 @@ export class AbilityListComponent implements OnInit, OnDestroy {
     return this.shopService.choosenAbility;
   }
   get propertiesDescription(): string[] {
-    let description: string[] = [];
+    const description: string[] = [];
     const choosenAbility = this.shopService.choosenAbility;
 
     if (choosenAbility.isImmediateAction) description.push('Мгновенное действие');
@@ -40,13 +40,13 @@ export class AbilityListComponent implements OnInit, OnDestroy {
     this.subscriptions.forEach(s => s.unsubscribe);
   }
 
-  isSelectedAbility(ability: Ability) {
+  isSelectedAbility(ability: AbilitySettings) {
     return this.shopService.choosenAbility && this.shopService.choosenAbility.type === ability.type;
   }
   isAvailablePrice(cost: number) {
     return this.playerService.gold >= cost;
   }
-  selectAbility(ability: Ability) {
+  selectAbility(ability: AbilitySettings) {
     this.shopService.selectAbility(ability);
   }
 }

@@ -4,7 +4,7 @@ import { Subject } from 'rxjs/Subject';
 import { of } from 'rxjs/observable/of';
 
 import { ItemType, ShopPageType } from '@enums';
-import { Ability, Hero, ShopAbilitiesPages, ShopEquipmentHitpoints } from '@models';
+import { AbilitySettings, Hero, ShopAbilitiesPages, ShopEquipmentHitpoints } from '@models';
 import {
   ShopAbilitiesAttack,
   ShopAbilitiesDefence,
@@ -28,7 +28,7 @@ import { SettingsService } from './settings.service';
 @Injectable()
 export class ShopService {
   choosenHero: Hero;
-  choosenAbilities: { pageType: ShopPageType; ability: Ability }[] = [];
+  choosenAbilities: { pageType: ShopPageType; ability: AbilitySettings }[] = [];
   choosenItem: { itemType: ItemType; item: { value: number; cost: number } };
   choosenHitpoints: { value: number; cost: number };
   choosenPageType: ShopPageType;
@@ -102,7 +102,7 @@ export class ShopService {
     }
     this.checkSelectedAvailable();
   }
-  selectAbility(ability: Ability) {
+  selectAbility(ability: AbilitySettings) {
     const previousAbility = this.choosenAbilities.findIndex(
       p => p.pageType === this.choosenPageType
     );
