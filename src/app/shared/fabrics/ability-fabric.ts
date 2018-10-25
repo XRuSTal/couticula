@@ -1,8 +1,8 @@
-import { Ability, AbilitySettings, Creature } from '@models';
+import { Ability, AbilityResult, AbilitySettings, Creature } from '@models';
 import { AbilityType } from '@app/shared/enums';
 
 export class AbilityFabric {
-  private static abilities = new Map<AbilityType, () => {}>();
+  private static abilities = new Map<AbilityType, () => AbilityResult>();
 
   static createAbility(settings: AbilitySettings): Ability {
     const func = this.abilities.get(settings.type);
@@ -12,6 +12,7 @@ export class AbilityFabric {
     } else {
       return new Ability(settings, () => {
         console.log('TODO: ability', AbilityType[settings.type]);
+        return null;
       });
     }
   }
@@ -23,7 +24,7 @@ export class AbilityFabric {
 
     return this.basicAttack(currentCreature, targetCreature, {});
 }
-  private static basicAttack(currentCreature: Creature, targetCreature: Creature, options) {
-
+  private static basicAttack(currentCreature: Creature, targetCreature: Creature, options): AbilityResult {
+    return null;
   }
 }

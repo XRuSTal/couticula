@@ -1,4 +1,5 @@
 import { AbilityType } from '@enums';
+import { AbilityResult } from './ability-result';
 import { AbilitySettings } from './ability-settings';
 
 // TODO: перенести в магазин (shop.ts)
@@ -55,7 +56,7 @@ export class Ability {
   type: AbilityType;
   name: string;
   description: string;
-  ability: () => any; // AbilityResult;
+  ability: () => AbilityResult;
   image: string;
   // cost: number;
   maxUseCount: number;
@@ -64,7 +65,7 @@ export class Ability {
   countTarget: number;
   combo?: AbilityType[];
 
-  constructor(settings: AbilitySettings, abilityFunction: () => any) {
+  constructor(settings: AbilitySettings, abilityFunction: () => AbilityResult) {
     this.type = settings.type;
     this.name = settings.name;
     this.description = settings.description;
