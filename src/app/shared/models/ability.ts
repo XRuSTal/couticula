@@ -1,6 +1,7 @@
 import { AbilityType } from '@enums';
 import { AbilityResult } from './ability-result';
 import { AbilitySettings } from './ability-settings';
+import { Creature } from './creature';
 
 // TODO: перенести в магазин (shop.ts)
 /* var AbilitiesShop = {
@@ -56,7 +57,7 @@ export class Ability {
   type: AbilityType;
   name: string;
   description: string;
-  ability: () => AbilityResult;
+  ability: (currentCreature: Creature, targetCreature: Creature) => AbilityResult;
   image: string;
   // cost: number;
   maxUseCount: number;
@@ -65,7 +66,10 @@ export class Ability {
   countTarget: number;
   combo?: AbilityType[];
 
-  constructor(settings: AbilitySettings, abilityFunction: () => AbilityResult) {
+  constructor(
+    settings: AbilitySettings,
+    abilityFunction: (currentCreature: Creature, targetCreature: Creature) => AbilityResult,
+  ) {
     this.type = settings.type;
     this.name = settings.name;
     this.description = settings.description;

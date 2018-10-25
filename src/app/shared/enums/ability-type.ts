@@ -20,9 +20,9 @@ export enum AbilityType {
   HeroShieldMedium,
   HeroShieldStrong,
   // Heal:
-  HeroSimpleHeal,
-  HeroSimpleHealTwoTargets,
-  HeroSimpleHealThreeTargets,
+  HeroBasicHeal,
+  HeroBasicHealTwoTargets,
+  HeroBasicHealThreeTargets,
   HeroHealAfterBattle,
   HeroHealFromPoison,
   HeroHealFromPoisonAfterBattle,
