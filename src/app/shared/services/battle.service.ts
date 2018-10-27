@@ -5,7 +5,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 import { AbilityType, BattleState, CreatureState, EffectType } from '@enums';
 import { Cell, Creature, Hero } from '@models';
-import { CreatureFabric } from '@shared/fabrics';
+import { AbilityFabric, CreatureFabric } from '@shared/fabrics';
 import { HeroService } from './hero.service';
 import { SettingsService } from './settings.service';
 
@@ -23,19 +23,18 @@ export class BattleService {
   endEvent$: Observable<Cell>;
 
   private cell: Cell;
-  private battleStateSource: BehaviorSubject<BattleState> = new BehaviorSubject<BattleState>(BattleState.Begin);
+  private battleStateSource: BehaviorSubject<BattleState> = new BehaviorSubject<BattleState>(
+    BattleState.Begin
+  );
   private endEventSource: Subject<Cell> = new Subject<Cell>();
   private eventsSource: Subject<BattleEvent> = new Subject<BattleEvent>();
   private monsters: Creature[] = [];
-  private currentCreature: { id: number; index: number; };
+  private currentCreature: { id: number; index: number };
   private currentRound: number;
   private currentTargetForMonsters: number;
   creatures: Creature[] = [];
 
-  constructor(
-    private heroService: HeroService,
-    private settingsService: SettingsService,
-  ) {
+  constructor(private heroService: HeroService, private settingsService: SettingsService) {
     this.endEvent$ = this.endEventSource.asObservable();
     this.events$ = this.eventsSource.asObservable();
   }
@@ -60,7 +59,6 @@ export class BattleService {
       this.newRound();
     }
   }
-
 
   heroAction(ability: AbilityType, target: number) {
     this.turn();
@@ -110,25 +108,31 @@ export class BattleService {
   }
   private setInitialEffectsAndAbilities() {
     this.creatures.forEach((p, i, arr) => {
-        p.currentEffects = []; // сброс для героев
-        p.effects.forEach(effect => {
-          p.currentEffects.push(effect);
-        });
-        p.currentAbilities = []; // сброс для героев
-        p.abilities.forEach(ability => {
-          p.currentAbilities.push(ability);
-        });
+      p.currentEffects = []; // сброс для героев
+      p.effects.forEach(effect => {
+        p.currentEffects.push(effect);
+      });
+      p.currentAbilities = []; // сброс для героев
+      p.abilities.forEach(abilityType => {
+        const ability = AbilityFabric.createAbility(abilityType);
+        p.currentAbilities.push(ability);
+      });
     });
   }
   private setNewTargetForMonster(exceptHero: number = null) {
     const heroes: number[] = [];
     this.creatures.forEach(creature => {
-      if (creature.state === CreatureState.Alive && (creature instanceof Hero) && creature.id !== exceptHero
-        && !creature.isExistsEffect(EffectType.HideCreature)) {
+      if (
+        creature.state === CreatureState.Alive &&
+        creature instanceof Hero &&
+        creature.id !== exceptHero &&
+        !creature.isExistsEffect(EffectType.HideCreature)
+      ) {
         heroes.push(creature.id);
       }
     });
-    this.currentTargetForMonsters = heroes.length === 0 ? exceptHero : heroes.sort(() => Math.random() - 0.5).pop();
+    this.currentTargetForMonsters =
+      heroes.length === 0 ? exceptHero : heroes.sort(() => Math.random() - 0.5).pop();
   }
   private prepareHeroBeforeBattle() {
     this.heroService.heroes.forEach(hero => {
@@ -170,7 +174,11 @@ export class BattleService {
     this.creatures.forEach(creature => {
       creature.usedInThisRoundAbilities = [];
       // снятие эффектов в конце раунда
-      creature.dropCurrentEffects([EffectType.BlockHeal, EffectType.MagicProtection, EffectType.Suppression]);
+      creature.dropCurrentEffects([
+        EffectType.BlockHeal,
+        EffectType.MagicProtection,
+        EffectType.Suppression,
+      ]);
     });
 
     this.checkBattleEnd();
@@ -186,15 +194,18 @@ export class BattleService {
     this.setNextCreature();
   }
   private setFirstCreature() {
-    const firstCreatureIndex = this.creatures.findIndex(creature => creature.state === CreatureState.Alive);
+    const firstCreatureIndex = this.creatures.findIndex(
+      creature => creature.state === CreatureState.Alive
+    );
     this.currentCreature = {
       index: firstCreatureIndex,
       id: this.creatures[firstCreatureIndex].id,
     };
   }
   private setNextCreature() {
-    const nextCreatureIndex = this.creatures.findIndex((creature, index) =>
-      creature.state === CreatureState.Alive && index > this.currentCreature.index
+    const nextCreatureIndex = this.creatures.findIndex(
+      (creature, index) =>
+        creature.state === CreatureState.Alive && index > this.currentCreature.index
     );
 
     if (nextCreatureIndex === -1) {

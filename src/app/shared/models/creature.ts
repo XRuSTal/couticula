@@ -1,6 +1,7 @@
 import { AbilityType, CreatureState, EffectType, ItemType } from '@enums';
 import { ItemFabric } from '@shared/fabrics';
 
+import { Ability } from './ability';
 import { CreatureEquipment } from './creature-equipment';
 import { Effect } from './effect';
 import { Item } from './item';
@@ -16,9 +17,9 @@ export class Creature {
   maxHitPoint = 0;
   state: CreatureState = CreatureState.Alive;
   abilities: AbilityType[] = []; // способности существа
-  currentAbilities: AbilityType[] = []; // способности существа, доступные во время боя
+  currentAbilities: Ability[] = []; // способности существа, доступные во время боя
   // !!! Каждая способность применяется только 1 раз за раунд
-  usedInThisBattleAbilities: number[] = []; // способности существа, примененные в этом раунде <AbilityType, number>
+  usedInThisBattleAbilities: AbilityType[] = []; // способности существа, примененные в этом раунде
   usedInThisRoundAbilities: AbilityType[] = []; // способности существа, примененные в этом бою
   // !!! Позволяет создавать однотипные эффекты с разным описанием. Если реально не пригодится - заменить на тип эффекта:
   effects: Effect[] = []; // эффекты на существе
@@ -60,7 +61,7 @@ export class Creature {
     }
   }
   dropCurrentAbility(abilityType: AbilityType) {
-    const indexAbility = this.currentAbilities.findIndex(ability => ability === abilityType);
+    const indexAbility = this.currentAbilities.findIndex(ability => ability.type === abilityType);
     if (indexAbility !== -1) {
       this.currentAbilities.splice(indexAbility, 1);
     }
@@ -72,7 +73,7 @@ export class Creature {
     }
   }
   dropCurrentEffects(effectType: EffectType[]) {
-      effectType.forEach(p => this.dropCurrentEffect(p));
+    effectType.forEach(p => this.dropCurrentEffect(p));
   }
   dropEffect(effectType: EffectType) {
     const indexEffect = this.effects.findIndex(effect => effect.effectType === effectType);
@@ -81,13 +82,13 @@ export class Creature {
     }
   }
   dropEffects(effectType: EffectType[]) {
-      effectType.forEach(p => this.dropEffect(p));
+    effectType.forEach(p => this.dropEffect(p));
   }
 
   isExistsEffect(effectType: EffectType) {
-    return (this.currentEffects.some(p => p.effectType === effectType));
+    return this.currentEffects.some(p => p.effectType === effectType);
   }
   isExistsSomeEffects(effectTypes: EffectType[]): boolean {
-    return (this.currentEffects.some(p => effectTypes.indexOf(p.effectType) !== -1));
+    return this.currentEffects.some(p => effectTypes.indexOf(p.effectType) !== -1);
   }
 }

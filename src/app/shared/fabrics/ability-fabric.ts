@@ -2,10 +2,19 @@ import { Ability, AbilityResult, AbilitySettings, Creature } from '@models';
 import { AbilityType } from '@app/shared/enums';
 
 export class AbilityFabric {
-  private static abilities = new Map<AbilityType,
-    (currentCreature: Creature, targetCreature: Creature) => AbilityResult>();
+  private static abilities = new Map<
+    AbilityType,
+    (currentCreature: Creature, targetCreature: Creature) => AbilityResult
+  >();
 
-  static createAbility(settings: AbilitySettings): Ability {
+  static createAbility(abilityType: AbilityType): Ability {
+    // TODO: init settings
+    const settings = [].find(abilitySettings => abilitySettings.type === abilityType);
+
+    return AbilityFabric.createAbilityBySettings(settings);
+  }
+
+  static createAbilityBySettings(settings: AbilitySettings): Ability {
     const func = AbilityFabric.abilities.get(settings.type);
 
     if (func) {
@@ -22,7 +31,6 @@ export class AbilityFabric {
     AbilityFabric.abilities.set(AbilityType.HeroBasicAttack, heroBasicAttack);
     AbilityFabric.abilities.set(AbilityType.HeroBasicHeal, heroBasicHeal);
   }
-
 }
 AbilityFabric.initialize();
 
