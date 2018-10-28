@@ -1,15 +1,23 @@
+import {
+  MonsterAbilities,
+  ShopAbilitiesAttack,
+  ShopAbilitiesDefence,
+  ShopAbilitiesHeal,
+  ShopAbilitiesMagic,
+  ShopAbilitiesSpecial,
+} from '@shared/db';
 import { Ability, AbilityResult, AbilitySettings, Creature } from '@models';
-import { AbilityType } from '@app/shared/enums';
+import { AbilityType } from '@enums';
 
 export class AbilityFabric {
   private static abilities = new Map<
     AbilityType,
     (currentCreature: Creature, targetCreature: Creature) => AbilityResult
   >();
+  private static abilitiesSettings = new Map<AbilityType, AbilitySettings>();
 
   static createAbility(abilityType: AbilityType): Ability {
-    // TODO: init settings
-    const settings = [].find(abilitySettings => abilitySettings.type === abilityType);
+    const settings = AbilityFabric.abilitiesSettings.get(abilityType);
 
     return AbilityFabric.createAbilityBySettings(settings);
   }
@@ -28,6 +36,25 @@ export class AbilityFabric {
   }
 
   static initialize() {
+    AbilityFabric.prepareAbilitiesSettings();
+    AbilityFabric.prepareAbilities();
+  }
+
+  private static prepareAbilitiesSettings() {
+    const allSettings = [
+      ...MonsterAbilities,
+      ...ShopAbilitiesAttack,
+      ...ShopAbilitiesDefence,
+      ...ShopAbilitiesHeal,
+      ...ShopAbilitiesMagic,
+      ...ShopAbilitiesSpecial
+    ];
+    allSettings.forEach(settings => {
+      AbilityFabric.abilitiesSettings.set(settings.type, settings);
+    });
+  }
+
+  private static prepareAbilities() {
     AbilityFabric.abilities.set(AbilityType.HeroBasicAttack, heroBasicAttack);
     AbilityFabric.abilities.set(AbilityType.HeroBasicHeal, heroBasicHeal);
   }
