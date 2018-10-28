@@ -35,7 +35,7 @@ export const HeroTypes: HeroSettings[] = [
     maxWeaponValue: 6,
     description: 'вместо атаки лечение.',
     inventory: [],
-    abilites: [ AbilityType.HeroSimpleHeal ],
+    abilites: [ AbilityType.HeroBasicHeal ],
     effects: [],
   },
   {
