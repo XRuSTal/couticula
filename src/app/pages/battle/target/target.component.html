@@ -20,14 +20,14 @@
 
 <div class="battle-field__target__effects">
   <img *ngFor="let effect of creature.currentEffects"
-       src="assets/img/effects/poisoned.jpg"
+       [src]="effect.image"
        class="battle-field__target__effects__effect">
 </div>
 
 <div *ngIf="isShownAbilities" class="battle-field__target__abilites">
-  <img *ngFor="let ability of creature.abilities; let i = index;"
+  <img *ngFor="let ability of creature.currentAbilities; let i = index;"
        (click)="selectAbility(i)"
-       src="assets/img/abilities/decrease-regeneration-1.jpg"
+       [src]="ability.image"
        class="battle-field__target__abilites__ability"
        [ngClass]="{ 'battle-field__target__abilites__ability_selected': i === selectedAbilityIndex }">
 </div>
