@@ -1,4 +1,5 @@
 import {
+  HeroBasicAbilities,
   MonsterAbilities,
   ShopAbilitiesAttack,
   ShopAbilitiesDefence,
@@ -42,6 +43,7 @@ export class AbilityFabric {
 
   private static prepareAbilitiesSettings() {
     const allSettings = [
+      ...HeroBasicAbilities,
       ...MonsterAbilities,
       ...ShopAbilitiesAttack,
       ...ShopAbilitiesDefence,

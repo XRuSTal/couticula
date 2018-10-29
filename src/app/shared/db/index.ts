@@ -3,6 +3,7 @@ export * from './creatures-boss';
 export * from './creatures-level1';
 export * from './creatures-level2';
 export * from './effects';
+export * from './hero-basic-abilities';
 export * from './hero-types';
 export * from './items';
 export * from './monster-abilities';
