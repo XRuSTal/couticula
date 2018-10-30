@@ -1,9 +1,6 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { NavController } from 'ionic-angular';
-import { Subscription } from 'rxjs/Subscription';
 
-import { ItemType } from '@enums';
-import { Creature, Hero, Item } from '@models';
+import { Creature } from '@models';
 
 @Component({
   selector: 'target',

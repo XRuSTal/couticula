@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
 import { Hero, Item } from '@models';
-import { MapPage } from '@pages';
 import { HeroService } from '@services';
 
 @Component({

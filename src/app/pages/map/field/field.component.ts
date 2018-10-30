@@ -7,8 +7,6 @@ import {
 } from '@angular/core';
 import { AlertController, NavController, NavParams, PopoverController } from 'ionic-angular';
 
-import { ItemFabric } from '@app/shared/fabrics';
-import { ItemType } from '@app/shared/enums';
 import { Cell } from '@models';
 import { BattleService, MapService, SettingsService, TreasureService } from '@services';
 

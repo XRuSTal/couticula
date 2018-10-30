@@ -5,7 +5,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { zip } from 'rxjs/operators';
 
 import { SearchEventType } from '@enums';
-import { Cell, Hero, Item } from '@models';
+import { Cell, Hero } from '@models';
 import { EventSearchService, HeroService, MapService, SettingsService } from '@services';
 import { DiceComponent } from '@app/shared/components';
 

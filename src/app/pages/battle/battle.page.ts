@@ -1,5 +1,5 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
 import { Cell, Creature, Hero } from '@models';
@@ -21,7 +21,7 @@ import { BattleState } from '@app/shared/enums';
 })
 export class BattlePage {
   cell: Cell;
-  creatures: Creature[];
+  creatures: Creature[] = [];
   selectedCreatureId: number;
   selectedHeroAbilityIndex = 0;
   currentCreature: { id: number; index: number; };

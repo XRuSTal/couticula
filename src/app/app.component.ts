@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { Platform, MenuController, Nav } from 'ionic-angular';
+import { MenuController, Nav, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
@@ -13,7 +13,7 @@ export class MyApp {
 
   // make HelloIonicPage the root (or first) page
   rootPage: any = StartPage;
-  pages: Array<{ title: string; component: any }>;
+  pages: { title: string; component: any }[];
 
   constructor(
     private platform: Platform,

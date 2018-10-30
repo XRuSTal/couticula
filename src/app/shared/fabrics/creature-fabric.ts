@@ -1,5 +1,5 @@
 import { HeroClass } from '@enums';
-import { Creature, CreatureSettings, Effect, Hero, HeroSettings } from '@models';
+import { Creature, CreatureSettings, Hero, HeroSettings } from '@models';
 import { CreaturesBoss, CreaturesLevel1, CreaturesLevel2, HeroTypes } from '@shared/db';
 import { Random } from '@app/shared/services';
 import { EffectsFabric } from './effects-fabric';

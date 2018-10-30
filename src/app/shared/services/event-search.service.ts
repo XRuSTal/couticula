@@ -2,9 +2,8 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 
-import { ItemType, SearchEventType } from '@enums';
+import { SearchEventType } from '@enums';
 import { Cell, EventSearch, Hero, Item } from '@models';
-import { ItemFabric } from '@shared/fabrics';
 import { HeroService } from './hero.service';
 import { MapService } from './map.service';
 import { PlayerService } from './player.service';

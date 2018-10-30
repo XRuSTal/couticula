@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
-import { Cell, EnemyGroupSettings, Item } from '@models';
+import { Cell, Item } from '@models';
 import { CellSettings } from '@shared/db';
 import { GameMode } from '@shared/enums';
 import { EnemyGroupFabric } from '@shared/fabrics';

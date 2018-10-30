@@ -1,5 +1,4 @@
-import { AbilityType, ItemType } from '@enums';
-import { Items } from '@shared/db';
+import { ItemType } from '@enums';
 
 export class Item {
   name: string;

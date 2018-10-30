@@ -10,6 +10,7 @@
     "clean": "ionic-app-scripts clean",
     "build": "ionic-app-scripts build",
     "lint": "ionic-app-scripts lint",
+    "lint:fix": "tslint --format verbose --project tsconfig.json --config tslint.json --fix",
     "ionic:build": "ionic-app-scripts build",
     "ionic:serve": "ionic-app-scripts serve"
   },

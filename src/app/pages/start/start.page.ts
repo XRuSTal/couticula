@@ -15,7 +15,7 @@ import { MultiplayerPage, SettingsPage, SinglePage } from '@pages';
 })
 export class StartPage {
   background: string;
-  pages: Array<{ title: string; component: any }>;
+  pages: { title: string; component: any }[];
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     this.background = 'assets/img/start-background.jpg';
@@ -32,6 +32,6 @@ export class StartPage {
   openPage(page) {
     console.log('openPage ' + page.title);
     this.navCtrl.push(page.component);
-    //this.navCtrl.setRoot(page.component);
+    // this.navCtrl.setRoot(page.component);
   }
 }

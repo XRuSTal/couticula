@@ -2,7 +2,6 @@ import { BattleService } from './battle.service';
 import { EventSearchService } from './event-search.service';
 import { GameService } from './game.service';
 import { HeroService } from './hero.service';
-import { HttpService } from './http.service';
 import { MapService } from './map.service';
 import { Random } from './random';
 import { PlayerService } from './player.service';
@@ -15,7 +14,6 @@ const SHARED_SERVICES: any[] = [
   EventSearchService,
   GameService,
   HeroService,
-  HttpService,
   MapService,
   PlayerService,
   SettingsService,
@@ -29,7 +27,6 @@ export {
   EventSearchService,
   GameService,
   HeroService,
-  HttpService,
   MapService,
   Random,
   PlayerService,

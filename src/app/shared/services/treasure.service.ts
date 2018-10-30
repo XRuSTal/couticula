@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 
-import { ItemType } from '@enums';
 import { Cell, Item } from '@models';
 import { ItemFabric } from '@shared/fabrics';
 import { PlayerService } from './player.service';
