@@ -5,7 +5,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 import { AbilityType, BattleState, CreatureState, EffectType } from '@enums';
 import { Cell, Creature, Hero } from '@models';
-import { AbilityFabric, CreatureFabric } from '@shared/fabrics';
+import { AbilityFabric, CreatureFabric, EffectsFabric } from '@shared/fabrics';
 import { HeroService } from './hero.service';
 import { SettingsService } from './settings.service';
 
@@ -185,7 +185,7 @@ export class BattleService {
 
     if (this.battleStateSource.value === BattleState.NewRound) {
       this.setFirstCreature();
-      // this.turn();
+      this.turn();
     }
   }
   private turn() {
@@ -219,6 +219,26 @@ export class BattleService {
   }
   private startTurn() {
     const creature: Creature = this.creatures[this.currentCreature.index];
+
+    if (creature.state !== CreatureState.Alive) {
+      return;
+    }
+
+    this.eventsSource.next({
+      state: BattleState.NewTurn,
+      currentCreature: this.currentCreature.id
+    });
+    this.battleStateSource.next(BattleState.NewTurn);
+
+    // применение всех эффектов
+    // creature.currentEffects.forEach((p) => { p.newRoundAction(creature); });
+    // снятие временных эффектов в начале хода существа
+    creature.dropCurrentEffects([EffectType.BlockDamage]);
+    const isStun = this.checkStun(creature);
+    if (isStun) {
+      return;
+    }
+
     if (creature instanceof Hero) {
       this.heroTurn();
     } else {
@@ -235,5 +255,17 @@ export class BattleService {
   }
   private monsterTurn() {
     console.log('monsterTurn');
+  }
+  private checkStun(creature: Creature) {
+    if (creature.isExistsEffect(EffectType.Stan2)) {
+        creature.dropCurrentEffect(EffectType.Stan2);
+        creature.currentEffects.push(EffectsFabric.createEffect(EffectType.Stan));
+        return true;
+    } else if (creature.isExistsEffect(EffectType.Stan)) {
+        creature.dropCurrentEffect(EffectType.Stan);
+        return true;
+    } else {
+      return false;
+    }
   }
 }
