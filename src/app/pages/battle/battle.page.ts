@@ -1,5 +1,5 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
 import { Cell, Creature, Hero } from '@models';
@@ -27,6 +27,7 @@ export class BattlePage {
   currentCreature: { id: number; index: number; };
   lastCreatureInRound: number;
   currentRound = 1;
+  waiting = true;
 
   get creaturesOrder() {
     return [...this.creatures.slice(this.currentCreature.index), ...this.creatures.slice(0, this.currentCreature.index)];
@@ -52,16 +53,9 @@ export class BattlePage {
   }
 
   ngOnInit() {
-    this.battleService.createBattle(this.cell);
-    this.battleService.startBattle();
-    this.creatures = this.battleService.creatures;
-    this.currentCreature = { id: this.creatures[0].id, index: 0 };
-    this.selectedCreatureId = this.currentCreature.id;
-    this.lastCreatureInRound = this.creatures[this.creatures.length - 1].id;
-    this.cd.markForCheck();
-
     this.battleService.events$.subscribe(event => {
-      console.log(event);
+      console.log(BattleState[event.state], event);
+      this.waiting = true;
       switch (event.state) {
         case BattleState.Begin:
         break;
@@ -73,6 +67,7 @@ export class BattlePage {
         this.currentCreature = { id: event.currentCreature, index: currentCreatureIndex };
         break;
         case BattleState.PlayerTurn:
+        this.waiting = false;
         break;
         case BattleState.MonsterTurn:
         break;
@@ -82,6 +77,14 @@ export class BattlePage {
         break;
       }
     });
+
+    this.battleService.createBattle(this.cell);
+    this.battleService.startBattle();
+    this.creatures = this.battleService.creatures;
+    this.currentCreature = { id: this.creatures[0].id, index: 0 };
+    this.selectedCreatureId = this.currentCreature.id;
+    this.lastCreatureInRound = this.creatures[this.creatures.length - 1].id;
+    this.cd.markForCheck();
   }
 
   openInventory() {

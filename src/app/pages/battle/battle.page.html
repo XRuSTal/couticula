@@ -53,4 +53,6 @@
             (selectAbilityIndex)="onSelectAbilityIndex($event)"
             class="battle-field__target battle-field__target_hero"></target>
   </div>
+
+  <div *ngIf="waiting" class="display-blocker"></div>
 </ion-content>
