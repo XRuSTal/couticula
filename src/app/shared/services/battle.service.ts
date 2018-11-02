@@ -4,10 +4,11 @@ import { Subject } from 'rxjs/Subject';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 import { AbilityType, BattleState, CreatureState, EffectType } from '@enums';
-import { Cell, Creature, Hero } from '@models';
+import { Ability, Cell, Creature, Hero } from '@models';
 import { AbilityFabric, CreatureFabric, EffectsFabric } from '@shared/fabrics';
 import { HeroService } from './hero.service';
 import { SettingsService } from './settings.service';
+import { Random } from '.';
 
 interface BattleEvent {
   state: BattleState;
@@ -149,7 +150,7 @@ export class BattleService {
       }
 
       hero.usedInThisRoundAbilities = [];
-      hero.usedInThisBattleAbilities = [];
+      hero.usedInThisBattleAbilities = new Map<AbilityType, number>();
     });
   }
 
@@ -234,15 +235,15 @@ export class BattleService {
     // creature.currentEffects.forEach((p) => { p.newRoundAction(creature); });
     // снятие временных эффектов в начале хода существа
     creature.dropCurrentEffects([EffectType.BlockDamage]);
-    const isStun = this.checkStun(creature);
-    if (isStun) {
+    const isStunned = this.checkIfIsStunned(creature);
+    if (isStunned) {
       return;
     }
 
     if (creature instanceof Hero) {
-      this.heroTurn();
+      this.heroTurn(creature);
     } else {
-      this.monsterTurn();
+      this.monsterTurn(creature);
     }
   }
   private endTurn() {
@@ -250,13 +251,50 @@ export class BattleService {
     // снятие эффектов в конце хода существа
     creature.dropCurrentEffects([EffectType.Course, EffectType.Imbecility, EffectType.Slackness]);
   }
-  private heroTurn() {
+  private heroTurn(creature: Hero) {
     console.log('heroTurn');
   }
-  private monsterTurn() {
+  private monsterTurn(creature: Creature) {
     console.log('monsterTurn');
+    this.eventsSource.next({
+      state: BattleState.MonsterTurn,
+      currentCreature: this.currentCreature.id,
+    });
+    this.battleStateSource.next(BattleState.MonsterTurn);
+
+    this.monsterAttack(creature);
   }
-  private checkStun(creature: Creature) {
+  private monsterAttack(creature: Creature) {
+    // проверка цели
+    if (!this.creatures.find(target => target.id === this.currentTargetForMonsters &&
+      target.state !== CreatureState.Alive)) {
+      this.setNewTargetForMonster();
+    }
+    // берем случайную способность
+    const availableAbilities = creature.getAvailableAbilities(); // способность применяется N раз за бой
+    const currentAbility = availableAbilities[Random.getInt(0, availableAbilities.length - 1)];
+
+    this.useAbility(creature, currentAbility);
+
+    this.eventsSource.next({
+      state: BattleState.MonsterAbility,
+      currentCreature: this.currentCreature.id,
+      ability: currentAbility.type,
+      // target: null,
+    });
+    this.battleStateSource.next(BattleState.MonsterTurn);
+  }
+  private useAbility(creature: Creature, ability: Ability) {
+    // TODO: ability
+
+    creature.usedInThisRoundAbilities.push(ability.type);
+    const countOfUses = creature.usedInThisBattleAbilities.has(ability.type)
+      ? creature.usedInThisBattleAbilities.get(ability.type)
+      : 0;
+    creature.usedInThisBattleAbilities.set(ability.type, countOfUses + 1);
+  }
+
+  private checkIfIsStunned(creature: Creature) {
     if (creature.isExistsEffect(EffectType.Stan2)) {
         creature.dropCurrentEffect(EffectType.Stan2);
         creature.currentEffects.push(EffectsFabric.createEffect(EffectType.Stan));

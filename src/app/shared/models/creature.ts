@@ -19,7 +19,7 @@ export class Creature {
   abilities: AbilityType[] = []; // способности существа
   currentAbilities: Ability[] = []; // способности существа, доступные во время боя
   // !!! Каждая способность применяется только 1 раз за раунд
-  usedInThisBattleAbilities: AbilityType[] = []; // способности существа, примененные в этом раунде
+  usedInThisBattleAbilities: Map<AbilityType, number> = new Map<AbilityType, number>(); // способности существа, примененные в этом раунде
   usedInThisRoundAbilities: AbilityType[] = []; // способности существа, примененные в этом бою
   // !!! Позволяет создавать однотипные эффекты с разным описанием. Если реально не пригодится - заменить на тип эффекта:
   effects: Effect[] = []; // эффекты на существе
@@ -83,6 +83,14 @@ export class Creature {
   }
   dropEffects(effectType: EffectType[]) {
     effectType.forEach(p => this.dropEffect(p));
+  }
+
+  getAvailableAbilities() {
+    return this.currentAbilities.filter(
+      ability => this.usedInThisRoundAbilities.indexOf(ability.type) === -1 &&
+        (ability.maxUseCount === 0 || !this.usedInThisBattleAbilities.has(ability.type) ||
+        ability.maxUseCount < this.usedInThisBattleAbilities.get(ability.type))
+    );
   }
 
   isExistsEffect(effectType: EffectType) {
