@@ -38,6 +38,13 @@ export class BattleService {
   constructor(private heroService: HeroService, private settingsService: SettingsService) {
     this.endEvent$ = this.endEventSource.asObservable();
     this.events$ = this.eventsSource.asObservable();
+
+    this.events$.subscribe(event => {
+      if (event.state === BattleState.PlayerAbility || event.state === BattleState.MonsterAbility) {
+        this.endTurn();
+        this.setNextCreature();
+      }
+    });
   }
 
   createBattle(cell: Cell) {
@@ -62,9 +69,8 @@ export class BattleService {
   }
 
   heroAction(ability: AbilityType, target: number) {
-    this.turn();
     this.eventsSource.next({
-      state: BattleState.NewTurn,
+      state: BattleState.PlayerAbility,
       currentCreature: this.currentCreature.id,
     });
 
@@ -186,13 +192,8 @@ export class BattleService {
 
     if (this.battleStateSource.value === BattleState.NewRound) {
       this.setFirstCreature();
-      this.turn();
+      this.startTurn();
     }
-  }
-  private turn() {
-    this.startTurn();
-    this.endTurn();
-    this.setNextCreature();
   }
   private setFirstCreature() {
     const firstCreatureIndex = this.creatures.findIndex(
@@ -216,6 +217,7 @@ export class BattleService {
         index: nextCreatureIndex,
         id: this.creatures[nextCreatureIndex].id,
       };
+      this.startTurn();
     }
   }
   private startTurn() {
@@ -253,6 +255,11 @@ export class BattleService {
   }
   private heroTurn(creature: Hero) {
     console.log('heroTurn');
+    this.eventsSource.next({
+      state: BattleState.PlayerTurn,
+      currentCreature: this.currentCreature.id,
+    });
+    this.battleStateSource.next(BattleState.PlayerTurn);
   }
   private monsterTurn(creature: Creature) {
     console.log('monsterTurn');
