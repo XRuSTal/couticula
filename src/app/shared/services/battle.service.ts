@@ -2,13 +2,14 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { delay } from 'rxjs/operators';
 
 import { AbilityType, BattleState, CreatureState, EffectType } from '@enums';
 import { Ability, Cell, Creature, Hero } from '@models';
 import { AbilityFabric, CreatureFabric, EffectsFabric } from '@shared/fabrics';
 import { HeroService } from './hero.service';
 import { SettingsService } from './settings.service';
-import { Random } from '.';
+import { Random } from './random';
 
 interface BattleEvent {
   state: BattleState;
@@ -39,7 +40,9 @@ export class BattleService {
     this.endEvent$ = this.endEventSource.asObservable();
     this.events$ = this.eventsSource.asObservable();
 
-    this.events$.subscribe(event => {
+    this.events$.pipe(
+      delay(100),
+    ).subscribe(event => {
       if (event.state === BattleState.PlayerAbility || event.state === BattleState.MonsterAbility) {
         this.endTurn();
         this.setNextCreature();
@@ -69,6 +72,7 @@ export class BattleService {
   }
 
   heroAction(ability: AbilityType, target: number) {
+    console.log('heroAction');
     this.eventsSource.next({
       state: BattleState.PlayerAbility,
       currentCreature: this.currentCreature.id,
@@ -222,6 +226,7 @@ export class BattleService {
   }
   private startTurn() {
     const creature: Creature = this.creatures[this.currentCreature.index];
+    console.log('startTurn', creature);
 
     if (creature.state !== CreatureState.Alive) {
       return;
@@ -250,6 +255,7 @@ export class BattleService {
   }
   private endTurn() {
     const creature: Creature = this.creatures[this.currentCreature.index];
+    console.log('endTurn', creature);
     // снятие эффектов в конце хода существа
     creature.dropCurrentEffects([EffectType.Course, EffectType.Imbecility, EffectType.Slackness]);
   }
@@ -272,6 +278,7 @@ export class BattleService {
     this.monsterAttack(creature);
   }
   private monsterAttack(creature: Creature) {
+    console.log('monsterAttack', creature);
     // проверка цели
     if (!this.creatures.find(target => target.id === this.currentTargetForMonsters &&
       target.state !== CreatureState.Alive)) {

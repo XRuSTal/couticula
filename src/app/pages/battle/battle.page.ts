@@ -4,8 +4,10 @@ import { NavController, NavParams } from 'ionic-angular';
 
 import { Cell, Creature, Hero } from '@models';
 import { InventoryPage } from '@pages';
-import { BattleService } from '@services';
+import { BattleService, SettingsService } from '@services';
 import { BattleState } from '@app/shared/enums';
+import { delay, zip } from 'rxjs/operators';
+import { interval } from 'rxjs/Observable/interval';
 
 @Component({
   selector: 'page-battle',
@@ -43,7 +45,8 @@ export class BattlePage {
     private cd: ChangeDetectorRef,
     public navCtrl: NavController,
     private params: NavParams,
-    private battleService: BattleService
+    private battleService: BattleService,
+    private settingsService: SettingsService,
   ) {
     this.cell = this.params.get('cell');
   }
@@ -53,7 +56,9 @@ export class BattlePage {
   }
 
   ngOnInit() {
-    this.battleService.events$.subscribe(event => {
+    this.battleService.events$.pipe(
+      zip(interval(this.settingsService.battleEventsDelay), (event, i) => event),
+    ).subscribe(event => {
       console.log(BattleState[event.state], event);
       this.waiting = true;
       switch (event.state) {
@@ -69,6 +74,9 @@ export class BattlePage {
         case BattleState.PlayerTurn:
         this.waiting = false;
         break;
+        case BattleState.PlayerAbility:
+        this.waiting = true;
+        break;
         case BattleState.MonsterTurn:
         break;
         case BattleState.Lose:
@@ -76,15 +84,16 @@ export class BattlePage {
         this.close();
         break;
       }
+      this.cd.markForCheck();
     });
 
     this.battleService.createBattle(this.cell);
-    this.battleService.startBattle();
     this.creatures = this.battleService.creatures;
     this.currentCreature = { id: this.creatures[0].id, index: 0 };
     this.selectedCreatureId = this.currentCreature.id;
     this.lastCreatureInRound = this.creatures[this.creatures.length - 1].id;
     this.cd.markForCheck();
+    this.battleService.startBattle();
   }
 
   openInventory() {
