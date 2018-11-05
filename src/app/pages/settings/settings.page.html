@@ -23,8 +23,13 @@
     </ion-item>
 
     <ion-item>
-      <ion-label color="dark">Задержка анимации</ion-label>
+      <ion-label color="dark">Задержка анимации карты</ion-label>
       <ion-input [(ngModel)]="settingsService.eventsDelay" type="number" step="100" min="100" max="2000"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label color="dark">Задержка анимации боя</ion-label>
+      <ion-input [(ngModel)]="settingsService.battleEventsDelay" type="number" step="100" min="100" max="2000"></ion-input>
     </ion-item>
   </ion-list>
 </ion-content>
