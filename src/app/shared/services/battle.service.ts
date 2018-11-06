@@ -5,7 +5,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { delay } from 'rxjs/operators';
 
 import { AbilityType, BattleState, CreatureState, EffectType } from '@enums';
-import { Ability, Cell, Creature, Hero } from '@models';
+import { Ability, AbilityResult, Cell, Creature, Hero } from '@models';
 import { AbilityFabric, CreatureFabric, EffectsFabric } from '@shared/fabrics';
 import { HeroService } from './hero.service';
 import { SettingsService } from './settings.service';
@@ -15,6 +15,7 @@ interface BattleEvent {
   state: BattleState;
   currentCreature?: number;
   ability?: AbilityType;
+  abilityResult?: AbilityResult;
   target?: number;
 }
 
@@ -288,24 +289,29 @@ export class BattleService {
     const availableAbilities = creature.getAvailableAbilities(); // способность применяется N раз за бой
     const currentAbility = availableAbilities[Random.getInt(0, availableAbilities.length - 1)];
 
-    this.useAbility(creature, currentAbility);
+    const abilityResult = this.useAbility(creature, currentAbility);
 
     this.eventsSource.next({
       state: BattleState.MonsterAbility,
       currentCreature: this.currentCreature.id,
       ability: currentAbility.type,
+      abilityResult,
       // target: null,
+
     });
     this.battleStateSource.next(BattleState.MonsterTurn);
   }
   private useAbility(creature: Creature, ability: Ability) {
-    // TODO: ability
+    const targetCreature = this.creatures.find(target => target.id === this.currentTargetForMonsters);
+    const abilityResult = ability.ability(creature, targetCreature);
 
     creature.usedInThisRoundAbilities.push(ability.type);
     const countOfUses = creature.usedInThisBattleAbilities.has(ability.type)
       ? creature.usedInThisBattleAbilities.get(ability.type)
       : 0;
     creature.usedInThisBattleAbilities.set(ability.type, countOfUses + 1);
+
+    return abilityResult;
   }
 
   private checkIfIsStunned(creature: Creature) {

@@ -59,6 +59,7 @@ export class AbilityFabric {
   private static prepareAbilities() {
     AbilityFabric.abilities.set(AbilityType.HeroBasicAttack, heroBasicAttack);
     AbilityFabric.abilities.set(AbilityType.HeroBasicHeal, heroBasicHeal);
+    AbilityFabric.abilities.set(AbilityType.MonsterBasicAttack, monsterBasicAttack);
   }
 }
 AbilityFabric.initialize();
@@ -69,6 +70,10 @@ function heroBasicAttack(currentCreature: Creature, targetCreature: Creature) {
 
 function heroBasicHeal(currentCreature: Creature, targetCreature: Creature) {
   return basicHeal(currentCreature, targetCreature, {});
+}
+
+function monsterBasicAttack(currentCreature: Creature, targetCreature: Creature) {
+  return basicAttack(currentCreature, targetCreature, {});
 }
 
 function basicAttack(currentCreature: Creature, targetCreature: Creature, options): AbilityResult {
