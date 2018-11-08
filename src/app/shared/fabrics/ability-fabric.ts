@@ -8,7 +8,7 @@ import {
   ShopAbilitiesSpecial,
 } from '@shared/db';
 import { Ability, AbilityResult, AbilitySettings, Creature } from '@models';
-import { AbilityType, EffectType } from '@enums';
+import { AbilityType, CreatureState, EffectType } from '@enums';
 import { Random } from '@services';
 
 export class AbilityFabric {
@@ -103,10 +103,9 @@ function basicHeal(currentCreature: Creature, targetCreature: Creature, options:
 
   // TODO: Совместное лечение
   if (currentCreature !== targetCreature) {
-    currentCreature.currentEffects.some(effect => {
+    currentCreature.currentEffects.forEach(effect => {
       if (effect.effectType === EffectType.HealWithAllies) {
         // effect.action(currentCreature);
-        return true;
       }
     });
   }
@@ -139,6 +138,24 @@ function getHealCoefficient(creature: Creature, dice: number) {
   } else {
     return 1;
   }
+}
+
+function decreaseHitpoint(creature: Creature, damageValue: number) {
+  let damage = 0;
+  if (!creature.isExistsEffect(EffectType.BlockDamage)) {
+    if (
+      creature.hitPoint <= damageValue ||
+      damageValue >= 13 && creature.isExistsEffect(EffectType.Destructible13)
+    ) {
+      damage = this.hitPoint;
+      creature.hitPoint = 0;
+      creature.state = CreatureState.DeadInThisTurn;
+    } else {
+      damage = damageValue;
+      creature.hitPoint -= damageValue;
+    }
+  }
+  return damage;
 }
 
 function increaseHitpoint(creature: Creature, healValue: number): number {
