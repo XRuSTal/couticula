@@ -94,29 +94,32 @@ function basicHeal(currentCreature: Creature, targetCreature: Creature, options:
     ? currentCreature.equipment.Weapon.value
     : 0;
   const healCoefficient = getHealCoefficient(currentCreature, diceHeal);
-  const healValue = options.fixedHeal ? options.fixedHeal : (weaponHeal + diceHeal) * healCoefficient;
-
-  // const damage = - currentCreature.increaseHitpoint(healValue);
+  const healValueMax = options.fixedHeal ? options.fixedHeal : (weaponHeal + diceHeal) * healCoefficient;
+  const healValue = increaseHitpoint(currentCreature, healValueMax);
 
   // Состояние броска
-  currentCreature.lastDiceDamage = null;
   currentCreature.lastDiceTarget = null;
-  if (!options.fixedHeal) {
-    // abilityResult.diceDamage = diceHeal;
-    currentCreature.lastDiceDamage = diceHeal;
-  }
+  currentCreature.lastDiceValue = options.fixedHeal ? null : diceHeal;
 
-  // Совместное лечение
+  // TODO: Совместное лечение
   if (currentCreature !== targetCreature) {
-    currentCreature.currentEffects.some(p => {
-      if (p.effectType === EffectType.HealWithAllies) {
-        // p.action(currentCreature);
+    currentCreature.currentEffects.some(effect => {
+      if (effect.effectType === EffectType.HealWithAllies) {
+        // effect.action(currentCreature);
         return true;
       }
     });
   }
+
   // TODO: Возвращать Array<AbilityResult>, для информации по нескольким существам
-  return null;
+  const abilityResult: AbilityResult = {
+    targetCreatureBefore,
+    targetCreatureAfter,
+    diceTarget: currentCreature.lastDiceTarget,
+    diceValue: currentCreature.lastDiceValue,
+    value: healValue,
+  };
+  return abilityResult;
 }
 
 function throwDiceDamage(creature: Creature): number {
@@ -136,4 +139,16 @@ function getHealCoefficient(creature: Creature, dice: number) {
   } else {
     return 1;
   }
+}
+
+function increaseHitpoint(creature: Creature, healValue: number): number {
+  let addonHitPoint = 0;
+
+  if (!creature.isExistsEffect(EffectType.BlockHeal)) {
+    addonHitPoint = creature.hitPoint + healValue > creature.maxHitPoint
+      ? creature.maxHitPoint - creature.hitPoint
+      : healValue;
+    creature.hitPoint = creature.hitPoint + addonHitPoint;
+  }
+  return addonHitPoint;
 }

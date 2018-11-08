@@ -26,7 +26,7 @@ export class Creature {
   currentEffects: Effect[] = []; // эффекты на существе во время боя
   equipment: CreatureEquipment = new CreatureEquipment();
   inventory: Item[] = [];
-  lastDiceDamage: number = null;
+  lastDiceValue: number = null;
   lastDiceTarget: number = null;
 
   constructor(
