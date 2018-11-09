@@ -3,6 +3,12 @@ import { Effect } from '@models';
 
 export const Effects: Effect[] = [
   {
+    effectType: EffectType.AttackOffset,
+    name: 'Смещение атаки',
+    image: 'assets/img/effects/attack-offset.jpg.jpg',
+    description: 'При получении удара в голову, атака переходит в другую часть тела (1 раз за бой)',
+  },
+  {
     effectType: EffectType.AttackWithIgnoringShield,
     name: 'Игнорирование щита',
     image: 'assets/img/effects/attack-with-ignoring-shield.jpg',
@@ -13,6 +19,12 @@ export const Effects: Effect[] = [
     name: 'Яд',
     image: 'assets/img/effects/attack-with-poison.jpg',
     description: 'Шанс 1 из 6, урон 1',
+  },
+  {
+    effectType: EffectType.BlockDamage,
+    name: 'Окаменение',
+    image: 'assets/img/effects/block-damage.jpg',
+    description: 'Не получает повреждений',
   },
   {
     effectType: EffectType.BlockHeal,
@@ -33,10 +45,46 @@ export const Effects: Effect[] = [
     description: 'При атаке наносится минимальный урон (бросок равен 1).',
   },
   {
+    effectType: EffectType.CreatureWithoutBody,
+    name: 'Нет тела',
+    image: 'assets/img/effects/creature-without-body.jpg',
+    description: '',
+  },
+  {
+    effectType: EffectType.CreatureWithoutHands,
+    name: 'Нет рук',
+    image: 'assets/img/effects/creature-without-hands.jpg',
+    description: '',
+  },
+  {
+    effectType: EffectType.CreatureWithoutHead,
+    name: 'Нет головы',
+    image: 'assets/img/effects/creature-without-head.jpg',
+    description: '',
+  },
+  {
+    effectType: EffectType.CreatureWithoutLegs,
+    name: 'Нет ног',
+    image: 'assets/img/effects/creature-without-legs.jpg',
+    description: '',
+  },
+  {
+    effectType: EffectType.Destructible13,
+    name: 'Разрушимость',
+    image: 'assets/img/effects/destructible.jpg',
+    description: 'При получении 13 и более урона разрушается',
+  },
+  {
     effectType: EffectType.ForceBreakingChests,
     name: 'Крепкий взломщик',
     image: 'assets/img/effects/todo.jpg',
     description: '+1 к силовому вскрытию сундуков',
+  },
+  {
+    effectType: EffectType.HealWithAllies,
+    name: 'Совместное лечение',
+    image: 'assets/img/effects/heal-with-allies.jpg',
+    description: 'При лечении союзников лечит себе 4 жизни',
   },
   {
     effectType: EffectType.HideCreature,
