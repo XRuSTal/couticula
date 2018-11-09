@@ -129,9 +129,33 @@ export const Effects: Effect[] = [
     description: 'Урон снижается на 2',
   },
   {
+    effectType: EffectType.Stan,
+    name: 'Оглушение',
+    image: 'assets/img/effects/stan.jpg',
+    description: 'Пропуск следующего хода.',
+  },
+  {
+    effectType: EffectType.Stan2,
+    name: 'Оглушение',
+    image: 'assets/img/effects/stan.jpg',
+    description: 'Пропуск следующих 2х ходов.',
+  },
+  {
     effectType: EffectType.Suppression,
     name: 'Подавление',
     image: 'assets/img/effects/suppression.jpg',
     description: 'Получение двойного урона',
+  },
+  {
+    effectType: EffectType.TargetAttackLegs,
+    name: 'Прицельная атака',
+    image: 'assets/img/effects/target-attack.jpg',
+    description: 'Всегда атакует по ногам',
+  },
+  {
+    effectType: EffectType.WounderHeal,
+    name: 'Чудотворное лечение',
+    image: 'assets/img/effects/wounder-heal.jpg',
+    description: 'При выпадании 5 или 6 во время лечения - двойной эффект',
   },
 ];
