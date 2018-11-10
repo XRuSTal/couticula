@@ -21,8 +21,15 @@ export class AbilityListComponent implements OnInit, OnDestroy {
     const description: string[] = [];
     const choosenAbility = this.shopService.choosenAbility;
 
-    if (choosenAbility.isImmediateAction) description.push('Мгновенное действие');
-    if (choosenAbility.isAddonAction) description.push('Дополнительное действие');
+    if (choosenAbility.isPassiveAction) {
+      description.push('Постоянное действие');
+    }
+    if (choosenAbility.isAddonAction) {
+      description.push('Дополнительное действие');
+    }
+    if (choosenAbility.isMagicAttack) {
+      description.push('Магическая атака');
+    }
     return description;
   }
 

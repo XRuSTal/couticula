@@ -16,7 +16,7 @@ export const ShopAbilitiesHeal: AbilitySettings[] = [
   {
     type: AbilityType.HeroHealPoison,
     name: 'Лечение от яда',
-    description: 'Снимает эффект отравления. Также позволяет снимать отравление в бою',
+    description: 'Снимает эффект отравления',
     image: 'assets/img/abilities/heal-poison.jpg',
     cost: 500,
     maxUseCount: null,
@@ -65,6 +65,7 @@ export const ShopAbilitiesHeal: AbilitySettings[] = [
     cost: 400,
     maxUseCount: null,
     isImmediateAction: true,
+    isPassiveAction: true,
     isAddonAction: false,
     countTarget: null,
   },
