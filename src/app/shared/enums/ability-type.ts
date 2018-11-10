@@ -24,7 +24,7 @@ export enum AbilityType {
   HeroBasicHealTwoTargets,
   HeroBasicHealThreeTargets,
   HeroHealAfterBattle,
-  HeroHealFromPoison,
+  HeroHealPoison,
   HeroHealFromPoisonAfterBattle,
   HeroHealWithAllies,
   HeroHealMedium,
