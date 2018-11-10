@@ -123,6 +123,12 @@ export const Effects: Effect[] = [
     description: '',
   },
   {
+    effectType: EffectType.Shield,
+    name: 'Щит',
+    image: 'assets/img/effects/shield.jpg',
+    description: '',
+  },
+  {
     effectType: EffectType.Slackness,
     name: 'Вялость',
     image: 'assets/img/effects/slackness.jpg',

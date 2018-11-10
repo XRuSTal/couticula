@@ -119,15 +119,21 @@ export class BattleService {
     this.creatures.sort(() => Math.random() - 0.5);
   }
   private setInitialEffectsAndAbilities() {
-    this.creatures.forEach((p, i, arr) => {
-      p.currentEffects = []; // сброс для героев
-      p.effects.forEach(effect => {
-        p.currentEffects.push(effect);
+    this.creatures.forEach(creature => {
+      creature.currentEffects = []; // сброс для героев
+      creature.effects.forEach(effect => {
+        creature.currentEffects.push(effect);
       });
-      p.currentAbilities = []; // сброс для героев
-      p.abilities.forEach(abilityType => {
+      const shield = creature.equipment.Shield;
+      if (shield && shield.hitPoint > 0) {
+        const shieldEffect = EffectsFabric.createEffect(EffectType.Shield);
+        shieldEffect.description = `Щит, броня ${shield.value} , прочность ${shield.hitPoint}.`;
+        creature.currentEffects.push(shieldEffect);
+      }
+      creature.currentAbilities = []; // сброс для героев
+      creature.abilities.forEach(abilityType => {
         const ability = AbilityFabric.createAbility(abilityType);
-        p.currentAbilities.push(ability);
+        creature.currentAbilities.push(ability);
       });
     });
   }
@@ -255,10 +261,23 @@ export class BattleService {
     }
   }
   private endTurn() {
-    const creature: Creature = this.creatures[this.currentCreature.index];
-    console.log('endTurn', creature);
+    const currentCreature: Creature = this.creatures[this.currentCreature.index];
+    console.log('endTurn', currentCreature);
     // снятие эффектов в конце хода существа
-    creature.dropCurrentEffects([EffectType.Course, EffectType.Imbecility, EffectType.Slackness]);
+    currentCreature.dropCurrentEffects([EffectType.Course, EffectType.Imbecility, EffectType.Slackness]);
+
+    // TODO: делать проверку только после гибели
+    // если погиб последний герой воин-страж, снимаем со всех защиту
+    if (!this.creatures.some(creature =>
+      creature.state === CreatureState.Alive &&
+      creature.abilities.indexOf(AbilityType.HeroHideCreature) !== -1)
+    ) {
+      this.creatures.forEach(creature => {
+        if (creature instanceof Hero) {
+          creature.dropCurrentEffect(EffectType.HideCreature);
+        }
+      });
+    }
   }
   private heroTurn(creature: Hero) {
     console.log('heroTurn');
