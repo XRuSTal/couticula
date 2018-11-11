@@ -13,7 +13,7 @@ export interface AbilitySettings {
   /** используется ли способность сразу после покупки */
   isImmediateAction: boolean;
   /** продолжается ли ход после использования способности */
-  isAddonAction: boolean;
+  isAddonAction?: boolean;
   /** является ли урон магическим */
   isMagicAttack?: boolean;
   /** является ли действие способности постоянным эффектом */

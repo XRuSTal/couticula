@@ -54,7 +54,7 @@ export enum AbilityType {
   HeroUseBottleOfHeal,
   HeroUseBottleOfStan,
   HeroUseBottleOfPoison,
-  HeroWounderHeal,
+  HeroWonderHeal,
   // Monsters:
   MonsterAddonSunLazy,
   MonsterAttackEqualsTargetArmor,
