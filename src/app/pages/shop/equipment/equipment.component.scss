@@ -26,6 +26,8 @@ equipment {
       align-content: space-between;
 
       &__value {
+        margin: auto;
+        padding: .5vh 2vh;
         color: white;
         font-size: 4.5vh;
         img {
@@ -49,8 +51,8 @@ equipment {
         &_selected {
           font-weight: bold;
           color: green;
-          background-color: black;
-          border: solid gold 2px;
+          background-color:rgba(0, 0, 0, 0.4);
+          box-shadow: 0px 0px 2vh .5vh white;
           border-radius: 3vh;
         }
         &_quality {
