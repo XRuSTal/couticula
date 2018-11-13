@@ -111,6 +111,24 @@ export const Effects: Effect[] = [
     description: 'Урон 1',
   },
   {
+    effectType: EffectType.Poison2,
+    name: 'Отравление',
+    image: 'assets/img/effects/poisoned.jpg',
+    description: 'Урон 2',
+  },
+  {
+    effectType: EffectType.Poison3,
+    name: 'Отравление',
+    image: 'assets/img/effects/poisoned.jpg',
+    description: 'Урон 3',
+  },
+  {
+    effectType: EffectType.Regeneration1,
+    name: 'Регенерация',
+    image: 'assets/img/effects/regeneration.jpg',
+    description: 'Восстановление 1 за ход',
+  },
+  {
     effectType: EffectType.Regeneration5,
     name: 'Регенерация',
     image: 'assets/img/effects/regeneration.jpg',
