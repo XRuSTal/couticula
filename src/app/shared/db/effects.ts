@@ -9,6 +9,18 @@ export const Effects: Effect[] = [
     description: 'При получении удара в голову, атака переходит в другую часть тела (1 раз за бой)',
   },
   {
+    effectType: EffectType.AttackWithBlockHeal,
+    name: 'Ядовитые чары',
+    image: 'assets/img/effects/attack-with-block-heal.jpg',
+    description: 'Атакованный не может исцеляться до конца хода',
+  },
+  {
+    effectType: EffectType.AttackWithCourse,
+    name: 'Проклятая атака',
+    image: 'assets/img/effects/attack-with-course.jpg',
+    description: 'Цель наносит минимальный урон',
+  },
+  {
     effectType: EffectType.AttackWithIgnoringShield,
     name: 'Игнорирование щита',
     image: 'assets/img/effects/attack-with-ignoring-shield.jpg',
@@ -16,9 +28,45 @@ export const Effects: Effect[] = [
   },
   {
     effectType: EffectType.AttackWithPoisonWeak1,
-    name: 'Яд',
+    name: 'Слабый яд',
     image: 'assets/img/effects/attack-with-poison.jpg',
     description: 'Шанс 1 из 6, урон 1',
+  },
+  {
+    effectType: EffectType.AttackWithPoisonWeak2,
+    name: 'Слабый яд',
+    image: 'assets/img/effects/attack-with-poison.jpg',
+    description: 'Шанс отравления цели 1 из 6, урон 2',
+  },
+  {
+    effectType: EffectType.AttackWithPoisonMedium2,
+    name: 'Средний яд',
+    image: 'assets/img/effects/attack-with-poison.jpg',
+    description: 'Шанс отравления цели 1 из 3, урон 2',
+  },
+  {
+    effectType: EffectType.AttackWithPoisonStrong3,
+    name: 'Сильный яд',
+    image: 'assets/img/effects/attack-with-poison.jpg',
+    description: 'Шанс отравления цели 1 из 2, урон 3',
+  },
+  {
+    effectType: EffectType.AttackWithStanWeak,
+    name: 'Слабое оглушение',
+    image: 'assets/img/effects/attack-with-stan-weak.jpg',
+    description: 'Шанс оглушения цели 1 из 6',
+  },
+  {
+    effectType: EffectType.AttackWithStanMedium,
+    name: 'Среднее оглушение',
+    image: 'assets/img/effects/attack-with-stan-medium.jpg',
+    description: 'Шанс оглушения цели 1 из 3',
+  },
+  {
+    effectType: EffectType.AttackWithStanStrong,
+    name: 'Сильное оглушение',
+    image: 'assets/img/effects/attack-with-stan-strong.jpg',
+    description: 'Шанс оглушения цели 1 из 2',
   },
   {
     effectType: EffectType.BlockDamage,
