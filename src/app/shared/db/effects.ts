@@ -21,6 +21,12 @@ export const Effects: Effect[] = [
     description: 'Цель наносит минимальный урон',
   },
   {
+    effectType: EffectType.AttackWithIgnoringArmor,
+    name: 'Крушащий удар',
+    image: 'assets/img/effects/attack-with-ignoring-armor.jpg',
+    description: 'Игнорирует броню цели',
+  },
+  {
     effectType: EffectType.AttackWithIgnoringShield,
     name: 'Игнорирование щита',
     image: 'assets/img/effects/attack-with-ignoring-shield.jpg',
@@ -187,6 +193,24 @@ export const Effects: Effect[] = [
     name: 'Возрождение змия',
     image: 'assets/img/effects/todo.jpg',
     description: '',
+  },
+  {
+    effectType: EffectType.ResistPoison1,
+    name: 'Иммунитет к яду',
+    image: 'assets/img/effects/resist-poison.jpg',
+    description: 'Невозможно отравить ядом с уроном 1',
+  },
+  {
+    effectType: EffectType.ResistPoisonAny,
+    name: 'Иммунитет к яду',
+    image: 'assets/img/effects/resist-poison.jpg',
+    description: 'Невозможно отравить',
+  },
+  {
+    effectType: EffectType.ResistStan,
+    name: 'Иммунитет к оглушению',
+    image: 'assets/img/effects/resist-stan.jpg',
+    description: 'Невозможно оглушить',
   },
   {
     effectType: EffectType.Shield,
