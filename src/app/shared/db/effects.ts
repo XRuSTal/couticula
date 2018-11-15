@@ -177,6 +177,12 @@ export const Effects: Effect[] = [
     description: 'Урон 3',
   },
   {
+    effectType: EffectType.Rage,
+    name: 'Ярость',
+    image: 'assets/img/effects/rage.jpg',
+    description: 'При выпадании 6 во время атаки - удвоение урона.',
+  },
+  {
     effectType: EffectType.Regeneration1,
     name: 'Регенерация',
     image: 'assets/img/effects/regeneration.jpg',
@@ -213,6 +219,12 @@ export const Effects: Effect[] = [
     description: 'Невозможно оглушить',
   },
   {
+    effectType: EffectType.ResistStanSpecial,
+    name: 'Сопротивление оглушению',
+    image: 'assets/img/effects/resist-stan-special.jpg',
+    description: 'При оглушении атакой получает 2ой урон, но не оглушается',
+  },
+  {
     effectType: EffectType.Shield,
     name: 'Щит',
     image: 'assets/img/effects/shield.jpg',
@@ -223,6 +235,12 @@ export const Effects: Effect[] = [
     name: 'Вялость',
     image: 'assets/img/effects/slackness.jpg',
     description: 'Урон снижается на 2',
+  },
+  {
+    effectType: EffectType.SpecialAttackLegs,
+    name: 'Захват',
+    image: 'assets/img/effects/special-attack-by-legs.jpg',
+    description: 'Игнорирование брони ног. При ударе по ногам противник оглушается на 1 ход.',
   },
   {
     effectType: EffectType.Stan,
