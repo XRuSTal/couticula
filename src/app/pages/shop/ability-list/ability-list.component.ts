@@ -14,6 +14,11 @@ export class AbilityListComponent implements OnInit, OnDestroy {
 
   private subscriptions: Subscription[] = [];
 
+  get availableAbilities() {
+    return this.shopAbilitiesPage.abilities.filter(ability =>
+      !('heroClass' in ability) || ability.heroClass === this.shopService.choosenHero.heroClass
+    );
+  }
   get choosenAbility() {
     return this.shopService.choosenAbility;
   }

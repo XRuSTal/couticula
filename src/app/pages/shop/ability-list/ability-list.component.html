@@ -4,7 +4,7 @@
     <ion-row>
       <ion-col>
         <ion-list ion-scroll class="shop__ability-list">
-          <ion-item *ngFor="let ability of shopAbilitiesPage.abilities"
+          <ion-item *ngFor="let ability of availableAbilities"
                     class="shop__ability-list__ability"
                     [ngClass]="{
                       'shop__ability-list__ability_not-available-price': !isAvailablePrice(ability.cost),
