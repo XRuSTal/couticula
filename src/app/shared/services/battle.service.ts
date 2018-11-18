@@ -31,11 +31,11 @@ export class BattleService {
   );
   private endEventSource: Subject<Cell> = new Subject<Cell>();
   private eventsSource: Subject<BattleEvent> = new Subject<BattleEvent>();
-  private monsters: Creature[] = [];
+  private monsters: Creature[];
   private currentCreature: { id: number; index: number };
   private currentRound: number;
   private currentTargetForMonsters: number;
-  creatures: Creature[] = [];
+  creatures: Creature[];
 
   constructor(private heroService: HeroService, private settingsService: SettingsService) {
     this.endEvent$ = this.endEventSource.asObservable();
@@ -72,23 +72,29 @@ export class BattleService {
     }
   }
 
-  heroAction(ability: AbilityType, target: number) {
+  heroAction(abilityType: AbilityType, target: number) {
     console.log('heroAction');
+
+    const currentCreature = this.creatures.find(creature => creature.id === this.currentCreature.id);
+    const availableAbilities = currentCreature.getAvailableAbilities(); // способность применяется N раз за бой
+    // проверка цели и способности
+    const currentAbility = availableAbilities.find(ability => ability.type === abilityType);
+    const targetCreature = this.creatures.find(creature => creature.id === target && creature.state === CreatureState.Alive);
+    if (!targetCreature) {
+      // TODO: ошибка и повторное действие
+    } else if (!currentAbility) {
+      // TODO: ошибка и повторное действие
+    }
+    const abilityResult = this.useAbility(currentCreature, targetCreature, currentAbility);
+
     this.eventsSource.next({
       state: BattleState.PlayerAbility,
       currentCreature: this.currentCreature.id,
+      ability: currentAbility.type,
+      abilityResult,
+      target,
     });
-
-    /* if (this.battleStateSource.value === BattleState.PlayerTurn) {
-      // TODO
-      this.eventsSource.next({
-        state: BattleState.PlayerTurn,
-        currentCreature: this.currentCreature.id,
-        ability,
-        target,
-      });
-      this.battleStateSource.next(BattleState.NewTurn);
-    } */
+    this.battleStateSource.next(BattleState.PlayerAbility);
   }
 
   winBattle() {
@@ -102,17 +108,19 @@ export class BattleService {
     this.battleStateSource.next(BattleState.Lose);
   }
   private generateMonsters() {
+    this.monsters = [];
     for (let index = 0; index < this.cell.mosterLevel1Count; index++) {
-      this.creatures.push(CreatureFabric.createRandomCreatureLevel1());
+      this.monsters.push(CreatureFabric.createRandomCreatureLevel1());
     }
     for (let index = 0; index < this.cell.mosterLevel2Count; index++) {
-      this.creatures.push(CreatureFabric.createRandomCreatureLevel2());
+      this.monsters.push(CreatureFabric.createRandomCreatureLevel2());
     }
     if (this.cell.doesBossExists) {
-      this.creatures.push(CreatureFabric.createRandomCreatureBoss());
+      this.monsters.push(CreatureFabric.createRandomCreatureBoss());
     }
   }
   private setCreaturesOrder() {
+    this.creatures = [];
     this.creatures.push(...this.monsters);
     this.creatures.push(...this.heroService.heroes);
 
@@ -307,21 +315,19 @@ export class BattleService {
     // берем случайную способность
     const availableAbilities = creature.getAvailableAbilities(); // способность применяется N раз за бой
     const currentAbility = availableAbilities[Random.getInt(0, availableAbilities.length - 1)];
+    const targetCreature = this.creatures.find(target => target.id === this.currentTargetForMonsters);
 
-    const abilityResult = this.useAbility(creature, currentAbility);
+    const abilityResult = this.useAbility(creature, targetCreature, currentAbility);
 
     this.eventsSource.next({
       state: BattleState.MonsterAbility,
       currentCreature: this.currentCreature.id,
       ability: currentAbility.type,
       abilityResult,
-      // target: null,
-
     });
-    this.battleStateSource.next(BattleState.MonsterTurn);
+    this.battleStateSource.next(BattleState.MonsterAbility);
   }
-  private useAbility(creature: Creature, ability: Ability) {
-    const targetCreature = this.creatures.find(target => target.id === this.currentTargetForMonsters);
+  private useAbility(creature: Creature, targetCreature: Creature, ability: Ability) {
     const abilityResult = ability.ability(creature, targetCreature);
 
     creature.usedInThisRoundAbilities.push(ability.type);
