@@ -112,17 +112,32 @@ function basicAttack(currentCreature: Creature, targetCreature: Creature, option
     ? currentCreature.equipment.Weapon.value
     : 0;
   let damageValue = options.fixedDamage || (diceDamage + weaponDamage);
-  // проверка на игнорирование и наличие щита
-  const armor = !targetCreature.equipment.Shield || currentCreature.isExistsEffect(EffectType.AttackWithIgnoringShield)
-    ? 0
-    : targetCreature.equipment.Shield.value;
 
-  damageValue *= options.damageCoefficient;
-
-  if (damageValue < 0) {
-    damageValue = 0;
+  // TODO: действия при атаке
+  // currentCreature.currentEffects.forEach(effect => effect.effectCausedByAttack(targetCreature));
+  if (diceTarget === 3) {
+    // TODO: особое оглушение для монстра
+    currentCreature.currentEffects.some(effect => {
+      if (effect.effectType === EffectType.SpecialAttackLegs) {
+        // effect.action(targetCreature);
+        return true;
+      }
+    });
   }
-  damageValue = decreaseHitPoints(targetCreature, damageValue);
+
+  if (!options.magicAttack) {
+    const armor = calcTargetCreatureArmor(currentCreature, targetCreature, diceTarget);
+    damageValue -= armor;
+  }
+
+  const damageCoefficient = calcDamageCoefficient(currentCreature, targetCreature, diceDamage, diceTarget, options);
+  damageValue *= damageCoefficient;
+
+  if (currentCreature.isExistsEffect(EffectType.Slackness)) {
+    damageValue -= 2;
+  }
+
+  damageValue = (damageValue < 0) ? 0 : decreaseHitPoints(targetCreature, damageValue);
   decreaseShield(currentCreature);
 
   // Состояние броска
@@ -220,6 +235,82 @@ function throwDiceTarget(currentCreature: Creature, targetCreature: Creature, di
       break;
   }
   return dice;
+}
+
+function calcTargetCreatureArmor(currentCreature: Creature, targetCreature: Creature, diceTarget: number) {
+  // проверка игнорирования брони атакующим
+  if (currentCreature.isExistsEffect(EffectType.AttackWithIgnoringArmor)) {
+    return 0;
+  }
+  // проверка на игнорирование и наличие щита
+  let armor = !targetCreature.equipment.Shield || currentCreature.isExistsEffect(EffectType.AttackWithIgnoringShield)
+    ? 0
+    : targetCreature.equipment.Shield.value;
+
+  // определение брони части тела цели
+  switch (diceTarget) {
+    case 1:
+      if (targetCreature.equipment.Head) {
+        armor += targetCreature.equipment.Head.value;
+      }
+      break;
+    case 2:
+      if (targetCreature.equipment.Hands) {
+        armor += targetCreature.equipment.Hands.value;
+      }
+      break;
+    case 3:
+      if (targetCreature.equipment.Legs && !currentCreature.isExistsEffect(EffectType.SpecialAttackLegs)) {
+        armor += targetCreature.equipment.Legs.value;
+      }
+      break;
+    default:
+      if (targetCreature.equipment.Body) {
+        armor += targetCreature.equipment.Body.value;
+      }
+      break;
+  }
+  // максимально возможная броня равна 6
+  return (armor > 6) ? 6 : armor;
+}
+
+function calcDamageCoefficient(
+  currentCreature: Creature,
+  targetCreature: Creature,
+  diceDamage: number,
+  diceTarget: number,
+  options: {
+    damageCoefficient: number,
+    magicAttack: boolean,
+  }
+) {
+  let damageCoefficient = options && options.damageCoefficient || 1;
+
+  if (options && options.magicAttack) {
+    if (targetCreature.isExistsEffect(EffectType.MagicProtection)) {
+      damageCoefficient = 0;
+    }
+  } else {
+    if (diceTarget === 1) { // попадание в голову
+      damageCoefficient *= 2;
+    }
+    if (diceDamage === 6 && currentCreature.isExistsEffect(EffectType.Rage)) {
+      damageCoefficient *= 2;
+    }
+    if (targetCreature.isExistsSomeEffects([EffectType.Stan2, EffectType.Stan]) &&
+      targetCreature.isExistsEffect(EffectType.ResistStanSpecial)
+    ) {
+      // особое сопротивление оглушению для монстра
+      targetCreature.dropCurrentEffects([EffectType.Stan2, EffectType.Stan]);
+      damageCoefficient *= 2;
+    }
+  }
+
+  if (targetCreature.isExistsEffect(EffectType.Suppression)) {
+    damageCoefficient *= 2;
+  }
+
+  return damageCoefficient;
 }
 
 function getHealCoefficient(creature: Creature, dice: number) {
