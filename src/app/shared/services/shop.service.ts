@@ -13,7 +13,7 @@ import {
   ShopAbilitiesSpecial,
   ShopEquipments,
 } from '@shared/db';
-import { ItemFabric } from '@shared/fabrics';
+import { AbilityFabric, ItemFabric } from '@shared/fabrics';
 
 import { HeroService } from './hero.service';
 import { PlayerService } from './player.service';
@@ -161,7 +161,12 @@ export class ShopService {
       if (currentHero.abilities.every(a => a !== ability.type)) {
         this.playerService.decreaseGold(ability.cost).then(success => {
           if (success) {
-            currentHero.abilities.push(ability.type);
+            if (ability.isImmediateAction) {
+              const immediateAbility = AbilityFabric.createAbility(ability.type);
+              immediateAbility.ability(currentHero, currentHero);
+            } else {
+              currentHero.abilities.push(ability.type);
+            }
           }
           this.resetCurrentAbility();
         });

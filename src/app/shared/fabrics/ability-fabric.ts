@@ -63,6 +63,7 @@ export class AbilityFabric {
   private static prepareAbilities() {
     AbilityFabric.abilities.set(AbilityType.HeroBasicAttack, heroBasicAttack);
     AbilityFabric.abilities.set(AbilityType.HeroBasicHeal, heroBasicHeal);
+    AbilityFabric.abilities.set(AbilityType.HeroHealAfterBattle, heroHealAfterBattle);
     AbilityFabric.abilities.set(AbilityType.MonsterBasicAttack, monsterBasicAttack);
   }
 }
@@ -78,6 +79,10 @@ function heroBasicAttack(currentCreature: Creature, targetCreature: Creature) {
 
 function heroBasicHeal(currentCreature: Creature, targetCreature: Creature) {
   return basicHeal(currentCreature, targetCreature, { useWeapon: true, fixedHeal: null, diceHeal: null });
+}
+
+function heroHealAfterBattle(currentCreature: Creature, targetCreature: Creature) {
+  return basicHeal(currentCreature, currentCreature, { useWeapon: false, fixedHeal: 7, diceHeal: null });
 }
 
 function monsterBasicAttack(currentCreature: Creature, targetCreature: Creature) {
@@ -169,7 +174,7 @@ function basicHeal(currentCreature: Creature, targetCreature: Creature, options:
   const weaponHeal = options.useWeapon && currentCreature.equipment.Weapon
     ? currentCreature.equipment.Weapon.value
     : 0;
-  const healCoefficient = getHealCoefficient(currentCreature, diceHeal);
+  const healCoefficient = calcHealCoefficient(currentCreature, diceHeal);
   const healValueMax = options.fixedHeal || (weaponHeal + diceHeal) * healCoefficient;
   const healValue = increaseHitPoints(currentCreature, healValueMax);
 
@@ -318,7 +323,7 @@ function calcDamageCoefficient(
   return damageCoefficient;
 }
 
-function getHealCoefficient(creature: Creature, dice: number) {
+function calcHealCoefficient(creature: Creature, dice: number) {
   if (
     creature.isExistsEffect(EffectType.WounderHeal) &&
     (dice === 5 || dice === 6)
