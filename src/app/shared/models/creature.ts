@@ -1,4 +1,4 @@
-import { AbilityType, CreatureState, EffectType, ItemType } from '@enums';
+import { AbilityType, CreatureState, DiceTarget, EffectType, ItemType } from '@enums';
 import { ItemFabric } from '@shared/fabrics';
 
 import { Ability } from './ability';
@@ -27,7 +27,7 @@ export class Creature {
   equipment: CreatureEquipment = new CreatureEquipment();
   inventory: Item[] = [];
   lastDiceValue: number = null;
-  lastDiceTarget: number = null;
+  lastDiceTarget: DiceTarget = null;
 
   constructor(
     id: number,

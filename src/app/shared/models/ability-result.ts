@@ -1,3 +1,4 @@
+import { DiceTarget } from '@enums';
 import { Creature } from './creature';
 
 export interface AbilityResult {
@@ -5,7 +6,7 @@ export interface AbilityResult {
   notCorrectTarget?: boolean;
   targetCreatureBefore: Creature;
   targetCreatureAfter: Creature;
-  diceTarget: number;
+  diceTarget: DiceTarget;
   diceValue: number;
   value: number;
 }

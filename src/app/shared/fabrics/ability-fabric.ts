@@ -8,8 +8,11 @@ import {
   ShopAbilitiesSpecial,
 } from '@shared/db';
 import { Ability, AbilityResult, AbilitySettings, Creature } from '@models';
-import { AbilityType, CreatureState, EffectType } from '@enums';
+import { AbilityType, CreatureState, DiceTarget, EffectType } from '@enums';
 import { Random } from '@services';
+
+// максимально возможная броня равна 6
+const ARMOR_MAX = 6;
 
 export class AbilityFabric {
   private static abilities = new Map<
@@ -94,14 +97,14 @@ function basicAttack(currentCreature: Creature, targetCreature: Creature, option
   weaponDamage: number;
   damageCoefficient: number;
   diceDamage: number;
-  diceTarget: number;
+  diceTarget: DiceTarget;
 }): AbilityResult {
   const targetCreatureBefore = targetCreature/*.copy()*/;
   const targetCreatureAfter = targetCreature;
 
   let diceTarget = throwDiceTarget(currentCreature, targetCreature, options.diceTarget);
-  if (diceTarget === 1 && targetCreature.isExistsEffect(EffectType.AttackOffset)) {
-    while (diceTarget === 1) {
+  if (diceTarget === DiceTarget.Head && targetCreature.isExistsEffect(EffectType.AttackOffset)) {
+    while (diceTarget === DiceTarget.Head) {
       diceTarget = throwDiceTarget(currentCreature, targetCreature);
     }
     targetCreature.dropCurrentEffect(EffectType.AttackOffset);
@@ -115,7 +118,7 @@ function basicAttack(currentCreature: Creature, targetCreature: Creature, option
 
   // TODO: действия при атаке
   // currentCreature.currentEffects.forEach(effect => effect.effectCausedByAttack(targetCreature));
-  if (diceTarget === 3) {
+  if (diceTarget === DiceTarget.Legs) {
     // TODO: особое оглушение для монстра
     currentCreature.currentEffects.some(effect => {
       if (effect.effectType === EffectType.SpecialAttackLegs) {
@@ -202,12 +205,12 @@ function throwDiceDamage(creature: Creature): number {
   return dice;
 }
 
-function throwDiceTarget(currentCreature: Creature, targetCreature: Creature, dice?: number): number {
+function throwDiceTarget(currentCreature: Creature, targetCreature: Creature, dice?: DiceTarget): DiceTarget {
   if (
     currentCreature.isExistsEffect(EffectType.TargetAttackLegs) &&
     !targetCreature.isExistsEffect(EffectType.CreatureWithoutLegs)
   ) {
-    return 3;
+    return DiceTarget.Legs;
   }
   if (!dice) {
     dice = Random.throwDiceD6();
@@ -216,28 +219,31 @@ function throwDiceTarget(currentCreature: Creature, targetCreature: Creature, di
     case 1:
       if (targetCreature.isExistsEffect(EffectType.CreatureWithoutHead)) {
         return throwDiceTarget(currentCreature, targetCreature);
+      } else {
+        return DiceTarget.Head;
       }
-      break;
     case 2:
       if (targetCreature.isExistsEffect(EffectType.CreatureWithoutHands)) {
         return throwDiceTarget(currentCreature, targetCreature);
+      } else {
+        return DiceTarget.Hands;
       }
-      break;
     case 3:
       if (targetCreature.isExistsEffect(EffectType.CreatureWithoutLegs)) {
         return throwDiceTarget(currentCreature, targetCreature);
+      } else {
+        return DiceTarget.Legs;
       }
-      break;
     default:
       if (targetCreature.isExistsEffect(EffectType.CreatureWithoutBody)) {
         return throwDiceTarget(currentCreature, targetCreature);
+      } else {
+        return DiceTarget.Body;
       }
-      break;
   }
-  return dice;
 }
 
-function calcTargetCreatureArmor(currentCreature: Creature, targetCreature: Creature, diceTarget: number) {
+function calcTargetCreatureArmor(currentCreature: Creature, targetCreature: Creature, diceTarget: DiceTarget) {
   // проверка игнорирования брони атакующим
   if (currentCreature.isExistsEffect(EffectType.AttackWithIgnoringArmor)) {
     return 0;
@@ -249,36 +255,35 @@ function calcTargetCreatureArmor(currentCreature: Creature, targetCreature: Crea
 
   // определение брони части тела цели
   switch (diceTarget) {
-    case 1:
+    case DiceTarget.Head:
       if (targetCreature.equipment.Head) {
         armor += targetCreature.equipment.Head.value;
       }
       break;
-    case 2:
+    case DiceTarget.Hands:
       if (targetCreature.equipment.Hands) {
         armor += targetCreature.equipment.Hands.value;
       }
       break;
-    case 3:
+    case DiceTarget.Legs:
       if (targetCreature.equipment.Legs && !currentCreature.isExistsEffect(EffectType.SpecialAttackLegs)) {
         armor += targetCreature.equipment.Legs.value;
       }
       break;
-    default:
+    case DiceTarget.Body:
       if (targetCreature.equipment.Body) {
         armor += targetCreature.equipment.Body.value;
       }
       break;
   }
-  // максимально возможная броня равна 6
-  return (armor > 6) ? 6 : armor;
+  return (armor > ARMOR_MAX) ? ARMOR_MAX : armor;
 }
 
 function calcDamageCoefficient(
   currentCreature: Creature,
   targetCreature: Creature,
   diceDamage: number,
-  diceTarget: number,
+  diceTarget: DiceTarget,
   options: {
     damageCoefficient: number,
     magicAttack: boolean,
@@ -291,7 +296,7 @@ function calcDamageCoefficient(
       damageCoefficient = 0;
     }
   } else {
-    if (diceTarget === 1) { // попадание в голову
+    if (diceTarget === DiceTarget.Head) {
       damageCoefficient *= 2;
     }
     if (diceDamage === 6 && currentCreature.isExistsEffect(EffectType.Rage)) {
