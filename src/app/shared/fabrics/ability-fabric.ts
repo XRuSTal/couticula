@@ -10,6 +10,7 @@ import {
 import { Ability, AbilityResult, AbilitySettings, Creature } from '@models';
 import { AbilityType, CreatureState, DiceTarget, EffectType } from '@enums';
 import { Random } from '@services';
+import { EffectsFabric } from './effects-fabric';
 
 // максимально возможная броня равна 6
 const ARMOR_MAX = 6;
@@ -62,12 +63,28 @@ export class AbilityFabric {
 
   private static prepareAbilities() {
     AbilityFabric.abilities.set(AbilityType.HeroBasicAttack, heroBasicAttack);
+    AbilityFabric.abilities.set(AbilityType.HeroPoisonWeak, heroPoisonWeak);
+    AbilityFabric.abilities.set(AbilityType.HeroPoisonMedium, heroPoisonMedium);
+    AbilityFabric.abilities.set(AbilityType.HeroPoisonStrong, heroPoisonStrong);
+    AbilityFabric.abilities.set(AbilityType.HeroRage, heroRage);
+    AbilityFabric.abilities.set(AbilityType.HeroStanWeak, heroStanWeak);
+    AbilityFabric.abilities.set(AbilityType.HeroStanMedium, heroStanMedium);
+    AbilityFabric.abilities.set(AbilityType.HeroStanStrong, heroStanStrong);
+    AbilityFabric.abilities.set(AbilityType.HeroThrowSpearow, heroThrowSpearow);
+
     AbilityFabric.abilities.set(AbilityType.HeroBasicHeal, heroBasicHeal);
     AbilityFabric.abilities.set(AbilityType.HeroHealAfterBattle, heroHealAfterBattle);
+
     AbilityFabric.abilities.set(AbilityType.MonsterBasicAttack, monsterBasicAttack);
   }
 }
 AbilityFabric.initialize();
+
+// *****************************************************************************
+// ABILITIES FUNCTIONS
+// *****************************************************************************
+
+// Attack:
 
 function heroBasicAttack(currentCreature: Creature, targetCreature: Creature) {
   return basicAttack(currentCreature, targetCreature, {
@@ -77,13 +94,75 @@ function heroBasicAttack(currentCreature: Creature, targetCreature: Creature) {
   });
 }
 
+function heroPoisonWeak(currentCreature: Creature, targetCreature: Creature) {
+  const newEffect = EffectsFabric.createEffect(EffectType.AttackWithPoisonWeak2);
+  currentCreature.effects.push(newEffect);
+  return null;
+}
+function heroPoisonMedium(currentCreature: Creature, targetCreature: Creature) {
+  const newEffect = EffectsFabric.createEffect(EffectType.AttackWithPoisonMedium2);
+  currentCreature.effects.push(newEffect);
+  return null;
+}
+function heroPoisonStrong(currentCreature: Creature, targetCreature: Creature) {
+  const newEffect = EffectsFabric.createEffect(EffectType.AttackWithPoisonStrong3);
+  currentCreature.effects.push(newEffect);
+  return null;
+}
+
+function heroRage(currentCreature: Creature, targetCreature: Creature) {
+  const newEffect = EffectsFabric.createEffect(EffectType.Rage);
+  currentCreature.effects.push(newEffect);
+  return null;
+}
+
+function heroStanWeak(currentCreature: Creature, targetCreature: Creature) {
+  const newEffect = EffectsFabric.createEffect(EffectType.AttackWithStanWeak);
+  currentCreature.effects.push(newEffect);
+  return null;
+}
+function heroStanMedium(currentCreature: Creature, targetCreature: Creature) {
+  const newEffect = EffectsFabric.createEffect(EffectType.AttackWithStanMedium);
+  currentCreature.effects.push(newEffect);
+  return null;
+}
+function heroStanStrong(currentCreature: Creature, targetCreature: Creature) {
+  const newEffect = EffectsFabric.createEffect(EffectType.AttackWithStanStrong);
+  currentCreature.effects.push(newEffect);
+  return null;
+}
+
+function heroThrowSpearow(currentCreature: Creature, targetCreature: Creature) {
+  return basicAttack(currentCreature, targetCreature, {
+    useWeapon: true, magicAttack: false,
+    fixedDamage: null, weaponDamage: 1, damageCoefficient: 1,
+    diceDamage: null, diceTarget: null,
+  });
+}
+
+// Defense:
+
+// Heal:
+
 function heroBasicHeal(currentCreature: Creature, targetCreature: Creature) {
-  return basicHeal(currentCreature, targetCreature, { useWeapon: true, fixedHeal: null, diceHeal: null });
+  return basicHeal(
+    currentCreature, targetCreature,
+    { useWeapon: true, fixedHeal: null, weaponHeal: null, diceHeal: null }
+  );
 }
 
 function heroHealAfterBattle(currentCreature: Creature, targetCreature: Creature) {
-  return basicHeal(currentCreature, currentCreature, { useWeapon: false, fixedHeal: 7, diceHeal: null });
+  return basicHeal(
+    currentCreature, currentCreature,
+    { useWeapon: false, fixedHeal: 7, weaponHeal: null, diceHeal: null }
+  );
 }
+
+// Magic:
+
+// Special:
+
+// Monsters:
 
 function monsterBasicAttack(currentCreature: Creature, targetCreature: Creature) {
   return basicAttack(currentCreature, targetCreature, {
@@ -116,9 +195,7 @@ function basicAttack(currentCreature: Creature, targetCreature: Creature, option
   }
   // проверка на фиксированный бросок и замену оружия
   const diceDamage = options.diceDamage || throwDiceDamage(currentCreature);
-  const weaponDamage = options.useWeapon && currentCreature.equipment.Weapon
-    ? currentCreature.equipment.Weapon.value
-    : 0;
+  const weaponDamage = calcWeaponValue(currentCreature, options);
   let damageValue = options.fixedDamage || (diceDamage + weaponDamage);
 
   // TODO: действия при атаке
@@ -165,15 +242,14 @@ function basicAttack(currentCreature: Creature, targetCreature: Creature, option
 function basicHeal(currentCreature: Creature, targetCreature: Creature, options: {
   useWeapon: boolean;
   fixedHeal: number;
+  weaponHeal: number;
   diceHeal: number;
 }): AbilityResult {
   const targetCreatureBefore = targetCreature/*.copy()*/;
   const targetCreatureAfter = targetCreature;
 
   const diceHeal = options.diceHeal || throwDiceDamage(currentCreature);
-  const weaponHeal = options.useWeapon && currentCreature.equipment.Weapon
-    ? currentCreature.equipment.Weapon.value
-    : 0;
+  const weaponHeal = calcWeaponValue(currentCreature, options);
   const healCoefficient = calcHealCoefficient(currentCreature, diceHeal);
   const healValueMax = options.fixedHeal || (weaponHeal + diceHeal) * healCoefficient;
   const healValue = increaseHitPoints(currentCreature, healValueMax);
@@ -334,6 +410,26 @@ function calcHealCoefficient(creature: Creature, dice: number) {
   }
 }
 
+function calcWeaponValue(
+  currentCreature: Creature,
+  options: {
+    useWeapon: boolean;
+    weaponDamage?: number;
+    weaponHeal?: number;
+  }
+) {
+  if (options && options.useWeapon) {
+    if (options.weaponDamage) {
+      return options.weaponDamage;
+    } else if (options.weaponHeal) {
+      return options.weaponHeal;
+    } else {
+      return currentCreature.equipment.Weapon ? currentCreature.equipment.Weapon.value : 0;
+    }
+  } else {
+    return 0;
+  }
+}
 function decreaseHitPoints(creature: Creature, damageValue: number) {
   let damage = 0;
   if (!creature.isExistsEffect(EffectType.BlockDamage)) {

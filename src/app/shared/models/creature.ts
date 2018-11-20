@@ -88,8 +88,8 @@ export class Creature {
   getAvailableAbilities() {
     return this.currentAbilities.filter(
       ability => this.usedInThisRoundAbilities.indexOf(ability.type) === -1 &&
-        (ability.maxUseCount === 0 || !this.usedInThisBattleAbilities.has(ability.type) ||
-        ability.maxUseCount < this.usedInThisBattleAbilities.get(ability.type))
+        (!ability.maxUseCount || !this.usedInThisBattleAbilities.has(ability.type) ||
+        ability.maxUseCount > this.usedInThisBattleAbilities.get(ability.type))
     );
   }
 
