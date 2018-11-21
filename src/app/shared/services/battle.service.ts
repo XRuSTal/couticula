@@ -5,7 +5,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { delay } from 'rxjs/operators';
 
 import { AbilityType, BattleState, CreatureState, EffectType } from '@enums';
-import { Ability, AbilityResult, Cell, Creature, Hero } from '@models';
+import { Ability, AbilityResult, AbilityResultError, Cell, Creature, Hero } from '@models';
 import { AbilityFabric, CreatureFabric, EffectsFabric } from '@shared/fabrics';
 import { HeroService } from './hero.service';
 import { SettingsService } from './settings.service';
@@ -15,7 +15,7 @@ interface BattleEvent {
   state: BattleState;
   currentCreature?: number;
   ability?: AbilityType;
-  abilityResult?: AbilityResult;
+  abilityResult?: AbilityResult | AbilityResultError;
   target?: number;
 }
 

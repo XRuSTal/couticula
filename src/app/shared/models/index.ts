@@ -1,5 +1,6 @@
 export * from './ability';
 export * from './ability-result';
+export * from './ability-result-error';
 export * from './ability-settings';
 export * from './cell';
 export * from './creature';

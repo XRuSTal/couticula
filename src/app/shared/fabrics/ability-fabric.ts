@@ -7,7 +7,7 @@ import {
   ShopAbilitiesMagic,
   ShopAbilitiesSpecial,
 } from '@shared/db';
-import { Ability, AbilityResult, AbilitySettings, Creature } from '@models';
+import { Ability, AbilityResult, AbilityResultError, AbilitySettings, Creature, Hero } from '@models';
 import { AbilityType, CreatureState, DiceTarget, EffectType } from '@enums';
 import { Random } from '@services';
 import { EffectsFabric } from './effects-fabric';
@@ -18,7 +18,7 @@ const ARMOR_MAX = 6;
 export class AbilityFabric {
   private static abilities = new Map<
     AbilityType,
-    (currentCreature: Creature, targetCreature: Creature) => AbilityResult
+    (currentCreature: Creature, targetCreature: Creature) => AbilityResult | AbilityResultError
   >();
   private static abilitiesSettings = new Map<AbilityType, AbilitySettings>();
 
@@ -74,6 +74,11 @@ export class AbilityFabric {
 
     AbilityFabric.abilities.set(AbilityType.HeroBasicHeal, heroBasicHeal);
     AbilityFabric.abilities.set(AbilityType.HeroHealAfterBattle, heroHealAfterBattle);
+    AbilityFabric.abilities.set(AbilityType.HeroHealPoison, heroHealFromPoison);
+    AbilityFabric.abilities.set(AbilityType.HeroHealMedium, heroHealMedium);
+    AbilityFabric.abilities.set(AbilityType.HeroHealStrong, heroHealStrong);
+    AbilityFabric.abilities.set(AbilityType.HeroHealWeak, heroHealWeak);
+    AbilityFabric.abilities.set(AbilityType.HeroHealWithAllies, heroHealWithAllies);
 
     AbilityFabric.abilities.set(AbilityType.MonsterBasicAttack, monsterBasicAttack);
   }
@@ -156,6 +161,56 @@ function heroHealAfterBattle(currentCreature: Creature, targetCreature: Creature
     currentCreature, currentCreature,
     { useWeapon: false, fixedHeal: 7, weaponHeal: null, diceHeal: null }
   );
+}
+
+function heroHealFromPoison(currentCreature: Creature, targetCreature: Creature) {
+
+  if (!(targetCreature instanceof Hero) ||
+    !targetCreature.isExistsSomeEffects([EffectType.Poison1, EffectType.Poison2, EffectType.Poison3])
+    ) {
+      const error: AbilityResultError = { notCorrectTarget: true };
+      return error;
+  }
+
+  const targetCreatureBefore = targetCreature/*.copy()*/;
+  const targetCreatureAfter = targetCreature;
+
+  targetCreature.dropCurrentEffects([EffectType.Poison1, EffectType.Poison2, EffectType.Poison3]);
+  targetCreature.dropEffects([EffectType.Poison1, EffectType.Poison2, EffectType.Poison3]);
+
+  const abilityResult: AbilityResult = {
+    targetCreatureBefore,
+    targetCreatureAfter,
+    diceTarget: null,
+    diceValue: null,
+    value: null,
+  };
+  return abilityResult;
+}
+
+function heroHealMedium(currentCreature: Creature, targetCreature: Creature) {
+  return basicHeal(
+    currentCreature, targetCreature,
+    { useWeapon: false, fixedHeal: 15, weaponHeal: null, diceHeal: null }
+  );
+}
+function heroHealStrong(currentCreature: Creature, targetCreature: Creature) {
+  return basicHeal(
+    currentCreature, targetCreature,
+    { useWeapon: false, fixedHeal: 20, weaponHeal: null, diceHeal: null }
+  );
+}
+function heroHealWeak(currentCreature: Creature, targetCreature: Creature) {
+  return basicHeal(
+    currentCreature, targetCreature,
+    { useWeapon: false, fixedHeal: 5, weaponHeal: null, diceHeal: null }
+  );
+}
+
+function heroHealWithAllies(currentCreature: Creature, targetCreature: Creature) {
+  const newEffect = EffectsFabric.createEffect(EffectType.HealWithAllies);
+  currentCreature.effects.push(newEffect);
+  return null;
 }
 
 // Magic:
