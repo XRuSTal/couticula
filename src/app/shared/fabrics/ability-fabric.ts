@@ -8,9 +8,10 @@ import {
   ShopAbilitiesSpecial,
 } from '@shared/db';
 import { Ability, AbilityResult, AbilityResultError, AbilitySettings, Creature, Hero } from '@models';
-import { AbilityType, CreatureState, DiceTarget, EffectType } from '@enums';
+import { AbilityType, CreatureState, DiceTarget, EffectType, ItemType } from '@enums';
 import { Random } from '@services';
 import { EffectsFabric } from './effects-fabric';
+import { ItemFabric } from './item-fabric';
 
 // максимально возможная броня равна 6
 const ARMOR_MAX = 6;
@@ -74,6 +75,9 @@ export class AbilityFabric {
 
     AbilityFabric.abilities.set(AbilityType.HeroAttackOffset, heroAttackOffset);
     AbilityFabric.abilities.set(AbilityType.HeroResistPoisonWeak, heroResistPoisonWeak);
+    AbilityFabric.abilities.set(AbilityType.HeroShieldWeak, heroShieldWeak);
+    AbilityFabric.abilities.set(AbilityType.HeroShieldMedium, heroShieldMedium);
+    AbilityFabric.abilities.set(AbilityType.HeroShieldStrong, heroShieldStrong);
 
     AbilityFabric.abilities.set(AbilityType.HeroBasicHeal, heroBasicHeal);
     AbilityFabric.abilities.set(AbilityType.HeroHealAfterBattle, heroHealAfterBattle);
@@ -160,6 +164,22 @@ function heroResistPoisonWeak(currentCreature: Creature, targetCreature: Creatur
   const newEffect = EffectsFabric.createEffect(EffectType.ResistPoison1);
   currentCreature.effects.push(newEffect);
   currentCreature.dropEffect(EffectType.Poison1);
+  return null;
+}
+
+function heroShieldWeak(currentCreature: Creature, targetCreature: Creature) {
+  const newShield = ItemFabric.createItem(ItemType.Shield, 2, { hitPoints: 2 });
+  currentCreature.inventory.push(newShield);
+  return null;
+}
+function heroShieldMedium(currentCreature: Creature, targetCreature: Creature) {
+  const newShield = ItemFabric.createItem(ItemType.Shield, 3, { hitPoints: 4 });
+  currentCreature.inventory.push(newShield);
+  return null;
+}
+function heroShieldStrong(currentCreature: Creature, targetCreature: Creature) {
+  const newShield = ItemFabric.createItem(ItemType.Shield, 2, { hitPoints: 6 });
+  currentCreature.inventory.push(newShield);
   return null;
 }
 

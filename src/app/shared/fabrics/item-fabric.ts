@@ -12,11 +12,11 @@ export class ItemFabric {
     return this.createEquipment(type, value, options);
   }
 
-  static createEquipment(type: ItemType, value: number, options?: {
+  static createEquipment(type: ItemType, value: number, options: {
     name?: string;
     image?: string;
     hitPoints?: number;
-  }): Item {
+  } = {}): Item {
     const itemInfo = Items.find(p => p.type === type);
     if (type === ItemType.Shield) {
       return new Shield(value, options.hitPoints, options.name || itemInfo.name, options.image || itemInfo.img);
