@@ -72,6 +72,9 @@ export class AbilityFabric {
     AbilityFabric.abilities.set(AbilityType.HeroStanStrong, heroStanStrong);
     AbilityFabric.abilities.set(AbilityType.HeroThrowSpearow, heroThrowSpearow);
 
+    AbilityFabric.abilities.set(AbilityType.HeroAttackOffset, heroAttackOffset);
+    AbilityFabric.abilities.set(AbilityType.HeroResistPoisonWeak, heroResistPoisonWeak);
+
     AbilityFabric.abilities.set(AbilityType.HeroBasicHeal, heroBasicHeal);
     AbilityFabric.abilities.set(AbilityType.HeroHealAfterBattle, heroHealAfterBattle);
     AbilityFabric.abilities.set(AbilityType.HeroHealPoison, heroHealFromPoison);
@@ -146,6 +149,19 @@ function heroThrowSpearow(currentCreature: Creature, targetCreature: Creature) {
 }
 
 // Defense:
+
+function heroAttackOffset(currentCreature: Creature, targetCreature: Creature) {
+  const newEffect = EffectsFabric.createEffect(EffectType.AttackOffset);
+  currentCreature.effects.push(newEffect);
+  return null;
+}
+
+function heroResistPoisonWeak(currentCreature: Creature, targetCreature: Creature) {
+  const newEffect = EffectsFabric.createEffect(EffectType.ResistPoison1);
+  currentCreature.effects.push(newEffect);
+  currentCreature.dropEffect(EffectType.Poison1);
+  return null;
+}
 
 // Heal:
 
