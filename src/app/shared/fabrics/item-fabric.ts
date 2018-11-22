@@ -4,16 +4,24 @@ import { Items } from '@shared/db';
 import { Random } from '@services';
 
 export class ItemFabric {
-  static createItem(type: ItemType, value: number, hitPoints = 0): Item {
-    return this.createEquipment(type, value, hitPoints);
+  static createItem(type: ItemType, value: number, options?: {
+    name?: string;
+    image?: string;
+    hitPoints?: number;
+  }): Item {
+    return this.createEquipment(type, value, options);
   }
 
-  static createEquipment(type: ItemType, value: number, hitPoints = 0): Item {
+  static createEquipment(type: ItemType, value: number, options?: {
+    name?: string;
+    image?: string;
+    hitPoints?: number;
+  }): Item {
     const itemInfo = Items.find(p => p.type === type);
     if (type === ItemType.Shield) {
-      return new Shield(value, hitPoints, itemInfo.name, itemInfo.img);
+      return new Shield(value, options.hitPoints, options.name || itemInfo.name, options.image || itemInfo.img);
     } else {
-      return new Item(type, value, itemInfo.name, itemInfo.img);
+      return new Item(type, value, options.name || itemInfo.name, options.image || itemInfo.img);
     }
   }
 
@@ -101,27 +109,34 @@ export class ItemFabric {
     return new Item(ItemType.Gold, gold, name, 'assets/img/items/gold-bag.jpg');
   }
 
-  private static createRandomShield(value: number): Item {
-    const shieldType = Random.throwDiceD3();
-    const shieldHitPoints = shieldType * 2;
-    const item = ItemFabric.createEquipment(ItemType.Shield, value, shieldHitPoints) as Shield;
-    switch (shieldType) {
+  private static createRandomShield(value: number) {
+    const shieldHitPoints = Random.throwDiceD6();
+    const item = ItemFabric.createShield(value, shieldHitPoints);
+    return item;
+  }
+
+  static createShield(value: number, hitPoints: number): Shield {
+    let name = '';
+    let image = '';
+    switch (hitPoints) {
       case 1:
-        item.name = 'Разбитый щит';
-        item.img = 'assets/img/items/shield-weak.jpg';
-        item.description = `Щит, броня ${value}, на 2 удара`;
-        break;
       case 2:
-        item.name = 'Стойкий щит';
-        item.img = 'assets/img/items/shield-medium.jpg';
-        item.description = `Щит, броня ${value}, на 4 удара`;
+        name = 'Разбитый щит';
+        image = 'assets/img/items/shield-weak.jpg';
         break;
       case 3:
-        item.name = 'Прочный щит';
-        item.img = 'assets/img/items/shield-strong.jpg';
-        item.description = `Щит, броня ${value}, на 6 ударов`;
+      case 4:
+        name = 'Стойкий щит';
+        image = 'assets/img/items/shield-medium.jpg';
+        break;
+      case 5:
+      case 6:
+        name = 'Прочный щит';
+        image = 'assets/img/items/shield-strong.jpg';
         break;
     }
+
+    const item = ItemFabric.createEquipment(ItemType.Shield, value, { hitPoints, name, image }) as Shield;
     return item;
   }
 }
