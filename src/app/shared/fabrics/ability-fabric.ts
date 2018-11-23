@@ -87,6 +87,9 @@ export class AbilityFabric {
     AbilityFabric.abilities.set(AbilityType.HeroHealWeak, heroHealWeak);
     AbilityFabric.abilities.set(AbilityType.HeroHealWithAllies, heroHealWithAllies);
 
+    AbilityFabric.abilities.set(AbilityType.HeroCastFlash, heroCastFlash);
+    AbilityFabric.abilities.set(AbilityType.HeroCastFireBall, heroCastFireBall);
+
     AbilityFabric.abilities.set(AbilityType.MonsterBasicAttack, monsterBasicAttack);
   }
 }
@@ -250,6 +253,22 @@ function heroHealWithAllies(currentCreature: Creature, targetCreature: Creature)
 }
 
 // Magic:
+
+function heroCastFlash(currentCreature: Creature, targetCreature: Creature) {
+  return basicAttack(currentCreature, targetCreature, {
+    useWeapon: true, magicAttack: true,
+    fixedDamage: null, weaponDamage: 2, damageCoefficient: 1,
+    diceDamage: null, diceTarget: null,
+  });
+}
+
+function heroCastFireBall(currentCreature: Creature, targetCreature: Creature) {
+  return basicAttack(currentCreature, targetCreature, {
+    useWeapon: true, magicAttack: true,
+    fixedDamage: null, weaponDamage: 5, damageCoefficient: 1,
+    diceDamage: null, diceTarget: null,
+  });
+}
 
 // Special:
 
