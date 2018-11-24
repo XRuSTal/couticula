@@ -171,17 +171,17 @@ function heroResistPoisonWeak(currentCreature: Creature, targetCreature: Creatur
 }
 
 function heroShieldWeak(currentCreature: Creature, targetCreature: Creature) {
-  const newShield = ItemFabric.createItem(ItemType.Shield, 2, { hitPoints: 2 });
+  const newShield = ItemFabric.createShield(2, 2);
   currentCreature.inventory.push(newShield);
   return null;
 }
 function heroShieldMedium(currentCreature: Creature, targetCreature: Creature) {
-  const newShield = ItemFabric.createItem(ItemType.Shield, 3, { hitPoints: 4 });
+  const newShield = ItemFabric.createShield(3, 4);
   currentCreature.inventory.push(newShield);
   return null;
 }
 function heroShieldStrong(currentCreature: Creature, targetCreature: Creature) {
-  const newShield = ItemFabric.createItem(ItemType.Shield, 2, { hitPoints: 6 });
+  const newShield = ItemFabric.createShield(2, 6);
   currentCreature.inventory.push(newShield);
   return null;
 }

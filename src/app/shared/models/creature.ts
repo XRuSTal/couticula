@@ -50,7 +50,7 @@ export class Creature {
     this.equipment.Hands = ItemFabric.createEquipment(ItemType.Hands, hands);
     this.equipment.Legs = ItemFabric.createEquipment(ItemType.Legs, legs);
     this.equipment.Body = ItemFabric.createEquipment(ItemType.Body, body);
-    this.equipment.Shield = ItemFabric.createEquipment(ItemType.Shield, body) as Shield;
+    this.equipment.Shield = ItemFabric.createEquipment(ItemType.Shield, 0, { hitPoints: 0 }) as Shield;
     this.abilities.push(AbilityType.MonsterBasicAttack);
   }
 
