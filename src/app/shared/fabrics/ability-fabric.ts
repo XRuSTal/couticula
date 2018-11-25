@@ -10,7 +10,7 @@ import {
 import { Ability, AbilityResult, AbilityResultError, AbilitySettings, Creature, Hero } from '@models';
 import { AbilityType, CreatureState, DiceTarget, EffectType, ItemType } from '@enums';
 import { Random } from '@services';
-import { EffectsFabric } from './effects-fabric';
+import { EffectFabric } from './effect-fabric';
 import { ItemFabric } from './item-fabric';
 
 // максимально возможная броня равна 6
@@ -110,39 +110,39 @@ function heroBasicAttack(currentCreature: Creature, targetCreature: Creature) {
 }
 
 function heroPoisonWeak(currentCreature: Creature, targetCreature: Creature) {
-  const newEffect = EffectsFabric.createEffect(EffectType.AttackWithPoisonWeak2);
+  const newEffect = EffectFabric.createEffect(EffectType.AttackWithPoisonWeak2);
   currentCreature.effects.push(newEffect);
   return null;
 }
 function heroPoisonMedium(currentCreature: Creature, targetCreature: Creature) {
-  const newEffect = EffectsFabric.createEffect(EffectType.AttackWithPoisonMedium2);
+  const newEffect = EffectFabric.createEffect(EffectType.AttackWithPoisonMedium2);
   currentCreature.effects.push(newEffect);
   return null;
 }
 function heroPoisonStrong(currentCreature: Creature, targetCreature: Creature) {
-  const newEffect = EffectsFabric.createEffect(EffectType.AttackWithPoisonStrong3);
+  const newEffect = EffectFabric.createEffect(EffectType.AttackWithPoisonStrong3);
   currentCreature.effects.push(newEffect);
   return null;
 }
 
 function heroRage(currentCreature: Creature, targetCreature: Creature) {
-  const newEffect = EffectsFabric.createEffect(EffectType.Rage);
+  const newEffect = EffectFabric.createEffect(EffectType.Rage);
   currentCreature.effects.push(newEffect);
   return null;
 }
 
 function heroStanWeak(currentCreature: Creature, targetCreature: Creature) {
-  const newEffect = EffectsFabric.createEffect(EffectType.AttackWithStanWeak);
+  const newEffect = EffectFabric.createEffect(EffectType.AttackWithStanWeak);
   currentCreature.effects.push(newEffect);
   return null;
 }
 function heroStanMedium(currentCreature: Creature, targetCreature: Creature) {
-  const newEffect = EffectsFabric.createEffect(EffectType.AttackWithStanMedium);
+  const newEffect = EffectFabric.createEffect(EffectType.AttackWithStanMedium);
   currentCreature.effects.push(newEffect);
   return null;
 }
 function heroStanStrong(currentCreature: Creature, targetCreature: Creature) {
-  const newEffect = EffectsFabric.createEffect(EffectType.AttackWithStanStrong);
+  const newEffect = EffectFabric.createEffect(EffectType.AttackWithStanStrong);
   currentCreature.effects.push(newEffect);
   return null;
 }
@@ -158,13 +158,13 @@ function heroThrowSpearow(currentCreature: Creature, targetCreature: Creature) {
 // Defense:
 
 function heroAttackOffset(currentCreature: Creature, targetCreature: Creature) {
-  const newEffect = EffectsFabric.createEffect(EffectType.AttackOffset);
+  const newEffect = EffectFabric.createEffect(EffectType.AttackOffset);
   currentCreature.effects.push(newEffect);
   return null;
 }
 
 function heroResistPoisonWeak(currentCreature: Creature, targetCreature: Creature) {
-  const newEffect = EffectsFabric.createEffect(EffectType.ResistPoison1);
+  const newEffect = EffectFabric.createEffect(EffectType.ResistPoison1);
   currentCreature.effects.push(newEffect);
   currentCreature.dropEffect(EffectType.Poison1);
   return null;
@@ -247,7 +247,7 @@ function heroHealWeak(currentCreature: Creature, targetCreature: Creature) {
 }
 
 function heroHealWithAllies(currentCreature: Creature, targetCreature: Creature) {
-  const newEffect = EffectsFabric.createEffect(EffectType.HealWithAllies);
+  const newEffect = EffectFabric.createEffect(EffectType.HealWithAllies);
   currentCreature.effects.push(newEffect);
   return null;
 }

@@ -6,7 +6,7 @@ import { delay } from 'rxjs/operators';
 
 import { AbilityType, BattleState, CreatureState, EffectType } from '@enums';
 import { Ability, AbilityResult, AbilityResultError, Cell, Creature, Hero } from '@models';
-import { AbilityFabric, CreatureFabric, EffectsFabric } from '@shared/fabrics';
+import { AbilityFabric, CreatureFabric, EffectFabric } from '@shared/fabrics';
 import { HeroService } from './hero.service';
 import { SettingsService } from './settings.service';
 import { Random } from './random';
@@ -134,7 +134,7 @@ export class BattleService {
       });
       const shield = creature.equipment.Shield;
       if (shield && shield.hitPoint > 0) {
-        const shieldEffect = EffectsFabric.createEffect(EffectType.Shield);
+        const shieldEffect = EffectFabric.createEffect(EffectType.Shield);
         shieldEffect.description = `Щит, броня ${shield.value} , прочность ${shield.hitPoint}.`;
         creature.currentEffects.push(shieldEffect);
       }
@@ -342,7 +342,7 @@ export class BattleService {
   private checkIfIsStunned(creature: Creature) {
     if (creature.isExistsEffect(EffectType.Stan2)) {
         creature.dropCurrentEffect(EffectType.Stan2);
-        creature.currentEffects.push(EffectsFabric.createEffect(EffectType.Stan));
+        creature.currentEffects.push(EffectFabric.createEffect(EffectType.Stan));
         return true;
     } else if (creature.isExistsEffect(EffectType.Stan)) {
         creature.dropCurrentEffect(EffectType.Stan);

@@ -2,7 +2,7 @@ import { HeroClass } from '@enums';
 import { Creature, CreatureSettings, Hero, HeroSettings } from '@models';
 import { CreaturesBoss, CreaturesLevel1, CreaturesLevel2, HeroTypes } from '@shared/db';
 import { Random } from '@app/shared/services';
-import { EffectsFabric } from './effects-fabric';
+import { EffectFabric } from './effect-fabric';
 
 export class CreatureFabric {
   private static GUID = 0;
@@ -16,7 +16,7 @@ export class CreatureFabric {
     newHero.maxItemValue = settings.maxArmorValue;
     newHero.abilities = [...settings.abilites];
     newHero.inventory = [...settings.inventory];
-    newHero.effects = settings.effects.map(effectType => EffectsFabric.createEffect(effectType));
+    newHero.effects = settings.effects.map(effectType => EffectFabric.createEffect(effectType));
     return newHero;
   }
 
@@ -56,7 +56,7 @@ export class CreatureFabric {
     newCreature.description = settings.description;
     newCreature.abilities = [...settings.abilites];
     newCreature.inventory = [...settings.inventory];
-    newCreature.effects = settings.effects.map(effectType => EffectsFabric.createEffect(effectType));
+    newCreature.effects = settings.effects.map(effectType => EffectFabric.createEffect(effectType));
     return newCreature;
   }
 }

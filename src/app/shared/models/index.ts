@@ -7,6 +7,7 @@ export * from './creature';
 export * from './creature-equipment';
 export * from './creature-settings';
 export * from './effect';
+export * from './effect-settings';
 export * from './event-search';
 export * from './enemy-group-settings';
 export * from './hero';

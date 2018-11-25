@@ -1,7 +1,7 @@
 import { EffectType } from '@enums';
-import { Effect } from '@models';
+import { EffectSettings } from '@models';
 
-export const Effects: Effect[] = [
+export const Effects: EffectSettings[] = [
   {
     effectType: EffectType.AttackOffset,
     name: 'Смещение атаки',
