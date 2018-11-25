@@ -308,13 +308,15 @@ function basicAttack(currentCreature: Creature, targetCreature: Creature, option
   const weaponDamage = calcWeaponValue(currentCreature, options);
   let damageValue = options.fixedDamage || (diceDamage + weaponDamage);
 
-  // TODO: действия при атаке
-  // currentCreature.currentEffects.forEach(effect => effect.effectCausedByAttack(targetCreature));
+  // действия при атаке
+  currentCreature.currentEffects
+    .filter(effect => effect.isAttackActivation)
+    .forEach(effect => effect.action(targetCreature));
   if (diceTarget === DiceTarget.Legs) {
-    // TODO: особое оглушение для монстра
+    // особое оглушение для монстра
     currentCreature.currentEffects.some(effect => {
       if (effect.effectType === EffectType.SpecialAttackLegs) {
-        // effect.action(targetCreature);
+        effect.action(targetCreature);
         return true;
       }
     });
@@ -368,11 +370,11 @@ function basicHeal(currentCreature: Creature, targetCreature: Creature, options:
   currentCreature.lastDiceTarget = null;
   currentCreature.lastDiceValue = options.fixedHeal ? null : diceHeal;
 
-  // TODO: Совместное лечение
+  // Совместное лечение
   if (currentCreature !== targetCreature) {
     currentCreature.currentEffects.forEach(effect => {
       if (effect.effectType === EffectType.HealWithAllies) {
-        // effect.action(currentCreature);
+        effect.action(currentCreature);
       }
     });
   }
