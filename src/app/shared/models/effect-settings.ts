@@ -5,4 +5,6 @@ export interface EffectSettings {
   description: string;
   image: string;
   effectType: EffectType;
+  isAttackActivation: boolean;
+  isNewRoundActivation: boolean;
 }

@@ -7,6 +7,8 @@ export class Effect implements EffectSettings {
   description: string;
   image: string;
   effectType: EffectType;
+  isAttackActivation: boolean;
+  isNewRoundActivation: boolean;
 
   action: (creature: Creature) => void;
 
