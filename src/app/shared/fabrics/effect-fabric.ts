@@ -34,6 +34,13 @@ export class EffectFabric {
     EffectFabric.actions.set(EffectType.AttackWithStanMedium, attackWithStanMedium);
     EffectFabric.actions.set(EffectType.AttackWithStanStrong, attackWithStanStrong);
     EffectFabric.actions.set(EffectType.SpecialAttackLegs, specialAttackLegs);
+
+    EffectFabric.actions.set(EffectType.Poison1, actionPoison1);
+    EffectFabric.actions.set(EffectType.Poison2, actionPoison2);
+    EffectFabric.actions.set(EffectType.Poison3, actionPoison3);
+    EffectFabric.actions.set(EffectType.Regeneration1, actionRegeneration1);
+    EffectFabric.actions.set(EffectType.Regeneration5, actionRegeneration5);
+    EffectFabric.actions.set(EffectType.HealWithAllies, actionHealWithAllies);
   }
 }
 EffectFabric.initialize();
@@ -142,4 +149,30 @@ function specialAttackLegs(creature: Creature) {
     const newEffect = EffectFabric.createEffect(EffectType.Stan);
     creature.currentEffects.push(newEffect);
   }
+}
+
+function actionPoison1(creature: Creature) {
+  actionPoison(creature, 1);
+}
+function actionPoison2(creature: Creature) {
+  actionPoison(creature, 2);
+}
+function actionPoison3(creature: Creature) {
+  actionPoison(creature, 3);
+}
+function actionPoison(creature: Creature, value: number) {
+  // creature.decreaseHitpoint(value);
+}
+function actionRegeneration1(creature: Creature) {
+  actionRegeneration(creature, 1);
+}
+function actionRegeneration5(creature: Creature) {
+  const value = creature.isExistsEffect(EffectType.DecreaseRegeneration1) ? 4 : 5;
+  actionRegeneration(creature, value);
+}
+function actionRegeneration(creature: Creature, value: number) {
+  // creature.increaseHitpoint(value);
+}
+function actionHealWithAllies(creature: Creature) {
+  // creature.increaseHitpoint(4);
 }

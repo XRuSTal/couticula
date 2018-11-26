@@ -254,7 +254,9 @@ export class BattleService {
     this.battleStateSource.next(BattleState.NewTurn);
 
     // применение всех эффектов
-    // creature.currentEffects.forEach((p) => { p.newRoundAction(creature); });
+    creature.currentEffects
+      .filter(effect => effect.isNewRoundActivation)
+      .forEach(effect => effect.action(creature));
     // снятие временных эффектов в начале хода существа
     creature.dropCurrentEffects([EffectType.BlockDamage]);
     const isStunned = this.checkIfIsStunned(creature);
