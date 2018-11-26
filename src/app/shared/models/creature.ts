@@ -99,4 +99,30 @@ export class Creature {
   isExistsSomeEffects(effectTypes: EffectType[]): boolean {
     return this.currentEffects.some(p => effectTypes.indexOf(p.effectType) !== -1);
   }
+
+  increaseHitpoint(value: number): number {
+    let healHitPoint = 0;
+    if (!this.isExistsEffect(EffectType.BlockHeal)) {
+      healHitPoint = this.hitPoint + value > this.maxHitPoint
+        ? this.maxHitPoint - this.hitPoint
+        : value;
+      this.hitPoint = this.hitPoint + healHitPoint;
+    }
+    return healHitPoint;
+  }
+
+  decreaseHitpoint(value: number): number {
+    let damage = 0;
+    if (!this.isExistsEffect(EffectType.BlockDamage)) {
+      if (this.hitPoint < damage || (damage >= 13 && !this.isExistsEffect(EffectType.Destructible13))) {
+        damage = this.hitPoint;
+        this.hitPoint = 0;
+        this.state = CreatureState.DeadInThisTurn;
+      } else {
+        damage = value;
+        this.hitPoint -= damage;
+      }
+    }
+    return damage;
+  }
 }

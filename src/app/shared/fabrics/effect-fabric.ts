@@ -161,7 +161,7 @@ function actionPoison3(creature: Creature) {
   actionPoison(creature, 3);
 }
 function actionPoison(creature: Creature, value: number) {
-  // creature.decreaseHitpoint(value);
+  creature.decreaseHitpoint(value);
 }
 function actionRegeneration1(creature: Creature) {
   actionRegeneration(creature, 1);
@@ -171,8 +171,8 @@ function actionRegeneration5(creature: Creature) {
   actionRegeneration(creature, value);
 }
 function actionRegeneration(creature: Creature, value: number) {
-  // creature.increaseHitpoint(value);
+  creature.increaseHitpoint(value);
 }
 function actionHealWithAllies(creature: Creature) {
-  // creature.increaseHitpoint(4);
+  creature.increaseHitpoint(4);
 }
