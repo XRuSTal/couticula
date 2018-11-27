@@ -129,9 +129,15 @@ export class BattleService {
   private setInitialEffectsAndAbilities() {
     this.creatures.forEach(creature => {
       creature.currentEffects = []; // сброс для героев
-      creature.effects.forEach(effect => {
-        creature.currentEffects.push(effect);
-      });
+      creature.effects
+        .filter(
+          effect => [
+            EffectType.BreakingChests,
+            EffectType.ForceBreakingChests
+          ].indexOf(effect.effectType) === -1)
+        .forEach(effect => {
+          creature.currentEffects.push(effect);
+        });
       const shield = creature.equipment.Shield;
       if (shield && shield.hitPoint > 0) {
         const shieldEffect = EffectFabric.createEffect(EffectType.Shield);
