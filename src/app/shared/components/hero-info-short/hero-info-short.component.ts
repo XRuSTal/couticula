@@ -9,4 +9,8 @@ import { Hero } from '@models';
 export class HeroInfoShortComponent {
   @Input() hero: Hero;
   @Input() isSelected: boolean;
+
+  get isBigValueHitPoints() {
+    return this.hero.hitPoint >= 100;
+  }
 }

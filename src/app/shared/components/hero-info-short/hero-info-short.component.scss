@@ -5,24 +5,32 @@
   height: 100%;
   background-size: cover;
   border-radius: 2vh;
+  font-size: 3.5vh;
+  font-weight: bold;
+  color: red;
+
+  &_selected {
+    border: solid gold 1vh;
+    border-radius: 3vh;
+    font-size: 3.0vh;
+  }
 
   &__hitpoints {
     width: 100%;
     border-radius: 0 0 2vh 2vh;
     text-align: end;
-    font-size: 3.5vh;
-    font-weight: bold;
-    color: red;
     background-color:rgba(0, 0, 0, 0.7);
     &__icon{
       color: red;
     }
+
+    &_big-value {
+      font-size: 3.0vh;
+    }
   }
 
-  &_selected {
-    border: solid gold 1vh;
-    border-radius: 3vh;
-    font-weight: bold;
-    color: red;
+  &_selected &__hitpoints_big-value {
+    font-size: 2.5vh;
   }
+
 }
