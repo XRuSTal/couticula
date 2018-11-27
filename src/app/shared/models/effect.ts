@@ -16,10 +16,12 @@ export class Effect implements EffectSettings {
     settings: EffectSettings,
     actionFunction: (currentCreature: Creature) => void,
   ) {
+    this.effectType = settings.effectType;
     this.name = settings.name;
     this.description = settings.description;
     this.image = settings.image;
-    this.effectType = settings.effectType;
+    this.isAttackActivation = settings.isAttackActivation;
+    this.isNewRoundActivation = settings.isNewRoundActivation;
     this.action = actionFunction;
   }
 }
