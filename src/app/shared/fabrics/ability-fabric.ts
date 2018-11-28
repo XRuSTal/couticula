@@ -87,8 +87,10 @@ export class AbilityFabric {
     AbilityFabric.abilities.set(AbilityType.HeroHealWeak, heroHealWeak);
     AbilityFabric.abilities.set(AbilityType.HeroHealWithAllies, heroHealWithAllies);
 
+    AbilityFabric.abilities.set(AbilityType.HeroCastDecreaseRegeneration1, heroCastDecreaseRegeneration1);
     AbilityFabric.abilities.set(AbilityType.HeroCastFlash, heroCastFlash);
     AbilityFabric.abilities.set(AbilityType.HeroCastFireBall, heroCastFireBall);
+    AbilityFabric.abilities.set(AbilityType.HeroCastSlackness, heroCastSlackness);
 
     AbilityFabric.abilities.set(AbilityType.MonsterBasicAttack, monsterBasicAttack);
   }
@@ -254,6 +256,22 @@ function heroHealWithAllies(currentCreature: Creature, targetCreature: Creature)
 
 // Magic:
 
+function heroCastDecreaseRegeneration1(currentCreature: Creature, targetCreature: Creature) {
+  const targetCreatureBefore = targetCreature/*.copy()*/;
+  const targetCreatureAfter = targetCreature;
+  const newEffect = EffectFabric.createEffect(EffectType.DecreaseRegeneration1);
+  targetCreature.effects.push(newEffect);
+
+  const abilityResult: AbilityResult = {
+    targetCreatureBefore,
+    targetCreatureAfter,
+    diceTarget: currentCreature.lastDiceTarget,
+    diceValue: currentCreature.lastDiceValue,
+    value: null,
+  };
+  return abilityResult;
+}
+
 function heroCastFlash(currentCreature: Creature, targetCreature: Creature) {
   return basicAttack(currentCreature, targetCreature, {
     useWeapon: true, magicAttack: true,
@@ -268,6 +286,22 @@ function heroCastFireBall(currentCreature: Creature, targetCreature: Creature) {
     fixedDamage: null, weaponDamage: 5, damageCoefficient: 1,
     diceDamage: null, diceTarget: null,
   });
+}
+
+function heroCastSlackness(currentCreature: Creature, targetCreature: Creature) {
+  const targetCreatureBefore = targetCreature/*.copy()*/;
+  const targetCreatureAfter = targetCreature;
+  const newEffect = EffectFabric.createEffect(EffectType.Slackness);
+  targetCreature.effects.push(newEffect);
+
+  const abilityResult: AbilityResult = {
+    targetCreatureBefore,
+    targetCreatureAfter,
+    diceTarget: currentCreature.lastDiceTarget,
+    diceValue: currentCreature.lastDiceValue,
+    value: null,
+  };
+  return abilityResult;
 }
 
 // Special:
