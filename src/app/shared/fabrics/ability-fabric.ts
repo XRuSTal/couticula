@@ -90,7 +90,15 @@ export class AbilityFabric {
     AbilityFabric.abilities.set(AbilityType.HeroCastDecreaseRegeneration1, heroCastDecreaseRegeneration1);
     AbilityFabric.abilities.set(AbilityType.HeroCastFlash, heroCastFlash);
     AbilityFabric.abilities.set(AbilityType.HeroCastFireBall, heroCastFireBall);
+    AbilityFabric.abilities.set(AbilityType.HeroCastImbecility, heroCastImbecility);
+    AbilityFabric.abilities.set(AbilityType.HeroCastLightningStrikes, heroCastLightningStrikes);
+    AbilityFabric.abilities.set(AbilityType.HeroCastMagicAttackStanned, heroCastMagicAttackStanned);
     AbilityFabric.abilities.set(AbilityType.HeroCastSlackness, heroCastSlackness);
+    AbilityFabric.abilities.set(AbilityType.HeroCastTripleMagicAttack, heroCastTripleMagicAttack);
+    AbilityFabric.abilities.set(AbilityType.HeroCastMagicProtection, heroCastMagicProtection);
+    AbilityFabric.abilities.set(AbilityType.HeroCastTripleStan, heroCastTripleStan);
+    AbilityFabric.abilities.set(AbilityType.HeroCastTurningToStone, heroCastTurningToStone);
+    AbilityFabric.abilities.set(AbilityType.HeroCastSuppression, heroCastSuppression);
 
     AbilityFabric.abilities.set(AbilityType.MonsterBasicAttack, monsterBasicAttack);
   }
@@ -260,13 +268,13 @@ function heroCastDecreaseRegeneration1(currentCreature: Creature, targetCreature
   const targetCreatureBefore = targetCreature/*.copy()*/;
   const targetCreatureAfter = targetCreature;
   const newEffect = EffectFabric.createEffect(EffectType.DecreaseRegeneration1);
-  targetCreature.effects.push(newEffect);
+  targetCreature.currentEffects.push(newEffect);
 
   const abilityResult: AbilityResult = {
     targetCreatureBefore,
     targetCreatureAfter,
-    diceTarget: currentCreature.lastDiceTarget,
-    diceValue: currentCreature.lastDiceValue,
+    diceTarget: null,
+    diceValue: null,
     value: null,
   };
   return abilityResult;
@@ -288,17 +296,141 @@ function heroCastFireBall(currentCreature: Creature, targetCreature: Creature) {
   });
 }
 
-function heroCastSlackness(currentCreature: Creature, targetCreature: Creature) {
+function heroCastImbecility(currentCreature: Creature, targetCreature: Creature) {
   const targetCreatureBefore = targetCreature/*.copy()*/;
   const targetCreatureAfter = targetCreature;
-  const newEffect = EffectFabric.createEffect(EffectType.Slackness);
-  targetCreature.effects.push(newEffect);
+  // шанс 50%
+  const dice = Random.throwDiceD6();
+  if (dice > 3) {
+    const newEffect = EffectFabric.createEffect(EffectType.Imbecility);
+    targetCreature.currentEffects.push(newEffect);
+  }
 
   const abilityResult: AbilityResult = {
     targetCreatureBefore,
     targetCreatureAfter,
-    diceTarget: currentCreature.lastDiceTarget,
-    diceValue: currentCreature.lastDiceValue,
+    diceTarget: null,
+    diceValue: null,
+    value: null,
+  };
+  return abilityResult;
+}
+
+function heroCastLightningStrikes(currentCreature: Creature, targetCreature: Creature) {
+  return basicAttack(currentCreature, targetCreature, {
+    useWeapon: false, magicAttack: true,
+    fixedDamage: null, weaponDamage: null, damageCoefficient: 1,
+    diceDamage: null, diceTarget: null,
+  });
+}
+
+function heroCastMagicAttackStanned(currentCreature: Creature, targetCreature: Creature) {
+  let damageCoefficient = 1;
+  if (targetCreature.isExistsSomeEffects([EffectType.Stan, EffectType.Stan2])) {
+    damageCoefficient = 2;
+    targetCreature.dropCurrentEffects([EffectType.Stan, EffectType.Stan2]);
+  }
+  return basicAttack(currentCreature, targetCreature, {
+    useWeapon: false, magicAttack: true,
+    fixedDamage: null, weaponDamage: null, damageCoefficient,
+    diceDamage: null, diceTarget: null,
+  });
+}
+
+function heroCastMagicProtection(currentCreature: Creature, targetCreature: Creature) {
+  const targetCreatureBefore = targetCreature/*.copy()*/;
+  const targetCreatureAfter = targetCreature;
+  const newEffect = EffectFabric.createEffect(EffectType.MagicProtection);
+  targetCreature.currentEffects.push(newEffect);
+
+  const abilityResult: AbilityResult = {
+    targetCreatureBefore,
+    targetCreatureAfter,
+    diceTarget: null,
+    diceValue: null,
+    value: null,
+  };
+  return abilityResult;
+}
+
+function heroCastSlackness(currentCreature: Creature, targetCreature: Creature) {
+  const targetCreatureBefore = targetCreature/*.copy()*/;
+  const targetCreatureAfter = targetCreature;
+  const newEffect = EffectFabric.createEffect(EffectType.Slackness);
+  targetCreature.currentEffects.push(newEffect);
+
+  const abilityResult: AbilityResult = {
+    targetCreatureBefore,
+    targetCreatureAfter,
+    diceTarget: null,
+    diceValue: null,
+    value: null,
+  };
+  return abilityResult;
+}
+
+function heroCastTripleMagicAttack(currentCreature: Creature, targetCreature: Creature) {
+  currentCreature.decreaseHitpoint(4);
+
+  return basicAttack(currentCreature, targetCreature, {
+    useWeapon: false, magicAttack: true,
+    fixedDamage: null, weaponDamage: null, damageCoefficient: 3,
+    diceDamage: null, diceTarget: null,
+  });
+}
+
+function heroCastTripleStan(currentCreature: Creature, targetCreature: Creature) {
+  if (targetCreature.isExistsSomeEffects([EffectType.ResistStan, EffectType.Stan, EffectType.Stan2])) {
+    return { notCorrectTarget: true } as AbilityResultError;
+  }
+
+  const targetCreatureBefore = targetCreature/*.copy()*/;
+  const targetCreatureAfter = targetCreature;
+  // шанс 50%
+  const dice = Random.throwDiceD6();
+  if (dice > 3) {
+    const newEffect = EffectFabric.createEffect(EffectType.Stan);
+    targetCreature.currentEffects.push(newEffect);
+  }
+
+  const abilityResult: AbilityResult = {
+    targetCreatureBefore,
+    targetCreatureAfter,
+    diceTarget: null,
+    diceValue: null,
+    value: null,
+  };
+  return abilityResult;
+}
+
+function heroCastTurningToStone(currentCreature: Creature, targetCreature: Creature) {
+  const targetCreatureBefore = currentCreature/*.copy()*/;
+  const targetCreatureAfter = currentCreature;
+  currentCreature.decreaseHitpoint(4);
+  const newEffect = EffectFabric.createEffect(EffectType.BlockDamage);
+  targetCreature.currentEffects.push(newEffect);
+
+  const abilityResult: AbilityResult = {
+    targetCreatureBefore,
+    targetCreatureAfter,
+    diceTarget: null,
+    diceValue: null,
+    value: null,
+  };
+  return abilityResult;
+}
+
+function heroCastSuppression(currentCreature: Creature, targetCreature: Creature) {
+  const targetCreatureBefore = targetCreature/*.copy()*/;
+  const targetCreatureAfter = targetCreature;
+  const newEffect = EffectFabric.createEffect(EffectType.Suppression);
+  targetCreature.currentEffects.push(newEffect);
+
+  const abilityResult: AbilityResult = {
+    targetCreatureBefore,
+    targetCreatureAfter,
+    diceTarget: null,
+    diceValue: null,
     value: null,
   };
   return abilityResult;
