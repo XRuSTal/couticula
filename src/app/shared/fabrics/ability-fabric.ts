@@ -100,6 +100,10 @@ export class AbilityFabric {
     AbilityFabric.abilities.set(AbilityType.HeroCastTurningToStone, heroCastTurningToStone);
     AbilityFabric.abilities.set(AbilityType.HeroCastSuppression, heroCastSuppression);
 
+    AbilityFabric.abilities.set(AbilityType.HeroUseBottleOfHeal, heroUseBottleOfHeal);
+    AbilityFabric.abilities.set(AbilityType.HeroUseBottleOfPoison, heroUseBottleOfPoison);
+    AbilityFabric.abilities.set(AbilityType.HeroUseBottleOfStan, heroUseBottleOfStan);
+
     AbilityFabric.abilities.set(AbilityType.MonsterBasicAttack, monsterBasicAttack);
   }
 }
@@ -437,6 +441,41 @@ function heroCastSuppression(currentCreature: Creature, targetCreature: Creature
 }
 
 // Special:
+
+function heroUseBottleOfHeal(currentCreature: Creature, targetCreature: Creature) {
+  const dice: number = Random.throwDiceD6();
+  return basicHeal(
+    currentCreature, currentCreature,
+    { useWeapon: false, fixedHeal: 5 * dice, weaponHeal: null, diceHeal: dice }
+  );
+}
+
+function heroUseBottleOfPoison(currentCreature: Creature, targetCreature: Creature) {
+}
+
+function heroUseBottleOfStan(currentCreature: Creature, targetCreature: Creature) {
+  const targetCreatureBefore = targetCreature/*.copy()*/;
+  const targetCreatureAfter = targetCreature;
+
+  if (!targetCreature.isExistsSomeEffects([EffectType.ResistStan, EffectType.Stan2])) {
+    const dice: number = Random.throwDiceD6();
+    const effectType = dice > 3 ? EffectType.Stan2 : EffectType.Stan;
+    const newEffect = EffectFabric.createEffect(effectType);
+    targetCreature.dropCurrentEffect(EffectType.Stan);
+    targetCreature.currentEffects.push(newEffect);
+
+    const abilityResult: AbilityResult = {
+      targetCreatureBefore,
+      targetCreatureAfter,
+      diceTarget: null,
+      diceValue: dice,
+      value: null,
+    };
+    return abilityResult;
+  } else {
+    return { notCorrectTarget: true } as AbilityResultError;
+  }
+}
 
 // Monsters:
 
