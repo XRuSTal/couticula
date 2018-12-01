@@ -451,6 +451,41 @@ function heroUseBottleOfHeal(currentCreature: Creature, targetCreature: Creature
 }
 
 function heroUseBottleOfPoison(currentCreature: Creature, targetCreature: Creature) {
+  const targetCreatureBefore = targetCreature/*.copy()*/;
+  const targetCreatureAfter = targetCreature;
+
+  if (!targetCreature.isExistsSomeEffects([EffectType.ResistPoisonAny, EffectType.Poison2, EffectType.Poison3])) {
+    const dice: number = Random.throwDiceD6();
+    const effectType = dice > 3 ? EffectType.Poison2 : EffectType.Poison1;
+    const newEffect = EffectFabric.createEffect(effectType);
+
+    if (effectType === EffectType.Poison1) {
+      if (!targetCreature.isExistsSomeEffects([EffectType.ResistPoison1, EffectType.Poison1])) {
+        targetCreature.currentEffects.push(newEffect);
+        // отравление остается после боя
+        targetCreature.effects.push(newEffect);
+      } else {
+        // отравление не сработало
+      }
+    } else {
+      targetCreature.dropCurrentEffect(EffectType.Poison1);
+      targetCreature.currentEffects.push(newEffect);
+      // отравление остается после боя
+      targetCreature.dropEffect(EffectType.Poison1);
+      targetCreature.effects.push(newEffect);
+    }
+
+    const abilityResult: AbilityResult = {
+      targetCreatureBefore,
+      targetCreatureAfter,
+      diceTarget: null,
+      diceValue: dice,
+      value: null,
+    };
+    return abilityResult;
+  } else {
+    return { notCorrectTarget: true } as AbilityResultError;
+  }
 }
 
 function heroUseBottleOfStan(currentCreature: Creature, targetCreature: Creature) {
