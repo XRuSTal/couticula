@@ -4,8 +4,8 @@ import { Subject } from 'rxjs/Subject';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { delay } from 'rxjs/operators';
 
-import { AbilityType, BattleState, CreatureState, EffectType } from '@enums';
-import { Ability, AbilityResult, AbilityResultError, Cell, Creature, Hero } from '@models';
+import { AbilityType, BattleState, CreatureState, EffectType, ItemType } from '@enums';
+import { Ability, AbilityResult, AbilityResultError, AbilitySettings, Cell, Creature, Hero } from '@models';
 import { AbilityFabric, CreatureFabric, EffectFabric } from '@shared/fabrics';
 import { HeroService } from './hero.service';
 import { SettingsService } from './settings.service';
@@ -149,7 +149,40 @@ export class BattleService {
         const ability = AbilityFabric.createAbility(abilityType);
         creature.currentAbilities.push(ability);
       });
+      this.setAbilitiesWithBottles(creature);
     });
+  }
+  private setAbilitiesWithBottles(creature: Creature) {
+    [ItemType.BottleOfHeal, ItemType.BottleOfPoison, ItemType.BottleOfStan].forEach(itemType => {
+      const bottles = creature.inventory.filter(item => item.type === itemType);
+      if (bottles.length > 0) {
+        const bottle = bottles[0];
+        const settings: AbilitySettings = {
+          type: this.getAbilityTypeOfItem(itemType),
+          name: bottle.name,
+          description: bottle.description,
+          image: bottle.img,
+          cost: null,
+          maxUseCount: bottles.length,
+          isImmediateAction: false,
+          isPassiveAction: false,
+          isAddonAction: true,
+          countTarget: 1,
+        };
+        const ability = AbilityFabric.createAbilityBySettings(settings);
+        creature.currentAbilities.push(ability);
+      }
+    });
+  }
+  private getAbilityTypeOfItem(itemType: ItemType) {
+    switch (itemType) {
+      case ItemType.BottleOfHeal:
+        return AbilityType.HeroUseBottleOfHeal;
+      case ItemType.BottleOfPoison:
+        return AbilityType.HeroUseBottleOfPoison;
+      case ItemType.BottleOfStan:
+        return AbilityType.HeroUseBottleOfStan;
+    }
   }
   private setNewTargetForMonster(exceptHero: number = null) {
     const heroes: number[] = [];
