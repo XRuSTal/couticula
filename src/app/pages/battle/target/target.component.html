@@ -25,9 +25,9 @@
 </div>
 
 <div *ngIf="isShownAbilities" class="battle-field__target__abilites">
-  <img *ngFor="let ability of creature.currentAbilities; let i = index;"
-       (click)="selectAbility(i)"
+  <img *ngFor="let ability of creature.currentAbilities"
+       (click)="selectAbility(ability.type)"
        [src]="ability.image"
        class="battle-field__target__abilites__ability"
-       [ngClass]="{ 'battle-field__target__abilites__ability_selected': i === selectedAbilityIndex }">
+       [ngClass]="{ 'battle-field__target__abilites__ability_selected': ability.type === selectedAbilityType }">
 </div>

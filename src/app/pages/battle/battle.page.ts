@@ -5,7 +5,7 @@ import { NavController, NavParams } from 'ionic-angular';
 import { Cell, Creature, Hero } from '@models';
 import { InventoryPage } from '@pages';
 import { BattleService, SettingsService } from '@services';
-import { BattleState } from '@app/shared/enums';
+import { AbilityType, BattleState } from '@app/shared/enums';
 import { delay, zip } from 'rxjs/operators';
 import { interval } from 'rxjs/Observable/interval';
 
@@ -25,7 +25,7 @@ export class BattlePage {
   cell: Cell;
   creatures: Creature[] = [];
   selectedCreatureId: number;
-  selectedHeroAbilityIndex = 0;
+  selectedHeroAbilityType: AbilityType;
   currentCreature: { id: number; index: number; };
   lastCreatureInRound: number;
   currentRound = 1;
@@ -81,7 +81,7 @@ export class BattlePage {
         break;
         case BattleState.Lose:
         case BattleState.Win:
-        this.close();
+        this.navCtrl.pop();
         break;
       }
       this.cd.markForCheck();
@@ -109,20 +109,14 @@ export class BattlePage {
   }
   clickTarget() {
     // TODO убрать после реализации боя
-    this.close();
-  }
-
-  close() {
     this.navCtrl.pop();
-    this.battleService.winBattle();
   }
 
-  onSelectAbilityIndex(selectedAbilityIndex: number) {
-    this.selectedHeroAbilityIndex = selectedAbilityIndex;
+  onSelectAbilityType(selectedAbilityType: AbilityType) {
+    this.selectedHeroAbilityType = selectedAbilityType;
   }
 
   private setHeroAction() {
-    const selectedAbility = this.targetHero.abilities[this.selectedHeroAbilityIndex];
-    this.battleService.heroAction(selectedAbility, this.targetMonter.id);
+    this.battleService.heroAction(this.selectedHeroAbilityType, this.targetMonter.id);
   }
 }

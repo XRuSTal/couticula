@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 
 import { Creature } from '@models';
+import { AbilityType } from '@app/shared/enums';
 
 @Component({
   selector: 'target',
@@ -9,12 +10,15 @@ import { Creature } from '@models';
 export class TargetComponent implements OnInit, OnDestroy {
   @Input() isShownAbilities = false;
   @Input() creature: Creature;
-  @Input() selectedAbilityIndex = 0;
-  @Output() selectAbilityIndex = new EventEmitter<number>();
+  @Input() selectedAbilityType = 0;
+  @Output() selectAbilityType = new EventEmitter<AbilityType>();
 
   constructor() {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.selectedAbilityType = this.creature.currentAbilities[0].type;
+    this.selectAbilityType.next(this.selectedAbilityType);
+  }
   ngOnDestroy() {
     // this.subscriptions.forEach(s => s.unsubscribe);
   }
@@ -23,8 +27,8 @@ export class TargetComponent implements OnInit, OnDestroy {
     console.log(this.creature.description);
   }
 
-  selectAbility(index: number) {
-    this.selectedAbilityIndex = index;
-    this.selectAbilityIndex.next(index);
+  selectAbility(abilityType: AbilityType) {
+    this.selectedAbilityType = abilityType;
+    this.selectAbilityType.next(abilityType);
   }
 }
