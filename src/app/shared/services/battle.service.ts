@@ -5,19 +5,11 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { delay } from 'rxjs/operators';
 
 import { AbilityType, BattleState, CreatureState, EffectType, ItemType } from '@enums';
-import { Ability, AbilityResult, AbilityResultError, AbilitySettings, Cell, Creature, Hero } from '@models';
+import { Ability, AbilitySettings, BattleEvent, Cell, Creature, Hero } from '@models';
 import { AbilityFabric, CreatureFabric, EffectFabric } from '@shared/fabrics';
 import { HeroService } from './hero.service';
 import { SettingsService } from './settings.service';
 import { Random } from './random';
-
-interface BattleEvent {
-  state: BattleState;
-  currentCreature?: number;
-  ability?: AbilityType;
-  abilityResult?: AbilityResult | AbilityResultError;
-  target?: number;
-}
 
 @Injectable()
 export class BattleService {
