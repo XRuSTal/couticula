@@ -56,6 +56,7 @@ export class BattleService {
 
   startBattle() {
     this.battleStateSource.next(BattleState.Begin);
+    this.eventsSource.next({ state: BattleState.Begin });
 
     if (this.settingsService.autoWin) {
       this.winBattle();

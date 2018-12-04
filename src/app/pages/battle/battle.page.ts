@@ -2,12 +2,10 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
-import { Cell, Creature, Hero } from '@models';
+import { BattleEvent, Cell, Creature, Hero } from '@models';
 import { InventoryPage } from '@pages';
 import { BattleService, SettingsService } from '@services';
 import { AbilityType, BattleState } from '@app/shared/enums';
-import { delay, zip } from 'rxjs/operators';
-import { interval } from 'rxjs/Observable/interval';
 
 @Component({
   selector: 'page-battle',
@@ -30,6 +28,8 @@ export class BattlePage {
   lastCreatureInRound: number;
   currentRound = 1;
   waiting = true;
+
+  private stackBattleEvents: BattleEvent[] = [];
 
   get creaturesOrder() {
     return [...this.creatures.slice(this.currentCreature.index), ...this.creatures.slice(0, this.currentCreature.index)];
@@ -56,33 +56,20 @@ export class BattlePage {
   }
 
   ngOnInit() {
-    this.battleService.events$.pipe(
-      zip(interval(this.settingsService.battleEventsDelay), (event, i) => event),
-    ).subscribe(event => {
+    this.battleService.events$.subscribe(event => {
       console.log(BattleState[event.state], event);
-      this.waiting = true;
+
       switch (event.state) {
         case BattleState.Begin:
-        break;
-        case BattleState.NewRound:
-        this.currentRound++;
-        break;
-        case BattleState.NewTurn:
-        const currentCreatureIndex = this.creatures.findIndex(creature => creature.id === event.currentCreature);
-        this.currentCreature = { id: event.currentCreature, index: currentCreatureIndex };
-        break;
-        case BattleState.PlayerTurn:
-        this.waiting = false;
-        break;
-        case BattleState.PlayerAbility:
-        this.waiting = true;
-        break;
-        case BattleState.MonsterTurn:
-        break;
+          this.eventHandler();
+          break;
         case BattleState.Lose:
         case BattleState.Win:
-        this.navCtrl.pop();
-        break;
+          this.navCtrl.pop();
+          break;
+        default:
+          this.stackBattleEvents.push(event);
+          break;
       }
       this.cd.markForCheck();
     });
@@ -94,6 +81,38 @@ export class BattlePage {
     this.lastCreatureInRound = this.creatures[this.creatures.length - 1].id;
     this.cd.markForCheck();
     this.battleService.startBattle();
+  }
+
+  private eventHandler() {
+    const event = this.stackBattleEvents.shift();
+    let eventDelay = this.settingsService.battleEventsDelay;
+
+    if (event) {
+      switch (event.state) {
+        case BattleState.NewRound:
+          this.currentRound++;
+          break;
+        case BattleState.NewTurn:
+          const currentCreatureIndex = this.creatures.findIndex(creature => creature.id === event.currentCreature);
+          this.currentCreature = { id: event.currentCreature, index: currentCreatureIndex };
+          break;
+        case BattleState.PlayerTurn:
+          this.waiting = false;
+          this.cd.markForCheck();
+          // остановка обработчика событий до выбора способности героя
+          return;
+        case BattleState.PlayerAbility:
+          this.waiting = true;
+          break;
+        case BattleState.MonsterTurn:
+          break;
+      }
+    } else {
+      eventDelay = 300;
+    }
+
+    this.cd.markForCheck();
+    setTimeout(this.eventHandler.bind(this), eventDelay);
   }
 
   openInventory() {
@@ -118,5 +137,7 @@ export class BattlePage {
 
   private setHeroAction() {
     this.battleService.heroAction(this.selectedHeroAbilityType, this.targetMonter.id);
+    // возобновление обработчика событий
+    this.eventHandler();
   }
 }
