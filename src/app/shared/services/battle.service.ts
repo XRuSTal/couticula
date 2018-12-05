@@ -370,6 +370,10 @@ export class BattleService {
       : 0;
     creature.usedInThisBattleAbilities.set(ability.type, countOfUses + 1);
 
+    if (ability.maxUseCount && ability.maxUseCount === countOfUses + 1) {
+      creature.dropCurrentAbility(ability.type);
+    }
+
     return abilityResult;
   }
 
