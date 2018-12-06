@@ -49,7 +49,7 @@ export const ShopAbilitiesHeal: AbilitySettings[] = [
   {
     type: AbilityType.HeroHealStrong,
     name: 'Сильное лечение',
-    description: 'Лечение на 15 (1 раз за бой)',
+    description: 'Лечение на 20 (2 раза за бой)',
     image: 'assets/img/abilities/heal-medium.jpg',
     cost: 800,
     maxUseCount: 2,
