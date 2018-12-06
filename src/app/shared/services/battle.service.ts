@@ -293,6 +293,8 @@ export class BattleService {
     creature.dropCurrentEffects([EffectType.BlockDamage]);
     const isStunned = this.checkIfIsStunned(creature);
     if (isStunned) {
+      this.endTurn();
+      this.setNextCreature();
       return;
     }
 
