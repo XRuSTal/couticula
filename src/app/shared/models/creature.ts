@@ -125,4 +125,11 @@ export class Creature {
     }
     return damage;
   }
+
+  removeItemFormInventory(item: Item) {
+    const index = this.inventory.findIndex(value => value === item);
+    if (index !== -1) {
+      return this.inventory.splice(index, 1)[0];
+    }
+  }
 }

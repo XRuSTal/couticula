@@ -444,6 +444,8 @@ function heroCastSuppression(currentCreature: Creature, targetCreature: Creature
 
 function heroUseBottleOfHeal(currentCreature: Creature, targetCreature: Creature) {
   const dice: number = Random.throwDiceD6();
+  const bottle = currentCreature.inventory.find(item => item.type === ItemType.BottleOfHeal);
+  currentCreature.removeItemFormInventory(bottle);
   return basicHeal(
     currentCreature, currentCreature,
     { useWeapon: false, fixedHeal: 5 * dice, weaponHeal: null, diceHeal: dice }
@@ -458,6 +460,8 @@ function heroUseBottleOfPoison(currentCreature: Creature, targetCreature: Creatu
     const dice: number = Random.throwDiceD6();
     const effectType = dice > 3 ? EffectType.Poison2 : EffectType.Poison1;
     const newEffect = EffectFabric.createEffect(effectType);
+    const bottle = currentCreature.inventory.find(item => item.type === ItemType.BottleOfPoison);
+    currentCreature.removeItemFormInventory(bottle);
 
     if (effectType === EffectType.Poison1) {
       if (!targetCreature.isExistsSomeEffects([EffectType.ResistPoison1, EffectType.Poison1])) {
@@ -496,6 +500,8 @@ function heroUseBottleOfStan(currentCreature: Creature, targetCreature: Creature
     const dice: number = Random.throwDiceD6();
     const effectType = dice > 3 ? EffectType.Stan2 : EffectType.Stan;
     const newEffect = EffectFabric.createEffect(effectType);
+    const bottle = currentCreature.inventory.find(item => item.type === ItemType.BottleOfStan);
+    currentCreature.removeItemFormInventory(bottle);
     targetCreature.dropCurrentEffect(EffectType.Stan);
     targetCreature.currentEffects.push(newEffect);
 
