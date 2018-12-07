@@ -5,7 +5,7 @@ import { NavController, NavParams } from 'ionic-angular';
 import { BattleEvent, Cell, Creature, Hero } from '@models';
 import { InventoryPage } from '@pages';
 import { BattleService, SettingsService } from '@services';
-import { AbilityType, BattleState } from '@app/shared/enums';
+import { AbilityType, BattleState, CreatureState } from '@app/shared/enums';
 
 @Component({
   selector: 'page-battle',
@@ -31,8 +31,14 @@ export class BattlePage {
 
   private stackBattleEvents: BattleEvent[] = [];
 
+  get creaturesCount() {
+    return this.creatures.filter(creature => creature.state === CreatureState.Alive).length;
+  }
   get creaturesOrder() {
-    return [...this.creatures.slice(this.currentCreature.index), ...this.creatures.slice(0, this.currentCreature.index)];
+    return [
+      ...this.creatures.slice(this.currentCreature.index),
+      ...this.creatures.slice(0, this.currentCreature.index),
+    ].filter(creature => creature.state === CreatureState.Alive);
   }
   get targetMonter() {
     return this.creatures.find(creature => creature.id === this.selectedCreatureId);
@@ -103,6 +109,7 @@ export class BattlePage {
           return;
         case BattleState.PlayerAbility:
           this.waiting = true;
+
           break;
         case BattleState.MonsterTurn:
           break;

@@ -18,22 +18,22 @@
             class="battle-field__target battle-field__target_monster"></target>
 
     <div class="battle-field__creatures"
-         [ngStyle]="{ 'grid-template-columns': 'repeat(' + (creatures.length + 1) + ', minmax(10vh, auto))' }">
+         [ngStyle]="{ 'grid-template-columns': 'repeat(' + (creaturesCount + 1) + ', minmax(10vh, auto))' }">
       <ng-container *ngFor="let creature of creaturesOrder">
         <div (click)="selectedCreature(creature.id)"
              [@scaleSelected]="creature.id === selectedCreatureId ? 'selected' : ''"
              class="battle-field__creatures__creature"
              [ngClass]="{ 'battle-field__creatures__creature_selected': creature.id === selectedCreatureId }"
              [ngStyle]="{
-                'height': (27 - creatures.length * 1.5) + 'vh',
-                'width': (27 - creatures.length * 1.5) + 'vh'
+                'height': (27 - creaturesCount * 1.5) + 'vh',
+                'width': (27 - creaturesCount * 1.5) + 'vh'
               }">
           <creature-info-short [creature]='creature'></creature-info-short>
         </div>
         <div *ngIf="creature.id === lastCreatureInRound"
               class="battle-field__creatures__round"
               [ngStyle]="{
-                'height': (27 - creatures.length * 1.5) + 'vh',
+                'height': (27 - creaturesCount * 1.5) + 'vh',
                 'width': '8vh'
               }">
           <div class="battle-field__creatures__round__border"></div>
