@@ -1,5 +1,6 @@
 export enum BattleState {
   Begin,
+  ContinuationPlayerTurn,
   NewRound,
   NewTurn,
   MonsterTurn,

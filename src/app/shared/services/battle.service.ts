@@ -5,7 +5,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { delay } from 'rxjs/operators';
 
 import { AbilityType, BattleState, CreatureState, EffectType, ItemType } from '@enums';
-import { Ability, AbilitySettings, BattleEvent, Cell, Creature, Hero } from '@models';
+import { Ability, AbilityResult, AbilitySettings, BattleEvent, Cell, Creature, Hero } from '@models';
 import { AbilityFabric, CreatureFabric, EffectFabric } from '@shared/fabrics';
 import { HeroService } from './hero.service';
 import { SettingsService } from './settings.service';
@@ -37,8 +37,19 @@ export class BattleService {
       delay(100),
     ).subscribe(event => {
       if (event.state === BattleState.PlayerAbility || event.state === BattleState.MonsterAbility) {
-        this.endTurn();
-        this.setNextCreature();
+        if ('notCorrectTarget' in event.abilityResult || (event.abilityResult as AbilityResult).isAddonAction) {
+          if (event.state === BattleState.MonsterAbility) {
+            const currentCreature: Creature = this.creatures[this.currentCreature.index];
+            this.monsterAttack(currentCreature);
+          } else {
+            this.eventsSource.next({
+              state: BattleState.ContinuationPlayerTurn,
+            });
+          }
+        } else {
+          this.endTurn();
+          this.setNextCreature();
+        }
       }
     });
   }
@@ -365,18 +376,22 @@ export class BattleService {
   }
   private useAbility(creature: Creature, targetCreature: Creature, ability: Ability) {
     const abilityResult = ability.ability(creature, targetCreature);
+    if ('notCorrectTarget' in abilityResult) {
+      return abilityResult;
+    } else {
+      creature.usedInThisRoundAbilities.push(ability.type);
+      const countOfUses = creature.usedInThisBattleAbilities.has(ability.type)
+        ? creature.usedInThisBattleAbilities.get(ability.type)
+        : 0;
+      creature.usedInThisBattleAbilities.set(ability.type, countOfUses + 1);
 
-    creature.usedInThisRoundAbilities.push(ability.type);
-    const countOfUses = creature.usedInThisBattleAbilities.has(ability.type)
-      ? creature.usedInThisBattleAbilities.get(ability.type)
-      : 0;
-    creature.usedInThisBattleAbilities.set(ability.type, countOfUses + 1);
+      if (ability.maxUseCount && ability.maxUseCount === countOfUses + 1) {
+        creature.dropCurrentAbility(ability.type);
+      }
 
-    if (ability.maxUseCount && ability.maxUseCount === countOfUses + 1) {
-      creature.dropCurrentAbility(ability.type);
+      (abilityResult as AbilityResult).isAddonAction = ability.isAddonAction;
+      return abilityResult;
     }
-
-    return abilityResult;
   }
 
   private checkIfIsStunned(creature: Creature) {

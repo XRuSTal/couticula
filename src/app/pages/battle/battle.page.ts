@@ -102,6 +102,7 @@ export class BattlePage {
           const currentCreatureIndex = this.creatures.findIndex(creature => creature.id === event.currentCreature);
           this.currentCreature = { id: event.currentCreature, index: currentCreatureIndex };
           break;
+        case BattleState.ContinuationPlayerTurn:
         case BattleState.PlayerTurn:
           this.waiting = false;
           this.cd.markForCheck();
