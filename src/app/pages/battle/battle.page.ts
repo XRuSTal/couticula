@@ -105,6 +105,7 @@ export class BattlePage {
         case BattleState.ContinuationPlayerTurn:
         case BattleState.PlayerTurn:
           this.waiting = false;
+          this.prepareHeroAbilities();
           this.cd.markForCheck();
           // остановка обработчика событий до выбора способности героя
           return;
@@ -143,6 +144,14 @@ export class BattlePage {
     this.selectedHeroAbilityType = selectedAbilityType;
   }
 
+  private prepareHeroAbilities() {
+    if (
+      !this.selectedHeroAbilityType ||
+      !this.targetHero.getAvailableAbilities().find(ability => ability.type === this.selectedHeroAbilityType)
+    ) {
+      this.selectedHeroAbilityType = this.targetHero.currentAbilities[0].type;
+    }
+  }
   private setHeroAction() {
     this.battleService.heroAction(this.selectedHeroAbilityType, this.targetMonter.id);
     // возобновление обработчика событий

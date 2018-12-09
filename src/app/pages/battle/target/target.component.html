@@ -25,7 +25,7 @@
 </div>
 
 <div *ngIf="isShownAbilities" class="battle-field__target__abilites">
-  <img *ngFor="let ability of creature.currentAbilities"
+  <img *ngFor="let ability of availableAbilities"
        (click)="selectAbility(ability.type)"
        [src]="ability.image"
        class="battle-field__target__abilites__ability"

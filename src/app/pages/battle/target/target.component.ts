@@ -10,13 +10,16 @@ import { AbilityType } from '@app/shared/enums';
 export class TargetComponent implements OnInit, OnDestroy {
   @Input() isShownAbilities = false;
   @Input() creature: Creature;
-  @Input() selectedAbilityType = 0;
+  @Input() selectedAbilityType: AbilityType;
   @Output() selectAbilityType = new EventEmitter<AbilityType>();
+
+  get availableAbilities() {
+    return this.creature.getAvailableAbilities();
+  }
 
   constructor() {}
 
   ngOnInit() {
-    this.selectedAbilityType = this.creature.currentAbilities[0].type;
     this.selectAbilityType.next(this.selectedAbilityType);
   }
   ngOnDestroy() {
