@@ -43,8 +43,12 @@
       </ng-container>
     </div>
     <div class="battle-field__dices">
-      <div class="battle-field__dices__target-dice" (click)="clickTarget()"></div>
-      <div class="battle-field__dices__value-dice" (click)="clickDice()"></div>
+      <dice-target [dice]='targetHero?.lastDiceTarget'
+                    class="battle-field__dices__target-dice"
+                    (click)="clickTarget()"></dice-target>
+      <dice [dice]='targetHero?.lastDiceValue'
+            class="battle-field__dices__value-dice"
+            (click)="clickDice()"></dice>
     </div>
 
     <target [isShownAbilities]="true"

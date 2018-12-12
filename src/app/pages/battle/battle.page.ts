@@ -1,11 +1,12 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ViewChild } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
-import { BattleEvent, Cell, Creature, Hero } from '@models';
+import { AbilityType, BattleState, CreatureState } from '@enums';
+import { AbilityResult, BattleEvent, Cell, Creature, Hero } from '@models';
 import { InventoryPage } from '@pages';
 import { BattleService, SettingsService } from '@services';
-import { AbilityType, BattleState, CreatureState } from '@app/shared/enums';
+import { DiceComponent, DiceTargetComponent } from '@shared/components';
 
 @Component({
   selector: 'page-battle',
@@ -20,6 +21,10 @@ import { AbilityType, BattleState, CreatureState } from '@app/shared/enums';
   ],
 })
 export class BattlePage {
+  @ViewChild(DiceTargetComponent)
+  diceTarget: DiceTargetComponent;
+  @ViewChild(DiceComponent)
+  diceValue: DiceComponent;
   cell: Cell;
   creatures: Creature[] = [];
   selectedCreatureId: number;
@@ -92,6 +97,7 @@ export class BattlePage {
   private eventHandler() {
     const event = this.stackBattleEvents.shift();
     let eventDelay = this.settingsService.battleEventsDelay;
+    const diceDelay = this.settingsService.battleDiceDelay;
 
     if (event) {
       switch (event.state) {
@@ -111,9 +117,16 @@ export class BattlePage {
           return;
         case BattleState.PlayerAbility:
           this.waiting = true;
-
+          eventDelay += diceDelay;
+          this.diceTarget.animate((event.abilityResult as AbilityResult).diceTarget, diceDelay);
+          this.diceValue.animate((event.abilityResult as AbilityResult).diceValue, diceDelay);
           break;
         case BattleState.MonsterTurn:
+          break;
+        case BattleState.MonsterAbility:
+          eventDelay += diceDelay;
+          this.diceTarget.animate((event.abilityResult as AbilityResult).diceTarget, diceDelay);
+          this.diceValue.animate((event.abilityResult as AbilityResult).diceValue, diceDelay);
           break;
       }
     } else {

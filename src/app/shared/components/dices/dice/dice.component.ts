@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { interval } from 'rxjs/observable/interval';
 import { finalize, take } from 'rxjs/operators';
 
@@ -7,14 +7,15 @@ import { Random } from '@services';
 @Component({
   selector: 'dice',
   templateUrl: 'dice.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DiceComponent implements OnInit {
   @Input()
-  value: number;
+  dice: number;
   @Input()
   backgroundColor = 'white';
 
-  constructor() {}
+  constructor(private cd: ChangeDetectorRef) {}
 
   ngOnInit() {}
 
@@ -22,12 +23,14 @@ export class DiceComponent implements OnInit {
     interval(animateInterval)
       .pipe(
         finalize(() => {
-          this.value = value;
+          this.dice = value;
+          this.cd.markForCheck();
         }),
         take(delay / animateInterval)
       )
       .subscribe(() => {
-        this.value = Random.throwDiceD6();
+        this.dice = Random.throwDiceD6();
+        this.cd.markForCheck();
       });
   }
 }
