@@ -16,6 +16,8 @@ export class SettingsPage {
     public settingsService: SettingsService,
   ) {}
 
+  convertToNumber(event): number { return +event; }
+
   close() {
     this.navCtrl.pop();
   }
