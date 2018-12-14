@@ -1,0 +1,69 @@
+<svg viewbox="0 0 100 100" height="700" width="110" style="background-color: red"
+     xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
+
+  <g>
+  <rect class="case" width="100" height="100" x="0" y="0" rx="20" ry="20"
+        fill="white" stroke="black" stroke-width="10"/>
+  <circle r="10" cx="25" cy="25" fill="black" class="dot1" transform="translate(25, 25)"/>
+  <circle r="10" cx="25" cy="50" fill="black" class="dot2" transform="translate(25, 0)"/>
+  <circle r="10" cx="25" cy="75" fill="black" class="dot3" transform="translate(25, -25)"/>
+  <circle r="10" cx="75" cy="25" fill="black" class="dot4" transform="translate(-25, 25)"/>
+  <circle r="10" cx="75" cy="50" fill="black" class="dot5" transform="translate(-25, 0)"/>
+  <circle r="10" cx="75" cy="75" fill="black" class="dot6" transform="translate(-25, -25)"/>
+  </g>
+
+  <g transform="translate(0, 20)">
+  <rect class="case" width="100" height="100" x="0" y="100" rx="20" ry="20"
+        fill="white" stroke="black" stroke-width="10"/>
+  <circle r="10" cx="25" cy="125" fill="black" class="dot1" transform="translate(0, 50)"/>
+  <circle r="10" cx="25" cy="150" fill="black" class="dot2" transform="translate(0, 25)"/>
+  <circle r="10" cx="25" cy="175" fill="black" class="dot3"/>
+  <circle r="10" cx="75" cy="125" fill="black" class="dot4"/>
+  <circle r="10" cx="75" cy="150" fill="black" class="dot5" transform="translate(0, -25)"/>
+  <circle r="10" cx="75" cy="175" fill="black" class="dot6" transform="translate(0, -50)"/>
+  </g>
+
+  <g transform="translate(0, 40)">
+    <rect class="case" width="100" height="100" x="0" y="200" rx="20" ry="20"
+          fill="white" stroke="black" stroke-width="10"/>
+    <circle r="10" cx="25" cy="225" fill="black" class="dot1" transform="translate(25, 25)"/>
+    <circle r="10" cx="25" cy="250" fill="black" class="dot2" transform="translate(25, 0)"/>
+    <circle r="10" cx="25" cy="275" fill="black" class="dot3"/>
+    <circle r="10" cx="75" cy="225" fill="black" class="dot4"/>
+    <circle r="10" cx="75" cy="250" fill="black" class="dot5" transform="translate(-25, 0)"/>
+    <circle r="10" cx="75" cy="275" fill="black" class="dot6" transform="translate(-25, -25)"/>
+  </g>
+
+  <g transform="translate(0, 60)">
+    <rect class="case" width="100" height="100" x="0" y="300" rx="20" ry="20"
+          fill="white" stroke="black" stroke-width="10"/>
+    <circle r="10" cx="25" cy="325" fill="black" class="dot1"/>
+    <circle r="10" cx="25" cy="350" fill="black" class="dot2" transform="translate(0, 25)"/>
+    <circle r="10" cx="25" cy="375" fill="black" class="dot3"/>
+    <circle r="10" cx="75" cy="325" fill="black" class="dot4"/>
+    <circle r="10" cx="75" cy="350" fill="black" class="dot5" transform="translate(0, -25)"/>
+    <circle r="10" cx="75" cy="375" fill="black" class="dot6"/>
+  </g>
+
+  <g transform="translate(0, 80)">
+    <rect class="case" width="100" height="100" x="0" y="400" rx="20" ry="20"
+          fill="white" stroke="black" stroke-width="10"/>
+    <circle r="10" cx="25" cy="425" fill="black" class="dot1"/>
+    <circle r="10" cx="25" cy="450" fill="black" class="dot2" transform="translate(25, 0)"/>
+    <circle r="10" cx="25" cy="475" fill="black" class="dot3"/>
+    <circle r="10" cx="75" cy="425" fill="black" class="dot4"/>
+    <circle r="10" cx="75" cy="450" fill="black" class="dot5" transform="translate(-25, 0)"/>
+    <circle r="10" cx="75" cy="475" fill="black" class="dot6"/>
+  </g>
+
+  <g transform="translate(0, 100)">
+    <rect class="case" width="100" height="100" x="0" y="500" rx="20" ry="20"
+          fill="white" stroke="black" stroke-width="10"/>
+    <circle r="10" cx="25" cy="525" fill="black" class="dot1"/>
+    <circle r="10" cx="25" cy="550" fill="black" class="dot2"/>
+    <circle r="10" cx="25" cy="575" fill="black" class="dot3"/>
+    <circle r="10" cx="75" cy="525" fill="black" class="dot4"/>
+    <circle r="10" cx="75" cy="550" fill="black" class="dot5"/>
+    <circle r="10" cx="75" cy="575" fill="black" class="dot6"/>
+  </g>
+</svg>
