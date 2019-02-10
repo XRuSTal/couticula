@@ -116,10 +116,10 @@ page-battle {
         background-color: brown;
 
         &__target-dice, &__value-dice {
+          position: relative;
           height: 12vh;
           width: 12vh;
           margin: auto;
-          background-color: black;
         }
       }
     }

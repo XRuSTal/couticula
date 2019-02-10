@@ -1,5 +1,6 @@
-<div class="dice-target"
-     [ngStyle]="{
+<div *ngIf="dice"
+      class="dice-target"
+      [ngStyle]="{
         'backgroundImage': 'url(' + image + ')',
         'backgroundColor': backgroundColor
       }">

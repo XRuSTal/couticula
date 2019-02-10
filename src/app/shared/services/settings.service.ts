@@ -13,7 +13,7 @@ export class SettingsService {
   priceThirdHero = 1000;
   eventsDelay = 600;
   battleEventsDelay = 500;
-  battleDiceDelay = 500;
+  battleDiceDelay = 1000;
 
   private platformWidth: number;
   private platformHeight: number;

@@ -5,6 +5,7 @@ import { finalize, take } from 'rxjs/operators';
 import { DiceTarget, ItemType } from '@enums';
 import { Item } from '@models';
 import { Random } from '@services';
+import { animateInterval as diceAnimateInterval } from '../dice/dice.component';
 
 @Component({
   selector: 'dice-target',
@@ -25,7 +26,7 @@ export class DiceTargetComponent implements OnInit {
     this.updateImage();
   }
 
-  animate(value: DiceTarget, delay: number, animateInterval = 100) {
+  animate(value: DiceTarget, delay: number, animateInterval = diceAnimateInterval) {
     interval(animateInterval)
       .pipe(
         finalize(() => {

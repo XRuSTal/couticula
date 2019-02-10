@@ -1,13 +1,88 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import {
+  animate,
+  state,
+  style,
+  transition,
+  trigger
+} from '@angular/animations';
 import { interval } from 'rxjs/observable/interval';
 import { finalize, take } from 'rxjs/operators';
 
 import { Random } from '@services';
 
+export const animateInterval = 200;
+
+const animateFunc = `${animateInterval}ms ease-in`;
+const dotsTransitions = [
+  transition('* => 1', animate(animateFunc)),
+  transition('* => 2', animate(animateFunc)),
+  transition('* => 3', animate(animateFunc)),
+  transition('* => 4', animate(animateFunc)),
+  transition('* => 5', animate(animateFunc)),
+  transition('* => 6', animate(animateFunc)),
+];
+
 @Component({
   selector: 'dice',
   templateUrl: 'dice.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  animations: [
+    trigger('dot1State', [
+      state('1', style({ transform: 'translate(25px, 25px)' })),
+      state('2', style({ transform: 'translate(0, 50px)' })),
+      state('3', style({ transform: 'translate(25px, 25px)' })),
+      state('4', style({ transform: 'translate(0, 0)' })),
+      state('5', style({ transform: 'translate(0, 0)' })),
+      state('6', style({ transform: 'translate(0, 0)' })),
+      ...dotsTransitions,
+    ]),
+    trigger('dot2State', [
+      state('1', style({ transform: 'translate(25px, 0)' })),
+      state('2', style({ transform: 'translate(0, 25px)' })),
+      state('3', style({ transform: 'translate(25px, 0)' })),
+      state('4', style({ transform: 'translate(0, 25px)' })),
+      state('5', style({ transform: 'translate(25px, 0)' })),
+      state('6', style({ transform: 'translate(0, 0)' })),
+      ...dotsTransitions,
+    ]),
+    trigger('dot3State', [
+      state('1', style({ transform: 'translate(25px, -25px)' })),
+      state('2', style({ transform: 'translate(0, 0)' })),
+      state('3', style({ transform: 'translate(0, 0)' })),
+      state('4', style({ transform: 'translate(0, 0)' })),
+      state('5', style({ transform: 'translate(0, 0)' })),
+      state('6', style({ transform: 'translate(0, 0)' })),
+      ...dotsTransitions,
+    ]),
+    trigger('dot4State', [
+      state('1', style({ transform: 'translate(-25px, 25px)' })),
+      state('2', style({ transform: 'translate(0, 0)' })),
+      state('3', style({ transform: 'translate(0, 0)' })),
+      state('4', style({ transform: 'translate(0, 0)' })),
+      state('5', style({ transform: 'translate(0, 0)' })),
+      state('6', style({ transform: 'translate(0, 0)' })),
+      ...dotsTransitions,
+    ]),
+    trigger('dot5State', [
+      state('1', style({ transform: 'translate(-25px, 0)' })),
+      state('2', style({ transform: 'translate(0, -25px)' })),
+      state('3', style({ transform: 'translate(-25px, 0)' })),
+      state('4', style({ transform: 'translate(0, -25px)' })),
+      state('5', style({ transform: 'translate(-25px, 0)' })),
+      state('6', style({ transform: 'translate(0, 0)' })),
+      ...dotsTransitions,
+    ]),
+    trigger('dot6State', [
+      state('1', style({ transform: 'translate(-25px, -25px)' })),
+      state('2', style({ transform: 'translate(0, -50px)' })),
+      state('3', style({ transform: 'translate(-25px, -25px)' })),
+      state('4', style({ transform: 'translate(0, 0)' })),
+      state('5', style({ transform: 'translate(0, 0)' })),
+      state('6', style({ transform: 'translate(0, 0)' })),
+      ...dotsTransitions,
+    ]),
+  ]
 })
 export class DiceComponent implements OnInit {
   @Input()
@@ -19,7 +94,7 @@ export class DiceComponent implements OnInit {
 
   ngOnInit() {}
 
-  animate(value: number, delay: number, animateInterval = 100) {
+  animate(value: number, delay: number) {
     interval(animateInterval)
       .pipe(
         finalize(() => {
@@ -29,8 +104,17 @@ export class DiceComponent implements OnInit {
         take(delay / animateInterval)
       )
       .subscribe(() => {
-        this.dice = Random.throwDiceD6();
+        this.dice = this.throwNewDiceD6(this.dice);
         this.cd.markForCheck();
       });
+  }
+
+  throwNewDiceD6(except: number): number {
+    let dice: number;
+    do {
+      dice = Random.throwDiceD6();
+    } while (dice === except);
+
+    return dice;
   }
 }

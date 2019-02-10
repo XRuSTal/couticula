@@ -1,7 +1,16 @@
-<div *ngIf="dice"
-     class="dice"
-     [ngStyle]="{
-        'backgroundImage': 'url(assets/img/dices/dice' + dice + '.png)',
-        'backgroundColor': backgroundColor
-      }">
-</div>
+<svg *ngIf="dice" viewBox="0 0 100 100"
+      xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
+  <g>
+  <rect class="case" width="90" height="90" x="5" y="5" rx="20" ry="20"
+        stroke="black" stroke-width="10"
+        [ngStyle]="{
+          'fill': backgroundColor
+        }"/>
+    <circle r="10" cx="25" cy="25" fill="black" class="dot1" [@dot1State]="dice"/>
+    <circle r="10" cx="25" cy="50" fill="black" class="dot2" [@dot2State]="dice"/>
+    <circle r="10" cx="25" cy="75" fill="black" class="dot3" [@dot3State]="dice"/>
+    <circle r="10" cx="75" cy="25" fill="black" class="dot4" [@dot4State]="dice"/>
+    <circle r="10" cx="75" cy="50" fill="black" class="dot5" [@dot5State]="dice"/>
+    <circle r="10" cx="75" cy="75" fill="black" class="dot6" [@dot6State]="dice"/>
+  </g>
+</svg>

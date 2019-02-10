@@ -46,7 +46,7 @@
       <dice-target [dice]='targetHero?.lastDiceTarget'
                     class="battle-field__dices__target-dice"
                     (click)="clickTarget()"></dice-target>
-      <dice [dice]='targetHero?.lastDiceValue'
+      <dice [dice]='targetHero?.lastDiceValue || 6'
             class="battle-field__dices__value-dice"
             (click)="clickDice()"></dice>
     </div>
