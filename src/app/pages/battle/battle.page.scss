@@ -74,6 +74,8 @@ page-battle {
           &_selected {
             border-radius: 3vh;
             border: solid gold 1vh;
+            box-sizing: border-box;
+            background-color: gold;
           }
         }
 

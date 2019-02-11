@@ -25,15 +25,15 @@
              class="battle-field__creatures__creature"
              [ngClass]="{ 'battle-field__creatures__creature_selected': creature.id === selectedCreatureId }"
              [ngStyle]="{
-                'height': (27 - creaturesCount * 1.5) + 'vh',
-                'width': (27 - creaturesCount * 1.5) + 'vh'
+                'height': (26.5 - creaturesCount * 1.5) + 'vh',
+                'width': (26.5 - creaturesCount * 1.5) + 'vh'
               }">
           <creature-info-short [creature]='creature'></creature-info-short>
         </div>
         <div *ngIf="creature.id === lastCreatureInRound"
               class="battle-field__creatures__round"
               [ngStyle]="{
-                'height': (27 - creaturesCount * 1.5) + 'vh',
+                'height': (26.5 - creaturesCount * 1.5) + 'vh',
                 'width': '8vh'
               }">
           <div class="battle-field__creatures__round__border"></div>
