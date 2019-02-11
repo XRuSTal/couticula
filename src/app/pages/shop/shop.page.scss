@@ -4,7 +4,7 @@ page-shop {
       width: 100% !important;
       height: 100% !important;
       display: grid;
-      grid-template-rows: auto 1fr 20vh;
+      grid-template-rows: 8vh 1fr 20vh;
     }
     .fixed-content {
       background: url(../assets/img/backgrounds/todo.jpg) no-repeat center center fixed;

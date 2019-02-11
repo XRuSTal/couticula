@@ -1,7 +1,13 @@
 ability-list {
+  .shop__ability-list__grid {
+    height: 100%;
+    padding: 0;
+  }
+
   .shop__ability-list {
-    max-height: 55vh;
-    min-height: 55vh;
+    max-height: 100%;
+    min-height: 100%;
+    margin: 0;
     overflow:scroll !important;
     background-color:rgba(0, 0, 0, 0.4);
     border-radius: 5vh;
@@ -52,8 +58,8 @@ ability-list {
   }
 
   .shop__ability-list__info {
-    max-height: 55vh;
-    min-height: 55vh;
+    max-height: 100%;
+    min-height: 100%;
     background-color:rgba(0, 0, 0, 0.4);
     border-radius: 5vh;
     padding: 2vh;
