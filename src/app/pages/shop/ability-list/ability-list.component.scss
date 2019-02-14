@@ -1,13 +1,16 @@
 ability-list {
   .shop__ability-list__grid {
-    height: 100%;
+    height: 62vh;
+    margin-top: 10vh;
     padding: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
   }
 
   .shop__ability-list {
-    max-height: 100%;
-    min-height: 100%;
-    margin: 0;
+    max-height: 58vh; // 62vh - 2vh * 2 (margin)
+    min-height: 58vh;
+    margin: 2vh;
     overflow:scroll !important;
     background-color:rgba(0, 0, 0, 0.4);
     border-radius: 5vh;
@@ -58,11 +61,11 @@ ability-list {
   }
 
   .shop__ability-list__info {
-    max-height: 100%;
-    min-height: 100%;
+    max-height: 58vh;
+    min-height: 58vh;
+    margin: 2vh;
     background-color:rgba(0, 0, 0, 0.4);
     border-radius: 5vh;
-    padding: 2vh;
 
     &__title {
       text-align: center;
