@@ -41,14 +41,12 @@ page-battle {
       min-height: 92vh;
       max-height: 92vh;
       grid-template-columns: 1fr auto;
-      grid-template-rows: auto 1fr auto;
+      grid-template-rows: 30vh 32vh 30vh;
       grid-template-areas: "monster monster"
                            "creatures dices"
                            "hero hero";
 
       &__target {
-        height: 30vh;
-
         &_monster {
           grid-row: monster;
           grid-column: monster;
@@ -64,11 +62,11 @@ page-battle {
         grid-column: creatures;
         display: grid;
         justify-content: space-around;
+        align-content: center;
         max-width: calc(100vw - 16vh);
         background-color: gray;
 
         &__creature {
-          margin: auto;
           background-color: green;
 
           &_selected {
@@ -80,7 +78,6 @@ page-battle {
         }
 
         &__round {
-          margin: auto;
           position: relative;
 
           &__border {
