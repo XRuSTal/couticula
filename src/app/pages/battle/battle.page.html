@@ -14,34 +14,15 @@
   <div class="battle-field">
     <target [isShownAbilities]="false"
             [creature]="targetMonter"
-            (selectAbility)="selectAbility"
             class="battle-field__target battle-field__target_monster"></target>
 
-    <div class="battle-field__creatures"
-         [ngStyle]="{ 'grid-template-columns': 'repeat(' + (creaturesCount + 1) + ', minmax(10vh, auto))' }">
-      <ng-container *ngFor="let creature of creaturesOrder">
-        <div (click)="selectedCreature(creature.id)"
-             [@scaleSelected]="creature.id === selectedCreatureId ? 'selected' : ''"
-             class="battle-field__creatures__creature"
-             [ngClass]="{ 'battle-field__creatures__creature_selected': creature.id === selectedCreatureId }"
-             [ngStyle]="{
-                'height': (26.5 - creaturesCount * 1.5) + 'vh',
-                'width': (26.5 - creaturesCount * 1.5) + 'vh'
-              }">
-          <creature-info-short [creature]='creature'></creature-info-short>
-        </div>
-        <div *ngIf="creature.id === lastCreatureInRound"
-              class="battle-field__creatures__round"
-              [ngStyle]="{
-                'height': (26.5 - creaturesCount * 1.5) + 'vh',
-                'width': '8vh'
-              }">
-          <div class="battle-field__creatures__round__border"></div>
-          <div class="battle-field__creatures__round__value"
-               [ngClass]="{ 'battle-field__creatures__round__value_big': currentRound > 9 }">{{currentRound}}</div>
-        </div>
-      </ng-container>
-    </div>
+    <creatures-list [creatures]="creaturesOrder"
+                    [selectedCreatureId]="selectedCreatureId"
+                    [lastCreatureInRound]="lastCreatureInRound"
+                    [currentRound]="currentRound"
+                    (selectCreature)="onSelectCreature($event)">
+    </creatures-list>
+
     <div class="battle-field__dices">
       <dice-target [dice]='targetHero?.lastDiceTarget'
                     class="battle-field__dices__target-dice"
