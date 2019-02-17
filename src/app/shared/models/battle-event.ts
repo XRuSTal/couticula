@@ -4,6 +4,7 @@ import { AbilityResultError } from './ability-result-error';
 
 export interface BattleEvent {
   state: BattleState;
+  round?: number;
   currentCreature?: number;
   ability?: AbilityType;
   abilityResult?: AbilityResult | AbilityResultError;

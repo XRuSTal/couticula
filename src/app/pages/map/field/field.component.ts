@@ -8,7 +8,7 @@ import {
 import { AlertController, NavController, NavParams, PopoverController } from 'ionic-angular';
 
 import { Cell } from '@models';
-import { BattleService, MapService, SettingsService, TreasureService } from '@services';
+import { BattleStateService, MapService, SettingsService, TreasureService } from '@services';
 
 import { EventAttackComponent } from '../event-attack/event-attack.component';
 import { EventSearchComponent } from '../event-search/event-search.component';
@@ -38,7 +38,7 @@ export class FieldComponent implements OnInit, OnDestroy {
     public navCtrl: NavController,
     public navParams: NavParams,
     private cd: ChangeDetectorRef,
-    private battleService: BattleService,
+    private battleStateService: BattleStateService,
     private mapService: MapService,
     private treasureService: TreasureService,
     private settingsService: SettingsService
@@ -53,7 +53,7 @@ export class FieldComponent implements OnInit, OnDestroy {
     );
 
     this.subscriptions.push(
-      this.battleService.endEvent$.subscribe(cell => {
+      this.battleStateService.endEvent$.subscribe(cell => {
         const treasuresCount = this.treasureService.calcTreasuresCountAfterBattle(cell);
         const treasures = this.treasureService.generateTreasure(treasuresCount);
 

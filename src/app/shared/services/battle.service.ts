@@ -15,13 +15,11 @@ import { Random } from './random';
 export class BattleService {
   battleState$: Observable<BattleState>;
   events$: Observable<BattleEvent>;
-  endEvent$: Observable<Cell>;
 
   private cell: Cell;
   private battleStateSource: BehaviorSubject<BattleState> = new BehaviorSubject<BattleState>(
     BattleState.Begin
   );
-  private endEventSource: Subject<Cell> = new Subject<Cell>();
   private eventsSource: Subject<BattleEvent> = new Subject<BattleEvent>();
   private monsters: Creature[];
   private currentCreature: { id: number; index: number };
@@ -30,7 +28,6 @@ export class BattleService {
   creatures: Creature[];
 
   constructor(private heroService: HeroService, private settingsService: SettingsService) {
-    this.endEvent$ = this.endEventSource.asObservable();
     this.events$ = this.eventsSource.asObservable();
 
     this.events$.pipe(
@@ -84,10 +81,12 @@ export class BattleService {
     // проверка цели и способности
     const currentAbility = availableAbilities.find(ability => ability.type === abilityType);
     const targetCreature = this.creatures.find(creature => creature.id === target && creature.state === CreatureState.Alive);
-    if (!targetCreature) {
+    if (!targetCreature || !currentAbility) {
       // TODO: ошибка и повторное действие
-    } else if (!currentAbility) {
-      // TODO: ошибка и повторное действие
+      this.eventsSource.next({
+        state: BattleState.ContinuationPlayerTurn,
+      });
+      return;
     }
     const abilityResult = this.useAbility(currentCreature, targetCreature, currentAbility);
 
@@ -105,7 +104,6 @@ export class BattleService {
     this.prepareHeroAfterWin();
     this.eventsSource.next({ state: BattleState.Win });
     this.battleStateSource.next(BattleState.Win);
-    this.endEventSource.next(this.cell);
   }
   private loseBattle() {
     this.eventsSource.next({ state: BattleState.Lose });
@@ -237,9 +235,9 @@ export class BattleService {
     }
   }
   private newRound() {
-    this.battleStateSource.next(BattleState.NewRound);
-    this.eventsSource.next({ state: BattleState.NewRound });
     this.currentRound += 1;
+    this.battleStateSource.next(BattleState.NewRound);
+    this.eventsSource.next({ state: BattleState.NewRound, round: this.currentRound });
     this.creatures.forEach(creature => {
       creature.usedInThisRoundAbilities = [];
       // снятие эффектов в конце раунда

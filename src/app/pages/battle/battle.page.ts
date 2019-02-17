@@ -1,24 +1,20 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ViewChild } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs/Subject';
 
 import { AbilityType, BattleState, CreatureState } from '@enums';
 import { AbilityResult, BattleEvent, Cell, Creature, Hero } from '@models';
 import { InventoryPage } from '@pages';
-import { BattleService, SettingsService } from '@services';
+import { BattleStateService, SettingsService } from '@services';
 import { DiceComponent, DiceTargetComponent } from '@shared/components';
 
 @Component({
   selector: 'page-battle',
   templateUrl: 'battle.page.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  animations: [
-    trigger('scaleSelected', [
-      state('selected', style({ transform: 'scale(1.3)' })),
-      transition('selected => *', [animate('400ms ease-out')]),
-      transition('* => selected', [animate('200ms ease-in')]),
-    ]),
-  ],
+  animations: [],
 })
 export class BattlePage {
   @ViewChild(DiceTargetComponent)
@@ -26,127 +22,118 @@ export class BattlePage {
   @ViewChild(DiceComponent)
   diceValue: DiceComponent;
   cell: Cell;
-  creatures: Creature[] = [];
-  selectedCreatureId: number;
-  selectedHeroAbilityType: AbilityType;
-  currentCreature: { id: number; index: number; };
-  lastCreatureInRound: number;
-  currentRound = 1;
   waiting = true;
 
-  private stackBattleEvents: BattleEvent[] = [];
+  private unsubscribe$: Subject<void> = new Subject();
 
-  get creaturesCount() {
-    return this.creatures.filter(creature => creature.state === CreatureState.Alive).length;
+  get currentRound() {
+    return this.battleStateService.currentRound;
   }
-  get creaturesOrder() {
-    return [
-      ...this.creatures.slice(this.currentCreature.index),
-      ...this.creatures.slice(0, this.currentCreature.index),
-    ].filter(creature => creature.state === CreatureState.Alive);
+  get creatures() {
+    return this.battleStateService.creatures;
   }
-  get targetMonter() {
-    return this.creatures.find(creature => creature.id === this.selectedCreatureId);
+  get selectedCreatureId() {
+    return this.battleStateService.selectedCreatureId;
+  }
+  get selectedHeroAbilityType() {
+    return this.battleStateService.selectedHeroAbilityType;
+  }
+  get currentCreature() {
+    return this.battleStateService.currentCreature;
+  }
+  get lastCreatureInRound() {
+    return this.battleStateService.lastCreatureInRound;
   }
   get targetHero() {
-    return this.creatures.find(creature => creature instanceof Hero);
+    return this.battleStateService.targetHero;
+  }
+  get targetMonter() {
+    return this.battleStateService.targetMonter;
+  }
+
+  get creaturesOrder() {
+    if (this.creatures.length) {
+      return [
+        ...this.creatures.slice(this.currentCreature.index),
+        ...this.creatures.slice(0, this.currentCreature.index),
+      ].filter(creature => creature.state === CreatureState.Alive);
+    }
   }
 
   constructor(
     private cd: ChangeDetectorRef,
     public navCtrl: NavController,
     private params: NavParams,
-    private battleService: BattleService,
+    private battleStateService: BattleStateService,
     private settingsService: SettingsService,
   ) {
     this.cell = this.params.get('cell');
+
+    this.battleStateService.events$
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(event => {
+        switch (event.state) {
+          case BattleState.Lose:
+          case BattleState.Win:
+            this.navCtrl.pop();
+            this.battleStateService.finishBattle(this.cell);
+            break;
+          default:
+            this.eventHandler(event);
+            break;
+        }
+      });
+
+    this.battleStateService.startBattle(this.cell);
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad BattlePage');
   }
 
-  ngOnInit() {
-    this.battleService.events$.subscribe(event => {
-      console.log(BattleState[event.state], event);
+  ngOnInit() {}
 
-      switch (event.state) {
-        case BattleState.Begin:
-          this.eventHandler();
-          break;
-        case BattleState.Lose:
-        case BattleState.Win:
-          this.navCtrl.pop();
-          break;
-        default:
-          this.stackBattleEvents.push(event);
-          break;
-      }
-      this.cd.markForCheck();
-    });
-
-    this.battleService.createBattle(this.cell);
-    this.creatures = this.battleService.creatures;
-    this.currentCreature = { id: this.creatures[0].id, index: 0 };
-    this.selectedCreatureId = this.currentCreature.id;
-    this.lastCreatureInRound = this.creatures[this.creatures.length - 1].id;
-    this.cd.markForCheck();
-    this.battleService.startBattle();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 
-  private eventHandler() {
-    const event = this.stackBattleEvents.shift();
-    let eventDelay = this.settingsService.battleEventsDelay;
+  private eventHandler(event: BattleEvent) {
     const diceDelay = this.settingsService.battleDiceDelay;
-
     if (event) {
       switch (event.state) {
         case BattleState.NewRound:
-          this.currentRound++;
+          console.info(`ROUND ${ this.battleStateService.currentRound }`);
           break;
         case BattleState.NewTurn:
-          const currentCreatureIndex = this.creatures.findIndex(creature => creature.id === event.currentCreature);
-          this.currentCreature = { id: event.currentCreature, index: currentCreatureIndex };
           break;
         case BattleState.ContinuationPlayerTurn:
         case BattleState.PlayerTurn:
           this.waiting = false;
-          this.prepareHeroAbilities();
-          this.cd.markForCheck();
-          // остановка обработчика событий до выбора способности героя
-          return;
+          break;
         case BattleState.PlayerAbility:
           this.waiting = true;
-          eventDelay += diceDelay;
           this.diceTarget.animate((event.abilityResult as AbilityResult).diceTarget, diceDelay);
           this.diceValue.animate((event.abilityResult as AbilityResult).diceValue, diceDelay);
           break;
         case BattleState.MonsterTurn:
           break;
         case BattleState.MonsterAbility:
-          eventDelay += diceDelay;
           this.diceTarget.animate((event.abilityResult as AbilityResult).diceTarget, diceDelay);
           this.diceValue.animate((event.abilityResult as AbilityResult).diceValue, diceDelay);
           break;
       }
-    } else {
-      eventDelay = 300;
     }
-
     this.cd.markForCheck();
-    setTimeout(this.eventHandler.bind(this), eventDelay);
   }
 
   openInventory() {
     this.navCtrl.push(InventoryPage);
   }
 
-  selectedCreature(creatureId: number) {
-    this.selectedCreatureId = creatureId;
-  }
 
   clickDice() {
-    this.setHeroAction();
+    this.battleStateService.heroAction(this.selectedHeroAbilityType, this.targetMonter.id);
   }
   clickTarget() {
     // TODO убрать после реализации боя
@@ -154,20 +141,10 @@ export class BattlePage {
   }
 
   onSelectAbilityType(selectedAbilityType: AbilityType) {
-    this.selectedHeroAbilityType = selectedAbilityType;
+    this.battleStateService.selectHeroAbilityType(selectedAbilityType);
   }
 
-  private prepareHeroAbilities() {
-    if (
-      !this.selectedHeroAbilityType ||
-      !this.targetHero.getAvailableAbilities().find(ability => ability.type === this.selectedHeroAbilityType)
-    ) {
-      this.selectedHeroAbilityType = this.targetHero.currentAbilities[0].type;
-    }
-  }
-  private setHeroAction() {
-    this.battleService.heroAction(this.selectedHeroAbilityType, this.targetMonter.id);
-    // возобновление обработчика событий
-    this.eventHandler();
+  onSelectCreature(creatureId: number) {
+    this.battleStateService.selectCreature(creatureId);
   }
 }
