@@ -13,7 +13,7 @@ export class Hero extends Creature {
   constructor(
     id: number,
     name: string,
-    img: string,
+    image: string,
     hitpoint = 0,
     weapon = 0,
     head = 0,
@@ -21,7 +21,7 @@ export class Hero extends Creature {
     legs = 0,
     body = 0
   ) {
-    super(id, name, img, hitpoint, weapon, head, hands, legs, body);
+    super(id, name, image, hitpoint, weapon, head, hands, legs, body);
     this.addonHitPoint = 0;
   }
 

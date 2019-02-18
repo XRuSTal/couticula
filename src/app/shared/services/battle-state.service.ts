@@ -1,15 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { delay, takeUntil, zip } from 'rxjs/operators';
+import { takeUntil, zip } from 'rxjs/operators';
 import { interval } from 'rxjs/Observable/interval';
 
-import { AbilityType, BattleState, CreatureState, EffectType, ItemType } from '@enums';
-import { Ability, AbilityResult, AbilitySettings, BattleEvent, Cell, Creature, Hero } from '@models';
+import { AbilityType, BattleState } from '@enums';
+import { BattleEvent, Cell, CreatureView } from '@models';
 import { BattleService } from './battle.service';
 import { SettingsService } from './settings.service';
-import { Random } from './random';
 
 @Injectable()
 export class BattleStateService {
@@ -17,11 +15,12 @@ export class BattleStateService {
   events$: Observable<BattleEvent>;
   endEvent$: Observable<Cell>;
   currentRound = 1;
-  creatures: Creature[] = [];
+  creatures: CreatureView[] = [];
   selectedCreatureId: number;
   selectedHeroAbilityType: AbilityType;
   currentCreature: { id: number; index: number; };
   lastCreatureInRound: number;
+  targetHero: CreatureView;
 
   private eventsSource: Subject<BattleEvent> = new Subject<BattleEvent>();
   private endEventSource: Subject<Cell> = new Subject<Cell>();
@@ -29,9 +28,6 @@ export class BattleStateService {
 
   get targetMonter() {
     return this.creatures.find(creature => creature.id === this.selectedCreatureId);
-  }
-  get targetHero() {
-    return this.creatures.find(creature => creature instanceof Hero);
   }
 
   constructor(
@@ -46,7 +42,8 @@ export class BattleStateService {
     this.subcribeOnBattleEvents();
 
     this.battleService.createBattle(cell);
-    this.creatures = this.battleService.creatures;
+    this.creatures = this.battleService.getCreatures();
+    this.targetHero = this.creatures[0];
     this.currentCreature = { id: this.creatures[0].id, index: 0 };
     this.selectedCreatureId = this.currentCreature.id;
     this.lastCreatureInRound = this.creatures[this.creatures.length - 1].id;
@@ -109,14 +106,14 @@ export class BattleStateService {
           this.currentRound = event.round;
           break;
         case BattleState.NewTurn:
-          const currentCreatureIndex = this.creatures.findIndex(creature => creature.id === event.currentCreature);
-          this.currentCreature = { id: event.currentCreature, index: currentCreatureIndex };
+          const currentCreatureIndex = this.creatures.findIndex(creature => creature.id === event.currentCreatureId);
+          this.currentCreature = { id: event.currentCreatureId, index: currentCreatureIndex };
           break;
         case BattleState.MonsterTurn:
           break;
         case BattleState.ContinuationPlayerTurn:
         case BattleState.PlayerTurn:
-          this.prepareHeroAbilities();
+          this.prepareHero(event);
           this.eventsSource.next(event);
           // остановка обработчика событий до выбора способности героя
           return;
@@ -134,11 +131,9 @@ export class BattleStateService {
     setTimeout(this.eventHandler.bind(this), eventDelay);
   }
 
-  private prepareHeroAbilities() {
-    const isAvailableCurrentAbility = this.targetHero.getAvailableAbilities()
-      .find(ability => ability.type === this.selectedHeroAbilityType);
-    if (!this.selectedHeroAbilityType || !isAvailableCurrentAbility) {
-      this.selectedHeroAbilityType = this.targetHero.currentAbilities[0].type;
+  private prepareHero(event: BattleEvent) {
+    if (event.currentCreature) {
+      this.targetHero = this.creatures.find(creature => creature.id === event.currentCreature.id);
     }
   }
 }

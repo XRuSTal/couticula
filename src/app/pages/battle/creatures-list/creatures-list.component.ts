@@ -1,8 +1,8 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
 
-import { Creature } from '@models';
-import { AbilityType, CreatureState } from '@app/shared/enums';
+import { CreatureView } from '@models';
+import { CreatureState } from '@app/shared/enums';
 
 @Component({
   selector: 'creatures-list',
@@ -18,7 +18,7 @@ import { AbilityType, CreatureState } from '@app/shared/enums';
   ],
 })
 export class CreaturesListComponent implements OnInit {
-  @Input() creatures: Creature[];
+  @Input() creatures: CreatureView[];
   @Input() selectedCreatureId: number;
   @Input() lastCreatureInRound: number;
   @Input() currentRound: number;

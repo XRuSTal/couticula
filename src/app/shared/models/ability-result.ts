@@ -1,9 +1,9 @@
 import { DiceTarget } from '@enums';
-import { Creature } from './creature';
+import { CreatureView } from './creature-view';
 
 export interface AbilityResult {
-  targetCreatureBefore: Creature;
-  targetCreatureAfter: Creature;
+  targetCreatureBefore: CreatureView;
+  targetCreatureAfter: CreatureView;
   diceTarget: DiceTarget;
   diceValue: number;
   value: number;

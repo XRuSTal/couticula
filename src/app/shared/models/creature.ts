@@ -3,6 +3,7 @@ import { ItemFabric } from '@shared/fabrics';
 
 import { Ability } from './ability';
 import { CreatureEquipment } from './creature-equipment';
+import { CreatureView } from './creature-view';
 import { Effect } from './effect';
 import { Item } from './item';
 import { Shield } from './shield';
@@ -12,7 +13,7 @@ export class Creature {
   name: string;
   // image: ImageType = ImageType.NoImage;
   description = '';
-  img: string;
+  image: string;
   hitPoint = 0;
   maxHitPoint = 0;
   state: CreatureState = CreatureState.Alive;
@@ -32,7 +33,7 @@ export class Creature {
   constructor(
     id: number,
     name: string,
-    img: string,
+    image: string,
     hitpoint = 0,
     weapon = 0,
     head = 0,
@@ -42,7 +43,7 @@ export class Creature {
   ) {
     this.id = id;
     this.name = name;
-    this.img = img;
+    this.image = image;
     this.hitPoint = hitpoint;
     this.maxHitPoint = hitpoint;
     this.equipment.Weapon = ItemFabric.createEquipment(ItemType.Weapon, weapon);
@@ -52,6 +53,11 @@ export class Creature {
     this.equipment.Body = ItemFabric.createEquipment(ItemType.Body, body);
     this.equipment.Shield = ItemFabric.createEquipment(ItemType.Shield, 0, { hitPoints: 0 }) as Shield;
     this.abilities.push(AbilityType.MonsterBasicAttack);
+  }
+
+  convertToCreatureView() {
+    return Object.assign({}, this, { availableAbilities: this.getAvailableAbilities() });
+    // return { ...this, availableAbilities: this.getAvailableAbilities() } as CreatureView;
   }
 
   dropAbility(abilityType: AbilityType) {

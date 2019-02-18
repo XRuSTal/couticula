@@ -5,6 +5,7 @@ export * from './ability-settings';
 export * from './battle-event';
 export * from './cell';
 export * from './creature';
+export * from './creature-view';
 export * from './creature-equipment';
 export * from './creature-settings';
 export * from './effect';

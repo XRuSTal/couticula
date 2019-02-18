@@ -25,7 +25,7 @@ export class BattleService {
   private currentCreature: { id: number; index: number };
   private currentRound: number;
   private currentTargetForMonsters: number;
-  creatures: Creature[];
+  private creatures: Creature[];
 
   constructor(private heroService: HeroService, private settingsService: SettingsService) {
     this.events$ = this.eventsSource.asObservable();
@@ -62,6 +62,10 @@ export class BattleService {
     this.setNewTargetForMonster();
   }
 
+  getCreatures() {
+    return this.creatures.map(creature => creature.convertToCreatureView());
+  }
+
   startBattle() {
     this.battleStateSource.next(BattleState.Begin);
     this.eventsSource.next({ state: BattleState.Begin });
@@ -85,6 +89,8 @@ export class BattleService {
       // TODO: ошибка и повторное действие
       this.eventsSource.next({
         state: BattleState.ContinuationPlayerTurn,
+        currentCreatureId: this.currentCreature.id,
+        currentCreature: currentCreature.convertToCreatureView(),
       });
       return;
     }
@@ -92,7 +98,7 @@ export class BattleService {
 
     this.eventsSource.next({
       state: BattleState.PlayerAbility,
-      currentCreature: this.currentCreature.id,
+      currentCreatureId: this.currentCreature.id,
       ability: currentAbility.type,
       abilityResult,
       target,
@@ -290,7 +296,7 @@ export class BattleService {
 
     this.eventsSource.next({
       state: BattleState.NewTurn,
-      currentCreature: this.currentCreature.id
+      currentCreatureId: this.currentCreature.id
     });
     this.battleStateSource.next(BattleState.NewTurn);
 
@@ -334,9 +340,11 @@ export class BattleService {
   }
   private heroTurn(creature: Hero) {
     console.log('heroTurn');
+    const currentCreature = this.creatures.find(creature => creature.id === this.currentCreature.id);
     this.eventsSource.next({
       state: BattleState.PlayerTurn,
-      currentCreature: this.currentCreature.id,
+      currentCreatureId: this.currentCreature.id,
+      currentCreature: currentCreature.convertToCreatureView(),
     });
     this.battleStateSource.next(BattleState.PlayerTurn);
   }
@@ -344,7 +352,7 @@ export class BattleService {
     console.log('monsterTurn');
     this.eventsSource.next({
       state: BattleState.MonsterTurn,
-      currentCreature: this.currentCreature.id,
+      currentCreatureId: this.currentCreature.id,
     });
     this.battleStateSource.next(BattleState.MonsterTurn);
 
@@ -366,7 +374,7 @@ export class BattleService {
 
     this.eventsSource.next({
       state: BattleState.MonsterAbility,
-      currentCreature: this.currentCreature.id,
+      currentCreatureId: this.currentCreature.id,
       ability: currentAbility.type,
       abilityResult,
     });

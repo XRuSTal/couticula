@@ -1,5 +1,5 @@
 <div class="battle-field__target__main" (click)="showCreatureDescription()">
-  <ion-img src="{{creature.img}}"
+  <ion-img src="{{creature.image}}"
            class="battle-field__target__main__image" ></ion-img>
 
   <div class="battle-field__target__main__name">{{creature.name}}</div>
@@ -25,7 +25,7 @@
 </div>
 
 <div *ngIf="isShownAbilities" class="battle-field__target__abilites">
-  <img *ngFor="let ability of availableAbilities"
+  <img *ngFor="let ability of creature.availableAbilities"
        (click)="selectAbility(ability.type)"
        [src]="ability.image"
        class="battle-field__target__abilites__ability"

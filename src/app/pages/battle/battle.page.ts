@@ -5,7 +5,7 @@ import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs/Subject';
 
 import { AbilityType, BattleState, CreatureState } from '@enums';
-import { AbilityResult, BattleEvent, Cell, Creature, Hero } from '@models';
+import { AbilityResult, BattleEvent, Cell } from '@models';
 import { InventoryPage } from '@pages';
 import { BattleStateService, SettingsService } from '@services';
 import { DiceComponent, DiceTargetComponent } from '@shared/components';
