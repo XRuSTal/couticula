@@ -5,7 +5,7 @@ import { takeUntil, zip } from 'rxjs/operators';
 import { interval } from 'rxjs/Observable/interval';
 
 import { AbilityType, BattleState } from '@enums';
-import { BattleEvent, Cell, CreatureView } from '@models';
+import { BattleEvent, Cell, CreatureView, AbilityResult } from '@models';
 import { BattleService } from './battle.service';
 import { SettingsService } from './settings.service';
 
@@ -119,6 +119,7 @@ export class BattleStateService {
           return;
         case BattleState.PlayerAbility:
         case BattleState.MonsterAbility:
+          this.updateCreature((event.abilityResult as AbilityResult).targetCreatureAfter);
           eventDelay += diceDelay;
           break;
       }
@@ -134,6 +135,12 @@ export class BattleStateService {
   private prepareHero(event: BattleEvent) {
     if (event.currentCreature) {
       this.targetHero = this.creatures.find(creature => creature.id === event.currentCreature.id);
+      this.selectedHeroAbilityType = this.targetHero.availableAbilities[0].type;
     }
+  }
+
+  private updateCreature(updatedCreature: CreatureView) {
+    const creatureIndex = this.creatures.findIndex(creature => creature.id === updatedCreature.id);
+    this.creatures.splice(creatureIndex, 1, updatedCreature);
   }
 }
