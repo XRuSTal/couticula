@@ -23,4 +23,5 @@ export interface CreatureView {
   inventory: Item[];
   lastDiceValue: number;
   lastDiceTarget: DiceTarget;
+  lastTargetInBattle: number;
 }

@@ -29,6 +29,7 @@ export class Creature {
   inventory: Item[] = [];
   lastDiceValue: number = null;
   lastDiceTarget: DiceTarget = null;
+  lastTargetInBattle: number = null;
 
   constructor(
     id: number,

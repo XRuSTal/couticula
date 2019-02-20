@@ -47,8 +47,8 @@ export class BattlePage {
   get targetHero() {
     return this.battleStateService.targetHero;
   }
-  get targetMonter() {
-    return this.battleStateService.targetMonter;
+  get targetMonster() {
+    return this.battleStateService.targetMonster;
   }
 
   get creaturesOrder() {
@@ -133,7 +133,7 @@ export class BattlePage {
 
 
   clickDice() {
-    this.battleStateService.heroAction(this.selectedHeroAbilityType, this.targetMonter.id);
+    this.battleStateService.heroAction(this.selectedHeroAbilityType, this.targetMonster.id);
   }
   clickTarget() {
     // TODO убрать после реализации боя

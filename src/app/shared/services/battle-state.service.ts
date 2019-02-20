@@ -5,7 +5,7 @@ import { takeUntil, zip } from 'rxjs/operators';
 import { interval } from 'rxjs/Observable/interval';
 
 import { AbilityType, BattleState } from '@enums';
-import { BattleEvent, Cell, CreatureView, AbilityResult } from '@models';
+import { AbilityResult, BattleEvent, Cell, CreatureView } from '@models';
 import { BattleService } from './battle.service';
 import { SettingsService } from './settings.service';
 
@@ -21,14 +21,12 @@ export class BattleStateService {
   currentCreature: { id: number; index: number; };
   lastCreatureInRound: number;
   targetHero: CreatureView;
+  targetMonster: CreatureView;
 
   private eventsSource: Subject<BattleEvent> = new Subject<BattleEvent>();
   private endEventSource: Subject<Cell> = new Subject<Cell>();
   private stackBattleEvents: BattleEvent[] = [];
 
-  get targetMonter() {
-    return this.creatures.find(creature => creature.id === this.selectedCreatureId);
-  }
 
   constructor(
     private battleService: BattleService,
@@ -44,6 +42,7 @@ export class BattleStateService {
     this.battleService.createBattle(cell);
     this.creatures = this.battleService.getCreatures();
     this.targetHero = this.creatures[0];
+    this.targetMonster = this.creatures[0];
     this.currentCreature = { id: this.creatures[0].id, index: 0 };
     this.selectedCreatureId = this.currentCreature.id;
     this.lastCreatureInRound = this.creatures[this.creatures.length - 1].id;
@@ -82,6 +81,7 @@ export class BattleStateService {
 
   selectCreature(creatureId: number) {
     this.selectedCreatureId = creatureId;
+    this.targetMonster = this.creatures.find(creature => creature.id === this.selectedCreatureId);
   }
 
   heroAction(selectedHeroAbilityType: AbilityType, targetMonterId: number) {
@@ -106,19 +106,28 @@ export class BattleStateService {
           this.currentRound = event.round;
           break;
         case BattleState.NewTurn:
-          const currentCreatureIndex = this.creatures.findIndex(creature => creature.id === event.currentCreatureId);
-          this.currentCreature = { id: event.currentCreatureId, index: currentCreatureIndex };
           break;
         case BattleState.MonsterTurn:
+          const currentMonsterIndex = this.creatures.findIndex(creature => creature.id === event.currentCreatureId);
+          this.currentCreature = { id: event.currentCreatureId, index: currentMonsterIndex };
+          this.selectedCreatureId = this.creatures[currentMonsterIndex].lastTargetInBattle || this.selectedCreatureId;
+          this.prepareMonsterTurn(event);
           break;
         case BattleState.ContinuationPlayerTurn:
         case BattleState.PlayerTurn:
-          this.prepareHero(event);
+          const currentHeroIndex = this.creatures.findIndex(creature => creature.id === event.currentCreatureId);
+          this.currentCreature = { id: event.currentCreatureId, index: currentHeroIndex };
+          this.selectedCreatureId = this.creatures[currentHeroIndex].lastTargetInBattle || this.selectedCreatureId;
+          this.prepareHeroTurn(event);
           this.eventsSource.next(event);
           // остановка обработчика событий до выбора способности героя
           return;
         case BattleState.PlayerAbility:
+          this.updateCreature((event.abilityResult as AbilityResult).targetCreatureAfter);
+          eventDelay += diceDelay;
+          break;
         case BattleState.MonsterAbility:
+          this.selectedCreatureId = (event.abilityResult as AbilityResult).targetCreatureAfter.id;
           this.updateCreature((event.abilityResult as AbilityResult).targetCreatureAfter);
           eventDelay += diceDelay;
           break;
@@ -132,11 +141,14 @@ export class BattleStateService {
     setTimeout(this.eventHandler.bind(this), eventDelay);
   }
 
-  private prepareHero(event: BattleEvent) {
-    if (event.currentCreature) {
-      this.targetHero = this.creatures.find(creature => creature.id === event.currentCreature.id);
-      this.selectedHeroAbilityType = this.targetHero.availableAbilities[0].type;
-    }
+  private prepareHeroTurn(event: BattleEvent) {
+    this.targetHero = this.creatures.find(creature => creature.id === this.currentCreature.id);
+    this.selectedHeroAbilityType = this.targetHero.availableAbilities[0].type;
+    this.targetMonster = this.creatures.find(creature => creature.id === this.selectedCreatureId);
+  }
+  private prepareMonsterTurn(event: BattleEvent) {
+    this.targetMonster = this.creatures.find(creature => creature.id === this.currentCreature.id);
+    this.targetHero = this.creatures.find(creature => creature.id === this.selectedCreatureId);
   }
 
   private updateCreature(updatedCreature: CreatureView) {

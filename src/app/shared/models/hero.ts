@@ -6,7 +6,6 @@ export class Hero extends Creature {
   addonHitPoint: number;
   maxAddonHitPoint: number;
   maxItemValue: number;
-  lastTargetInBattle: number;
   uniqueAbilities: AbilityType[]; // уникальные способности героя
   shopHideAbilities: AbilityType[];
 

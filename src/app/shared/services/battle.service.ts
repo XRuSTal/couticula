@@ -385,6 +385,7 @@ export class BattleService {
     if ('notCorrectTarget' in abilityResult) {
       return abilityResult;
     } else {
+      creature.lastTargetInBattle = targetCreature.id;
       creature.usedInThisRoundAbilities.push(ability.type);
       const countOfUses = creature.usedInThisBattleAbilities.has(ability.type)
         ? creature.usedInThisBattleAbilities.get(ability.type)
