@@ -111,6 +111,7 @@ export class BattleStateService {
           const currentMonsterIndex = this.creatures.findIndex(creature => creature.id === event.currentCreatureId);
           this.currentCreature = { id: event.currentCreatureId, index: currentMonsterIndex };
           this.selectedCreatureId = this.creatures[currentMonsterIndex].lastTargetInBattle || this.selectedCreatureId;
+          this.updateCreature(event.currentCreature);
           this.prepareMonsterTurn(event);
           break;
         case BattleState.ContinuationPlayerTurn:
@@ -118,6 +119,7 @@ export class BattleStateService {
           const currentHeroIndex = this.creatures.findIndex(creature => creature.id === event.currentCreatureId);
           this.currentCreature = { id: event.currentCreatureId, index: currentHeroIndex };
           this.selectedCreatureId = this.creatures[currentHeroIndex].lastTargetInBattle || this.selectedCreatureId;
+          this.updateCreature(event.currentCreature);
           this.prepareHeroTurn(event);
           this.eventsSource.next(event);
           // остановка обработчика событий до выбора способности героя

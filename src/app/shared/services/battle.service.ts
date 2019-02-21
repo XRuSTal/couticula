@@ -340,11 +340,10 @@ export class BattleService {
   }
   private heroTurn(creature: Hero) {
     console.log('heroTurn');
-    const currentCreature = this.creatures.find(creature => creature.id === this.currentCreature.id);
     this.eventsSource.next({
       state: BattleState.PlayerTurn,
       currentCreatureId: this.currentCreature.id,
-      currentCreature: currentCreature.convertToCreatureView(),
+      currentCreature: creature.convertToCreatureView(),
     });
     this.battleStateSource.next(BattleState.PlayerTurn);
   }
@@ -353,6 +352,7 @@ export class BattleService {
     this.eventsSource.next({
       state: BattleState.MonsterTurn,
       currentCreatureId: this.currentCreature.id,
+      currentCreature: creature.convertToCreatureView(),
     });
     this.battleStateSource.next(BattleState.MonsterTurn);
 
