@@ -111,14 +111,15 @@ export class ShopPage implements OnInit, OnDestroy {
             text: 'Купить',
             handler: () => {
               console.log('Agree clicked');
-              const navTransition = confirm.dismiss();
-              this.shopService.buyNewHero().then(success => {
-                if (success) {
-                  navTransition.then(() => {
-                    this.openPage({ title: 'ChoiceHeroPage', component: ChoiceHeroPage });
-                  });
-                }
-              });
+              const navTransition = confirm.dismiss()
+                .then(() => this.shopService.buyNewHero())
+                .then(success => {
+                  if (success) {
+                    navTransition.then(() => {
+                      this.openPage({ title: 'ChoiceHeroPage', component: ChoiceHeroPage });
+                    });
+                  }
+                });
               return false;
             },
           },

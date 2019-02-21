@@ -42,7 +42,8 @@ export class EventAttackComponent {
     this.viewCtrl.dismiss();
   }
   attack() {
-    this.navCtrl.push(BattlePage, { cell: this.cell });
-    this.viewCtrl.dismiss();
+    this.viewCtrl.dismiss().then(() => {
+      this.navCtrl.push(BattlePage, { cell: this.cell });
+    });
   }
 }
