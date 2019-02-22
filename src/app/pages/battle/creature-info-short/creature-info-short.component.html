@@ -8,4 +8,9 @@
     {{creature.hitPoint}}
     <ion-icon name="heart" class="battle-field__creature-info-short__hitpoints__icon"></ion-icon>
   </div>
+  <div *ngIf="changeHitPoint"
+        class="battle-field__creature-info-short__effects"
+        [ngClass]="{ 'battle-field__creature-info-short__effects_positive': isPositive }">
+    <div class="battle-field__creature-info-short__effects__change-hitpoints">{{changeHitPoint}}</div>
+  </div>
 </div>

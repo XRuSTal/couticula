@@ -39,5 +39,28 @@ creature-info-short {
         color: red;
       }
     }
+
+    &__effects {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      height: 50%;
+      width: 50%;
+      border-radius: 50%;
+      background-color: red;
+      color: white;
+
+      &_positive {
+        background-color: blue;
+      }
+
+      &__change-hitpoints {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+    }
   }
 }
