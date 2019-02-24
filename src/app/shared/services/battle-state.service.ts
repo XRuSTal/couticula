@@ -31,13 +31,6 @@ export class BattleStateService {
   private creatureEffectEventsSource: Subject<CreatureBattleEffect> = new Subject<CreatureBattleEffect>();
   private stackBattleEvents: BattleEvent[] = [];
 
-  updateCreaturesOrder() {
-    this.orderedCreatures = [
-      ...this.creatures.slice(this.currentCreature.index),
-      ...this.creatures.slice(0, this.currentCreature.index),
-    ].filter(creature => creature.state === CreatureState.Alive);
-  }
-
   constructor(
     private battleService: BattleService,
     private settingsService: SettingsService,
@@ -52,11 +45,12 @@ export class BattleStateService {
 
     this.battleService.createBattle(cell);
     this.creatures = this.battleService.getCreatures();
+    this.orderedCreatures = this.creatures;
     this.targetHero = this.creatures[0];
     this.targetMonster = this.creatures[0];
     this.currentCreature = { id: this.creatures[0].id, index: 0 };
     this.selectedCreatureId = this.currentCreature.id;
-    this.lastCreatureInRound = this.creatures[this.creatures.length - 1].id;
+    this.updateLastCreatureInRound();
     this.battleService.startBattle();
   }
 
@@ -139,10 +133,6 @@ export class BattleStateService {
           // остановка обработчика событий до выбора способности героя
           return;
         case BattleState.PlayerAbility:
-          this.updateCreature((event.abilityResult as AbilityResult).targetCreatureAfter);
-          this.creatureEffectEventsSource.next(this.getCreatureChanges(event));
-          eventDelay += diceDelay;
-          break;
         case BattleState.MonsterAbility:
           this.selectedCreatureId = (event.abilityResult as AbilityResult).targetCreatureAfter.id;
           this.updateCreature((event.abilityResult as AbilityResult).targetCreatureAfter);
@@ -159,6 +149,13 @@ export class BattleStateService {
     setTimeout(this.eventHandler.bind(this), eventDelay);
   }
 
+  private updateCreaturesOrder() {
+    this.orderedCreatures = [
+      ...this.creatures.slice(this.currentCreature.index),
+      ...this.creatures.slice(0, this.currentCreature.index),
+    ].filter(creature => creature.state === CreatureState.Alive);
+  }
+
   private prepareHeroTurn(event: BattleEvent) {
     this.targetHero = this.creatures.find(creature => creature.id === this.currentCreature.id);
     this.selectedHeroAbilityType = this.targetHero.availableAbilities[0].type;
@@ -172,6 +169,9 @@ export class BattleStateService {
   private updateCreature(updatedCreature: CreatureView) {
     const creatureIndex = this.creatures.findIndex(creature => creature.id === updatedCreature.id);
     this.creatures[creatureIndex] = updatedCreature;
+    if (updatedCreature.state !== CreatureState.Alive && updatedCreature.id === this.lastCreatureInRound) {
+      this.updateLastCreatureInRound();
+    }
   }
 
   private getCreatureChanges(event: BattleEvent) {
@@ -191,7 +191,9 @@ export class BattleStateService {
     };
     return diff as CreatureBattleEffect;
   }
-  private getNewEffects(effects1: Effect[], effects2: Effect[]) {
-    return effects1.filter(effect1 => !effects2.some(effect2 => effect2.effectType === effect1.effectType));
+  private updateLastCreatureInRound() {
+    this.lastCreatureInRound = this.creatures
+      .filter(creature => creature.state === CreatureState.Alive)
+      .pop().id;
   }
 }
