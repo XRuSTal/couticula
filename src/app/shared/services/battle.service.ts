@@ -106,7 +106,7 @@ export class BattleService {
     this.battleStateSource.next(BattleState.PlayerAbility);
   }
 
-  winBattle() {
+  private winBattle() {
     this.prepareHeroAfterWin();
     this.eventsSource.next({ state: BattleState.Win });
     this.battleStateSource.next(BattleState.Win);
@@ -221,6 +221,9 @@ export class BattleService {
         hero.equipment.Shield.currentHitPoint = hero.equipment.Shield.hitPoint;
       }
 
+      hero.lastDiceTarget = null;
+      hero.lastDiceValue = null;
+      hero.lastTargetInBattle = null;
       hero.usedInThisRoundAbilities = [];
       hero.usedInThisBattleAbilities = new Map<AbilityType, number>();
     });
