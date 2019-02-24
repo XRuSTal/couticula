@@ -4,7 +4,7 @@ import { NavController, NavParams } from 'ionic-angular';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs/Subject';
 
-import { AbilityType, BattleState, CreatureState } from '@enums';
+import { AbilityType, BattleState } from '@enums';
 import { AbilityResult, BattleEvent, Cell } from '@models';
 import { InventoryPage } from '@pages';
 import { BattleStateService, SettingsService } from '@services';
@@ -29,9 +29,6 @@ export class BattlePage {
   get currentRound() {
     return this.battleStateService.currentRound;
   }
-  get creatures() {
-    return this.battleStateService.creatures;
-  }
   get selectedCreatureId() {
     return this.battleStateService.selectedCreatureId;
   }
@@ -51,13 +48,8 @@ export class BattlePage {
     return this.battleStateService.targetMonster;
   }
 
-  get creaturesOrder() {
-    if (this.creatures.length) {
-      return [
-        ...this.creatures.slice(this.currentCreature.index),
-        ...this.creatures.slice(0, this.currentCreature.index),
-      ].filter(creature => creature.state === CreatureState.Alive);
-    }
+  get orderedCreatures() {
+    return this.battleStateService.orderedCreatures;
   }
 
   constructor(

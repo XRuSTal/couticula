@@ -4,6 +4,7 @@ export * from './ability-result-error';
 export * from './ability-settings';
 export * from './battle-event';
 export * from './cell';
+export * from './creature-battle-effect';
 export * from './creature';
 export * from './creature-view';
 export * from './creature-equipment';
