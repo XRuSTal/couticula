@@ -1,4 +1,4 @@
-<ion-content class="inventory inventory_background" scroll="false">
+<div class="inventory inventory_background">
   <ion-toolbar class="inventory__title">
     <ion-buttons start>
       <gold></gold>
@@ -23,7 +23,7 @@
 
   <div class="inventory__hero-panel">
     <div class="inventory__hero-panel__image">
-      <ion-img src="{{selectedHero.image}}" ></ion-img>
+      <img src="{{selectedHero.image}}">
     </div>
     <div class="inventory__hero-panel__type">{{heroClassName}}</div>
     <!-- <div class="inventory__hero-panel__name">{{selectedHero.name}}</div> -->
@@ -35,12 +35,18 @@
     </div>
   </div>
 
-  <div class="inventory__hero-inventory">
-    <div *ngFor="let item of heroInventory"
-         class="inventory__hero-inventory__item"
-         (click)="equipItem(item)">
-      <item-info-short [item]='item'></item-info-short>
-    </div>
+  <div *ngIf="heroInventory.length === 0; else inventory"
+        class="inventory__hero-inventory inventory__hero-inventory_empty">
+    Нет предметов
   </div>
+  <ng-template #inventory>
+    <div class="inventory__hero-inventory">
+      <div *ngFor="let item of heroInventory"
+          class="inventory__hero-inventory__item"
+          (click)="equipItem(item)">
+        <item-info-short [item]='item'></item-info-short>
+      </div>
+    </div>
+  </ng-template>
 
-</ion-content>
+</div>
