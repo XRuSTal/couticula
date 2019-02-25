@@ -24,10 +24,9 @@
     </creatures-list>
 
     <div class="battle-field__dices">
-      <dice-target [dice]='targetHero?.lastDiceTarget'
-                    class="battle-field__dices__target-dice"
+      <dice-target class="battle-field__dices__target-dice"
                     (click)="clickTarget()"></dice-target>
-      <dice [dice]='targetHero?.lastDiceValue || 6'
+      <dice [dice]='6'
             class="battle-field__dices__value-dice"
             (click)="clickDice()"></dice>
     </div>

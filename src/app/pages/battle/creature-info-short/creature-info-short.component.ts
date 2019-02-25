@@ -12,7 +12,7 @@ import { BattleStateService } from '@services';
 })
 export class CreatureInfoShortComponent implements OnInit, OnDestroy {
   @Input() creature: CreatureView;
-  hitPointDiff: number;
+  hitPointDiff: number = null;
 
   private unsubscribe$: Subject<void> = new Subject();
 
@@ -23,8 +23,8 @@ export class CreatureInfoShortComponent implements OnInit, OnDestroy {
   get changeHitPoint() {
     if (this.hitPointDiff > 0) {
       return '+' + this.hitPointDiff;
-    } else {
-      return this.hitPointDiff;
+    } else if (this.hitPointDiff !== null) {
+      return this.hitPointDiff.toString();
     }
   }
 

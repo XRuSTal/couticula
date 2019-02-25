@@ -25,7 +25,7 @@ export class CreaturesListComponent implements OnInit {
   @Output() selectCreature = new EventEmitter<number>();
 
   get creaturesCount() {
-    return this.creatures.filter(creature => creature.state === CreatureState.Alive).length;
+    return this.creatures.length;
   }
 
   constructor() {}

@@ -3,6 +3,7 @@ export * from './ability-result';
 export * from './ability-result-error';
 export * from './ability-settings';
 export * from './battle-event';
+export * from './battle-state-event';
 export * from './cell';
 export * from './creature-battle-effect';
 export * from './creature';

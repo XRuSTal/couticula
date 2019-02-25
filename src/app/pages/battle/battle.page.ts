@@ -5,7 +5,7 @@ import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs/Subject';
 
 import { AbilityType, BattleState } from '@enums';
-import { AbilityResult, BattleEvent, Cell } from '@models';
+import { AbilityResult, BattleStateEvent, Cell } from '@models';
 import { InventoryPage } from '@pages';
 import { BattleStateService, SettingsService } from '@services';
 import { DiceComponent, DiceTargetComponent } from '@shared/components';
@@ -90,8 +90,7 @@ export class BattlePage {
     this.unsubscribe$.complete();
   }
 
-  private eventHandler(event: BattleEvent) {
-    const diceDelay = this.settingsService.battleDiceDelay;
+  private eventHandler(event: BattleStateEvent) {
     if (event) {
       switch (event.state) {
         case BattleState.NewRound:
@@ -105,14 +104,14 @@ export class BattlePage {
           break;
         case BattleState.PlayerAbility:
           this.waiting = true;
-          this.diceTarget.animate((event.abilityResult as AbilityResult).diceTarget, diceDelay);
-          this.diceValue.animate((event.abilityResult as AbilityResult).diceValue, diceDelay);
+          this.diceTarget.animate((event.abilityResult as AbilityResult).diceTarget, event.delay);
+          this.diceValue.animate((event.abilityResult as AbilityResult).diceValue, event.delay);
           break;
         case BattleState.MonsterTurn:
           break;
         case BattleState.MonsterAbility:
-          this.diceTarget.animate((event.abilityResult as AbilityResult).diceTarget, diceDelay);
-          this.diceValue.animate((event.abilityResult as AbilityResult).diceValue, diceDelay);
+          this.diceTarget.animate((event.abilityResult as AbilityResult).diceTarget, event.delay);
+          this.diceValue.animate((event.abilityResult as AbilityResult).diceValue, event.delay);
           break;
       }
     }
