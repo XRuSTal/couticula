@@ -154,9 +154,8 @@ export class BattleStateService {
   }
 
   private startTurn(event: BattleEvent) {
-    const currentMonsterIndex = this.creatures.findIndex(creature => creature.id === event.currentCreatureId);
-    this.currentCreature = { id: event.currentCreatureId, index: currentMonsterIndex };
-    this.selectedCreatureId = this.creatures[currentMonsterIndex].lastTargetInBattle || this.selectedCreatureId;
+    const currentCreatureIndex = this.creatures.findIndex(creature => creature.id === event.currentCreatureId);
+    this.currentCreature = { id: event.currentCreatureId, index: currentCreatureIndex };
     this.updateCreaturesOrder();
     this.updateCreature(event.currentCreature);
   }
@@ -169,11 +168,14 @@ export class BattleStateService {
   }
 
   private prepareHeroTurn(event: BattleEvent) {
+    const lastTarget = this.creatures[this.currentCreature.index].lastTargetInBattle;
+    this.selectedCreatureId = (!!lastTarget || lastTarget === 0) ? lastTarget : this.selectedCreatureId;
     this.targetHero = this.creatures.find(creature => creature.id === this.currentCreature.id);
     this.selectedHeroAbilityType = this.targetHero.availableAbilities[0].type;
     this.targetMonster = this.creatures.find(creature => creature.id === this.selectedCreatureId);
   }
   private prepareMonsterTurn(event: BattleEvent) {
+    this.selectedCreatureId = event.currentTargetForMonsters;
     this.targetMonster = this.creatures.find(creature => creature.id === this.currentCreature.id);
     this.targetHero = this.creatures.find(creature => creature.id === this.selectedCreatureId);
   }

@@ -347,6 +347,7 @@ export class BattleService {
       state: BattleState.PlayerTurn,
       currentCreatureId: this.currentCreature.id,
       currentCreature: creature.convertToCreatureView(),
+      currentTargetForMonsters: this.currentTargetForMonsters,
     });
     this.battleStateSource.next(BattleState.PlayerTurn);
   }
@@ -356,6 +357,7 @@ export class BattleService {
       state: BattleState.MonsterTurn,
       currentCreatureId: this.currentCreature.id,
       currentCreature: creature.convertToCreatureView(),
+      currentTargetForMonsters: this.currentTargetForMonsters,
     });
     this.battleStateSource.next(BattleState.MonsterTurn);
 

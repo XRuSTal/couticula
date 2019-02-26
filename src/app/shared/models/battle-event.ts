@@ -8,6 +8,7 @@ export interface BattleEvent {
   round?: number;
   currentCreatureId?: number;
   currentCreature?: CreatureView;
+  currentTargetForMonsters?: number;
   ability?: AbilityType;
   abilityResult?: AbilityResult | AbilityResultError;
   target?: number;
