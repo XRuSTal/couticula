@@ -1,11 +1,17 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import { Subject } from 'rxjs/Subject';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { delay } from 'rxjs/operators';
 
 import { AbilityType, BattleState, CreatureState, EffectType, ItemType } from '@enums';
-import { Ability, AbilityResult, AbilitySettings, BattleEvent, Cell, Creature, Hero } from '@models';
+import {
+  Ability,
+  AbilityResult,
+  AbilitySettings,
+  BattleEvent,
+  Cell,
+  Creature,
+  Hero,
+} from '@models';
 import { AbilityFabric, CreatureFabric, EffectFabric } from '@shared/fabrics';
 import { HeroService } from './hero.service';
 import { SettingsService } from './settings.service';
@@ -30,11 +36,12 @@ export class BattleService {
   constructor(private heroService: HeroService, private settingsService: SettingsService) {
     this.events$ = this.eventsSource.asObservable();
 
-    this.events$.pipe(
-      delay(100),
-    ).subscribe(event => {
+    this.events$.pipe(delay(100)).subscribe(event => {
       if (event.state === BattleState.PlayerAbility || event.state === BattleState.MonsterAbility) {
-        if ('notCorrectTarget' in event.abilityResult || (event.abilityResult as AbilityResult).isAddonAction) {
+        if (
+          'notCorrectTarget' in event.abilityResult ||
+          (event.abilityResult as AbilityResult).isAddonAction
+        ) {
           if (event.state === BattleState.MonsterAbility) {
             const currentCreature: Creature = this.creatures[this.currentCreature.index];
             this.monsterAttack(currentCreature);
@@ -80,11 +87,15 @@ export class BattleService {
   heroAction(abilityType: AbilityType, target: number) {
     console.log('heroAction');
 
-    const currentCreature = this.creatures.find(creature => creature.id === this.currentCreature.id);
+    const currentCreature = this.creatures.find(
+      creature => creature.id === this.currentCreature.id
+    );
     const availableAbilities = currentCreature.getAvailableAbilities(); // способность применяется N раз за бой
     // проверка цели и способности
     const currentAbility = availableAbilities.find(ability => ability.type === abilityType);
-    const targetCreature = this.creatures.find(creature => creature.id === target && creature.state === CreatureState.Alive);
+    const targetCreature = this.creatures.find(
+      creature => creature.id === target && creature.state === CreatureState.Alive
+    );
     if (!targetCreature || !currentAbility) {
       // TODO: ошибка и повторное действие
       this.eventsSource.next({
@@ -139,10 +150,11 @@ export class BattleService {
       creature.currentEffects = []; // сброс для героев
       creature.effects
         .filter(
-          effect => [
-            EffectType.BreakingChests,
-            EffectType.ForceBreakingChests
-          ].indexOf(effect.effectType) === -1)
+          effect =>
+            [EffectType.BreakingChests, EffectType.ForceBreakingChests].indexOf(
+              effect.effectType
+            ) === -1
+        )
         .forEach(effect => {
           creature.currentEffects.push(effect);
         });
@@ -299,7 +311,7 @@ export class BattleService {
 
     this.eventsSource.next({
       state: BattleState.NewTurn,
-      currentCreatureId: this.currentCreature.id
+      currentCreatureId: this.currentCreature.id,
     });
     this.battleStateSource.next(BattleState.NewTurn);
 
@@ -326,13 +338,20 @@ export class BattleService {
     const currentCreature: Creature = this.creatures[this.currentCreature.index];
     console.log('endTurn', currentCreature);
     // снятие эффектов в конце хода существа
-    currentCreature.dropCurrentEffects([EffectType.Course, EffectType.Imbecility, EffectType.Slackness]);
+    currentCreature.dropCurrentEffects([
+      EffectType.Course,
+      EffectType.Imbecility,
+      EffectType.Slackness,
+    ]);
 
     // TODO: делать проверку только после гибели
     // если погиб последний герой воин-страж, снимаем со всех защиту
-    if (!this.creatures.some(creature =>
-      creature.state === CreatureState.Alive &&
-      creature.abilities.indexOf(AbilityType.HeroHideCreature) !== -1)
+    if (
+      !this.creatures.some(
+        creature =>
+          creature.state === CreatureState.Alive &&
+          creature.abilities.indexOf(AbilityType.HeroHideCreature) !== -1
+      )
     ) {
       this.creatures.forEach(creature => {
         if (creature instanceof Hero) {
@@ -366,14 +385,20 @@ export class BattleService {
   private monsterAttack(creature: Creature) {
     console.log('monsterAttack', creature);
     // проверка цели
-    if (!this.creatures.find(target => target.id === this.currentTargetForMonsters &&
-      target.state !== CreatureState.Alive)) {
+    if (
+      !this.creatures.find(
+        target =>
+          target.id === this.currentTargetForMonsters && target.state !== CreatureState.Alive
+      )
+    ) {
       this.setNewTargetForMonster();
     }
     // берем случайную способность
     const availableAbilities = creature.getAvailableAbilities(); // способность применяется N раз за бой
     const currentAbility = availableAbilities[Random.getInt(0, availableAbilities.length - 1)];
-    const targetCreature = this.creatures.find(target => target.id === this.currentTargetForMonsters);
+    const targetCreature = this.creatures.find(
+      target => target.id === this.currentTargetForMonsters
+    );
 
     const abilityResult = this.useAbility(creature, targetCreature, currentAbility);
 
@@ -408,12 +433,12 @@ export class BattleService {
 
   private checkIfIsStunned(creature: Creature) {
     if (creature.isExistsEffect(EffectType.Stan2)) {
-        creature.dropCurrentEffect(EffectType.Stan2);
-        creature.currentEffects.push(EffectFabric.createEffect(EffectType.Stan));
-        return true;
+      creature.dropCurrentEffect(EffectType.Stan2);
+      creature.currentEffects.push(EffectFabric.createEffect(EffectType.Stan));
+      return true;
     } else if (creature.isExistsEffect(EffectType.Stan)) {
-        creature.dropCurrentEffect(EffectType.Stan);
-        return true;
+      creature.dropCurrentEffect(EffectType.Stan);
+      return true;
     } else {
       return false;
     }

@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 
 import { AbilitySettings, ShopAbilitiesPage } from '@models';
 import { PlayerService, ShopService } from '@services';
@@ -15,8 +15,9 @@ export class AbilityListComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription[] = [];
 
   get availableAbilities() {
-    return this.shopAbilitiesPage.abilities.filter(ability =>
-      !('heroClass' in ability) || ability.heroClass === this.shopService.choosenHero.heroClass
+    return this.shopAbilitiesPage.abilities.filter(
+      ability =>
+        !('heroClass' in ability) || ability.heroClass === this.shopService.choosenHero.heroClass
     );
   }
   get choosenAbility() {

@@ -1,4 +1,5 @@
-import { AbilityType, HeroClass } from '@enums';
+import { AbilityType, HeroClass } from '@shared/enums';
+import { Ability } from '@enums';
 
 export interface AbilitySettings {
   type: AbilityType;

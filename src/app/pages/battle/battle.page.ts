@@ -1,8 +1,8 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ViewChild } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
+import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs/Subject';
 
 import { AbilityType, BattleState } from '@enums';
 import { AbilityResult, BattleStateEvent, Cell } from '@models';
@@ -57,24 +57,22 @@ export class BattlePage {
     public navCtrl: NavController,
     private params: NavParams,
     private battleStateService: BattleStateService,
-    private settingsService: SettingsService,
+    private settingsService: SettingsService
   ) {
     this.cell = this.params.get('cell');
 
-    this.battleStateService.events$
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(event => {
-        switch (event.state) {
-          case BattleState.Lose:
-          case BattleState.Win:
-            this.navCtrl.pop();
-            this.battleStateService.finishBattle(this.cell);
-            break;
-          default:
-            this.eventHandler(event);
-            break;
-        }
-      });
+    this.battleStateService.events$.pipe(takeUntil(this.unsubscribe$)).subscribe(event => {
+      switch (event.state) {
+        case BattleState.Lose:
+        case BattleState.Win:
+          this.navCtrl.pop();
+          this.battleStateService.finishBattle(this.cell);
+          break;
+        default:
+          this.eventHandler(event);
+          break;
+      }
+    });
 
     this.battleStateService.startBattle(this.cell);
   }
@@ -94,7 +92,7 @@ export class BattlePage {
     if (event) {
       switch (event.state) {
         case BattleState.NewRound:
-          console.info(`ROUND ${ this.battleStateService.currentRound }`);
+          console.info(`ROUND ${this.battleStateService.currentRound}`);
           break;
         case BattleState.NewTurn:
           break;
@@ -121,7 +119,6 @@ export class BattlePage {
   openInventory() {
     this.navCtrl.push(InventoryPage);
   }
-
 
   clickDice() {
     this.battleStateService.heroAction(this.selectedHeroAbilityType, this.targetMonster.id);

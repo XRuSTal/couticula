@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { AlertController, NavController, NavParams, Tabs } from 'ionic-angular';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 
 import { ShopPageType } from '@enums';
 import { Hero, ShopAbilitiesPages } from '@models';
@@ -16,7 +16,8 @@ const maxHeroCount = 3;
   templateUrl: 'shop.page.html',
 })
 export class ShopPage implements OnInit, OnDestroy {
-  @ViewChild('shopTabs') tabRef: Tabs;
+  @ViewChild('shopTabs')
+  tabRef: Tabs;
 
   shopAbilitiesPages: ShopAbilitiesPages;
   tabEquipment: any = EquipmentComponent;
@@ -111,7 +112,8 @@ export class ShopPage implements OnInit, OnDestroy {
             text: 'Купить',
             handler: () => {
               console.log('Agree clicked');
-              const navTransition = confirm.dismiss()
+              const navTransition = confirm
+                .dismiss()
                 .then(() => this.shopService.buyNewHero())
                 .then(success => {
                   if (success) {

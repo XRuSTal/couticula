@@ -1,5 +1,11 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
-import { interval } from 'rxjs/observable/interval';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  Input,
+  OnInit,
+} from '@angular/core';
+import { interval } from 'rxjs';
 import { finalize, take } from 'rxjs/operators';
 
 import { DiceTarget, ItemType } from '@enums';
@@ -60,12 +66,9 @@ export class DiceTargetComponent implements OnInit {
   }
 
   private getRandomDiceTarget(except: DiceTarget) {
-    const dices = [
-      DiceTarget.Body,
-      DiceTarget.Hands,
-      DiceTarget.Head,
-      DiceTarget.Legs,
-    ].filter(dice => dice !== except);
+    const dices = [DiceTarget.Body, DiceTarget.Hands, DiceTarget.Head, DiceTarget.Legs].filter(
+      dice => dice !== except
+    );
     const randomIndex = Random.getInt(0, dices.length - 1);
     return dices[randomIndex];
   }

@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NavParams, ViewController } from 'ionic-angular';
-import { interval } from 'rxjs/Observable/interval';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription, interval } from 'rxjs';
 import { zip } from 'rxjs/operators';
 
 import { SearchEventType } from '@enums';

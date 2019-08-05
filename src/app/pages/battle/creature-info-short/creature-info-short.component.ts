@@ -1,6 +1,13 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  Input,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
+import { Subject } from 'rxjs';
 import { delay, filter, takeUntil, tap } from 'rxjs/operators';
-import { Subject } from 'rxjs/Subject';
 
 import { CreatureView } from '@models';
 import { BattleStateService } from '@services';
@@ -11,13 +18,14 @@ import { BattleStateService } from '@services';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CreatureInfoShortComponent implements OnInit, OnDestroy {
-  @Input() creature: CreatureView;
+  @Input()
+  creature: CreatureView;
   hitPointDiff: number = null;
 
   private unsubscribe$: Subject<void> = new Subject();
 
   get isPositive() {
-    return (this.hitPointDiff > 0);
+    return this.hitPointDiff > 0;
   }
 
   get changeHitPoint() {
@@ -28,10 +36,7 @@ export class CreatureInfoShortComponent implements OnInit, OnDestroy {
     }
   }
 
-  constructor(
-    private battleStateService: BattleStateService,
-    private cd: ChangeDetectorRef,
-  ) {}
+  constructor(private battleStateService: BattleStateService, private cd: ChangeDetectorRef) {}
 
   ngOnInit() {
     this.battleStateService.creatureEffectEvents$
@@ -46,8 +51,9 @@ export class CreatureInfoShortComponent implements OnInit, OnDestroy {
           this.hitPointDiff = null;
           this.cd.markForCheck();
         }),
-        takeUntil(this.unsubscribe$),
-      ).subscribe();
+        takeUntil(this.unsubscribe$)
+      )
+      .subscribe();
   }
 
   ngOnDestroy() {

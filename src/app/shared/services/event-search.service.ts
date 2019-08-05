@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import { Subject } from 'rxjs/Subject';
+import { Observable, Subject } from 'rxjs';
 
 import { SearchEventType } from '@enums';
 import { Cell, EventSearch, Hero, Item } from '@models';

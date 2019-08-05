@@ -1,11 +1,17 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import { Subject } from 'rxjs/Subject';
+import { Observable, Subject, interval } from 'rxjs';
 import { takeUntil, zip } from 'rxjs/operators';
-import { interval } from 'rxjs/Observable/interval';
 
 import { AbilityType, BattleState, CreatureState } from '@enums';
-import { AbilityResult, BattleEvent, BattleStateEvent, Cell, CreatureBattleEffect, CreatureView, Effect } from '@models';
+import {
+  AbilityResult,
+  BattleEvent,
+  BattleStateEvent,
+  Cell,
+  CreatureBattleEffect,
+  CreatureView,
+  Effect,
+} from '@models';
 import { BattleService } from './battle.service';
 import { SettingsService } from './settings.service';
 
@@ -17,7 +23,7 @@ export class BattleStateService {
   currentRound = 1;
   selectedCreatureId: number;
   selectedHeroAbilityType: AbilityType;
-  currentCreature: { id: number; index: number; };
+  currentCreature: { id: number; index: number };
   lastCreatureInRound: number;
   targetHero: CreatureView;
   targetMonster: CreatureView;
@@ -26,13 +32,12 @@ export class BattleStateService {
   private creatures: CreatureView[] = [];
   private eventsSource: Subject<BattleStateEvent> = new Subject<BattleStateEvent>();
   private endEventSource: Subject<Cell> = new Subject<Cell>();
-  private creatureEffectEventsSource: Subject<CreatureBattleEffect> = new Subject<CreatureBattleEffect>();
+  private creatureEffectEventsSource: Subject<CreatureBattleEffect> = new Subject<
+    CreatureBattleEffect
+  >();
   private stackBattleEvents: BattleEvent[] = [];
 
-  constructor(
-    private battleService: BattleService,
-    private settingsService: SettingsService,
-  ) {
+  constructor(private battleService: BattleService, private settingsService: SettingsService) {
     this.events$ = this.eventsSource.asObservable();
     this.endEvent$ = this.endEventSource.asObservable();
     this.creatureEffectEvents$ = this.creatureEffectEventsSource.asObservable();
@@ -57,25 +62,27 @@ export class BattleStateService {
   }
 
   private subcribeOnBattleEvents() {
-    this.battleService.events$.pipe(
-      zip(interval(100), (event, i) => event),
-      takeUntil(this.endEvent$),
-    ).subscribe(event => {
-      console.log(BattleState[event.state], event);
+    this.battleService.events$
+      .pipe(
+        zip(interval(100), (event, i) => event),
+        takeUntil(this.endEvent$)
+      )
+      .subscribe(event => {
+        console.log(BattleState[event.state], event);
 
-      switch (event.state) {
-        case BattleState.Begin:
-          this.eventHandler();
-          break;
-        case BattleState.Lose:
-        case BattleState.Win:
-          this.stackBattleEvents.push(event);
-          break;
-        default:
-          this.stackBattleEvents.push(event);
-          break;
-      }
-    });
+        switch (event.state) {
+          case BattleState.Begin:
+            this.eventHandler();
+            break;
+          case BattleState.Lose:
+          case BattleState.Win:
+            this.stackBattleEvents.push(event);
+            break;
+          default:
+            this.stackBattleEvents.push(event);
+            break;
+        }
+      });
   }
 
   selectHeroAbilityType(selectedAbilityType: AbilityType) {
@@ -137,9 +144,7 @@ export class BattleStateService {
           battleEvent.delay = abilityResultDelay;
           // отображение результата способности после броска
           setTimeout(() => {
-            this.creatureEffectEventsSource.next(
-              this.getCreatureChanges(event, eventDelay)
-            );
+            this.creatureEffectEventsSource.next(this.getCreatureChanges(event, eventDelay));
           }, battleEvent.delay + eventDelay);
           eventDelay += battleEvent.delay + eventDelay + eventDelay; // бросок + задержка + результат
           break;
@@ -154,7 +159,9 @@ export class BattleStateService {
   }
 
   private startTurn(event: BattleEvent) {
-    const currentCreatureIndex = this.creatures.findIndex(creature => creature.id === event.currentCreatureId);
+    const currentCreatureIndex = this.creatures.findIndex(
+      creature => creature.id === event.currentCreatureId
+    );
     this.currentCreature = { id: event.currentCreatureId, index: currentCreatureIndex };
     this.updateCreaturesOrder();
     this.updateCreature(event.currentCreature);
@@ -169,7 +176,8 @@ export class BattleStateService {
 
   private prepareHeroTurn(event: BattleEvent) {
     const lastTarget = this.creatures[this.currentCreature.index].lastTargetInBattle;
-    this.selectedCreatureId = (!!lastTarget || lastTarget === 0) ? lastTarget : this.selectedCreatureId;
+    this.selectedCreatureId =
+      !!lastTarget || lastTarget === 0 ? lastTarget : this.selectedCreatureId;
     this.targetHero = this.creatures.find(creature => creature.id === this.currentCreature.id);
     this.selectedHeroAbilityType = this.targetHero.availableAbilities[0].type;
     this.targetMonster = this.creatures.find(creature => creature.id === this.selectedCreatureId);
@@ -189,7 +197,10 @@ export class BattleStateService {
       }
     }
 
-    if (updatedCreature.state !== CreatureState.Alive && updatedCreature.id === this.lastCreatureInRound) {
+    if (
+      updatedCreature.state !== CreatureState.Alive &&
+      updatedCreature.id === this.lastCreatureInRound
+    ) {
       this.updateLastCreatureInRound();
     }
   }
@@ -201,14 +212,18 @@ export class BattleStateService {
       animationTime,
       creatureId: creatureAfter.id,
       diffHitpoints: creatureAfter.hitPoint - creatureBefore.hitPoint,
-      addonEffects: creatureAfter.currentEffects
-        .filter(effectAfter =>
-          !creatureBefore.currentEffects.some(effectBefore => effectBefore.effectType === effectAfter.effectType)
-        ),
-      removedEffects: creatureBefore.currentEffects
-        .filter(effectBefore =>
-          !creatureAfter.currentEffects.some(effectAfter => effectAfter.effectType === effectBefore.effectType)
-        ),
+      addonEffects: creatureAfter.currentEffects.filter(
+        effectAfter =>
+          !creatureBefore.currentEffects.some(
+            effectBefore => effectBefore.effectType === effectAfter.effectType
+          )
+      ),
+      removedEffects: creatureBefore.currentEffects.filter(
+        effectBefore =>
+          !creatureAfter.currentEffects.some(
+            effectAfter => effectAfter.effectType === effectBefore.effectType
+          )
+      ),
     };
     return diff as CreatureBattleEffect;
   }

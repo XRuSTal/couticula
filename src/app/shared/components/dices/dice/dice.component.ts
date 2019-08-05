@@ -1,12 +1,12 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import {
-  animate,
-  state,
-  style,
-  transition,
-  trigger
-} from '@angular/animations';
-import { interval } from 'rxjs/observable/interval';
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  Input,
+  OnInit,
+} from '@angular/core';
+import { animate, state, style, transition, trigger } from '@angular/animations';
+import { interval } from 'rxjs';
 import { finalize, take } from 'rxjs/operators';
 
 import { Random } from '@services';
@@ -82,7 +82,7 @@ const dotsTransitions = [
       state('6', style({ transform: 'translate(0, 0)' })),
       ...dotsTransitions,
     ]),
-  ]
+  ],
 })
 export class DiceComponent implements OnInit {
   @Input()

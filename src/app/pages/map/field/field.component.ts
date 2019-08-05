@@ -6,6 +6,7 @@ import {
   OnInit,
 } from '@angular/core';
 import { AlertController, NavController, NavParams, PopoverController } from 'ionic-angular';
+import { Subscription } from 'rxjs';
 
 import { Cell } from '@models';
 import { BattleStateService, MapService, SettingsService, TreasureService } from '@services';
@@ -13,7 +14,6 @@ import { BattleStateService, MapService, SettingsService, TreasureService } from
 import { EventAttackComponent } from '../event-attack/event-attack.component';
 import { EventSearchComponent } from '../event-search/event-search.component';
 import { EventTreasuresComponent } from '../event-treasures/event-treasures.component';
-import { Subscription } from '../../../../../node_modules/rxjs/Subscription';
 
 @Component({
   selector: 'field',
