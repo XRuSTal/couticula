@@ -1,18 +1,19 @@
 {
   "compilerOptions": {
     "baseUrl": "src",
+    "outDir": "./dist/out-tsc",
     "allowSyntheticDefaultImports": true,
     "declaration": false,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "lib": [
       "dom",
-      "es2015"
+      "es2018"
     ],
     "module": "es2015",
     "moduleResolution": "node",
     "sourceMap": true,
-    "target": "es5",
+    "target": "es2015",
     "paths": {
       "@app/*": ["app/*"],
       "@assets/*": ["assets/*"],
@@ -30,8 +31,5 @@
     "node_modules",
     "src/**/*.spec.ts"
   ],
-  "compileOnSave": false,
-  "atom": {
-    "rewriteTsconfig": false
-  }
+  "compileOnSave": false
 }

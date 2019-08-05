@@ -1,18 +1,16 @@
 {
-  "name": "ionic-hello-world",
-  "author": "Ionic Framework",
-  "config": {
-    "ionic_webpack": "./config/webpack.config.js"
-  },
+  "name": "couticula",
+  "version": "0.0.1",
+  "author": "BarinDwalin",
   "homepage": "http://ionicframework.com/",
   "private": true,
   "scripts": {
-    "clean": "ionic-app-scripts clean",
-    "build": "ionic-app-scripts build",
-    "lint": "ionic-app-scripts lint",
-    "lint:fix": "tslint --format verbose --project tsconfig.json --config tslint.json --fix",
-    "ionic:build": "ionic-app-scripts build",
-    "ionic:serve": "ionic-app-scripts serve"
+    "ng": "ng",
+    "start": "ng serve",
+    "build": "ng build",
+    "test": "ng test",
+    "lint": "ng lint",
+    "e2e": "ng e2e"
   },
   "husky": {
     "hooks": {
@@ -20,39 +18,78 @@
     }
   },
   "lint-staged": {
-    "*.ts": ["prettier --write", "git add"]
+    "*.ts": [
+      "prettier --write",
+      "git add"
+    ]
   },
   "dependencies": {
-    "@angular/animations": "5.2.11",
-    "@angular/common": "5.2.11",
-    "@angular/compiler": "5.2.11",
-    "@angular/compiler-cli": "5.2.11",
-    "@angular/core": "5.2.11",
-    "@angular/forms": "5.2.11",
-    "@angular/http": "5.2.11",
-    "@angular/platform-browser": "5.2.11",
-    "@angular/platform-browser-dynamic": "5.2.11",
-    "@ionic-native/core": "4.7.0",
-    "@ionic-native/splash-screen": "4.7.0",
-    "@ionic-native/status-bar": "4.7.0",
-    "@ionic/pro": "1.0.20",
-    "@ionic/storage": "2.1.3",
-    "ionic-angular": "3.9.2",
-    "ionicons": "3.0.0",
-    "npm": "^6.3.0",
-    "rxjs": "5.5.11",
-    "sw-toolbox": "3.6.0",
-    "zone.js": "0.8.26"
+    "@angular/common": "~8.1.2",
+    "@angular/compiler": "~8.1.2",
+    "@angular/core": "~8.1.2",
+    "@angular/forms": "~8.1.2",
+    "@angular/platform-browser": "~8.1.2",
+    "@angular/platform-browser-dynamic": "~8.1.2",
+    "@angular/router": "~8.1.2",
+    "@ionic-native/core": "^5.0.0",
+    "@ionic-native/splash-screen": "^5.0.0",
+    "@ionic-native/status-bar": "^5.0.0",
+    "@ionic/angular": "^4.7.1",
+    "cordova-android": "^8.0.0",
+    "core-js": "^2.5.4",
+    "rxjs": "~6.5.1",
+    "tslib": "^1.9.0",
+    "zone.js": "~0.9.1"
   },
   "devDependencies": {
-    "@ionic/app-scripts": "3.1.10",
+    "@angular-devkit/architect": "~0.801.2",
+    "@angular-devkit/build-angular": "~0.801.2",
+    "@angular-devkit/core": "~8.1.2",
+    "@angular-devkit/schematics": "~8.1.2",
+    "@angular/cli": "~8.1.2",
+    "@angular/compiler": "~8.1.2",
+    "@angular/compiler-cli": "~8.1.2",
+    "@angular/language-service": "~8.1.2",
+    "@ionic/angular-toolkit": "~2.0.0",
+    "@types/jasmine": "~3.3.8",
+    "@types/jasminewd2": "~2.0.3",
+    "@types/node": "~8.9.4",
+    "codelyzer": "^5.0.0",
     "husky": "^1.0.0-rc.13",
+    "jasmine-core": "~3.4.0",
+    "jasmine-spec-reporter": "~4.2.1",
+    "karma": "~4.1.0",
+    "karma-chrome-launcher": "~2.2.0",
+    "karma-coverage-istanbul-reporter": "~2.0.1",
+    "karma-jasmine": "~2.0.1",
+    "karma-jasmine-html-reporter": "^1.4.0",
     "lint-staged": "^7.2.2",
     "prettier": "1.14.2",
-    "tslint": "^5.11.0",
-    "tslint-ionic-rules": "0.0.17",
-    "typescript": "~2.6.2",
-    "webpack-merge": "^4.1.3"
+    "protractor": "~5.4.0",
+    "ts-node": "~7.0.0",
+    "tslint": "~5.15.0",
+    "typescript": "~3.4.3",
+    "cordova-plugin-whitelist": "1.3.3",
+    "cordova-plugin-statusbar": "2.4.2",
+    "cordova-plugin-device": "2.0.2",
+    "cordova-plugin-splashscreen": "5.0.2",
+    "cordova-plugin-ionic-webview": "^4.0.0",
+    "cordova-plugin-ionic-keyboard": "^2.0.5"
   },
-  "description": "githubIonic: An Ionic project"
+  "description": "githubIonic: An RPG project",
+  "cordova": {
+    "plugins": {
+      "cordova-plugin-whitelist": {},
+      "cordova-plugin-statusbar": {},
+      "cordova-plugin-device": {},
+      "cordova-plugin-splashscreen": {},
+      "cordova-plugin-ionic-webview": {
+        "ANDROID_SUPPORT_ANNOTATIONS_VERSION": "27.+"
+      },
+      "cordova-plugin-ionic-keyboard": {}
+    },
+    "platforms": [
+      "android"
+    ]
+  }
 }
