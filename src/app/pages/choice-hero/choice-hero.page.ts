@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 
 import { HeroSettings } from '@models';

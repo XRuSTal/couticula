@@ -5,7 +5,7 @@ import {
   OnDestroy,
   OnInit,
 } from '@angular/core';
-import { AlertController, NavController, NavParams, PopoverController } from 'ionic-angular';
+import { AlertController, NavController, NavParams, PopoverController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 
 import { Cell } from '@models';

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { NavParams, ViewController } from 'ionic-angular';
+import { NavParams, ViewController } from '@ionic/angular';
 
 import { Cell, Hero } from '@models';
 import { HeroService, MapService } from '@services';

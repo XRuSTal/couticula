@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { NavController } from 'ionic-angular';
+import { NavController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 
 import { ItemType } from '@enums';

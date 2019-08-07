@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams } from '@ionic/angular';
 
 import { ChoiceHeroPage, MapPage, ShopPage } from '@pages';
 
@@ -24,10 +24,6 @@ export class SinglePage {
   }
 
   openFirstGamePage() {
-    this.navCtrl.setPages([
-      { page: MapPage },
-      { page: ShopPage },
-      { page: ChoiceHeroPage },
-    ]);
+    this.navCtrl.setPages([{ page: MapPage }, { page: ShopPage }, { page: ChoiceHeroPage }]);
   }
 }

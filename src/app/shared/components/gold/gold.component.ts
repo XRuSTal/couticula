@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController } from 'ionic-angular';
 
 import { PlayerService } from '@services';
 
@@ -12,7 +11,7 @@ export class GoldComponent implements OnInit {
     return this.playerService.gold;
   }
 
-  constructor(public navCtrl: NavController, private playerService: PlayerService) {}
+  constructor(private playerService: PlayerService) {}
 
   ngOnInit() {}
 

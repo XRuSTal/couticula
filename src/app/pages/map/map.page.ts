@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController } from '@ionic/angular';
 
 import { InventoryPage, ShopPage } from '@pages';
 
@@ -8,9 +8,7 @@ import { InventoryPage, ShopPage } from '@pages';
   templateUrl: 'map.page.html',
 })
 export class MapPage {
-  constructor(
-    public navCtrl: NavController,
-  ) {}
+  constructor(public navCtrl: NavController) {}
 
   ngOnInit() {}
 

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams } from '@ionic/angular';
 import { SettingsService } from '@services';
 import { GameMode } from '@shared/enums';
 
@@ -13,10 +13,12 @@ export class SettingsPage {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    public settingsService: SettingsService,
+    public settingsService: SettingsService
   ) {}
 
-  convertToNumber(event): number { return +event; }
+  convertToNumber(event): number {
+    return +event;
+  }
 
   close() {
     this.navCtrl.pop();

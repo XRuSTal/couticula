@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams } from '@ionic/angular';
 
 import { Hero, HeroSettings } from '@models';
 
@@ -8,7 +8,8 @@ import { Hero, HeroSettings } from '@models';
   templateUrl: 'card-hero.component.html',
 })
 export class CardHeroComponent {
-  @Input() hero: HeroSettings;
+  @Input()
+  hero: HeroSettings;
 
   get heroClassName() {
     return Hero.getHeroClassName(this.hero.heroClass);

@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { NavParams, ViewController } from 'ionic-angular';
+import { NavParams, ViewController } from '@ionic/angular';
 import { Subscription, interval } from 'rxjs';
 import { zip } from 'rxjs/operators';
 

@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { AlertController, NavController, NavParams, Tabs } from 'ionic-angular';
+import { AlertController, NavController, NavParams, Tabs } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 
 import { ShopPageType } from '@enums';
