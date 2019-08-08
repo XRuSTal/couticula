@@ -24,12 +24,5 @@
       "@services": ["app/shared/services"]
     }
   },
-  "include": [
-    "src/**/*.ts"
-  ],
-  "exclude": [
-    "node_modules",
-    "src/**/*.spec.ts"
-  ],
   "compileOnSave": false
 }
