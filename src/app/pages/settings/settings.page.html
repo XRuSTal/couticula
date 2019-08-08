@@ -1,19 +1,23 @@
 <ion-content class="settings settings_background">
-  <ion-toolbar class="settings__title">
-    <ion-title>Настройки</ion-title>
+  <ion-toolbar class="settings__header">
+    <ion-title class="settings__header__name">Настройки</ion-title>
     <ion-buttons end>
-      <button ion-button (click)="close()">
+      <ion-button fill="outline"
+                  color="light"
+                  (click)="close()">
         Закрыть
-      </button>
+      </ion-button>
     </ion-buttons>
   </ion-toolbar>
 
   <ion-list class="settings__list">
     <ion-item>
       <ion-label>Режим игры</ion-label>
-      <ion-select [(ngModel)]="settingsService.gameMode">
-        <ion-option [value]="gameMode.Easy">Простой</ion-option>
-        <ion-option [value]="gameMode.Hard">Сложный</ion-option>
+      <ion-select [(ngModel)]="settingsService.gameMode"
+                  okText="Да!"
+                  cancelText="Отмена">
+        <ion-select-option [value]="gameMode.Easy">Простой</ion-select-option>
+        <ion-select-option [value]="gameMode.Hard">Сложный</ion-select-option>
       </ion-select>
     </ion-item>
 

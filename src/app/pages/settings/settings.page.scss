@@ -1,46 +1,29 @@
-page-settings {
-  .settings {
-    > .scroll-content {
-      width: 100% !important;
-      height: 100% !important;
-      display: grid;
-      grid-template-rows: auto 1fr;
+.settings {
+  &_background {
+    --background: url('assets/img/backgrounds/todo.jpg') no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+  }
+
+  &__header {
+    min-height: auto;
+    --background: transparent;
+    color: white;
+
+    &__name {
+      font-weight: bold;
     }
-    .fixed-content { }
+  }
 
-    &_background {
-      background: url(../assets/img/backgrounds/todo.jpg) no-repeat center center fixed;
-      -webkit-background-size: cover;
-      -moz-background-size: cover;
-      -o-background-size: cover;
-      background-size: cover;
-    }
-
-    &__title {
-      min-height: auto;
-      .toolbar-background {
-        background-color: transparent;
-      }
-
-      ion-buttons button {
-        color: white;
-      }
-
-      ion-title .toolbar-title {
-        font-weight: bold;
-        color: white;
-      }
-    }
-
-    &__list {
-      display: grid;
-      grid-template-columns: 45vw 45vw;
-      grid-template-rows: repeat(auto-fill, 15vh);
-      justify-content: space-around;
-      padding: 5vh;
-      color: white;
-
-      .input-cover { position: static; }
-    }
+  &__list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-column-gap: 2vh;
+    justify-content: space-around;
+    padding: 5vh;
+    background: transparent;
+    color: white;
   }
 }
