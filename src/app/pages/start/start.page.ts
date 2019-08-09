@@ -1,28 +1,21 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from '@ionic/angular';
+import { Router } from '@angular/router';
 
-import { MultiplayerPage, SettingsPage, SinglePage } from '@pages';
-
-/*
-  Generated class for the Start page.
-
-  See http://ionicframework.com/docs/v2/components/#navigation for more info on
-  Ionic pages and navigation.
-*/
 @Component({
   selector: 'page-start',
   templateUrl: 'start.page.html',
+  styleUrls: ['start.page.scss'],
 })
 export class StartPage {
   background: string;
-  pages: { title: string; component: any }[];
+  pages: { title: string; route: string }[];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(private router: Router) {
     this.background = 'assets/img/start-background.jpg';
     this.pages = [
-      { title: 'Single', component: SinglePage },
-      { title: 'Multiplayer', component: MultiplayerPage },
-      { title: 'Settings', component: SettingsPage },
+      { title: 'Single', route: '/single' },
+      { title: 'Multiplayer', route: '/multiplayer' },
+      { title: 'Settings', route: '/settings' },
     ];
   }
 
@@ -30,8 +23,6 @@ export class StartPage {
     console.log('ionViewDidLoad StartPage');
   }
   openPage(page) {
-    console.log('openPage ' + page.title);
-    this.navCtrl.push(page.component);
-    // this.navCtrl.setRoot(page.component);
+    this.router.navigateByUrl(page.route);
   }
 }

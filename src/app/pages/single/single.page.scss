@@ -1,23 +1,26 @@
-page-single {
-    .single-background {
-         background: url(../assets/img/backgrounds/todo.jpg) no-repeat center center fixed;
-        -webkit-background-size: cover;
-        -moz-background-size: cover;
-        -o-background-size: cover;
-        background-size: cover;
-        
-        .scroll-content {
-            display: table !important;
-            width: 100% !important;
-            height: 100% !important;
-        }
-        
-        .center {
-            text-align: center;
-            font-weight: bold;
-            color: white;
-            background-color: black;
-            opacity: 0.5;
-        }
-    }         
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  height: 100vh;
+  background: url('assets/img/backgrounds/start.jpg') no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+
+  .header {
+    width: 100%;
+    text-align: center;
+    font-weight: bold;
+    color: var(--ion-color-dark-contrast);
+    background-color: var(--ion-color-dark);
+    opacity: var(--control-opacity);
+  }
+
+  .loader {
+    height: 3vh;
+    margin: 5vh;
+  }
 }
