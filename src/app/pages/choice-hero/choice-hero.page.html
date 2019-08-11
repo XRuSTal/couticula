@@ -1,12 +1,13 @@
+<ion-content class="container">
+  <h2 class="header">Выбор героя</h2>
 
-<ion-content class="choice-hero-background" scroll="false">
-    <h2 class="center">Выбор героя</h2>
-
-    <ion-grid>
-        <ion-row>
-            <ion-col *ngFor="let hero of heroes">
-                <card-hero [hero]="hero" (click)="selectHero(hero)"></card-hero>
-            </ion-col>
-        </ion-row>
-    </ion-grid>
+  <ion-grid>
+    <ion-row>
+      <ion-col *ngFor="let hero of heroes">
+        <card-hero class="hero"
+                  [hero]="hero"
+                  (click)="selectHero(hero)"></card-hero>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

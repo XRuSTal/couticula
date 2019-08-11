@@ -1,24 +1,12 @@
-<ion-card class="hero">
+<ion-card class="hero"
+          color="light">
+  <ion-card-header class="hero__title">
+    <ion-card-subtitle>{{heroClassName}}</ion-card-subtitle>
+  </ion-card-header>
 
-  <div class="card-title">{{heroClassName}}</div>
+  <img class="hero__image" src="{{hero.img}}">
 
-  <div align="center">
-    <img src="{{hero.img}}">
-  </div>
-
-  <div class="description"  align="justify">
-    <b>Особенность: </b>
-    <span>{{hero.description}}</span>
-  </div>
-
+  <ion-card-content class="hero__description">
+    <b>Особенность: </b>{{hero.description}}
+  </ion-card-content>
 </ion-card>
-
-
-<!--<div class="col-xs-4">\
-    <div class="row"><img style= "float:left; width:80px;" src= "' + images[ImageType.HeroCleric].src + '" /></div>\
-    <div class="row"><b><span style="float:left;">Клирик</span></b></div>\
-</div>\
-<div class="col-xs-4">\
-    <div class="row"><img style= "float:left; width:80px;" src= "' + images[ImageType.HeroScout].src + '" /></div>\
-    <div class="row"><b><span style="float:left;">Следопыт</span></b></div>\
-</div>\-->

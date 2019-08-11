@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { NavController, NavParams } from '@ionic/angular';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
 import { HeroSettings } from '@models';
@@ -8,6 +8,7 @@ import { GameService, HeroService, ShopService } from '@services';
 @Component({
   selector: 'page-choice-hero',
   templateUrl: 'choice-hero.page.html',
+  styleUrls: ['choice-hero.page.scss'],
 })
 export class ChoiceHeroPage implements OnInit, OnDestroy {
   heroes: HeroSettings[];
@@ -15,8 +16,7 @@ export class ChoiceHeroPage implements OnInit, OnDestroy {
   private subscriptions: Subscription[] = [];
 
   constructor(
-    public navCtrl: NavController,
-    public navParams: NavParams,
+    private router: Router,
     public gameService: GameService,
     public heroService: HeroService,
     public shopService: ShopService
@@ -31,12 +31,14 @@ export class ChoiceHeroPage implements OnInit, OnDestroy {
     this.subscriptions.forEach(s => s.unsubscribe);
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad ChoiceHeroPage');
-  }
   selectHero(hero: HeroSettings) {
+    const isFirstHero = this.heroService.heroes.length === 0;
     this.heroService.addNewHero(hero.heroClass).then(() => {
-      this.navCtrl.pop();
+      if (isFirstHero) {
+        this.router.navigateByUrl('/map');
+      } else {
+        this.router.navigateByUrl('/shop');
+      }
     });
   }
 }
