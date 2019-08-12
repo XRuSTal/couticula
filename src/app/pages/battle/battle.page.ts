@@ -1,5 +1,11 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ViewChild } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnDestroy,
+  ViewChild,
+} from '@angular/core';
 import { NavController, NavParams } from '@ionic/angular';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -16,10 +22,10 @@ import { DiceComponent, DiceTargetComponent } from '@shared/components';
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [],
 })
-export class BattlePage {
-  @ViewChild(DiceTargetComponent)
+export class BattlePage implements OnDestroy {
+  @ViewChild(DiceTargetComponent, { static: true })
   diceTarget: DiceTargetComponent;
-  @ViewChild(DiceComponent)
+  @ViewChild(DiceComponent, { static: true })
   diceValue: DiceComponent;
   cell: Cell;
   waiting = true;
@@ -77,12 +83,6 @@ export class BattlePage {
     this.battleStateService.startBattle(this.cell);
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad BattlePage');
-  }
-
-  ngOnInit() {}
-
   ngOnDestroy() {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
@@ -117,7 +117,7 @@ export class BattlePage {
   }
 
   openInventory() {
-    this.navCtrl.push(InventoryPage);
+    // this.navCtrl.push(InventoryPage);
   }
 
   clickDice() {

@@ -1,22 +1,32 @@
 
 <ion-content class="shop shop__background" scroll="false">
   <ion-toolbar class="shop__title">
-    <ion-buttons start>
+    <ion-buttons slot="start">
       <gold></gold>
     </ion-buttons>
     <ion-title>Магазин</ion-title>
-    <ion-buttons end>
-      <button ion-button (click)="close()">
+    <ion-buttons slot="end">
+      <ion-button fill="outline"
+                  color="light"
+                  (click)="close()">
         Закрыть
-      </button>
+      </ion-button>
     </ion-buttons>
   </ion-toolbar>
 
-  <ion-tabs #shopTabs tabsPlacement="top" (ionChange)="onTabsChange()">
-    <ion-tab tabIcon="contact" small tabTitle="Снаряжение" [root]="tabEquipment" [rootParams]="equipmentPage"></ion-tab>
-    <ion-tab *ngFor="let page of shopAbilitiesPages.pages"
-             tabIcon="flame" small [tabTitle]="page.title"
-             [root]="tabAbilityList" [rootParams]="page"></ion-tab>
+  <ion-tabs #shopTabs (ionChange)="onTabsChange()">
+    <ion-tab-bar slot="top">
+      <ion-tab-button tab="tabEquipment">
+        <ion-icon name="contact"></ion-icon>
+        <ion-label>Снаряжение</ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button *ngFor="let page of shopAbilitiesPages.pages"
+                       [tab]="page.title">
+        <ion-icon name="flame"></ion-icon>
+        <ion-label>{{page.title}}</ion-label>
+      </ion-tab-button>
+    </ion-tab-bar>
   </ion-tabs>
 
   <div class="shop__footer">

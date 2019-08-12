@@ -19,9 +19,6 @@ export class StartPage {
     ];
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad StartPage');
-  }
   openPage(page) {
     this.router.navigateByUrl(page.route);
   }

@@ -1,25 +1,24 @@
 
-<ion-content class="map-background" scroll="false">
-  <ion-toolbar class="map-title">
-    <ion-buttons start>
+<ion-content class="map">
+  <ion-toolbar class="map__title">
+    <ion-buttons slot="start">
       <gold></gold>
-      <!--<button ion-button (click)="selectGold()">
-        {{gold}}
-        <img src="assets/img/gold.png" alt="" title="" />        
-      </button>-->
-    </ion-buttons>  
-    <ion-title>Карта</ion-title>  
-    <ion-buttons end>
-      <button ion-button (click)="openShop()">
+    </ion-buttons>
+    <ion-title>Карта</ion-title>
+    <ion-buttons slot="end">
+      <ion-button fill="outline"
+                  color="light"
+                  (click)="openShop()">
         Магазин
-      </button>
-      <button ion-button (click)="openInventory()">
+      </ion-button>
+      <ion-button fill="outline"
+                  color="light"
+                  (click)="openInventory()">
         Инвентарь
-      </button>
+      </ion-button>
     </ion-buttons>
   </ion-toolbar>
 
-  <field>
-  </field>
+  <field></field>
 
 </ion-content>

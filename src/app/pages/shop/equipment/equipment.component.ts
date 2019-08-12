@@ -44,7 +44,7 @@ export class EquipmentComponent implements OnInit, OnDestroy {
     private shopService: ShopService
   ) {
     // Id is 1, nav refers to Tab1
-    console.log(this.navCtrl.id);
+    //console.log(this.navCtrl.id);
   }
 
   ngOnInit() {

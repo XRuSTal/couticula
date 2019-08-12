@@ -1,15 +1,66 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import { StartPage } from './pages';
+import {
+  ChoiceHeroPage,
+  InventoryPage,
+  LoginPage,
+  MapPage,
+  MultiplayerPage,
+  SettingsPage,
+  ShopPage,
+  SinglePage,
+  StartPage,
+} from './pages';
 
 const routes: Routes = [
   {
     path: 'start-page',
     component: StartPage,
+    pathMatch: 'full',
+  },
+  {
+    path: 'choice-hero',
+    component: ChoiceHeroPage,
+    pathMatch: 'full',
+  },
+  {
+    path: 'inventory',
+    component: InventoryPage,
+    pathMatch: 'full',
+  },
+  {
+    path: 'login',
+    component: LoginPage,
+    pathMatch: 'full',
+  },
+  {
+    path: 'map',
+    component: MapPage,
+    pathMatch: 'full',
+  },
+  {
+    path: 'multiplayer',
+    component: MultiplayerPage,
+    pathMatch: 'full',
+  },
+  {
+    path: 'settings',
+    component: SettingsPage,
+    pathMatch: 'full',
+  },
+  {
+    path: 'shop',
+    component: ShopPage,
+    pathMatch: 'full',
+  },
+  {
+    path: 'single',
+    component: SinglePage,
+    pathMatch: 'full',
   },
   {
     path: '',
-    redirectTo: '/main-menu',
+    redirectTo: '/start-page',
     pathMatch: 'full',
   },
 ];

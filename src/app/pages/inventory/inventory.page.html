@@ -1,13 +1,15 @@
 <div class="inventory inventory_background">
   <ion-toolbar class="inventory__title">
-    <ion-buttons start>
+    <ion-buttons slot="start">
       <gold></gold>
     </ion-buttons>
     <ion-title>Инвентарь</ion-title>
-    <ion-buttons end>
-      <button ion-button (click)="close()">
+    <ion-buttons slot="end">
+      <ion-button fill="outline"
+                  color="light"
+                  (click)="close()">
         Закрыть
-      </button>
+      </ion-button>
     </ion-buttons>
   </ion-toolbar>
 

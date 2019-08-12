@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { AlertController, NavController, NavParams, Tabs } from '@ionic/angular';
+import { AlertController, NavController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 
 import { ShopPageType } from '@enums';
@@ -16,8 +16,8 @@ const maxHeroCount = 3;
   templateUrl: 'shop.page.html',
 })
 export class ShopPage implements OnInit, OnDestroy {
-  @ViewChild('shopTabs')
-  tabRef: Tabs;
+  @ViewChild('shopTabs', { static: true })
+  tabRef: any; // TODO: route
 
   shopAbilitiesPages: ShopAbilitiesPages;
   tabEquipment: any = EquipmentComponent;
@@ -40,7 +40,6 @@ export class ShopPage implements OnInit, OnDestroy {
   constructor(
     public alertCtrl: AlertController,
     public navCtrl: NavController,
-    public navParams: NavParams,
     private heroService: HeroService,
     private playerService: PlayerService,
     private shopService: ShopService
@@ -91,7 +90,7 @@ export class ShopPage implements OnInit, OnDestroy {
   }
   openPage(page) {
     console.log('openPage ' + page.title);
-    this.navCtrl.push(page.component);
+    //this.navCtrl.push(page.component);
   }
   addHero() {
     this.shopService.getHeroPrice().then(price => {
@@ -99,7 +98,7 @@ export class ShopPage implements OnInit, OnDestroy {
         return;
       }
       const confirm = this.alertCtrl.create({
-        title: 'Купить нового героя?',
+        header: 'Купить нового героя?',
         message: `Стоимость ${price} золота`,
         buttons: [
           {
@@ -113,7 +112,6 @@ export class ShopPage implements OnInit, OnDestroy {
             handler: () => {
               console.log('Agree clicked');
               const navTransition = confirm
-                .dismiss()
                 .then(() => this.shopService.buyNewHero())
                 .then(success => {
                   if (success) {
@@ -127,7 +125,6 @@ export class ShopPage implements OnInit, OnDestroy {
           },
         ],
       });
-      confirm.present();
     });
   }
 

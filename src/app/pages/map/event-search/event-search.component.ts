@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { NavParams, ViewController } from '@ionic/angular';
+import { NavParams, PopoverController } from '@ionic/angular';
 import { Subscription, interval } from 'rxjs';
 import { zip } from 'rxjs/operators';
 
@@ -13,7 +13,7 @@ import { DiceComponent } from '@app/shared/components';
   templateUrl: 'event-search.component.html',
 })
 export class EventSearchComponent implements OnInit, OnDestroy {
-  @ViewChild(DiceComponent)
+  @ViewChild(DiceComponent, { static: true })
   dice: DiceComponent;
 
   cell: Cell;
@@ -31,7 +31,7 @@ export class EventSearchComponent implements OnInit, OnDestroy {
 
   constructor(
     private params: NavParams,
-    public viewCtrl: ViewController,
+    private popoverController: PopoverController,
     private eventSearchService: EventSearchService,
     private heroService: HeroService,
     private mapService: MapService,
@@ -78,6 +78,6 @@ export class EventSearchComponent implements OnInit, OnDestroy {
   }
 
   close() {
-    this.viewCtrl.dismiss();
+    this.popoverController.dismiss();
   }
 }

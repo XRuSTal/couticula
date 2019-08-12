@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, ViewController } from '@ionic/angular';
+import { NavController, NavParams, PopoverController } from '@ionic/angular';
 
 import { Cell } from '@models';
 import { BattlePage } from '@pages';
@@ -32,18 +32,18 @@ export class EventAttackComponent {
   constructor(
     private navCtrl: NavController,
     private params: NavParams,
-    public viewCtrl: ViewController
+    private popoverController: PopoverController
   ) {
     this.cell = this.params.get('cell');
     console.log(this.cell);
   }
 
   close() {
-    this.viewCtrl.dismiss();
+    this.popoverController.dismiss();
   }
   attack() {
-    this.viewCtrl.dismiss().then(() => {
-      this.navCtrl.push(BattlePage, { cell: this.cell });
+    this.popoverController.dismiss().then(() => {
+      //this.navCtrl.push(BattlePage, { cell: this.cell });
     });
   }
 }

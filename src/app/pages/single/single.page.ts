@@ -13,10 +13,11 @@ import { resolve } from 'q';
   styleUrls: ['single.page.scss'],
 })
 export class SinglePage implements OnInit {
+  private progress = 0;
+
   get progressNormalize() {
     return this.progress / 100;
   }
-  private progress = 0;
 
   constructor(
     public navCtrl: NavController,
