@@ -1,5 +1,13 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewEncapsulation,
+} from '@angular/core';
 
 import { CreatureView } from '@models';
 import { CreatureState } from '@app/shared/enums';
@@ -7,6 +15,7 @@ import { CreatureState } from '@app/shared/enums';
 @Component({
   selector: 'creatures-list',
   templateUrl: 'creatures-list.component.html',
+  styleUrls: ['creatures-list.component.scss'],
   encapsulation: ViewEncapsulation.Emulated,
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [
@@ -18,11 +27,16 @@ import { CreatureState } from '@app/shared/enums';
   ],
 })
 export class CreaturesListComponent implements OnInit {
-  @Input() creatures: CreatureView[];
-  @Input() selectedCreatureId: number;
-  @Input() lastCreatureInRound: number;
-  @Input() currentRound: number;
-  @Output() selectCreature = new EventEmitter<number>();
+  @Input()
+  creatures: CreatureView[];
+  @Input()
+  selectedCreatureId: number;
+  @Input()
+  lastCreatureInRound: number;
+  @Input()
+  currentRound: number;
+  @Output()
+  selectCreature = new EventEmitter<number>();
 
   get creaturesCount() {
     return this.creatures.length;
@@ -30,11 +44,9 @@ export class CreaturesListComponent implements OnInit {
 
   constructor() {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   select(creatureId: number) {
     this.selectCreature.emit(creatureId);
   }
-
 }

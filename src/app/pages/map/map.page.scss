@@ -6,8 +6,9 @@
   background-size: cover;
 
   &__title {
-    min-height: 8vh;
-    max-height: 8vh;
+    --min-height: 8vh;
+    --max-height: 8vh;
     --background: transparent;
+    color: white;
   }
 }

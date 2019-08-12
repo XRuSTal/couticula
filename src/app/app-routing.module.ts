@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import {
+  BattlePage,
   ChoiceHeroPage,
   InventoryPage,
   LoginPage,
@@ -16,6 +17,11 @@ const routes: Routes = [
   {
     path: 'start-page',
     component: StartPage,
+    pathMatch: 'full',
+  },
+  {
+    path: 'battle',
+    component: BattlePage,
     pathMatch: 'full',
   },
   {

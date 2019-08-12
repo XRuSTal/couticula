@@ -14,6 +14,7 @@ const maxHeroCount = 3;
 @Component({
   selector: 'page-shop',
   templateUrl: 'shop.page.html',
+  styleUrls: ['shop.page.scss'],
 })
 export class ShopPage implements OnInit, OnDestroy {
   @ViewChild('shopTabs', { static: true })

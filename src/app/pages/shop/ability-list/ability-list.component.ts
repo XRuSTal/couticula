@@ -7,6 +7,7 @@ import { PlayerService, ShopService } from '@services';
 @Component({
   selector: 'ability-list',
   templateUrl: 'ability-list.component.html',
+  styleUrls: ['ability-list.component.scss'],
 })
 export class AbilityListComponent implements OnInit, OnDestroy {
   shopAbilitiesPage: ShopAbilitiesPage;

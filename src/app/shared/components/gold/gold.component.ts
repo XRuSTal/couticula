@@ -5,6 +5,7 @@ import { PlayerService } from '@services';
 @Component({
   selector: 'gold',
   templateUrl: 'gold.component.html',
+  styleUrls: ['gold.component.scss'],
 })
 export class GoldComponent implements OnInit {
   get gold() {

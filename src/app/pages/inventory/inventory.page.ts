@@ -7,6 +7,7 @@ import { HeroService } from '@services';
 @Component({
   selector: 'page-inventory',
   templateUrl: 'inventory.page.html',
+  styleUrls: ['inventory.page.scss'],
 })
 export class InventoryPage {
   selectedHero: Hero;

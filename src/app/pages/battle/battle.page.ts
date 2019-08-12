@@ -6,7 +6,7 @@ import {
   OnDestroy,
   ViewChild,
 } from '@angular/core';
-import { NavController, NavParams } from '@ionic/angular';
+import { NavController } from '@ionic/angular';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
@@ -19,6 +19,7 @@ import { DiceComponent, DiceTargetComponent } from '@shared/components';
 @Component({
   selector: 'page-battle',
   templateUrl: 'battle.page.html',
+  styleUrls: ['battle.page.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [],
 })
@@ -61,11 +62,10 @@ export class BattlePage implements OnDestroy {
   constructor(
     private cd: ChangeDetectorRef,
     public navCtrl: NavController,
-    private params: NavParams,
     private battleStateService: BattleStateService,
     private settingsService: SettingsService
   ) {
-    this.cell = this.params.get('cell');
+    this.cell = history.state.cell; // this.params.get('cell');
 
     this.battleStateService.events$.pipe(takeUntil(this.unsubscribe$)).subscribe(event => {
       switch (event.state) {

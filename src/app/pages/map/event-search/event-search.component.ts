@@ -11,6 +11,7 @@ import { DiceComponent } from '@app/shared/components';
 @Component({
   selector: 'event-search',
   templateUrl: 'event-search.component.html',
+  styleUrls: ['event-search.component.scss'],
 })
 export class EventSearchComponent implements OnInit, OnDestroy {
   @ViewChild(DiceComponent, { static: true })

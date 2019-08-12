@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, PopoverController } from '@ionic/angular';
+import { Router } from '@angular/router';
+import { NavParams, PopoverController } from '@ionic/angular';
 
 import { Cell } from '@models';
-import { BattlePage } from '@pages';
 
 @Component({
   selector: 'event-attack',
   templateUrl: 'event-attack.component.html',
+  styleUrls: ['event-attack.component.scss'],
 })
 export class EventAttackComponent {
   cell: Cell;
@@ -30,9 +31,9 @@ export class EventAttackComponent {
     return 'assets/img/map/event-attack-monster-boss.png';
   }
   constructor(
-    private navCtrl: NavController,
     private params: NavParams,
-    private popoverController: PopoverController
+    private popoverController: PopoverController,
+    private router: Router
   ) {
     this.cell = this.params.get('cell');
     console.log(this.cell);
@@ -43,7 +44,7 @@ export class EventAttackComponent {
   }
   attack() {
     this.popoverController.dismiss().then(() => {
-      //this.navCtrl.push(BattlePage, { cell: this.cell });
+      this.router.navigateByUrl('/battle', { state: { cell: this.cell } });
     });
   }
 }

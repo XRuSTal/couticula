@@ -1,80 +1,53 @@
-page-shop {
-  .shop {
-    > .scroll-content {
-      width: 100% !important;
-      height: 100% !important;
-      display: grid;
-      grid-template-rows: 8vh 1fr 20vh;
-    }
-    .fixed-content {
-      background: url(../assets/img/backgrounds/todo.jpg) no-repeat center center fixed;
-      -webkit-background-size: cover;
-      -moz-background-size: cover;
-      -o-background-size: cover;
-      background-size: cover;
-    }
+.shop {
+  --background: url('assets/img/backgrounds/todo.jpg') no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
 
-    &__background {
-      background: url(../assets/img/backgrounds/todo.jpg) no-repeat center center fixed;
-      -webkit-background-size: cover;
-      -moz-background-size: cover;
-      -o-background-size: cover;
-      background-size: cover;
-    }
+  &__title {
+    --min-height: 8vh;
+    --max-height: 8vh;
+    --background: transparent;
+    color: white;
+  }
 
-    &__title {
-      min-height: auto;
-      .toolbar-background {
-        background-color: transparent;
+  ion-tabs {
+    position: initial;
+    .tab-button {
+      height: 10vh;
+      min-height: 10vh;
+      max-height: 10vh;
+
+      ion-icon {
+        font-size: 1.5em;
       }
+    }
+  }
 
-      ion-buttons button {
+  .shop__footer {
+    display: grid;
+    grid-template-columns: 1fr auto;
+
+    &__buy-section {
+      justify-self: center;
+      align-self: center;
+      width: 40vh;
+      color: white;
+      .buy-button {
         color: white;
-      }
+        border-color: white;
+        background-color: gray;
+        border-radius: 1rem;
+        opacity: .6;
 
-      ion-title .toolbar-title {
-        font-weight: bold;
-        color: white;
-      }
-    }
-
-    ion-tabs {
-      position: initial;
-      .tab-button {
-        height: 10vh;
-        min-height: 10vh;
-        max-height: 10vh;
-
-        ion-icon {
-          font-size: 1.5em;
+        &_available {
+          background-color: green;
         }
-      }
-    }
 
-    .shop__footer {
-      display: grid;
-      grid-template-columns: 1fr auto;
-
-      &__buy-section {
-        justify-self: center;
-        align-self: center;
-        width: 40vh;
-        color: white;
-        .buy-button {
-          color: white;
-          border-color: white;
-          background-color: gray;
-          border-radius: 1rem;
-          opacity: .6;
-
-          &_available {
-            background-color: green;
-          }
-
-          &.activated {
-            color: black;
-            background-color: white;
-          }
+        &.activated {
+          color: black;
+          background-color: white;
         }
       }
     }

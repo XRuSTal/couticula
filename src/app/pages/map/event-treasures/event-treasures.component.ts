@@ -9,6 +9,7 @@ import { HeroService, MapService } from '@services';
 @Component({
   selector: 'event-treasures',
   templateUrl: 'event-treasures.component.html',
+  styleUrls: ['event-treasures.component.scss'],
   animations: [
     trigger('scaleInOut', [
       state('in', style({ transform: 'scale(1)' })),

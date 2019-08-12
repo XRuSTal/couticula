@@ -6,12 +6,17 @@ import { AbilityType } from '@app/shared/enums';
 @Component({
   selector: 'target',
   templateUrl: 'target.component.html',
+  styleUrls: ['target.component.scss'],
 })
 export class TargetComponent implements OnInit {
-  @Input() isShownAbilities = false;
-  @Input() creature: CreatureView;
-  @Input() selectedAbilityType: AbilityType;
-  @Output() selectAbilityType = new EventEmitter<AbilityType>();
+  @Input()
+  isShownAbilities = false;
+  @Input()
+  creature: CreatureView;
+  @Input()
+  selectedAbilityType: AbilityType;
+  @Output()
+  selectAbilityType = new EventEmitter<AbilityType>();
 
   constructor() {}
 

@@ -7,12 +7,17 @@ const maxHeroCount = 3;
 @Component({
   selector: 'heroes-info-short',
   templateUrl: 'heroes-info-short.component.html',
+  styleUrls: ['heroes-info-short.component.scss'],
 })
 export class HeroesInfoShortComponent implements OnInit {
-  @Input() heroes: Hero[];
-  @Input() isNewHeroAvailable = true;
-  @Output() addedHero = new EventEmitter<void>();
-  @Output() selectedHero = new EventEmitter<Hero>();
+  @Input()
+  heroes: Hero[];
+  @Input()
+  isNewHeroAvailable = true;
+  @Output()
+  addedHero = new EventEmitter<void>();
+  @Output()
+  selectedHero = new EventEmitter<Hero>();
 
   private currentHero: Hero;
   get newHeroButtons() {
@@ -21,7 +26,7 @@ export class HeroesInfoShortComponent implements OnInit {
     buttons.fill(null);
     return buttons;
   }
-/*
+  /*
   constructor() {
     this.currentHero = this.heroes[0];
   } */

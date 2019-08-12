@@ -10,6 +10,7 @@ import { HeroService, PlayerService, ShopService } from '@services';
 @Component({
   selector: 'equipment',
   templateUrl: 'equipment.component.html',
+  styleUrls: ['equipment.component.scss'],
   animations: [
     trigger('flyInOutLeft', [
       state('in', style({ transform: 'translateX(0)' })),

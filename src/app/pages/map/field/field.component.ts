@@ -18,6 +18,7 @@ import { EventTreasuresComponent } from '../event-treasures/event-treasures.comp
 @Component({
   selector: 'field',
   templateUrl: 'field.component.html',
+  styleUrls: ['field.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FieldComponent implements OnInit, OnDestroy {

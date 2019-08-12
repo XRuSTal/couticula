@@ -15,6 +15,7 @@ import { BattleStateService } from '@services';
 @Component({
   selector: 'creature-info-short',
   templateUrl: 'creature-info-short.component.html',
+  styleUrls: ['creature-info-short.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CreatureInfoShortComponent implements OnInit, OnDestroy {
