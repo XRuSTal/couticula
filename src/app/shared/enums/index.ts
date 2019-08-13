@@ -9,3 +9,4 @@ export * from './hero-class';
 export * from './item-type';
 export * from './search-event-type';
 export * from './shop-page-type';
+export * from './rollType';

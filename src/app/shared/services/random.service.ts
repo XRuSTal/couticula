@@ -1,41 +1,41 @@
 import { Injectable } from '@angular/core';
-import { rollType } from '../enums/rollType';
+import { RollType } from '@shared/enums';
 import { SettingsService } from './settings.service';
 
 @Injectable()
-export class Random {
-  static allDices: {
-    name: string;
-    dices: number[];
+export class RandomService {
+  static predictedRolls: {
+    tag: string;
+    upcomingRolls: number[];
   }[] = [];
 
   static settingsService: SettingsService;
 
-  static chooseRandomFunc(playerTag: string): number {
-    if (this.settingsService.rollType === rollType.random) {
-      return Random.throwDiceD6();
+  static defineRollsType(eventTag: string): number {
+    if (this.settingsService.rollType === RollType.random) {
+      return RandomService.throwDiceD6();
     } else {
-      return Random.rollNormalizeDices(playerTag);
+      return RandomService.rollNormalizeDices(eventTag);
     }
   }
 
-  static rollNormalizeDices(name: string): number {
+  static rollNormalizeDices(tag: string): number {
     let index: number;
-    index = Random.allDices.findIndex(a => a.name === name);
+    index = RandomService.predictedRolls.findIndex(a => a.tag === tag);
     if (index === -1) {
-      Random.allDices.push({ name: name, dices: [] });
-      index = Random.allDices.length - 1;
+      RandomService.predictedRolls.push({ tag: tag, upcomingRolls: [] });
+      index = RandomService.predictedRolls.length - 1;
     }
-    if (this.allDices[index].dices.length === 0) {
-      Random.generateRandomRolls(index);
+    if (this.predictedRolls[index].upcomingRolls.length === 0) {
+      RandomService.generateRandomRolls(index);
     }
-    return Random.allDices[index].dices.pop();
+    return RandomService.predictedRolls[index].upcomingRolls.pop();
   }
 
   static generateRandomRolls(index: number): void {
-    const rolls: number[] = [1, 2, 3, 4, 5, 6];
+    const d6: number[] = [1, 2, 3, 4, 5, 6];
 
-    this.allDices[index].dices = rolls.sort(function() {
+    this.predictedRolls[index].upcomingRolls = d6.sort(function() {
       return 0.5 - Math.random();
     });
   }
@@ -49,10 +49,10 @@ export class Random {
   }
 
   static throwDiceD3(): number {
-    return Random.getInt(1, 3);
+    return RandomService.getInt(1, 3);
   }
 
   static throwDiceD6(): number {
-    return Random.getInt(1, 6);
+    return RandomService.getInt(1, 6);
   }
 }

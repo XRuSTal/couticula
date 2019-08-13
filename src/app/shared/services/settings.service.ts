@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Platform } from '@ionic/angular';
-import { GameMode } from '@shared/enums';
-import { rollType } from '../enums/rollType';
+import { GameMode, RollType } from '@shared/enums';
 
 @Injectable()
 export class SettingsService {
@@ -15,7 +14,7 @@ export class SettingsService {
   eventsDelay = 600;
   battleEventsDelay = 500;
   battleDiceDelay = 1000;
-  rollType: rollType = rollType.random;
+  rollType: RollType = RollType.random;
 
   private platformWidth: number;
   private platformHeight: number;

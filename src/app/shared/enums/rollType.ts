@@ -1,4 +1,4 @@
-export enum rollType {
+export enum RollType {
   random,
   normalize,
 }
