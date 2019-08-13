@@ -52,7 +52,7 @@ export class RandomService {
     return this.getInt(1, 3);
   }
 
-  throwDiceD6(): number {
+  private throwDiceD6(): number {
     return this.getInt(1, 6);
   }
 }
