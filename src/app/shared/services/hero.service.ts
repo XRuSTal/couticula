@@ -13,7 +13,7 @@ import { RandomService } from './random.service';
 export class HeroService {
   heroes: Hero[];
 
-  constructor(private playerService: PlayerService) {
+  constructor(private playerService: PlayerService, private randomService: RandomService) {
     this.heroes = [];
     // this.getHeroes().then(heroes => this.heroes = heroes.map(hero => new Hero(hero)));
     // обновлен список героев
@@ -87,7 +87,8 @@ export class HeroService {
           // this.dropEffect(EffectType.Shield);
         }
         hero.equipment.Shield = item as Shield;
-        // this.effects.push(new Effect("Щит", "Постоянное действие. Щит, броня " + item.value + ", прочность " + (item as Shield).hitpoint, ImageType.ShieldMedium, EffectType.Shield));
+        // this.effects.push(new Effect("Щит", "Постоянное действие. Щит, броня " + item.value + ", прочность " +
+        // (item as Shield).hitpoint, ImageType.ShieldMedium, EffectType.Shield));
         break;
     }
     this.removeItemFormInventory(hero, item);
@@ -98,7 +99,7 @@ export class HeroService {
   }
 
   private tryUseHealBottle(hero: Hero, item: Item) {
-    const dice = RandomService.throwDiceD6();
+    const dice = this.randomService.rollDiceD6();
     const maxHealHitPoint = dice * 5;
     const healHitPoint = this.healHero(hero.id, maxHealHitPoint);
 
@@ -141,7 +142,7 @@ export class HeroService {
   loseHeroThing(heroId: number) {
     const hero = this.heroes.find(p => p.id === heroId);
     if (hero.inventory.length > 0) {
-      const index = RandomService.getInt(0, hero.inventory.length - 1);
+      const index = this.randomService.getInt(0, hero.inventory.length - 1);
       const item = hero.inventory[index];
       this.removeItemFormInventory(hero, item);
       return item;

@@ -7,7 +7,7 @@ import { RandomService } from './random.service';
 
 @Injectable()
 export class TreasureService {
-  constructor(private playerService: PlayerService) {}
+  constructor(private playerService: PlayerService, private randomService: RandomService) {}
 
   generateTreasure(treasuresCount: number): Item[] {
     const newItems: Item[] = [];
@@ -15,7 +15,7 @@ export class TreasureService {
 
     // Число сокровищ не превышает 10!
     for (let i = 0; i < Math.min(10, treasuresCount) + 0 /*побольше для тестов*/; i++) {
-      const dice = RandomService.throwDiceD6();
+      const dice = this.randomService.rollDiceD6();
       switch (dice) {
         case 1:
         case 2:
@@ -41,7 +41,7 @@ export class TreasureService {
     const maxTreasuresCount =
       1 * cell.mosterLevel1Count + 2 * cell.mosterLevel2Count + 3 * (cell.doesBossExists ? 1 : 0);
 
-    const treasuresCount = RandomService.getInt(mostersCount, maxTreasuresCount);
+    const treasuresCount = this.randomService.getInt(mostersCount, maxTreasuresCount);
     return treasuresCount;
   }
 }

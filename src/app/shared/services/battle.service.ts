@@ -33,7 +33,11 @@ export class BattleService {
   private currentTargetForMonsters: number;
   private creatures: Creature[];
 
-  constructor(private heroService: HeroService, private settingsService: SettingsService) {
+  constructor(
+    private heroService: HeroService,
+    private settingsService: SettingsService,
+    private randomService: RandomService
+  ) {
     this.events$ = this.eventsSource.asObservable();
 
     this.events$.pipe(delay(100)).subscribe(event => {
@@ -396,7 +400,7 @@ export class BattleService {
     // берем случайную способность
     const availableAbilities = creature.getAvailableAbilities(); // способность применяется N раз за бой
     const currentAbility =
-      availableAbilities[RandomService.getInt(0, availableAbilities.length - 1)];
+      availableAbilities[this.randomService.getInt(0, availableAbilities.length - 1)];
     const targetCreature = this.creatures.find(
       target => target.id === this.currentTargetForMonsters
     );

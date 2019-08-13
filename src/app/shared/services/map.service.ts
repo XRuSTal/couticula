@@ -22,7 +22,7 @@ export class MapService {
     return this.gameMap;
   }
 
-  constructor(private settingsService: SettingsService) {
+  constructor(private settingsService: SettingsService, private randomService: RandomService) {
     this.visibleMap$ = this.visibleMapSource.asObservable();
   }
 
@@ -101,8 +101,8 @@ export class MapService {
     let xCave: number, yCave: number;
 
     for (let count = 0; count < tryCount; count++) {
-      xCave = this.xCurrentMap + RandomService.getInt(-radius, radius);
-      yCave = this.yCurrentMap + RandomService.getInt(-radius, radius);
+      xCave = this.xCurrentMap + this.randomService.getInt(-radius, radius);
+      yCave = this.yCurrentMap + this.randomService.getInt(-radius, radius);
       if (this.isEmptyCell(xCave, yCave)) {
         return {
           x: xCave,
@@ -148,10 +148,18 @@ export class MapService {
     let waysCount = this.getWaysCount(deep);
     // this.gameMap[x][y].ways = waysCount.toString();
 
-    if (this.isEmptyCell(x + 1, y)) this.createEmptyCell(x + 1, y);
-    if (this.isEmptyCell(x - 1, y)) this.createEmptyCell(x - 1, y);
-    if (this.isEmptyCell(x, y + 1)) this.createEmptyCell(x, y + 1);
-    if (this.isEmptyCell(x, y - 1)) this.createEmptyCell(x, y - 1);
+    if (this.isEmptyCell(x + 1, y)) {
+      this.createEmptyCell(x + 1, y);
+    }
+    if (this.isEmptyCell(x - 1, y)) {
+      this.createEmptyCell(x - 1, y);
+    }
+    if (this.isEmptyCell(x, y + 1)) {
+      this.createEmptyCell(x, y + 1);
+    }
+    if (this.isEmptyCell(x, y - 1)) {
+      this.createEmptyCell(x, y - 1);
+    }
 
     const cellRight = this.gameMap[x + 1][y];
     const cellLeft = this.gameMap[x - 1][y];
@@ -159,7 +167,7 @@ export class MapService {
     const cellBottom = this.gameMap[x][y - 1];
     // генерация развилок в произвольном порядке
     const directionsWithRandomSort = [cellRight, cellLeft, cellTop, cellBottom]
-      .map(p => ({ weight: Random.getFloat(0, 1), cell: p }))
+      .map(p => ({ weight: this.randomService.getFloat(0, 1), cell: p }))
       .sort(p => p.weight);
 
     for (let i = 0; i < 4; i++) {
@@ -183,7 +191,7 @@ export class MapService {
   }
   private getWaysCount(deep: number) {
     // 2-3 для начала и 1-3 иначе
-    let waysCount = deep < 4 ? RandomService.getInt(2, 3) : RandomService.getInt(1, 6);
+    let waysCount = deep < 4 ? this.randomService.getInt(2, 3) : this.randomService.getInt(1, 6);
     // тупик 50%
     if (waysCount > 3) {
       waysCount = 0;
