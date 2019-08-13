@@ -6,7 +6,7 @@ import { CellSettings } from '@shared/db';
 import { GameMode } from '@shared/enums';
 import { EnemyGroupFabric } from '@shared/fabrics';
 
-import { Random } from './random';
+import { Random } from './random.service';
 import { SettingsService } from './settings.service';
 
 @Injectable()

@@ -7,7 +7,7 @@ import { HeroService } from './hero.service';
 import { MapService } from './map.service';
 import { PlayerService } from './player.service';
 import { TreasureService } from './treasure.service';
-import { Random } from './random';
+import { Random } from './random.service';
 
 @Injectable()
 export class EventSearchService {

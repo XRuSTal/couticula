@@ -7,7 +7,7 @@ import { HeroTypes } from '@shared/db';
 import { CreatureFabric } from '@shared/fabrics';
 
 import { PlayerService } from './player.service';
-import { Random } from './random';
+import { Random } from './random.service';
 
 @Injectable()
 export class HeroService {

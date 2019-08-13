@@ -15,7 +15,7 @@ import {
 import { AbilityFabric, CreatureFabric, EffectFabric } from '@shared/fabrics';
 import { HeroService } from './hero.service';
 import { SettingsService } from './settings.service';
-import { Random } from './random';
+import { Random } from './random.service';
 
 @Injectable()
 export class BattleService {

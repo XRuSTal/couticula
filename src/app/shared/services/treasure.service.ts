@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Cell, Item } from '@models';
 import { ItemFabric } from '@shared/fabrics';
 import { PlayerService } from './player.service';
-import { Random } from './random';
+import { Random } from './random.service';
 
 @Injectable()
 export class TreasureService {
@@ -36,11 +36,10 @@ export class TreasureService {
   }
 
   calcTreasuresCountAfterBattle(cell: Cell) {
-    const mostersCount = cell.mosterLevel1Count + cell.mosterLevel2Count + (cell.doesBossExists ? 1 : 0);
+    const mostersCount =
+      cell.mosterLevel1Count + cell.mosterLevel2Count + (cell.doesBossExists ? 1 : 0);
     const maxTreasuresCount =
-      1 * cell.mosterLevel1Count +
-      2 * cell.mosterLevel2Count +
-      3 * (cell.doesBossExists ? 1 : 0);
+      1 * cell.mosterLevel1Count + 2 * cell.mosterLevel2Count + 3 * (cell.doesBossExists ? 1 : 0);
 
     const treasuresCount = Random.getInt(mostersCount, maxTreasuresCount);
     return treasuresCount;
