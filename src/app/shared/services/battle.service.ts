@@ -15,7 +15,7 @@ import {
 import { AbilityFabric, CreatureFabric, EffectFabric } from '@shared/fabrics';
 import { HeroService } from './hero.service';
 import { SettingsService } from './settings.service';
-import { Random } from './random';
+import { RandomService } from './random.service';
 
 @Injectable()
 export class BattleService {
@@ -33,7 +33,11 @@ export class BattleService {
   private currentTargetForMonsters: number;
   private creatures: Creature[];
 
-  constructor(private heroService: HeroService, private settingsService: SettingsService) {
+  constructor(
+    private heroService: HeroService,
+    private settingsService: SettingsService,
+    private randomService: RandomService
+  ) {
     this.events$ = this.eventsSource.asObservable();
 
     this.events$.pipe(delay(100)).subscribe(event => {
@@ -395,7 +399,8 @@ export class BattleService {
     }
     // берем случайную способность
     const availableAbilities = creature.getAvailableAbilities(); // способность применяется N раз за бой
-    const currentAbility = availableAbilities[Random.getInt(0, availableAbilities.length - 1)];
+    const currentAbility =
+      availableAbilities[this.randomService.getInt(0, availableAbilities.length - 1)];
     const targetCreature = this.creatures.find(
       target => target.id === this.currentTargetForMonsters
     );
