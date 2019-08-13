@@ -9,7 +9,7 @@ export class RandomService {
     upcomingRolls: number[];
   }[] = [];
 
-  settingsService: SettingsService;
+  constructor(private settingsService: SettingsService) {}
 
   rollDiceD6(eventTag?: string): number {
     if (this.settingsService.rollType === RollType.random) {

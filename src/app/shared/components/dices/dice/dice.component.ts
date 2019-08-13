@@ -9,7 +9,7 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import { interval } from 'rxjs';
 import { finalize, take } from 'rxjs/operators';
 
-import { Random } from '@services';
+import { RandomService } from '@services';
 
 export const animateInterval = 200;
 
@@ -91,7 +91,7 @@ export class DiceComponent implements OnInit {
   @Input()
   backgroundColor = 'white';
 
-  constructor(private cd: ChangeDetectorRef) {}
+  constructor(private cd: ChangeDetectorRef, private randomService: RandomService) {}
 
   ngOnInit() {}
 
@@ -113,7 +113,7 @@ export class DiceComponent implements OnInit {
   throwNewDiceD6(except: number): number {
     let dice: number;
     do {
-      dice = Random.throwDiceD6();
+      dice = this.randomService.rollDiceD6();
     } while (dice === except);
 
     return dice;

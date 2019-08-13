@@ -1,8 +1,14 @@
 import { Cell, EnemyGroupSettings } from '@models';
-import { Random } from '@services';
+import { RandomService } from '@services';
 import { MonstersSettings } from '@shared/db';
 
 export class EnemyGroupFabric {
+  private static randomService: RandomService;
+
+  static initialize(randomService: RandomService) {
+    EnemyGroupFabric.randomService = randomService;
+  }
+
   static createMostersCasual(cell: Cell): EnemyGroupSettings {
     const deep = cell.deep;
     console.log('createMostersCasual', cell);
@@ -19,13 +25,17 @@ export class EnemyGroupFabric {
       };
     }
 
-    let mosterLevel2Count = Random.getInt(s.mosterLevel2Min, s.mosterLevel2Max);
+    let mosterLevel2Count = EnemyGroupFabric.randomService.getInt(
+      s.mosterLevel2Min,
+      s.mosterLevel2Max
+    );
     const diff = mosterLevel2Count - s.mosterLevel2Min;
-    const mosterLevel1Count = Random.getInt(
+    const mosterLevel1Count = EnemyGroupFabric.randomService.getInt(
       s.mosterLevel1Min - diff * 2,
       s.mosterLevel1Max - diff * 2
     );
-    const doesBossExist = mosterLevel2Count > 0 && s.percentBoss > Random.getInt(1, 100);
+    const doesBossExist =
+      mosterLevel2Count > 0 && s.percentBoss > EnemyGroupFabric.randomService.getInt(1, 100);
     mosterLevel2Count -= doesBossExist ? 1 : 0;
 
     return { mosterLevel1Count, mosterLevel2Count, doesBossExist } as EnemyGroupSettings;
@@ -50,11 +60,15 @@ export class EnemyGroupFabric {
       s.mosterLevel2Min = 3;
       s.percentBoss = 33;
     }
-    const mosterCount = Random.getInt(s.mosterMinCount, s.mosterMaxCount);
-    let mosterLevel2Count = Random.getInt(s.mosterLevel2Min, s.mosterLevel2Max);
+    const mosterCount = EnemyGroupFabric.randomService.getInt(s.mosterMinCount, s.mosterMaxCount);
+    let mosterLevel2Count = EnemyGroupFabric.randomService.getInt(
+      s.mosterLevel2Min,
+      s.mosterLevel2Max
+    );
     const mosterLevel1Count =
       mosterCount - mosterLevel2Count < 0 ? 0 : mosterCount - mosterLevel2Count;
-    const doesBossExist = mosterLevel2Count > 0 && s.percentBoss > Random.getInt(1, 100);
+    const doesBossExist =
+      mosterLevel2Count > 0 && s.percentBoss > EnemyGroupFabric.randomService.getInt(1, 100);
     mosterLevel2Count -= doesBossExist ? 1 : 0;
 
     return { mosterLevel1Count, mosterLevel2Count, doesBossExist } as EnemyGroupSettings;

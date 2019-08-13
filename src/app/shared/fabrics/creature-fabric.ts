@@ -1,11 +1,16 @@
 import { HeroClass } from '@enums';
 import { Creature, CreatureSettings, Hero, HeroSettings } from '@models';
+import { RandomService } from '@services';
 import { CreaturesBoss, CreaturesLevel1, CreaturesLevel2, HeroTypes } from '@shared/db';
-import { Random } from '@app/shared/services';
 import { EffectFabric } from './effect-fabric';
 
 export class CreatureFabric {
+  private static randomService: RandomService;
   private static GUID = 0;
+
+  static initialize(randomService: RandomService) {
+    CreatureFabric.randomService = randomService;
+  }
 
   static createHero(heroClass: HeroClass): Hero {
     const settings: HeroSettings = HeroTypes.find(p => p.heroClass === heroClass);
@@ -21,21 +26,21 @@ export class CreatureFabric {
   }
 
   static createRandomCreatureLevel1(): Creature {
-    const randomIndex = Random.getInt(0, CreaturesLevel1.length - 1);
+    const randomIndex = CreatureFabric.randomService.getInt(0, CreaturesLevel1.length - 1);
     const settings = CreaturesLevel1[randomIndex];
     const newCreature = CreatureFabric.createCreature(settings);
     return newCreature;
   }
 
   static createRandomCreatureLevel2(): Creature {
-    const randomIndex = Random.getInt(0, CreaturesLevel1.length - 1);
+    const randomIndex = CreatureFabric.randomService.getInt(0, CreaturesLevel2.length - 1);
     const settings = CreaturesLevel2[randomIndex];
     const newCreature = CreatureFabric.createCreature(settings);
     return newCreature;
   }
 
   static createRandomCreatureBoss(): Creature {
-    const randomIndex = Random.getInt(0, CreaturesBoss.length - 1);
+    const randomIndex = CreatureFabric.randomService.getInt(0, CreaturesBoss.length - 1);
     const settings = CreaturesBoss[randomIndex];
     const newCreature = CreatureFabric.createCreature(settings);
     return newCreature;
@@ -51,7 +56,7 @@ export class CreatureFabric {
       settings.head,
       settings.hands,
       settings.legs,
-      settings.body,
+      settings.body
     );
     newCreature.description = settings.description;
     newCreature.abilities = [...settings.abilites];
