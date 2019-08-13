@@ -1,5 +1,4 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { NavController, NavParams } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 
 import { AbilitySettings, ShopAbilitiesPage } from '@models';
@@ -8,6 +7,7 @@ import { PlayerService, ShopService } from '@services';
 @Component({
   selector: 'ability-list',
   templateUrl: 'ability-list.component.html',
+  styleUrls: ['ability-list.component.scss'],
 })
 export class AbilityListComponent implements OnInit, OnDestroy {
   shopAbilitiesPage: ShopAbilitiesPage;
@@ -39,13 +39,8 @@ export class AbilityListComponent implements OnInit, OnDestroy {
     return description;
   }
 
-  constructor(
-    navCtrl: NavController,
-    navParams: NavParams,
-    private playerService: PlayerService,
-    private shopService: ShopService
-  ) {
-    this.shopAbilitiesPage = navParams.data;
+  constructor(private playerService: PlayerService, private shopService: ShopService) {
+    //this.shopAbilitiesPage = navParams.data;
   }
 
   ngOnInit() {}

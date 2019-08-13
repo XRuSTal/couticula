@@ -26,6 +26,7 @@ const dotsTransitions = [
 @Component({
   selector: 'dice',
   templateUrl: 'dice.component.html',
+  styleUrls: ['dice.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [
     trigger('dot1State', [

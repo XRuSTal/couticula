@@ -10,6 +10,7 @@ import { HeroService, PlayerService, ShopService } from '@services';
 @Component({
   selector: 'equipment',
   templateUrl: 'equipment.component.html',
+  styleUrls: ['equipment.component.scss'],
   animations: [
     trigger('flyInOutLeft', [
       state('in', style({ transform: 'translateX(0)' })),
@@ -44,7 +45,7 @@ export class EquipmentComponent implements OnInit, OnDestroy {
     private shopService: ShopService
   ) {
     // Id is 1, nav refers to Tab1
-    console.log(this.navCtrl.id);
+    //console.log(this.navCtrl.id);
   }
 
   ngOnInit() {

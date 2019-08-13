@@ -1,66 +1,64 @@
-creature-info-short {
-  .battle-field__creature-info-short {
+.battle-field__creature-info-short {
+  height: 100%;
+  width: 100%;
+  position: relative;
+
+  &__image {
     height: 100%;
     width: 100%;
-    position: relative;
+    border-radius: 2vh;
+  }
 
-    &__image {
-      height: 100%;
-      width: 100%;
-      border-radius: 2vh;
-    }
+  &__name {
+    width: 100%;
+    position: absolute;
+    top: 0;
+    text-align: center;
+    font-size: 3vh;
+    color: white;
+    text-shadow:
+      -1px -1px 0 #000,
+      1px -1px 0 #000,
+      -1px 1px 0 #000,
+      1px 1px 0 #000,
+      0 0 10px #000;
+  }
 
-    &__name {
-      width: 100%;
-      position: absolute;
-      top: 0;
-      text-align: center;
-      font-size: 3vh;
-      color: white;
-      text-shadow:
-        -1px -1px 0 #000,
-        1px -1px 0 #000,
-        -1px 1px 0 #000,
-        1px 1px 0 #000,
-        0 0 10px #000;
-    }
-
-    &__hitpoints {
-      width: 100%;
-      position: absolute;
-      bottom: 0;
-      border-radius: 0 0 2vh 2vh;
-      text-align: center;
-      font-size: 4vh;
-      font-weight: bold;
+  &__hitpoints {
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    border-radius: 0 0 2vh 2vh;
+    text-align: center;
+    font-size: 4vh;
+    font-weight: bold;
+    color: red;
+    background-color:rgba(0, 0, 0, 0.7);
+    &__icon{
       color: red;
-      background-color:rgba(0, 0, 0, 0.7);
-      &__icon{
-        color: red;
-      }
+    }
+  }
+
+  &__effects {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 50%;
+    width: 50%;
+    border-radius: 50%;
+    background-color: red;
+    color: white;
+
+    &_positive {
+      background-color: blue;
     }
 
-    &__effects {
+    &__change-hitpoints {
       position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      height: 50%;
-      width: 50%;
-      border-radius: 50%;
-      background-color: red;
-      color: white;
-
-      &_positive {
-        background-color: blue;
-      }
-
-      &__change-hitpoints {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-      }
     }
   }
 }

@@ -1,81 +1,69 @@
-page-battle {
-  .battle-background {
-    background: url(../assets/img/backgrounds/todo.jpg) no-repeat center center fixed;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
+.battle {
+  background: url('assets/img/backgrounds/todo.jpg') no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
 
-    .battle-title {
-      min-height: 8vh;
-      max-height: 8vh;
-      .toolbar-background {
-        background-color: transparent;
+  .battle__title {
+    --min-height: 8vh;
+    --max-height: 8vh;
+    --background: transparent;
+    color: white;
+  }
+
+  .battle-field {
+    display: grid;
+    min-height: 92vh;
+    max-height: 92vh;
+    grid-template-columns: 1fr auto;
+    grid-template-rows: 30vh 32vh 30vh;
+    grid-template-areas: "monster monster"
+                          "creatures dices"
+                          "hero hero";
+
+    &__target {
+      &_monster {
+        grid-row: monster;
+        grid-column: monster;
       }
-
-      ion-buttons button {
-        color: white;
-      }
-
-      ion-title .toolbar-title {
-        font-weight: bold;
-        color: white;
+      &_hero {
+        grid-row: hero;
+        grid-column: hero;
       }
     }
 
-    .battle-field {
+    creatures-list {
+      grid-row: creatures;
+      grid-column: creatures;
+      max-width: calc(100vw - 16vh);
+      background-color: gray;
+    }
+
+    &__dices {
+      grid-row: dices;
+      grid-column: dices;
+      width: 16vh;
       display: grid;
-      min-height: 92vh;
-      max-height: 92vh;
-      grid-template-columns: 1fr auto;
-      grid-template-rows: 30vh 32vh 30vh;
-      grid-template-areas: "monster monster"
-                           "creatures dices"
-                           "hero hero";
+      grid-template-rows: 1fr 1fr;
+      background-color: brown;
 
-      &__target {
-        &_monster {
-          grid-row: monster;
-          grid-column: monster;
-        }
-        &_hero {
-          grid-row: hero;
-          grid-column: hero;
-        }
-      }
-
-      creatures-list {
-        grid-row: creatures;
-        grid-column: creatures;
-        max-width: calc(100vw - 16vh);
-        background-color: gray;
-      }
-
-      &__dices {
-        grid-row: dices;
-        grid-column: dices;
-        width: 16vh;
-        display: grid;
-        grid-template-rows: 1fr 1fr;
-        background-color: brown;
-
-        &__target-dice, &__value-dice {
-          position: relative;
-          height: 12vh;
-          width: 12vh;
-          margin: auto;
-        }
+      &__target-dice, &__value-dice {
+        position: relative;
+        height: 12vh;
+        width: 12vh;
+        margin: auto;
       }
     }
+  }
 
-    .display-blocker {
-      position: absolute;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      left: 0;
-      background-color: olive;
-      opacity: .3;
-    }
+  .display-blocker {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: olive;
+    opacity: .3;
   }
 }

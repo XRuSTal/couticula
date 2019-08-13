@@ -12,6 +12,7 @@ import { Cell } from '@models';
 @Component({
   selector: 'cell',
   templateUrl: 'cell.component.html',
+  styleUrls: ['cell.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CellComponent implements OnChanges {

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from '@ionic/angular';
+import { NavController } from '@ionic/angular';
 
 import { Hero, Item } from '@models';
 import { HeroService } from '@services';
@@ -7,6 +7,7 @@ import { HeroService } from '@services';
 @Component({
   selector: 'page-inventory',
   templateUrl: 'inventory.page.html',
+  styleUrls: ['inventory.page.scss'],
 })
 export class InventoryPage {
   selectedHero: Hero;
@@ -24,16 +25,8 @@ export class InventoryPage {
     return Hero.getHeroClassName(this.selectedHero.heroClass);
   }
 
-  constructor(
-    public navCtrl: NavController,
-    public navParams: NavParams,
-    private heroService: HeroService
-  ) {
+  constructor(public navCtrl: NavController, private heroService: HeroService) {
     this.selectedHero = this.heroes[0];
-  }
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad InventoryPage');
   }
 
   choseHero(hero: Hero) {

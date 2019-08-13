@@ -1,26 +1,18 @@
 import { Component } from '@angular/core';
-import { NavController } from '@ionic/angular';
-
-import { InventoryPage, ShopPage } from '@pages';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'page-map',
   templateUrl: 'map.page.html',
+  styleUrls: ['map.page.scss'],
 })
 export class MapPage {
-  constructor(public navCtrl: NavController) {}
+  constructor(private router: Router) {}
 
-  ngOnInit() {}
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad MapPage');
-  }
   openShop() {
-    console.log('openPage ShopPage');
-    this.navCtrl.push(ShopPage);
+    this.router.navigateByUrl('/shop');
   }
   openInventory() {
-    console.log('openPage InventoryPage');
-    this.navCtrl.push(InventoryPage);
+    this.router.navigateByUrl('/inventory');
   }
 }

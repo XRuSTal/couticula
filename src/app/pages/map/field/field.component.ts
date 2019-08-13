@@ -5,7 +5,7 @@ import {
   OnDestroy,
   OnInit,
 } from '@angular/core';
-import { AlertController, NavController, NavParams, PopoverController } from '@ionic/angular';
+import { PopoverController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 
 import { Cell } from '@models';
@@ -18,6 +18,7 @@ import { EventTreasuresComponent } from '../event-treasures/event-treasures.comp
 @Component({
   selector: 'field',
   templateUrl: 'field.component.html',
+  styleUrls: ['field.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FieldComponent implements OnInit, OnDestroy {
@@ -33,10 +34,7 @@ export class FieldComponent implements OnInit, OnDestroy {
   }
 
   constructor(
-    public alertCtrl: AlertController,
     public popoverCtrl: PopoverController,
-    public navCtrl: NavController,
-    public navParams: NavParams,
     private cd: ChangeDetectorRef,
     private battleStateService: BattleStateService,
     private mapService: MapService,
@@ -60,14 +58,12 @@ export class FieldComponent implements OnInit, OnDestroy {
         this.mapService.removeMonstersOnCell(cell.x, cell.y, treasures);
         cell = this.mapService.getCell(cell.x, cell.y);
 
-        const popover = this.popoverCtrl.create(
-          EventTreasuresComponent,
-          { cell },
-          { cssClass: 'popover-event-treasures' }
-        );
-        popover.present({
-          // ev: myEvent
+        const popover = this.popoverCtrl.create({
+          component: EventTreasuresComponent,
+          componentProps: { cell },
+          cssClass: 'popover-event-treasures',
         });
+        popover.then(p => p.present());
       })
     );
   }
@@ -99,34 +95,28 @@ export class FieldComponent implements OnInit, OnDestroy {
     console.log(e);
   }
 
-  private showEventAttackComponent(cell: Cell) {
-    const popover = this.popoverCtrl.create(
-      EventAttackComponent,
-      { cell },
-      { cssClass: 'popover-event-attack' }
-    );
-    popover.present({
-      // ev: myEvent
+  private async showEventAttackComponent(cell: Cell) {
+    const popover = await this.popoverCtrl.create({
+      component: EventAttackComponent,
+      componentProps: { cell },
+      cssClass: 'popover-event-attack',
     });
+    return await popover.present();
   }
-  private showEventSearchComponent(cell: Cell) {
-    const popover = this.popoverCtrl.create(
-      EventSearchComponent,
-      { cell },
-      { cssClass: 'popover-event-search' }
-    );
-    popover.present({
-      // ev: myEvent
+  private async showEventSearchComponent(cell: Cell) {
+    const popover = await this.popoverCtrl.create({
+      component: EventSearchComponent,
+      componentProps: { cell },
+      cssClass: 'popover-event-search',
     });
+    return await popover.present();
   }
-  private showEventWinComponent(cell: Cell) {
-    const popover = this.popoverCtrl.create(
-      EventTreasuresComponent,
-      { cell },
-      { cssClass: 'popover-event-treasures' }
-    );
-    popover.present({
-      // ev: myEvent
+  private async showEventWinComponent(cell: Cell) {
+    const popover = await this.popoverCtrl.create({
+      component: EventTreasuresComponent,
+      componentProps: { cell },
+      cssClass: 'popover-event-treasures',
     });
+    return await popover.present();
   }
 }

@@ -1,8 +1,5 @@
-gold {
-  button {
-    background-color: transparent !important;
-    img {
-      height: 60%;
-    }
+.gold {
+  &__icon {
+    height: 60%;
   }
 }

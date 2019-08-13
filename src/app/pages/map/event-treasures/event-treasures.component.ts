@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { NavParams, ViewController } from '@ionic/angular';
+import { NavParams, PopoverController } from '@ionic/angular';
+import { ViewController } from '@ionic/core';
 
 import { Cell, Hero } from '@models';
 import { HeroService, MapService } from '@services';
@@ -8,6 +9,7 @@ import { HeroService, MapService } from '@services';
 @Component({
   selector: 'event-treasures',
   templateUrl: 'event-treasures.component.html',
+  styleUrls: ['event-treasures.component.scss'],
   animations: [
     trigger('scaleInOut', [
       state('in', style({ transform: 'scale(1)' })),
@@ -27,7 +29,7 @@ export class EventTreasuresComponent implements OnInit {
 
   constructor(
     private params: NavParams,
-    public viewCtrl: ViewController,
+    private popoverController: PopoverController,
     private heroService: HeroService,
     private mapService: MapService
   ) {
@@ -38,7 +40,7 @@ export class EventTreasuresComponent implements OnInit {
   ngOnInit() {}
 
   close() {
-    this.viewCtrl.dismiss();
+    this.popoverController.dismiss();
   }
 
   choseHero(hero: Hero) {

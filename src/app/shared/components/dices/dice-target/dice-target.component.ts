@@ -16,6 +16,7 @@ import { animateInterval as diceAnimateInterval } from '../dice/dice.component';
 @Component({
   selector: 'dice-target',
   templateUrl: 'dice-target.component.html',
+  styleUrls: ['dice-target.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DiceTargetComponent implements OnInit {

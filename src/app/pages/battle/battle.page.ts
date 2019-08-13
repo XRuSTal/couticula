@@ -1,6 +1,12 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ViewChild } from '@angular/core';
-import { NavController, NavParams } from '@ionic/angular';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnDestroy,
+  ViewChild,
+} from '@angular/core';
+import { NavController } from '@ionic/angular';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
@@ -13,13 +19,14 @@ import { DiceComponent, DiceTargetComponent } from '@shared/components';
 @Component({
   selector: 'page-battle',
   templateUrl: 'battle.page.html',
+  styleUrls: ['battle.page.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [],
 })
-export class BattlePage {
-  @ViewChild(DiceTargetComponent)
+export class BattlePage implements OnDestroy {
+  @ViewChild(DiceTargetComponent, { static: true })
   diceTarget: DiceTargetComponent;
-  @ViewChild(DiceComponent)
+  @ViewChild(DiceComponent, { static: true })
   diceValue: DiceComponent;
   cell: Cell;
   waiting = true;
@@ -55,11 +62,10 @@ export class BattlePage {
   constructor(
     private cd: ChangeDetectorRef,
     public navCtrl: NavController,
-    private params: NavParams,
     private battleStateService: BattleStateService,
     private settingsService: SettingsService
   ) {
-    this.cell = this.params.get('cell');
+    this.cell = history.state.cell; // this.params.get('cell');
 
     this.battleStateService.events$.pipe(takeUntil(this.unsubscribe$)).subscribe(event => {
       switch (event.state) {
@@ -76,12 +82,6 @@ export class BattlePage {
 
     this.battleStateService.startBattle(this.cell);
   }
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad BattlePage');
-  }
-
-  ngOnInit() {}
 
   ngOnDestroy() {
     this.unsubscribe$.next();
@@ -117,7 +117,7 @@ export class BattlePage {
   }
 
   openInventory() {
-    this.navCtrl.push(InventoryPage);
+    // this.navCtrl.push(InventoryPage);
   }
 
   clickDice() {

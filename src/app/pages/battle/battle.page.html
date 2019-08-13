@@ -1,13 +1,16 @@
-<div class="battle-background">
-  <ion-toolbar class="battle-title">
-    <ion-buttons start>
+<div class="battle">
+  <ion-toolbar class="battle__title">
+    <ion-buttons slot="start">
       <gold></gold>
     </ion-buttons>
     <ion-title>Сражение</ion-title>
-    <ion-buttons end>
-      <button ion-button (click)="openInventory()">
+    <ion-buttons slot="end">
+      <ion-button fill="clear"
+                  size="small"
+                  color="light"
+                  (click)="openInventory()">
         Инвентарь
-      </button>
+      </ion-button>
     </ion-buttons>
   </ion-toolbar>
 
