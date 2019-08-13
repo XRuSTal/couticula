@@ -7,7 +7,7 @@ import { HeroTypes } from '@shared/db';
 import { CreatureFabric } from '@shared/fabrics';
 
 import { PlayerService } from './player.service';
-import { Random } from './random.service';
+import { RandomService } from './random.service';
 
 @Injectable()
 export class HeroService {
@@ -98,7 +98,7 @@ export class HeroService {
   }
 
   private tryUseHealBottle(hero: Hero, item: Item) {
-    const dice = Random.throwDiceD6();
+    const dice = RandomService.throwDiceD6();
     const maxHealHitPoint = dice * 5;
     const healHitPoint = this.healHero(hero.id, maxHealHitPoint);
 
@@ -141,7 +141,7 @@ export class HeroService {
   loseHeroThing(heroId: number) {
     const hero = this.heroes.find(p => p.id === heroId);
     if (hero.inventory.length > 0) {
-      const index = Random.getInt(0, hero.inventory.length - 1);
+      const index = RandomService.getInt(0, hero.inventory.length - 1);
       const item = hero.inventory[index];
       this.removeItemFormInventory(hero, item);
       return item;

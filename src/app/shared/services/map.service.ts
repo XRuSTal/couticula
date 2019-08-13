@@ -6,7 +6,7 @@ import { CellSettings } from '@shared/db';
 import { GameMode } from '@shared/enums';
 import { EnemyGroupFabric } from '@shared/fabrics';
 
-import { Random } from './random.service';
+import { RandomService } from './random.service';
 import { SettingsService } from './settings.service';
 
 @Injectable()
@@ -101,8 +101,8 @@ export class MapService {
     let xCave: number, yCave: number;
 
     for (let count = 0; count < tryCount; count++) {
-      xCave = this.xCurrentMap + Random.getInt(-radius, radius);
-      yCave = this.yCurrentMap + Random.getInt(-radius, radius);
+      xCave = this.xCurrentMap + RandomService.getInt(-radius, radius);
+      yCave = this.yCurrentMap + RandomService.getInt(-radius, radius);
       if (this.isEmptyCell(xCave, yCave)) {
         return {
           x: xCave,
@@ -183,7 +183,7 @@ export class MapService {
   }
   private getWaysCount(deep: number) {
     // 2-3 для начала и 1-3 иначе
-    let waysCount = deep < 4 ? Random.getInt(2, 3) : Random.getInt(1, 6);
+    let waysCount = deep < 4 ? RandomService.getInt(2, 3) : RandomService.getInt(1, 6);
     // тупик 50%
     if (waysCount > 3) {
       waysCount = 0;

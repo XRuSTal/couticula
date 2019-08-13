@@ -7,7 +7,7 @@ import { HeroService } from './hero.service';
 import { MapService } from './map.service';
 import { PlayerService } from './player.service';
 import { TreasureService } from './treasure.service';
-import { Random } from './random.service';
+import { RandomService } from './random.service';
 
 @Injectable()
 export class EventSearchService {
@@ -26,7 +26,7 @@ export class EventSearchService {
 
   createRandomEvent(cell: Cell) {
     // определение наличия события
-    let dice = Random.throwDiceD6();
+    let dice = RandomService.throwDiceD6();
     this.eventsSource.next({
       type: SearchEventType.ThrowDice,
       text: 'Определение наличия события',
@@ -35,7 +35,7 @@ export class EventSearchService {
     if (dice >= 5) {
       this.eventsSource.next({ type: SearchEventType.Smth, text: 'Произошло событие!' });
       // определение масштабности события
-      dice = Random.throwDiceD6();
+      dice = RandomService.throwDiceD6();
       this.eventsSource.next({
         type: SearchEventType.ThrowDice,
         text: 'Определение масштабности события',
@@ -66,7 +66,7 @@ export class EventSearchService {
 
   private checkHeroes() {
     // шанс срабатывания события(для каждого игрока отдельно)
-    const chance = Random.throwDiceD6();
+    const chance = RandomService.throwDiceD6();
     this.eventsSource.next({
       type: SearchEventType.SeparateHeroes,
       text: `Событие действует на каждого игрока отдельно! (сложность ${chance})`,
@@ -78,7 +78,7 @@ export class EventSearchService {
         type: SearchEventType.CheckHero,
         text: hero.name,
       });
-      const dice = Random.throwDiceD6();
+      const dice = RandomService.throwDiceD6();
       this.eventsSource.next({ type: SearchEventType.ThrowDice, text: hero.name, dice });
       if (dice >= chance) {
         heroes.push(hero);
@@ -103,7 +103,7 @@ export class EventSearchService {
     }
 
     // определение типа события
-    const dice = Random.throwDiceD6();
+    const dice = RandomService.throwDiceD6();
     this.eventsSource.next({
       type: SearchEventType.ThrowDice,
       text: 'Определение типа события',
@@ -117,7 +117,7 @@ export class EventSearchService {
   }
 
   private createGoodEvent(cell: Cell, heroes: Hero[]) {
-    const dice = Random.throwDiceD6();
+    const dice = RandomService.throwDiceD6();
     this.eventsSource.next({
       type: SearchEventType.ThrowDice,
       text: 'Положительное событие',
@@ -140,7 +140,7 @@ export class EventSearchService {
   }
 
   private createBadEvent(heroes: Hero[]) {
-    const dice = Random.throwDiceD6();
+    const dice = RandomService.throwDiceD6();
     this.eventsSource.next({
       type: SearchEventType.ThrowDice,
       text: 'Негативное событие',
@@ -171,7 +171,7 @@ export class EventSearchService {
     });
 
     heroes.forEach(hero => {
-      const dice = Random.throwDiceD6();
+      const dice = RandomService.throwDiceD6();
       this.eventsSource.next({ type: SearchEventType.ThrowDice, text: hero.name, dice });
 
       const item: Item = this.treasureService.generateTreasure(1)[0];
@@ -197,7 +197,7 @@ export class EventSearchService {
       });
     } else {
       hurtHeroes.forEach(hero => {
-        const dice = Random.throwDiceD6();
+        const dice = RandomService.throwDiceD6();
         this.eventsSource.next({ type: SearchEventType.ThrowDice, text: hero.name, dice });
 
         const maxHealHitPoint = dice * 5;
@@ -232,7 +232,7 @@ export class EventSearchService {
     });
 
     heroes.forEach(hero => {
-      const dice = Random.throwDiceD6();
+      const dice = RandomService.throwDiceD6();
       this.eventsSource.next({ type: SearchEventType.ThrowDice, text: hero.name, dice });
 
       const lostGold = this.playerService.lossGold(hero.id);
@@ -250,7 +250,7 @@ export class EventSearchService {
     });
 
     heroes.forEach(hero => {
-      const dice = Random.throwDiceD6();
+      const dice = RandomService.throwDiceD6();
       this.eventsSource.next({ type: SearchEventType.ThrowDice, text: hero.name, dice });
 
       const maxDamage = dice * 5;
@@ -269,7 +269,7 @@ export class EventSearchService {
     });
 
     heroes.forEach(hero => {
-      const dice = Random.throwDiceD6();
+      const dice = RandomService.throwDiceD6();
       this.eventsSource.next({ type: SearchEventType.ThrowDice, text: hero.name, dice });
 
       const item = this.heroService.loseHeroThing(hero.id);
@@ -282,13 +282,13 @@ export class EventSearchService {
 
   private createRandomTrap(heroes: Hero[]) {
     // шанс срабатывания (для каждого игрока отдельно)
-    const chance = Random.throwDiceD6();
+    const chance = RandomService.throwDiceD6();
     this.eventsSource.next({
       type: SearchEventType.ExistsTrap,
       text: `Присутствует ловушка! (сложность ${chance})`,
     });
 
-    const dice = Random.throwDiceD6();
+    const dice = RandomService.throwDiceD6();
     this.eventsSource.next({
       type: SearchEventType.ThrowDice,
       text: 'Определение типа ловушки',
@@ -319,7 +319,7 @@ export class EventSearchService {
     heroes.forEach(hero => {
       const isTrapActivated = this.activateTrap(hero, chance);
       if (isTrapActivated) {
-        const dice = Random.throwDiceD6();
+        const dice = RandomService.throwDiceD6();
         const maxDamage = dice * 6;
         const damage = this.heroService.damageHero(hero.id, maxDamage);
         this.eventsSource.next({
@@ -379,7 +379,7 @@ export class EventSearchService {
       type: SearchEventType.CheckHero,
       text: hero.name,
     });
-    const dice = Random.throwDiceD6();
+    const dice = RandomService.throwDiceD6();
     this.eventsSource.next({ type: SearchEventType.ThrowDice, text: hero.name, dice });
     if (dice >= chance) {
       this.eventsSource.next({

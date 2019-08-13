@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Cell, Item } from '@models';
 import { ItemFabric } from '@shared/fabrics';
 import { PlayerService } from './player.service';
-import { Random } from './random.service';
+import { RandomService } from './random.service';
 
 @Injectable()
 export class TreasureService {
@@ -15,7 +15,7 @@ export class TreasureService {
 
     // Число сокровищ не превышает 10!
     for (let i = 0; i < Math.min(10, treasuresCount) + 0 /*побольше для тестов*/; i++) {
-      const dice = Random.throwDiceD6();
+      const dice = RandomService.throwDiceD6();
       switch (dice) {
         case 1:
         case 2:
@@ -41,7 +41,7 @@ export class TreasureService {
     const maxTreasuresCount =
       1 * cell.mosterLevel1Count + 2 * cell.mosterLevel2Count + 3 * (cell.doesBossExists ? 1 : 0);
 
-    const treasuresCount = Random.getInt(mostersCount, maxTreasuresCount);
+    const treasuresCount = RandomService.getInt(mostersCount, maxTreasuresCount);
     return treasuresCount;
   }
 }

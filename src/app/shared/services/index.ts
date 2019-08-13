@@ -4,7 +4,7 @@ import { EventSearchService } from './event-search.service';
 import { GameService } from './game.service';
 import { HeroService } from './hero.service';
 import { MapService } from './map.service';
-import { Random } from './random.service';
+import { RandomService } from './random.service';
 import { PlayerService } from './player.service';
 import { SettingsService } from './settings.service';
 import { ShopService } from './shop.service';
@@ -31,7 +31,7 @@ export {
   GameService,
   HeroService,
   MapService,
-  Random,
+  RandomService,
   PlayerService,
   SettingsService,
   ShopService,
