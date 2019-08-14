@@ -1,25 +1,44 @@
 import { ItemType } from '@enums';
 import { Item, Shield } from '@models';
+import { RandomService } from '@services';
 import { Items } from '@shared/db';
-import { Random } from '@services';
 
 export class ItemFabric {
-  static createItem(type: ItemType, value: number, options?: {
-    name?: string;
-    image?: string;
-    hitPoints?: number;
-  }): Item {
+  private static randomService: RandomService;
+
+  static initialize(randomService: RandomService) {
+    ItemFabric.randomService = randomService;
+  }
+
+  static createItem(
+    type: ItemType,
+    value: number,
+    options?: {
+      name?: string;
+      image?: string;
+      hitPoints?: number;
+    }
+  ): Item {
     return this.createEquipment(type, value, options);
   }
 
-  static createEquipment(type: ItemType, value: number, options: {
-    name?: string;
-    image?: string;
-    hitPoints?: number;
-  } = {}): Item {
+  static createEquipment(
+    type: ItemType,
+    value: number,
+    options: {
+      name?: string;
+      image?: string;
+      hitPoints?: number;
+    } = {}
+  ): Item {
     const itemInfo = Items.find(p => p.type === type);
     if (type === ItemType.Shield) {
-      return new Shield(value, options.hitPoints, options.name || itemInfo.name, options.image || itemInfo.img);
+      return new Shield(
+        value,
+        options.hitPoints,
+        options.name || itemInfo.name,
+        options.image || itemInfo.img
+      );
     } else {
       return new Item(type, value, options.name || itemInfo.name, options.image || itemInfo.img);
     }
@@ -38,7 +57,7 @@ export class ItemFabric {
   }
 
   static createRandomBottle(): Item {
-    const randomNum = Random.throwDiceD6();
+    const randomNum = ItemFabric.randomService.rollDiceD6();
     switch (randomNum) {
       case 1:
       case 2:
@@ -54,8 +73,8 @@ export class ItemFabric {
 
   static createRandomEquipment(): Item {
     let item: Item;
-    const value: number = Random.throwDiceD6();
-    const randomNum = Random.throwDiceD6();
+    const value: number = ItemFabric.randomService.rollDiceD6();
+    const randomNum = ItemFabric.randomService.rollDiceD6();
     switch (randomNum) {
       case 1:
         item = ItemFabric.createEquipment(ItemType.Head, value);
@@ -85,8 +104,8 @@ export class ItemFabric {
   }
 
   static createRandomGoldBag(): Item {
-    const sizeBag = Random.throwDiceD6();
-    const value = Random.throwDiceD6();
+    const sizeBag = ItemFabric.randomService.rollDiceD6();
+    const value = ItemFabric.randomService.rollDiceD6();
     let gold: number;
     let name: string;
     switch (sizeBag) {
@@ -110,7 +129,7 @@ export class ItemFabric {
   }
 
   private static createRandomShield(value: number) {
-    const shieldHitPoints = Random.throwDiceD6();
+    const shieldHitPoints = ItemFabric.randomService.rollDiceD6();
     const item = ItemFabric.createShield(value, shieldHitPoints);
     return item;
   }
@@ -136,7 +155,11 @@ export class ItemFabric {
         break;
     }
 
-    const item = ItemFabric.createEquipment(ItemType.Shield, value, { hitPoints, name, image }) as Shield;
+    const item = ItemFabric.createEquipment(ItemType.Shield, value, {
+      hitPoints,
+      name,
+      image,
+    }) as Shield;
     return item;
   }
 }

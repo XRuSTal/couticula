@@ -18,6 +18,7 @@ const SHARED_SERVICES: any[] = [
   HeroService,
   MapService,
   PlayerService,
+  RandomService,
   SettingsService,
   ShopService,
   TreasureService,

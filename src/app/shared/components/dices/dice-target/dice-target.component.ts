@@ -10,7 +10,7 @@ import { finalize, take } from 'rxjs/operators';
 
 import { DiceTarget, ItemType } from '@enums';
 import { Item } from '@models';
-import { Random } from '@services';
+import { RandomService } from '@services';
 import { animateInterval as diceAnimateInterval } from '../dice/dice.component';
 
 @Component({
@@ -27,7 +27,7 @@ export class DiceTargetComponent implements OnInit {
 
   image = '';
 
-  constructor(private cd: ChangeDetectorRef) {}
+  constructor(private cd: ChangeDetectorRef, private randomService: RandomService) {}
 
   ngOnInit() {
     this.updateImage();
@@ -70,7 +70,7 @@ export class DiceTargetComponent implements OnInit {
     const dices = [DiceTarget.Body, DiceTarget.Hands, DiceTarget.Head, DiceTarget.Legs].filter(
       dice => dice !== except
     );
-    const randomIndex = Random.getInt(0, dices.length - 1);
+    const randomIndex = this.randomService.getInt(0, dices.length - 1);
     return dices[randomIndex];
   }
 }

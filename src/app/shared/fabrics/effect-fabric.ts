@@ -1,10 +1,12 @@
 import { Creature, Effect, EffectSettings } from '@models';
+import { RandomService } from '@services';
 import { Effects } from '@shared/db';
-import { EffectType } from '@app/shared/enums';
-import { Random } from '../services';
+import { EffectType } from '@shared/enums';
 
 export class EffectFabric {
-  private static actions = new Map<EffectType, (currentCreature: Creature) => void>();
+  static randomService: RandomService;
+
+  private static actions: Map<EffectType, (currentCreature: Creature) => void>;
 
   static createEffect(effectType: EffectType): Effect {
     const settings: EffectSettings = Effects.find(effect => effect.effectType === effectType);
@@ -19,11 +21,13 @@ export class EffectFabric {
     }
   }
 
-  static initialize() {
+  static initialize(randomService: RandomService) {
+    EffectFabric.randomService = randomService;
     EffectFabric.prepareActions();
   }
 
   private static prepareActions() {
+    EffectFabric.actions = new Map();
     EffectFabric.actions.set(EffectType.AttackWithBlockHeal, attackWithBlockHeal);
     EffectFabric.actions.set(EffectType.AttackWithCourse, attackWithCourse);
     EffectFabric.actions.set(EffectType.AttackWithPoisonWeak1, attackWithPoisonWeak1);
@@ -43,7 +47,6 @@ export class EffectFabric {
     EffectFabric.actions.set(EffectType.HealWithAllies, actionHealWithAllies);
   }
 }
-EffectFabric.initialize();
 
 function attackWithBlockHeal(creature: Creature) {
   if (!creature.isExistsEffect(EffectType.BlockHeal)) {
@@ -60,15 +63,17 @@ function attackWithCourse(creature: Creature) {
 }
 
 function attackWithPoisonWeak1(creature: Creature) {
-  const dice = Random.throwDiceD6();
+  const dice = EffectFabric.randomService.rollDiceD6();
   if (dice === 6) {
-    if (!creature.isExistsSomeEffects([
-      EffectType.ResistPoisonAny,
-      EffectType.ResistPoison1,
-      EffectType.Poison1,
-      EffectType.Poison2,
-      EffectType.Poison3
-    ])) {
+    if (
+      !creature.isExistsSomeEffects([
+        EffectType.ResistPoisonAny,
+        EffectType.ResistPoison1,
+        EffectType.Poison1,
+        EffectType.Poison2,
+        EffectType.Poison3,
+      ])
+    ) {
       const newEffect = EffectFabric.createEffect(EffectType.Poison1);
       creature.currentEffects.push(newEffect);
       // Отравление остается после боя
@@ -77,9 +82,15 @@ function attackWithPoisonWeak1(creature: Creature) {
   }
 }
 function attackWithPoisonWeak2(creature: Creature) {
-  const dice = Random.throwDiceD6();
+  const dice = EffectFabric.randomService.rollDiceD6();
   if (dice === 6) {
-    if (!creature.isExistsSomeEffects([EffectType.ResistPoisonAny, EffectType.Poison2, EffectType.Poison3])) {
+    if (
+      !creature.isExistsSomeEffects([
+        EffectType.ResistPoisonAny,
+        EffectType.Poison2,
+        EffectType.Poison3,
+      ])
+    ) {
       creature.dropCurrentEffect(EffectType.Poison1);
       const newEffect = EffectFabric.createEffect(EffectType.Poison2);
       creature.currentEffects.push(newEffect);
@@ -90,9 +101,15 @@ function attackWithPoisonWeak2(creature: Creature) {
   }
 }
 function attackWithPoisonMedium2(creature: Creature) {
-  const dice = Random.throwDiceD6();
+  const dice = EffectFabric.randomService.rollDiceD6();
   if (dice >= 5) {
-    if (!creature.isExistsSomeEffects([EffectType.ResistPoisonAny, EffectType.Poison2, EffectType.Poison3])) {
+    if (
+      !creature.isExistsSomeEffects([
+        EffectType.ResistPoisonAny,
+        EffectType.Poison2,
+        EffectType.Poison3,
+      ])
+    ) {
       creature.dropCurrentEffect(EffectType.Poison1);
       const newEffect = EffectFabric.createEffect(EffectType.Poison2);
       creature.currentEffects.push(newEffect);
@@ -103,7 +120,7 @@ function attackWithPoisonMedium2(creature: Creature) {
   }
 }
 function attackWithPoisonStrong3(creature: Creature) {
-  const dice = Random.throwDiceD6();
+  const dice = EffectFabric.randomService.rollDiceD6();
   if (dice >= 4) {
     if (!creature.isExistsSomeEffects([EffectType.ResistPoisonAny, EffectType.Poison3])) {
       creature.dropCurrentEffects([EffectType.Poison1, EffectType.Poison2]);
@@ -117,7 +134,7 @@ function attackWithPoisonStrong3(creature: Creature) {
 }
 
 function attackWithStanWeak(creature: Creature) {
-  const dice = Random.throwDiceD6();
+  const dice = EffectFabric.randomService.rollDiceD6();
   if (dice === 6) {
     if (!creature.isExistsSomeEffects([EffectType.ResistStan, EffectType.Stan])) {
       const newEffect = EffectFabric.createEffect(EffectType.Stan);
@@ -126,7 +143,7 @@ function attackWithStanWeak(creature: Creature) {
   }
 }
 function attackWithStanMedium(creature: Creature) {
-  const dice = Random.throwDiceD6();
+  const dice = EffectFabric.randomService.rollDiceD6();
   if (dice >= 5) {
     if (!creature.isExistsSomeEffects([EffectType.ResistStan, EffectType.Stan])) {
       const newEffect = EffectFabric.createEffect(EffectType.Stan);
@@ -135,7 +152,7 @@ function attackWithStanMedium(creature: Creature) {
   }
 }
 function attackWithStanStrong(creature: Creature) {
-  const dice = Random.throwDiceD6();
+  const dice = EffectFabric.randomService.rollDiceD6();
   if (dice >= 4) {
     if (!creature.isExistsSomeEffects([EffectType.ResistStan, EffectType.Stan])) {
       const newEffect = EffectFabric.createEffect(EffectType.Stan);
