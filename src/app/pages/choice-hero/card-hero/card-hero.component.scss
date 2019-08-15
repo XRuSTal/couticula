@@ -1,6 +1,6 @@
 .hero {
   display: grid;
-  grid-template-rows: auto 1fr auto;
+  grid-template-rows: auto 40vh 1fr;
   height: 100%;
   margin: 0;
   border-radius: 3vh;
@@ -15,11 +15,13 @@
   }
 
   &__image {
+    height: 100%;
+    object-fit: contain;
     border-radius: .5vh;
   }
 
   &__description {
-    padding: .5vh;
+    padding: 1.5vh;
     font-size: 3.5vh;
   }
 }
