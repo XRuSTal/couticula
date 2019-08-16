@@ -11,7 +11,7 @@
   </ion-toolbar>
 
   <ion-list class="settings__list">
-    <ion-item>
+    <!--<ion-item>
       <ion-label>Режим игры</ion-label>
       <ion-select [(ngModel)]="settingsService.gameMode"
                   okText="Да!"
@@ -20,12 +20,7 @@
         <ion-select-option [value]="gameMode.Hard">Сложный</ion-select-option>
       </ion-select>
     </ion-item>
-
-    <ion-item>
-      <ion-label>Автопобеда</ion-label>
-      <ion-toggle [(ngModel)]="settingsService.autoWin" color="dark"></ion-toggle>
-    </ion-item>
-
+  
     <ion-item>
       <ion-label color="dark">Задержка анимации карты</ion-label>
       <ion-input [(ngModel)]="settingsService.eventsDelay"
@@ -46,5 +41,62 @@
                   (ngModelChange)="settingsService.battleDiceDelay = convertToNumber($event)"
                   type="number" step="100" min="100" max="2000"></ion-input>
     </ion-item>
+
+    <ion-item>
+      <ion-label>Автопобеда</ion-label>
+      <ion-toggle [(ngModel)]="settingsService.autoWin" color="dark"></ion-toggle>
+    </ion-item>-->
+
+      <ion-item [formGroup]="settings">
+           <ion-list-header>Сложность</ion-list-header>
+           <ion-select formControlName="difficult">
+             <ion-select-option [value]="gameMode.Easy">Easy</ion-select-option>
+             <ion-select-option [value]="gameMode.Hard">Hard</ion-select-option>
+           </ion-select>
+      </ion-item>
+
+    <!--<form [formGroup]="settings">
+      <input type="radio" name="difficult" formControlName="difficult" [value]="gameMode.Easy"><label for="difficult">Easy</label>
+      <input type="radio" name="difficult" formControlName="difficult" [value]="gameMode.Hard"><label for="difficult">Hard</label>
+    </form>-->
+
+    <!--<form [formGroup]="settings">
+        <input type="checkbox" name="autoWin" formControlName="autoWin"><label for="autoWin">Автопобеда</label>
+    </form>-->
+
+    <ion-item [formGroup]="settings">
+        <ion-label>Автопобеда</ion-label>
+        <ion-toggle formControlName="autoWin" color="dark"></ion-toggle>
+    </ion-item>
+
+    <!--<form [formGroup]="settings">
+      <input type="range" name="eventDelay" min="100" max="2000" step="100" formControlName="eventDelay"><label for="eventDelay">Задержка Анимации Карты</label>
+    </form>-->
+
+    <ion-item [formGroup]="settings">
+      <ion-label>Задержка Анимации Карты</ion-label>
+      <ion-input type="number" formControlName="eventDelay" name="eventDelay" min="100" max="2000" step="100" ></ion-input>
+    </ion-item>
+
+    <!--<form [formGroup]="settings">
+        <input type="range" name="battleEventsDelay" min="100" max="2000" step="100" formControlName="battleEventsDelay"><label for="battleEventsDelay">Задержка Анимации Боя</label>
+    </form>-->
+
+    <ion-item [formGroup]="settings">
+        <ion-label>Задержка Анимации Боя</ion-label>
+        <ion-input type="number" formControlName="battleEventsDelay" name="eventDelay" min="100" max="2000" step="100" ></ion-input>
+    </ion-item>
+
+    <!--<form [formGroup]="settings">
+        <input type="range" name="battleDiceDelay" min="100" max="2000" step="100" formControlName="battleDiceDelay"><label for="battleDiceDelay">Задержка Броска Костей</label>
+    </form>-->
+
+    <ion-item [formGroup]="settings">
+        <ion-label>Задержка Броска Костей</ion-label>
+        <ion-input type="number" formControlName="battleDiceDelay" name="eventDelay" min="100" max="2000" step="100" ></ion-input>
+    </ion-item>    
+    
+
+
   </ion-list>
 </ion-content>
