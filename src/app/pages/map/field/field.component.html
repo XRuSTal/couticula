@@ -1,7 +1,7 @@
 <div class="map__field"
      [ngStyle]="{
-        'grid-template-rows': 'repeat(' + cntY + ', minmax(auto, ' + 90 / cntY + 'vh))',
-        'grid-template-columns': 'repeat(' + cntX + ', minmax(auto, ' + 90 / cntY + 'vh))'
+        'grid-template-rows': 'repeat(' + cntY + ', minmax(auto, ' + 80 / cntY + 'vh))',
+        'grid-template-columns': 'repeat(' + cntX + ', minmax(auto, ' + 80 / cntY + 'vh))'
      }"
      (swipe)="swipeEvent($event)">
   <ng-container *ngFor="let cell of visibleMap">

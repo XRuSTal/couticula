@@ -1,6 +1,6 @@
 .inventory {
   display: grid;
-  grid-template-rows: 8vh 92vh;
+  grid-template-rows: 15vh 85vh;
   grid-template-columns: minmax(20vw, auto) minmax(auto, 40vw) minmax(20vw, auto);
   background: url('assets/img/backgrounds/todo.jpg') no-repeat center center fixed;
   -webkit-background-size: cover;
@@ -18,7 +18,7 @@
 
   &__hero-equipment {
     display: grid;
-    grid-template-rows: repeat(6, 13vh) auto;
+    grid-template-rows: repeat(6, 12vh) auto;
     grid-row-gap: 2vh;
     justify-items: center;
 
