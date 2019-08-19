@@ -26,11 +26,13 @@ export class SettingsPage implements OnDestroy {
   }
 
   ngOnDestroy() {
-    this.settingsService.gameMode = this.settings.get('difficult').value;
-    this.settingsService.eventsDelay = this.settings.get('eventDelay').value;
-    this.settingsService.autoWin = this.settings.get('autoWin').value;
-    this.settingsService.battleEventsDelay = this.settings.get('battleEventsDelay').value;
-    this.settingsService.battleDiceDelay = this.settings.get('battleDiceDelay').value;
+    const model = this.settings.value;
+
+    this.settingsService.gameMode = model.difficult;
+    this.settingsService.eventsDelay = model.eventDelay;
+    this.settingsService.autoWin = model.autoWin;
+    this.settingsService.battleEventsDelay = model.battleEventsDelay;
+    this.settingsService.battleDiceDelay = model.battleDiceDelay;
   }
 
   close() {
