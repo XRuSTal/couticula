@@ -1,50 +1,45 @@
 <ion-content class="settings">
-  <ion-toolbar class="settings__header">
-    <ion-title class="settings__header__name">Настройки</ion-title>
-    <ion-buttons slot="end">
-      <ion-button fill="outline"
-                  color="light"
-                  (click)="close()">
-        Закрыть
-      </ion-button>
-    </ion-buttons>
-  </ion-toolbar>
-
-  <ion-list class="settings__list">
-    <ion-item>
-      <ion-label>Режим игры</ion-label>
-      <ion-select [(ngModel)]="settingsService.gameMode"
-                  okText="Да!"
-                  cancelText="Отмена">
-        <ion-select-option [value]="gameMode.Easy">Простой</ion-select-option>
-        <ion-select-option [value]="gameMode.Hard">Сложный</ion-select-option>
-      </ion-select>
-    </ion-item>
-
-    <ion-item>
-      <ion-label>Автопобеда</ion-label>
-      <ion-toggle [(ngModel)]="settingsService.autoWin" color="dark"></ion-toggle>
-    </ion-item>
-
-    <ion-item>
-      <ion-label color="dark">Задержка анимации карты</ion-label>
-      <ion-input [(ngModel)]="settingsService.eventsDelay"
-                  (ngModelChange)="settingsService.eventsDelay = convertToNumber($event)"
-                  type="number" step="100" min="100" max="2000"></ion-input>
-    </ion-item>
-
-    <ion-item>
-      <ion-label color="dark">Задержка анимации боя</ion-label>
-      <ion-input [(ngModel)]="settingsService.battleEventsDelay"
-                  (ngModelChange)="settingsService.battleEventsDelay = convertToNumber($event)"
-                  type="number" step="100" min="100" max="2000"></ion-input>
-    </ion-item>
-
-    <ion-item>
-      <ion-label color="dark">Задержка броска костей</ion-label>
-      <ion-input [(ngModel)]="settingsService.battleDiceDelay"
-                  (ngModelChange)="settingsService.battleDiceDelay = convertToNumber($event)"
-                  type="number" step="100" min="100" max="2000"></ion-input>
-    </ion-item>
-  </ion-list>
-</ion-content>
+    <ion-toolbar class="settings__header">
+      <ion-title class="settings__header__name">Настройки</ion-title>
+      <ion-buttons slot="end">
+        <ion-button fill="outline"
+                    color="light"
+                    (click)="close()">
+          Закрыть
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  
+    <ion-list [formGroup]="settings" class="settings__list">
+  
+        <ion-item>
+             <ion-label>Режим игры</ion-label>
+             <ion-select  class="settings__select" formControlName="difficult">
+               <ion-select-option [value]="gameMode.Easy">Простой</ion-select-option>
+               <ion-select-option [value]="gameMode.Hard">Сложный</ion-select-option>
+             </ion-select>
+        </ion-item>
+  
+      <ion-item>
+          <ion-label>Автопобеда</ion-label>
+          <ion-toggle formControlName="autoWin" color="dark"></ion-toggle>
+      </ion-item>
+  
+      <ion-item>
+        <ion-label>Задержка анимации карты</ion-label>
+        <ion-input type="number" formControlName="eventDelay" name="eventDelay" min="100" max="2000" step="100" ></ion-input>
+      </ion-item>
+  
+      <ion-item>
+          <ion-label>Задержка анимации боя</ion-label>
+          <ion-input type="number" formControlName="battleEventsDelay" name="eventDelay" min="100" max="2000" step="100" ></ion-input>
+      </ion-item>
+  
+      <ion-item>
+          <ion-label>Задержка броска костей</ion-label>
+          <ion-input type="number" formControlName="battleDiceDelay" name="eventDelay" min="100" max="2000" step="100" ></ion-input>
+      </ion-item>    
+  
+    </ion-list>
+  </ion-content>
+  
