@@ -1,5 +1,5 @@
 .container {
-  background: url('assets/img/backgrounds/todo.jpg') no-repeat center center fixed;
+  --background: url('assets/img/backgrounds/todo.jpg') no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -12,11 +12,5 @@
     color: white;
     background-color: black;
     opacity: 0.5;
-  }
-
-  .hero {
-    display: block;
-    max-height: 30vh;
-    max-width: 30vw;
   }
 }

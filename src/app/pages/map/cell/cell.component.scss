@@ -1,20 +1,20 @@
 .map__field__cell {
   position: relative;
 
-  &__battle-event {
+  &__battle-event, &__search-event, &__treasures, &__cave, &__info {
     position: absolute;
     top: 0;
+    left: 0;
     z-index: 1;
+  }
 
+  &__battle-event {
     &_exists-boss {
       background-color: red;
     }
   }
 
   &__search-event, &__treasures, &__cave {
-    position: absolute;
-    z-index: 1;
-    top: 0;
     padding: 25%;
   }
   &__cave {
@@ -22,8 +22,7 @@
   }
 
   &__info {
-    position: absolute;
+    font-size: 3.5vh;
     color: red;
-    top: -.5vh;
   }
 }
