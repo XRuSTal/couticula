@@ -12,10 +12,8 @@ import {
   Creature,
   Hero,
 } from '@models';
+import { HeroService, RandomService, SettingsService, StatisticService } from '@services';
 import { AbilityFabric, CreatureFabric, EffectFabric } from '@shared/fabrics';
-import { HeroService } from './hero.service';
-import { SettingsService } from './settings.service';
-import { RandomService } from './random.service';
 
 @Injectable()
 export class BattleService {
@@ -36,7 +34,8 @@ export class BattleService {
   constructor(
     private heroService: HeroService,
     private settingsService: SettingsService,
-    private randomService: RandomService
+    private randomService: RandomService,
+    private statisticService: StatisticService
   ) {
     this.events$ = this.eventsSource.asObservable();
 
@@ -123,10 +122,26 @@ export class BattleService {
 
   private winBattle() {
     this.prepareHeroAfterWin();
+    this.monsters.forEach(curmon => {
+      this.statisticService.updateStatistic(
+        curmon.name,
+        curmon.hitPoint,
+        curmon.maxHitPoint,
+        curmon.state
+      );
+    });
     this.eventsSource.next({ state: BattleState.Win });
     this.battleStateSource.next(BattleState.Win);
   }
   private loseBattle() {
+    this.monsters.forEach(curmon => {
+      this.statisticService.updateStatistic(
+        curmon.name,
+        curmon.hitPoint,
+        curmon.maxHitPoint,
+        curmon.state
+      );
+    });
     this.eventsSource.next({ state: BattleState.Lose });
     this.battleStateSource.next(BattleState.Lose);
   }
