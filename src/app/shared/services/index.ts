@@ -9,6 +9,7 @@ import { RandomService } from './random.service';
 import { SettingsService } from './settings.service';
 import { ShopService } from './shop.service';
 import { StatisticService } from './statistic.service';
+import { StorageService } from './storage.service';
 import { TreasureService } from './treasure.service';
 
 const SHARED_SERVICES: any[] = [
@@ -23,6 +24,7 @@ const SHARED_SERVICES: any[] = [
   SettingsService,
   ShopService,
   StatisticService,
+  StorageService,
   TreasureService,
 ];
 
@@ -39,5 +41,6 @@ export {
   SettingsService,
   ShopService,
   StatisticService,
+  StorageService,
   TreasureService,
 };

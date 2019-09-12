@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Storage } from '@ionic/storage';
 
 import { CreatureState } from '@enums';
 import { CreatureSettings } from '@models';
 import { CreaturesBoss, CreaturesLevel1, CreaturesLevel2 } from '@shared/db';
+
+import { StorageService } from '@services';
 
 @Injectable()
 export class StatisticService {
@@ -22,53 +23,63 @@ export class StatisticService {
     rolledDices: number[];
   }[] = [];
 
-  constructor(private storage: Storage) {
-    /*  this.creatureBoss = CreaturesBoss;
-        this.creatureLevel1 = CreaturesLevel1;
-        this.creatureLevel2 = CreaturesLevel2;
+  constructor(private storageService: StorageService) {
+    this.creatureBoss = CreaturesBoss;
+    this.creatureLevel1 = CreaturesLevel1;
+    this.creatureLevel2 = CreaturesLevel2;
 
-        this.creatureBoss.forEach( curCreat => {
-            const index = this.statisticByCreatures.findIndex( curStat => curStat.creature === curCreat.name);
-            if ( index === -1) {
-                this.statisticByCreatures.push( {
-                    creature: curCreat.name,
-                    dealtDamage: 0,
-                    recievedDamage: 0,
-                    encounteredTimes: 0,
-                    kills: 0,
-                    killedTimes: 0,
-                    rolledDices: []
-                });
-            }
+    this.creatureBoss.forEach(curCreat => {
+      const index = this.statisticByCreatures.findIndex(
+        curStat => curStat.creature === curCreat.name
+      );
+      if (index === -1) {
+        this.statisticByCreatures.push({
+          creature: curCreat.name,
+          dealtDamage: 0,
+          recievedDamage: 0,
+          encounteredTimes: 0,
+          kills: 0,
+          killedTimes: 0,
+          rolledDices: [],
         });
-        this.creatureLevel1.forEach( curCreat => {
-            const index = this.statisticByCreatures.findIndex( curStat => curStat.creature === curCreat.name);
-            if ( index === -1) {
-                this.statisticByCreatures.push( {
-                    creature: curCreat.name,
-                    dealtDamage: 0,
-                    recievedDamage: 0,
-                    encounteredTimes: 0,
-                    kills: 0,
-                    killedTimes: 0,
-                    rolledDices: []
-                });
-            }
+      }
+    });
+    this.creatureLevel1.forEach(curCreat => {
+      const index = this.statisticByCreatures.findIndex(
+        curStat => curStat.creature === curCreat.name
+      );
+      if (index === -1) {
+        this.statisticByCreatures.push({
+          creature: curCreat.name,
+          dealtDamage: 0,
+          recievedDamage: 0,
+          encounteredTimes: 0,
+          kills: 0,
+          killedTimes: 0,
+          rolledDices: [],
         });
-        this.creatureLevel2.forEach( curCreat => {
-            const index = this.statisticByCreatures.findIndex( curStat => curStat.creature === curCreat.name);
-            if ( index === -1) {
-                this.statisticByCreatures.push( {
-                    creature: curCreat.name,
-                    dealtDamage: 0,
-                    recievedDamage: 0,
-                    encounteredTimes: 0,
-                    kills: 0,
-                    killedTimes: 0,
-                    rolledDices: []
-                });
-            }
-        });*/
+      }
+    });
+    this.creatureLevel2.forEach(curCreat => {
+      const index = this.statisticByCreatures.findIndex(
+        curStat => curStat.creature === curCreat.name
+      );
+      if (index === -1) {
+        this.statisticByCreatures.push({
+          creature: curCreat.name,
+          dealtDamage: 0,
+          recievedDamage: 0,
+          encounteredTimes: 0,
+          kills: 0,
+          killedTimes: 0,
+          rolledDices: [],
+        });
+      }
+    });
+  }
+
+  checkStorage(): void {
+    this.storageService.setStorageValue('testJSON', '555', 'kills');
   }
 
   updateStatistic(creature: string, remainingHp: number, maxHp: number, state: CreatureState) {
