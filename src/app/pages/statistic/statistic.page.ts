@@ -13,10 +13,6 @@ export class StatisticPage {
 
   constructor(private navCtrl: NavController, private statisticService: StatisticService) {}
 
-  tests(): void {
-    this.statisticService.checkStorage();
-  }
-
   close() {
     this.navCtrl.back();
   }
