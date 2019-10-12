@@ -5,8 +5,8 @@ import { LoginPage } from './login/login.page';
 import { MAP_COMPONENTS, MapPage } from './map';
 import { MultiplayerPage } from './multiplayer/multiplayer.page';
 import { SettingsPage } from './settings/settings.page';
-import { SinglePage } from './single/single.page';
 import { SHOP_COMPONENTS, ShopPage } from './shop';
+import { SinglePage } from './single/single.page';
 import { StartPage } from './start/start.page';
 
 const PAGES_COMPONENTS: any[] = [

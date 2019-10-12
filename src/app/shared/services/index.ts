@@ -1,13 +1,15 @@
-import { BattleService } from './battle.service';
 import { BattleStateService } from './battle-state.service';
+import { BattleService } from './battle.service';
 import { EventSearchService } from './event-search.service';
 import { GameService } from './game.service';
 import { HeroService } from './hero.service';
 import { MapService } from './map.service';
-import { RandomService } from './random.service';
 import { PlayerService } from './player.service';
+import { RandomService } from './random.service';
 import { SettingsService } from './settings.service';
 import { ShopService } from './shop.service';
+import { StatisticService } from './statistic.service';
+import { StorageService } from './storage.service';
 import { TreasureService } from './treasure.service';
 
 const SHARED_SERVICES: any[] = [
@@ -21,6 +23,8 @@ const SHARED_SERVICES: any[] = [
   RandomService,
   SettingsService,
   ShopService,
+  StatisticService,
+  StorageService,
   TreasureService,
 ];
 
@@ -36,5 +40,7 @@ export {
   RandomService,
   SettingsService,
   ShopService,
+  StatisticService,
+  StorageService,
   TreasureService,
 };

@@ -69,6 +69,11 @@ const routes: Routes = [
     redirectTo: '/start-page',
     pathMatch: 'full',
   },
+  {
+    path: 'statistic',
+    loadChildren: () =>
+      import('./pages/statistic/statistic.module').then(mod => mod.StatisticPageModule),
+  },
 ];
 @NgModule({
   imports: [RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })],
