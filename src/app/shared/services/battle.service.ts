@@ -122,26 +122,12 @@ export class BattleService {
 
   private winBattle() {
     this.prepareHeroAfterWin();
-    this.monsters.forEach(curmon => {
-      this.statisticService.updateStatistic(
-        curmon.name,
-        curmon.hitPoint,
-        curmon.maxHitPoint,
-        curmon.state
-      );
-    });
+    this.statisticService.updateStatistic(this.monsters);
     this.eventsSource.next({ state: BattleState.Win });
     this.battleStateSource.next(BattleState.Win);
   }
   private loseBattle() {
-    this.monsters.forEach(curmon => {
-      this.statisticService.updateStatistic(
-        curmon.name,
-        curmon.hitPoint,
-        curmon.maxHitPoint,
-        curmon.state
-      );
-    });
+    this.statisticService.updateStatistic(this.monsters);
     this.eventsSource.next({ state: BattleState.Lose });
     this.battleStateSource.next(BattleState.Lose);
   }

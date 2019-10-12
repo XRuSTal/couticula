@@ -68,8 +68,6 @@ export class BattleStateService {
         takeUntil(this.endEvent$)
       )
       .subscribe(event => {
-        console.log(BattleState[event.state], event);
-
         switch (event.state) {
           case BattleState.Begin:
             this.eventHandler();
@@ -154,7 +152,6 @@ export class BattleStateService {
       eventDelay = 300;
     }
 
-    console.log('setTimeout', eventDelay, diceDelay);
     setTimeout(this.eventHandler.bind(this), eventDelay);
   }
 

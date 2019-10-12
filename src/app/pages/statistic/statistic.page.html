@@ -7,13 +7,11 @@
             </ion-button>
         </ion-buttons>
     </ion-toolbar>
-    <ion-button (click)="tests()">TEST!</ion-button>
-    <ion-list *ngFor="let creature of statisticService.statisticByCreatures">
+    <ion-list *ngFor="let creature of statisticService.allStatistics">
         <ion-item>
             <ion-label>
                 <h2>{{creature.creature}} </h2>
-                <h3>Killed times: {{creature.killedTimes}} </h3>
-                <h3>Recieved damage: {{creature.recievedDamage}}</h3>
+                <h3>Killed times: {{creature.statistic.kills}} </h3>
             </ion-label>
         </ion-item>
     </ion-list>

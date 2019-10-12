@@ -1,18 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
-
-export class CreatureSettings {
-  dealtDamage = 0;
-  recievedDamage = 0;
-  encounteredTimes = 0;
-  kills = 0;
-  killedTimes = 0;
-}
+import { promise } from 'selenium-webdriver';
 
 @Injectable()
 export class StorageService {
-  newJSON: string;
-  currJSON = {
+  emptyJSON = {
     dealtDamage: 0,
     recievedDamage: 0,
     encounteredTimes: 0,
@@ -20,28 +12,49 @@ export class StorageService {
     killedTimes: 0,
   };
 
-  private storeGuid = 'couticulaStore';
-
   constructor(private storage: Storage) {}
 
-  setStorageValue(key: string, value: CreatureSettings, parameter?: string): void {
-    if (typeof value === 'string') {
-    }
-
-    this.storage.get(key).then(val => {
-      if (val === null) {
-        console.log(this.currJSON);
+  async parseValueToStore(key: string, value: number, parameter: string) {
+    let JSONToStore = {};
+    await this.storage.get(key).then(val => {
+      if (val == null || this.isEmpty(val)) {
+        JSONToStore = Object.assign({}, this.emptyJSON);
       } else {
-        this.currJSON = Object.assign(this.currJSON, JSON.parse(val));
+        JSONToStore = Object.assign(JSONToStore, val);
+        JSONToStore[parameter] = JSONToStore[parameter] + value;
+      }
+      this.storeValue(key, JSONToStore);
+    });
+  }
+
+  private isEmpty(obj: any): boolean {
+    for (let key in obj) {
+      if (obj.hasOwnProperty(key)) return false;
+    }
+    return true;
+  }
+
+  private storeValue(key: string, valueToStore: any) {
+    if (valueToStore != null) {
+      this.storage.set(key, valueToStore);
+    }
+  }
+
+  async parseJSONToGetStatistic(key: string) {
+    let JSONToGetStat = {
+      dealtDamage: 0,
+      recievedDamage: 0,
+      encounteredTimes: 0,
+      kills: 0,
+      killedTimes: 0,
+    };
+    await this.storage.get(key).then(val => {
+      if (val === null || this.isEmpty(val)) {
+        JSONToGetStat = Object.assign({}, this.emptyJSON);
+      } else {
+        JSONToGetStat = Object.assign({}, val);
       }
     });
-    if (parameter != null) {
-      this.currJSON[parameter] = this.currJSON[parameter] + value;
-      this.newJSON = JSON.stringify(this.currJSON);
-      console.log(this.newJSON);
-      this.storage.set(key, this.newJSON);
-    } else {
-      this.storage.set(key, value);
-    }
+    return JSONToGetStat;
   }
 }
