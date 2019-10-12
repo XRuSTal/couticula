@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { CreatureState } from '@enums';
-import { CreatureSettings, Creature } from '@models';
+import { Creature, CreatureSettings } from '@models';
 import { CreaturesBoss, CreaturesLevel1, CreaturesLevel2 } from '@shared/db';
 
 import { StorageService } from '@services';
@@ -68,16 +68,24 @@ export class StatisticService {
   }
 
   async updateStatistic(monsnters: Creature[]) {
-    let numOfCreat = {};
+    const numOfCreat = {};
     monsnters.forEach(creature => {
-      if (creature.state == CreatureState.Dead || creature.state == CreatureState.DeadInThisTurn) {
-        if (numOfCreat.hasOwnProperty(creature.name)) numOfCreat[creature.name]++;
-        else numOfCreat[creature.name] = 1;
+      if (
+        creature.state === CreatureState.Dead ||
+        creature.state === CreatureState.DeadInThisTurn
+      ) {
+        if (numOfCreat.hasOwnProperty(creature.name)) {
+          numOfCreat[creature.name]++;
+        } else {
+          numOfCreat[creature.name] = 1;
+        }
       }
     });
 
-    for (let monst in numOfCreat) {
-      await this.increaseKilledCounter(monst, numOfCreat[monst]);
+    for (const monst in numOfCreat) {
+      if (numOfCreat.hasOwnProperty(monst)) {
+        await this.increaseKilledCounter(monst, numOfCreat[monst]);
+      }
     }
     this.refreshStatistics();
   }

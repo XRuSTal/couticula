@@ -28,8 +28,10 @@ export class StorageService {
   }
 
   private isEmpty(obj: any): boolean {
-    for (let key in obj) {
-      if (obj.hasOwnProperty(key)) return false;
+    for (const key in obj) {
+      if (obj.hasOwnProperty(key)) {
+        return false;
+      }
     }
     return true;
   }
