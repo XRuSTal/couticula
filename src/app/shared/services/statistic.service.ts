@@ -2,17 +2,15 @@ import { Injectable } from '@angular/core';
 
 import { CreatureState } from '@enums';
 import { Creature, CreatureSettings } from '@models';
-import { CreaturesBoss, CreaturesLevel1, CreaturesLevel2 } from '@shared/db';
 
 import { StorageService } from '@services';
 
 @Injectable()
 export class StatisticService {
-  creatureBoss: CreatureSettings[];
-  creatureLevel1: CreatureSettings[];
-  creatureLevel2: CreatureSettings[];
-  x: number;
-  allStatistics: {
+  private creatureBoss: CreatureSettings[];
+  private creatureLevel1: CreatureSettings[];
+  private creatureLevel2: CreatureSettings[];
+  private allStatistics: {
     creature: string;
     statistic: {
       dealtDamage: number;
@@ -23,77 +21,60 @@ export class StatisticService {
     };
   }[] = [];
 
-  listOfCreatures: string[] = [];
-
   constructor(private storageService: StorageService) {
-    this.creatureBoss = CreaturesBoss;
-    this.creatureLevel1 = CreaturesLevel1;
-    this.creatureLevel2 = CreaturesLevel2;
-
-    this.creatureBoss.forEach(curCreat => {
-      const index = this.listOfCreatures.findIndex(curStat => curStat === curCreat.name);
-      if (index === -1) {
-        this.listOfCreatures.push(curCreat.name);
-      }
-    });
-    this.creatureLevel1.forEach(curCreat => {
-      const index = this.listOfCreatures.findIndex(curStat => curStat === curCreat.name);
-      if (index === -1) {
-        this.listOfCreatures.push(curCreat.name);
-      }
-    });
-    this.creatureLevel2.forEach(curCreat => {
-      const index = this.listOfCreatures.findIndex(curStat => curStat === curCreat.name);
-      if (index === -1) {
-        this.listOfCreatures.push(curCreat.name);
-      }
-    });
     this.refreshStatistics();
   }
 
   private async refreshStatistics() {
-    this.listOfCreatures.forEach(async creature => {
-      const index = this.allStatistics.findIndex(curStat => curStat.creature === creature);
+    const allCreatures = this.creatureBoss
+      .map(creat => creat.name)
+      .concat(
+        this.creatureLevel1.map(creat => creat.name),
+        this.creatureLevel2.map(creat => creat.name)
+      );
+
+    allCreatures.forEach(async curCreat => {
+      const stat = await this.storageService.getStatistic(curCreat);
+      const index = this.allStatistics.findIndex(curStat => curStat.creature === curCreat);
       if (index === -1) {
         this.allStatistics.push({
-          creature: creature,
-          statistic: await this.storageService.parseJSONToGetStatistic(creature),
+          creature: curCreat,
+          statistic: stat,
         });
       } else {
-        this.allStatistics[index].statistic = await this.storageService.parseJSONToGetStatistic(
-          creature
-        );
+        this.allStatistics[index].statistic = stat;
       }
     });
   }
 
-  async updateStatistic(monsnters: Creature[]) {
-    const numOfCreat = {};
-    monsnters.forEach(creature => {
+  async updateStatistic(monsters: Creature[]) {
+    const numOfCreat = new Map();
+    monsters.forEach(creature => {
       if (
         creature.state === CreatureState.Dead ||
         creature.state === CreatureState.DeadInThisTurn
       ) {
-        if (numOfCreat.hasOwnProperty(creature.name)) {
-          numOfCreat[creature.name]++;
+        if (!numOfCreat.get(creature.name)) {
+          numOfCreat.set(creature.name, 1);
         } else {
-          numOfCreat[creature.name] = 1;
+          numOfCreat.set(creature.name, numOfCreat.get(creature.name) + 1);
         }
       }
     });
 
-    for (const monst in numOfCreat) {
-      if (numOfCreat.hasOwnProperty(monst)) {
-        await this.increaseKilledCounter(monst, numOfCreat[monst]);
-      }
-    }
+    numOfCreat.forEach(async (monst, kills) => {
+      await this.increaseKilledCounter(monst, kills);
+    });
+
     this.refreshStatistics();
   }
 
   async increaseKilledCounter(creature: string, numKills: number) {
-    const index = this.listOfCreatures.findIndex(curCreat => curCreat === creature);
+    const index = this.allStatistics.findIndex(curCreat => curCreat.creature === creature);
     if (index !== -1) {
-      await this.storageService.parseValueToStore(creature, numKills, 'kills');
+      const statObj = await this.storageService.getStatistic(creature);
+      statObj.kills++;
+      await this.storageService.storeValue(creature, statObj);
     }
   }
 }

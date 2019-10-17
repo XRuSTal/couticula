@@ -9,11 +9,9 @@ import { StatisticService } from '@services';
   styleUrls: ['statistic.page.scss'],
 })
 export class StatisticPage {
-  x: number;
-
   constructor(private navCtrl: NavController, private statisticService: StatisticService) {}
 
   close() {
-    this.navCtrl.back();
+    this.navCtrl.pop();
   }
 }

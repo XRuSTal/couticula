@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
-import { promise } from 'selenium-webdriver';
 
 @Injectable()
 export class StorageService {
-  emptyJSON = {
+  emptyStatictis = {
     dealtDamage: 0,
     recievedDamage: 0,
     encounteredTimes: 0,
@@ -14,49 +13,28 @@ export class StorageService {
 
   constructor(private storage: Storage) {}
 
-  async parseValueToStore(key: string, value: number, parameter: string) {
-    let JSONToStore = {};
+  async storeValue(key: string, obj: any) {
+    let objToStore = {};
     await this.storage.get(key).then(val => {
-      if (val == null || this.isEmpty(val)) {
-        JSONToStore = Object.assign({}, this.emptyJSON);
+      if (val == null) {
+        objToStore = Object.assign({}, this.emptyStatictis);
       } else {
-        JSONToStore = Object.assign(JSONToStore, val);
-        JSONToStore[parameter] = JSONToStore[parameter] + value;
+        objToStore = Object.assign(objToStore, obj);
       }
-      this.storeValue(key, JSONToStore);
+      this.storage.set(key, objToStore);
     });
   }
 
-  private isEmpty(obj: any): boolean {
-    for (const key in obj) {
-      if (obj.hasOwnProperty(key)) {
-        return false;
-      }
-    }
-    return true;
-  }
+  async getStatistic(key: string) {
+    let objToGetStat = this.emptyStatictis;
 
-  private storeValue(key: string, valueToStore: any) {
-    if (valueToStore != null) {
-      this.storage.set(key, valueToStore);
-    }
-  }
-
-  async parseJSONToGetStatistic(key: string) {
-    let JSONToGetStat = {
-      dealtDamage: 0,
-      recievedDamage: 0,
-      encounteredTimes: 0,
-      kills: 0,
-      killedTimes: 0,
-    };
     await this.storage.get(key).then(val => {
-      if (val === null || this.isEmpty(val)) {
-        JSONToGetStat = Object.assign({}, this.emptyJSON);
+      if (val === null) {
+        objToGetStat = Object.assign({}, this.emptyStatictis);
       } else {
-        JSONToGetStat = Object.assign({}, val);
+        objToGetStat = Object.assign({}, val);
       }
     });
-    return JSONToGetStat;
+    return objToGetStat;
   }
 }
