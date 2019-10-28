@@ -13,28 +13,11 @@ export class StorageService {
 
   constructor(private storage: Storage) {}
 
-  async storeValue(key: string, obj: any) {
-    let objToStore = {};
-    await this.storage.get(key).then(val => {
-      if (val == null) {
-        objToStore = Object.assign({}, this.emptyStatictis);
-      } else {
-        objToStore = Object.assign(objToStore, obj);
-      }
-      this.storage.set(key, objToStore);
-    });
+  storeValue(key: string, obj: any) {
+    this.storage.set(key, obj);
   }
 
-  async getStatistic(key: string) {
-    let objToGetStat = this.emptyStatictis;
-
-    await this.storage.get(key).then(val => {
-      if (val === null) {
-        objToGetStat = Object.assign({}, this.emptyStatictis);
-      } else {
-        objToGetStat = Object.assign({}, val);
-      }
-    });
-    return objToGetStat;
+  getStatistic(key: string) {
+    return this.storage.get(key);
   }
 }

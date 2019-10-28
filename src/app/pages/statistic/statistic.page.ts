@@ -9,6 +9,10 @@ import { StatisticService } from '@services';
   styleUrls: ['statistic.page.scss'],
 })
 export class StatisticPage {
+  get statistic() {
+    return this.statisticService.allStatistics;
+  }
+
   constructor(private navCtrl: NavController, private statisticService: StatisticService) {}
 
   close() {

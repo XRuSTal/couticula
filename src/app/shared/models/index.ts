@@ -19,3 +19,4 @@ export * from './hero-settings';
 export * from './item';
 export * from './shield';
 export * from './shop';
+export * from './statistic';

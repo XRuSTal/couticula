@@ -12,10 +12,11 @@ import {
   Creature,
   Hero,
 } from '@models';
-import { HeroService } from '@services';
-import { RandomService } from '@services';
-import { SettingsService } from '@services';
-import { StatisticService } from '@services';
+import { HeroService } from './hero.service';
+import { RandomService } from './random.service';
+import { SettingsService } from './settings.service';
+import { StatisticService } from './statistic.service';
+
 import { AbilityFabric, CreatureFabric, EffectFabric } from '@shared/fabrics';
 
 @Injectable()
