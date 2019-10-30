@@ -5,7 +5,7 @@ import { Creature, Statistic } from '@models';
 
 import { StorageService } from './storage.service';
 
-import { CreaturesBoss, CreaturesLevel1, CreaturesLevel2 } from '../db';
+import { CreaturesBoss, CreaturesLevel1, CreaturesLevel2 } from '@shared/db';
 
 @Injectable()
 export class StatisticService {
