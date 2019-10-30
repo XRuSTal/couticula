@@ -28,10 +28,7 @@ export class StatisticService {
         );
 
         if (!stat) {
-          this.allStatistics.push(<Statistic>{
-            creatureName: currentCreature,
-            kills: 0,
-          });
+          this.allStatistics.push(new Statistic(currentCreature, 0));
         } else {
           this.allStatistics.push(stat);
         }
@@ -43,7 +40,8 @@ export class StatisticService {
     monsters.forEach(creature => {
       if (
         creature.state === CreatureState.Dead ||
-        creature.state === CreatureState.DeadInThisTurn
+        creature.state === CreatureState.DeadInThisTurn ||
+        creature.state === CreatureState.Alive
       ) {
         if (!numOfCreatures.has(creature.name)) {
           numOfCreatures.set(creature.name, 1);
