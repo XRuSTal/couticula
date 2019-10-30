@@ -40,8 +40,7 @@ export class StatisticService {
     monsters.forEach(creature => {
       if (
         creature.state === CreatureState.Dead ||
-        creature.state === CreatureState.DeadInThisTurn ||
-        creature.state === CreatureState.Alive
+        creature.state === CreatureState.DeadInThisTurn
       ) {
         if (!numOfCreatures.has(creature.name)) {
           numOfCreatures.set(creature.name, 1);
