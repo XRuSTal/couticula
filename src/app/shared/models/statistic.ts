@@ -1,4 +1,4 @@
 export class Statistic {
-  creature: string;
+  creatureName: string;
   kills: number;
 }
